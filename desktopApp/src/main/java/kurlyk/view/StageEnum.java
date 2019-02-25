@@ -3,6 +3,6 @@ package kurlyk.view;
 
 public enum StageEnum {
 
-    MAIN_STAGE
+    SIGN_IN_STAGE
 
 }

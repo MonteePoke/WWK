@@ -12,36 +12,24 @@ import java.util.Map;
 public class StagePool {
     private static StagePool ourInstance = new StagePool();
     private Map<String, Stage> stageMap = new HashMap<>();
-    private String currentShowesStage;
+    private StageEnum currentShowesStage;
 
     public static StagePool getInstance() {
         return ourInstance;
     }
 
-    private StagePool() {
-        currentShowesStage = "";
-    }
+    private StagePool() { }
 
     public void addStage(StageEnum stageEnum, Stage stage){
         if (!stageMap.containsKey(stageEnum.name())) {
             stageMap.put(stageEnum.name(), stage);
-            currentShowesStage = stageEnum.name();
-        } else {
-            throw new StageIsExistExeption(stageEnum.name());
-        }
-    }
-
-    public void addStageAndShow(StageEnum stageEnum, Stage stage){
-        if (!stageMap.containsKey(stageEnum.name())) {
-            stageMap.put(stageEnum.name(), stage);
-            stage.show();
         } else {
             throw new StageIsExistExeption(stageEnum.name());
         }
     }
 
     public void deleteStage(StageEnum stageEnum){
-        if (stageEnum.name().equals(currentShowesStage)){
+        if (stageEnum.equals(currentShowesStage)){
             throw new StageIsShowExeption(stageEnum.name());
         } else {
             stageMap.remove(stageEnum.name());
@@ -53,12 +41,7 @@ public class StagePool {
     }
 
     public void showStage(StageEnum stageEnum){
+        currentShowesStage = stageEnum;
         getStage(stageEnum).show();
-    }
-
-    public static Stage createStage(){
-        Stage stage = new Stage();
-        stage.setScene(new Scene(new Group()));
-        return stage;
     }
 }

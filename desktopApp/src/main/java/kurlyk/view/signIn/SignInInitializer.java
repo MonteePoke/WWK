@@ -3,12 +3,12 @@ package kurlyk.view.signIn;
 import kurlyk.view.StageEnum;
 import kurlyk.view.config.ConfigCreator;
 import kurlyk.view.fxCommon.AbstractInitializer;
-import kurlyk.view.fxCommon.IInitializer;
+import kurlyk.view.fxCommon.Initializer;
 
 public class SignInInitializer extends AbstractInitializer<SignInController> {
 
     @Override
-    public IInitializer initialize() {
+    public Initializer initialize() {
         return super.initialize();
     }
 
@@ -25,7 +25,7 @@ public class SignInInitializer extends AbstractInitializer<SignInController> {
     @Override
     protected void setHandler(){
         controller.getServerConfigButton().setOnAction(event -> {
-            ConfigCreator.setSceneRoot(StageEnum.MAIN_STAGE);
+            ConfigCreator.setSceneRoot(StageEnum.SIGN_IN_STAGE);
         });
 
         controller.getLocalConfigButton().setOnKeyPressed(event -> {

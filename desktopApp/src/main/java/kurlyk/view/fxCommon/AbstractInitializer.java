@@ -1,18 +1,21 @@
 package kurlyk.view.fxCommon;
 
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
+import javafx.stage.Stage;
 import kurlyk.exeption.InitializatorExeption;
 
-public abstract class AbstractInitializer <T> implements IInitializer{
+public abstract class AbstractInitializer <T> implements Initializer {
 
     protected FXMLLoader loader;
     protected T controller;
 
     private final String prefixToMarkupPath = "view/";
     private final String sufixToMarkupPath = ".fxml";
+    private final String prefixToStylePath = "style/";
+    private final String sufixToStylePath = ".css";
+    private final String commonStylesheets = "common";
 
-    public IInitializer initialize() {
+    public Initializer initialize() {
         try {
             loader = new FXMLLoader(getClass().getClassLoader().getResource(
                     prefixToMarkupPath +
@@ -20,6 +23,9 @@ public abstract class AbstractInitializer <T> implements IInitializer{
                             sufixToMarkupPath)
             );
             loader.load();
+            Stage stage = loader.getRoot();
+            stage.getScene().getStylesheets().add(prefixToStylePath + commonStylesheets + sufixToStylePath);
+            stage.getScene().getStylesheets().add(prefixToStylePath + getName() + sufixToStylePath);
             controller = loader.getController();
         } catch (Exception e) {
             throw new InitializatorExeption(getClass().getSimpleName(), e);
@@ -29,7 +35,7 @@ public abstract class AbstractInitializer <T> implements IInitializer{
         return this;
     }
 
-    public Parent getRoot(){
+    public Stage getRoot(){
         return loader.getRoot();
     }
 

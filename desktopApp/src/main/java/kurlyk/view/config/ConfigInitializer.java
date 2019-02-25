@@ -1,13 +1,13 @@
 package kurlyk.view.config;
 
 import kurlyk.view.fxCommon.AbstractInitializer;
-import kurlyk.view.fxCommon.IInitializer;
+import kurlyk.view.fxCommon.Initializer;
 
 
 public class ConfigInitializer extends AbstractInitializer<ConfigController> {
 
     @Override
-    public IInitializer initialize() {
+    public Initializer initialize() {
         return super.initialize();
     }
 
