@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<VBox alignment="center" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kurlyk.view.config.ConfigController">
+    <VBox alignment="TOP_CENTER">
+        <Label fx:id="nameNew" text="Вторая страница"/>
+    </VBox>
+</VBox>

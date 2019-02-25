@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.Region?>
+<VBox alignment="center" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kurlyk.view.signIn.SignInController">
+    <VBox alignment="TOP_CENTER">
+        <Label fx:id="nameLabel" VBox.vgrow="ALWAYS" maxHeight="Infinity" text="Фамилия Имя Отчество"/>
+        <TextField fx:id="nameInput" VBox.vgrow="ALWAYS" maxHeight="Infinity"/>
+        <Label fx:id="groupLabel" VBox.vgrow="ALWAYS" maxHeight="Infinity" text="Группа"/>
+        <TextField fx:id="groupInput" VBox.vgrow="ALWAYS" maxHeight="Infinity"/>
+        <HBox>
+            <Region HBox.hgrow="ALWAYS" />
+            <BorderPane>
+                <padding>
+                    <Insets top="20" right="20" bottom="20" left="20"/>
+                </padding>
+                <top>
+                    <Label fx:id="configLabel" text="Конфигурация"/>
+                </top>
+                <left>
+                    <Button fx:id="localConfigButton" text="Конфигуратор"/>
+                </left>
+                <right>
+                    <Button fx:id="serverConfigButton" text="Сервер"/>
+                </right>
+            </BorderPane>
+            <BorderPane>
+                <padding>
+                    <Insets top="20" right="20" bottom="20" left="20"/>
+                </padding>
+                <top>
+                    <Label fx:id="runLabel" text="Запуск лабораторной работы"/>
+                </top>
+                <left>
+                    <Button fx:id="localRunButton" text="Локальный"/>
+                </left>
+                <right>
+                    <Button fx:id="serverRunButton" text="Удалённый"/>
+                </right>
+            </BorderPane>
+            <Region HBox.hgrow="ALWAYS" />
+        </HBox>
+    </VBox>
+</VBox>
