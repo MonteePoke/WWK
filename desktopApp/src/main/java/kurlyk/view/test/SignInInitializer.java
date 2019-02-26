@@ -1,10 +1,6 @@
-package kurlyk.view.config;
+package kurlyk.view.test;
 
-import kurlyk.view.fxCommon.AbstractInitializer;
-import kurlyk.view.fxCommon.Initializer;
-
-
-public class ConfigInitializer extends AbstractInitializer<ConfigController> {
+public class SignInInitializer extends AbstractInitializer<SignInController> {
 
     @Override
     public Initializer initialize() {
@@ -13,7 +9,7 @@ public class ConfigInitializer extends AbstractInitializer<ConfigController> {
 
     @Override
     public String getName() {
-        return "config";
+        return "signIn";
     }
 
     @Override

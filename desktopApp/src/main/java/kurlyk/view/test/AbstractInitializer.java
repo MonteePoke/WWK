@@ -1,5 +1,4 @@
-package kurlyk.view.fxCommon;
-
+package kurlyk.view.test;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import kurlyk.exeption.InitializatorExeption;
@@ -28,7 +27,7 @@ public abstract class AbstractInitializer <T> implements Initializer {
             stage.getScene().getStylesheets().add(prefixToStylePath + getName() + sufixToStylePath);
             controller = loader.getController();
         } catch (Exception e) {
-            throw new InitializatorExeption(getClass().getSimpleName(), e);
+            throw new InitializatorExeption(e);
         }
         setProperty();
         setHandler();

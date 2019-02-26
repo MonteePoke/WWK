@@ -1,4 +1,4 @@
-package kurlyk.view.fxCommon;
+package kurlyk.view.test;
 
 import javafx.stage.Stage;
 

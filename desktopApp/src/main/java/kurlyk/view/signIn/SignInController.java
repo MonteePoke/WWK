@@ -8,37 +8,33 @@ import lombok.Getter;
 
 public class SignInController {
 
-    @FXML
-    @Getter
-    private Label nameLabel;
-    @FXML
-    @Getter
-    public TextField nameInput;
+    @FXML private Label nameLabel;
+    @FXML public TextField nameInput;
+    @FXML private Label groupLabel;
+    @FXML private TextField groupInput;
+    @FXML private Label configLabel;
+    @FXML private Button localConfigButton;
+    @FXML private Button serverConfigButton;
+    @FXML private Label runLabel;
+    @FXML private Button localRunButton;
+    @FXML private Button serverRunButton;
 
-    @FXML
-    @Getter
-    private Label groupLabel;
-    @FXML
-    @Getter
-    private TextField groupInput;
 
-    @FXML
-    @Getter
-    private Label configLabel;
-    @FXML
-    @Getter
-    private Button localConfigButton;
-    @FXML
-    @Getter
-    private Button serverConfigButton;
+    protected void initialize(){
+        serverConfigButton.setOnAction(event -> {
+//            fxmlLoader.print();
+        });
 
-    @FXML
-    @Getter
-    private Label runLabel;
-    @FXML
-    @Getter
-    private Button localRunButton;
-    @FXML
-    @Getter
-    private Button serverRunButton;
+        localConfigButton.setOnKeyPressed(event -> {
+
+        });
+
+        localRunButton.setOnKeyPressed(event -> {
+
+        });
+
+        serverRunButton.setOnKeyPressed(event -> {
+
+        });
+    }
 }
