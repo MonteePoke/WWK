@@ -1,4 +1,4 @@
-package kurlyk.view;
+package kurlyk.view.fxCommon;
 
 
 public enum StageEnum {

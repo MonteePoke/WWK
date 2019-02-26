@@ -1,6 +1,6 @@
 package kurlyk.view.signIn;
 
-import kurlyk.view.StageEnum;
+import kurlyk.view.fxCommon.StageEnum;
 import kurlyk.view.config.ConfigCreator;
 import kurlyk.view.fxCommon.AbstractInitializer;
 import kurlyk.view.fxCommon.Initializer;

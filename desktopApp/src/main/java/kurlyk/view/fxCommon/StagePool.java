@@ -1,7 +1,5 @@
-package kurlyk.view;
+package kurlyk.view.fxCommon;
 
-import javafx.scene.Group;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 import kurlyk.exeption.StageIsExistExeption;
 import kurlyk.exeption.StageIsShowExeption;

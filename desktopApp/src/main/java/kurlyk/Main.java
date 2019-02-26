@@ -2,8 +2,8 @@ package kurlyk;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import kurlyk.view.StageEnum;
-import kurlyk.view.StagePool;
+import kurlyk.view.fxCommon.StageEnum;
+import kurlyk.view.fxCommon.StagePool;
 import kurlyk.view.signIn.SignInInitializer;
 
 
