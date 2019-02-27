@@ -21,7 +21,6 @@ public class FxmlLoader implements ApplicationContextAware {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(FxmlLoader.class.getResource(pathToMarkupPath + viewName + ".fxml"));
         loader.setClassLoader(FxmlLoader.class.getClassLoader());
-        loader.setControllerFactory(staticContext::getBean);
         Parent parent = loader.load(FxmlLoader.class.getResourceAsStream(pathToMarkupPath + viewName + ".fxml"));
         parent.getStylesheets().add(pathToStylePath + "common.css");
         parent.getStylesheets().add(pathToStylePath + viewName + ".css");

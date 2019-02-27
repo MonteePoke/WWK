@@ -5,7 +5,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import lombok.Getter;
+import org.springframework.stereotype.Component;
 
+@Component
 public class SignInController {
 
     @FXML private Label nameLabel;
@@ -22,7 +24,7 @@ public class SignInController {
 
     protected void initialize(){
         serverConfigButton.setOnAction(event -> {
-//            fxmlLoader.print();
+
         });
 
         localConfigButton.setOnKeyPressed(event -> {

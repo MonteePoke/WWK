@@ -21,7 +21,6 @@ public class Main extends Application {
     public void start(Stage primaryStage){
         FxmlLoader renderer = context.getBean(FxmlLoader.class);
 
-//        primaryStage.setScene(new Scene(new SignInInitializer().initialize().getRoot()));
         SignInStage signInStage = new SignInStage();
         signInStage.show();
     }
