@@ -1,18 +1,14 @@
-package kurlyk.view.signIn;
+package kurlyk.view.lab;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import kurlyk.view.fxCommon.Controller;
-import kurlyk.view.lab.LabStage;
-import lombok.Getter;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
-
 @Component
-public class SignInController extends Controller {
+public class LabController extends Controller {
 
     @FXML private Label nameLabel;
     @FXML public TextField nameInput;
@@ -26,21 +22,20 @@ public class SignInController extends Controller {
     @FXML private Button serverRunButton;
 
 
-    public void initialize(){
+    protected void initialize(){
         serverConfigButton.setOnAction(event -> {
 
         });
 
-        localConfigButton.setOnAction(event -> {
+        localConfigButton.setOnKeyPressed(event -> {
 
         });
 
-        localRunButton.setOnAction(event -> {
-            LabStage labStage = new LabStage();
-            labStage.show();
+        localRunButton.setOnKeyPressed(event -> {
+
         });
 
-        serverRunButton.setOnAction(event -> {
+        serverRunButton.setOnKeyPressed(event -> {
 
         });
     }

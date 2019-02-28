@@ -19,8 +19,6 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage){
-        FxmlLoader renderer = context.getBean(FxmlLoader.class);
-
         SignInStage signInStage = new SignInStage();
         signInStage.show();
     }

@@ -27,14 +27,18 @@ public class FxmlLoader implements ApplicationContextAware {
         return parent;
     }
 
-    public static Scene loadScene(String viewName){
-        Scene scene = new Scene(new Group());
+    public static Parent loadParent(String viewName){
+        Parent parent = new Group();
         try {
-            scene.setRoot(load(viewName));
+            parent = load(viewName);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return scene;
+        return parent;
+    }
+
+    public static Scene loadScene(String viewName){
+        return new Scene(loadParent(viewName));
     }
 
     @Override
