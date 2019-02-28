@@ -6,9 +6,9 @@ import kurlyk.common.PropertyReader;
 public abstract class BaseStage extends Stage {
 
     public BaseStage() {
-        setScene(FxmlLoader.loadScene(getName()));
+        setScene(FxmlLoader.loadScene(getPathToMainStage()));
         setTitle(PropertyReader.getInstance().getProperty("mainTitle"));
     }
 
-    public abstract String getName();
+    public abstract String getPathToMainStage();
 }

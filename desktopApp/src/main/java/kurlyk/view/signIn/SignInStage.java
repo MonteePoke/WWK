@@ -10,7 +10,7 @@ public class SignInStage extends BaseStage {
     }
 
     @Override
-    public String getName() {
-        return "signIn";
+    public String getPathToMainStage() {
+        return "signIn/main";
     }
 }

@@ -10,7 +10,7 @@ public class LabStage extends BaseStage {
     }
 
     @Override
-    public String getName() {
-        return "lab";
+    public String getPathToMainStage() {
+        return "lab/main";
     }
 }

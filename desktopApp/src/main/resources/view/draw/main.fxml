@@ -5,9 +5,12 @@
 
 <?import javafx.scene.Group?>
 <BorderPane xmlns:fx="http://javafx.com/fxml/1">
+    <right>
+
+    </right>
     <center>
         <Group>
-            <Label fx:id="nameNew" text="Таб-рисовалка"/>
+            <Label fx:id="nameNew" text="Рисовалка"/>
         </Group>
     </center>
 </BorderPane>
