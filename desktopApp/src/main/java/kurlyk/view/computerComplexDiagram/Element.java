@@ -4,11 +4,12 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import kurlyk.graph.GraphElement;
 
-public class Element <T extends Enum> extends ImageView {
+public class Element extends ImageView {
 
-    private GraphElement<T> graphElement;
+    private GraphElement<ElementEnum> graphElement;
 
-    public Element(String pathToImage) {
-        super(new Image(Element.class.getResourceAsStream("")));
+    public Element(ElementEnum elementEnum) {
+        super(new Image(Element.class.getResourceAsStream(elementEnum.getPathToImage())));
+        this.graphElement = new GraphElement<>(elementEnum);
     }
 }
