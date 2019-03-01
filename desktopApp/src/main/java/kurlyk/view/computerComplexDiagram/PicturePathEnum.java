@@ -1,6 +1,6 @@
 package kurlyk.view.computerComplexDiagram;
 
-public enum ElementEnum {
+public enum PicturePathEnum {
     RAM("images/RAM.png"),
     CPU("images/CPU.png"),
     IO("images/IO.png"),
@@ -8,7 +8,7 @@ public enum ElementEnum {
 
     private String pathToImage;
 
-    ElementEnum(String pathToImage) {
+    PicturePathEnum(String pathToImage) {
         this.pathToImage = pathToImage;
     }
 

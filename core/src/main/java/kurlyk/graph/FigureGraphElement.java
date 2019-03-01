@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @EqualsAndHashCode
 @AllArgsConstructor
-public class GraphElement <T extends Enum> {
+public class FigureGraphElement<T extends Enum> {
     private T type;
 
 }
