@@ -19,9 +19,10 @@ public class FxmlLoader implements ApplicationContextAware {
 
     private static Parent load(String viewName) throws IOException {
         FXMLLoader loader = new FXMLLoader();
+        loader.setControllerFactory(clazz -> staticContext.getBean(clazz));
         loader.setLocation(FxmlLoader.class.getResource(pathToView + viewName + ".fxml"));
         loader.setClassLoader(FxmlLoader.class.getClassLoader());
-        Parent parent = loader.load(FxmlLoader.class.getResourceAsStream(pathToView + viewName + ".fxml"));
+        Parent parent = loader.load();
         parent.getStylesheets().add(pathToView + "common.css");
         parent.getStylesheets().add(pathToView + viewName + ".css");
         return parent;

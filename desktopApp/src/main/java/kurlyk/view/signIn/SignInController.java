@@ -25,7 +25,7 @@ public class SignInController extends Controller {
     @FXML private Button serverRunButton;
 
     @Autowired
-    StagePool stagePool;
+    private StagePool stagePool;
 
     public void initialize(){
         serverConfigButton.setOnAction(event -> {
@@ -38,7 +38,7 @@ public class SignInController extends Controller {
 
         localRunButton.setOnAction(event -> {
             LabStage labStage = new LabStage();
-            stagePool.pushStage(labStage);
+            stagePool.pushStage("labStage", labStage);
             labStage.show();
         });
 
