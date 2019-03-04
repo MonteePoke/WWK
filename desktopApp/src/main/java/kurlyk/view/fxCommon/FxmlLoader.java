@@ -8,22 +8,22 @@ import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
+
 import java.io.IOException;
 
 @Component
 public class FxmlLoader implements ApplicationContextAware {
 
     private static ApplicationContext staticContext;
-    private static final String pathToMarkupPath = "/view/";
-    private static final String pathToStylePath = "/style/";
+    private static final String pathToView = "/view/";
 
     private static Parent load(String viewName) throws IOException {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(FxmlLoader.class.getResource(pathToMarkupPath + viewName + ".fxml"));
+        loader.setLocation(FxmlLoader.class.getResource(pathToView + viewName + ".fxml"));
         loader.setClassLoader(FxmlLoader.class.getClassLoader());
-        Parent parent = loader.load(FxmlLoader.class.getResourceAsStream(pathToMarkupPath + viewName + ".fxml"));
-        parent.getStylesheets().add(pathToStylePath + "common.css");
-        parent.getStylesheets().add(pathToStylePath + viewName + ".css");
+        Parent parent = loader.load(FxmlLoader.class.getResourceAsStream(pathToView + viewName + ".fxml"));
+        parent.getStylesheets().add(pathToView + "common.css");
+        parent.getStylesheets().add(pathToView + viewName + ".css");
         return parent;
     }
 

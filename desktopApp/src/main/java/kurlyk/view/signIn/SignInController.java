@@ -5,11 +5,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import kurlyk.view.fxCommon.Controller;
+import kurlyk.view.fxCommon.StagePool;
 import kurlyk.view.lab.LabStage;
-import lombok.Getter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import javax.annotation.PostConstruct;
 
 @Component
 public class SignInController extends Controller {
@@ -25,6 +24,8 @@ public class SignInController extends Controller {
     @FXML private Button localRunButton;
     @FXML private Button serverRunButton;
 
+    @Autowired
+    StagePool stagePool;
 
     public void initialize(){
         serverConfigButton.setOnAction(event -> {
@@ -37,6 +38,7 @@ public class SignInController extends Controller {
 
         localRunButton.setOnAction(event -> {
             LabStage labStage = new LabStage();
+            stagePool.pushStage(labStage);
             labStage.show();
         });
 
