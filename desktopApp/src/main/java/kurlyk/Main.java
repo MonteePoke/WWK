@@ -3,6 +3,7 @@ package kurlyk;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import kurlyk.view.fxCommon.StagePool;
+import kurlyk.view.fxCommon.Stages;
 import kurlyk.view.signIn.SignInStage;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -20,7 +21,7 @@ public class Main extends Application {
     public void start(Stage primaryStage){
         SignInStage signInStage = new SignInStage();
         StagePool stagePool = (StagePool) context.getBean("stagePool");
-        stagePool.pushStage("signInStage", signInStage);
+        stagePool.pushStage(Stages.SIGN_IN, signInStage);
         signInStage.show();
     }
 

@@ -8,6 +8,6 @@ import lombok.Getter;
 @EqualsAndHashCode
 @AllArgsConstructor
 public class ComputerSystemGraphElement {
-    private ComputerSystemEnum type;
+    private ComputerSystemElements type;
 
 }

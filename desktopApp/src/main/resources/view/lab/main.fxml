@@ -1,10 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<VBox fx:id="root" alignment="center" minWidth="1000" minHeight="600" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kurlyk.view.lab.LabController">
-    <HBox>
-        <Button fx:id="CpuButton" text="CPU"> </Button>
-    </HBox>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<VBox alignment="center" minWidth="1000" minHeight="600" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kurlyk.view.lab.LabController">
+    <BorderPane fx:id="root" VBox.vgrow="ALWAYS">
+        <right>
+            <VBox fx:id="toolPanel">
+                <Button fx:id="cpuButton" text="CPU" maxWidth="Infinity"> </Button>
+                <Button fx:id="ramButton" text="RAM" maxWidth="Infinity"> </Button>
+                <Button fx:id="ioButton" text="IO" maxWidth="Infinity"> </Button>
+                <Button fx:id="pointButton" text="POINT" maxWidth="Infinity"> </Button>
+                <Button fx:id="connector" text="CONNECT" maxWidth="Infinity"> </Button>
+                <Button fx:id="cancel" text="CANCEL" maxWidth="Infinity"> </Button>
+            </VBox>
+        </right>
+        <center>
+            <AnchorPane fx:id="drawPanel">
+
+            </AnchorPane>
+        </center>
+    </BorderPane>
 </VBox>

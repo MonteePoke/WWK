@@ -10,21 +10,21 @@ import java.util.Map;
 @Component
 public class StagePool {
 
-    private Map<String, Stage> pool;
+    private Map<Stages, Stage> pool;
 
     public StagePool() {
         pool = new HashMap<>();
     }
 
-    public void pushStage(String key, Stage stage){
+    public void pushStage(Stages key, Stage stage){
         pool.put(key, stage);
     }
 
-    public Stage popStage(String key){
+    public Stage popStage(Stages key){
         return pool.remove(key);
     }
 
-    public void closeStage(String key){
+    public void closeStage(Stages key){
         pool.remove(key).close();
     }
 }
