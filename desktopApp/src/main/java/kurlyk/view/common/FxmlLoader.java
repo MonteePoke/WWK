@@ -1,4 +1,4 @@
-package kurlyk.view.fxCommon;
+package kurlyk.view.common;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;

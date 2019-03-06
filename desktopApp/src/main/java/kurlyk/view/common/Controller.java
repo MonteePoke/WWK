@@ -1,4 +1,4 @@
-package kurlyk.view.fxCommon;
+package kurlyk.view.common;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;

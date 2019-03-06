@@ -11,14 +11,15 @@
                 <Button fx:id="ramButton" text="RAM" maxWidth="Infinity"> </Button>
                 <Button fx:id="ioButton" text="IO" maxWidth="Infinity"> </Button>
                 <Button fx:id="pointButton" text="POINT" maxWidth="Infinity"> </Button>
-                <Button fx:id="connector" text="CONNECT" maxWidth="Infinity"> </Button>
-                <Button fx:id="cancel" text="CANCEL" maxWidth="Infinity"> </Button>
+                <Button fx:id="connect" text="CONNECT" maxWidth="Infinity"> </Button>
             </VBox>
         </right>
         <center>
-            <AnchorPane fx:id="drawPanel">
+            <ScrollPane fx:id="scrollPanel">
+                <AnchorPane fx:id="drawPanel">
 
-            </AnchorPane>
+                </AnchorPane>
+            </ScrollPane>
         </center>
     </BorderPane>
 </VBox>

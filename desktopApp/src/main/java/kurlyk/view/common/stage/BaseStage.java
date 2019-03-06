@@ -1,7 +1,8 @@
-package kurlyk.view.fxCommon;
+package kurlyk.view.common.stage;
 
 import javafx.stage.Stage;
 import kurlyk.view.Properties;
+import kurlyk.view.common.FxmlLoader;
 
 public abstract class BaseStage extends Stage {
 

@@ -7,7 +7,8 @@ import lombok.Getter;
 @Getter
 @EqualsAndHashCode
 @AllArgsConstructor
-public class ComputerSystemGraphElement {
-    private ComputerSystemElements type;
+public class ComputerSystemElement {
+    private ComputerSystemElementTypes type;
+    private double availabilityFactor;
 
 }

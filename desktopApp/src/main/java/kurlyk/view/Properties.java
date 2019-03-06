@@ -13,7 +13,7 @@ public class Properties {
 
     private Properties(){
         properties = new HashMap<>();
-        properties.put("mainTitle", "Курлык");
+        properties.put("mainTitle", "Адриатический свин");
     }
 
     public String getProperty(String name){

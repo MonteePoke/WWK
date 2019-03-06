@@ -1,4 +1,4 @@
-package kurlyk.view.fxCommon;
+package kurlyk.view.common.stage;
 
 import javafx.stage.Stage;
 import org.springframework.stereotype.Component;

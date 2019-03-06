@@ -1,6 +1,6 @@
 package kurlyk.view.lab;
 
-import kurlyk.view.fxCommon.BaseStage;
+import kurlyk.view.common.stage.BaseStage;
 
 public class LabStage extends BaseStage {
 

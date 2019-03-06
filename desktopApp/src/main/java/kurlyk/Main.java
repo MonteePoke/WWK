@@ -2,8 +2,8 @@ package kurlyk;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import kurlyk.view.fxCommon.StagePool;
-import kurlyk.view.fxCommon.Stages;
+import kurlyk.view.common.stage.StagePool;
+import kurlyk.view.common.stage.Stages;
 import kurlyk.view.signIn.SignInStage;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 

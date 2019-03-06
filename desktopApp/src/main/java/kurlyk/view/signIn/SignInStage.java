@@ -1,6 +1,6 @@
 package kurlyk.view.signIn;
 
-import kurlyk.view.fxCommon.BaseStage;
+import kurlyk.view.common.stage.BaseStage;
 
 public class SignInStage extends BaseStage {
 
