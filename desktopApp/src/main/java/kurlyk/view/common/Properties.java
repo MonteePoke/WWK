@@ -1,4 +1,4 @@
-package kurlyk.view;
+package kurlyk.view.common;
 
 import java.util.HashMap;
 
@@ -14,6 +14,7 @@ public class Properties {
     private Properties(){
         properties = new HashMap<>();
         properties.put("mainTitle", "Адриатический свин");
+        properties.put("delete", "Удалить");
     }
 
     public String getProperty(String name){

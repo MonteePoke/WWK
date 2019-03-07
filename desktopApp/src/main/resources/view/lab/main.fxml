@@ -3,6 +3,7 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import kurlyk.view.common.component.OnlyDoubleTextField?>
 <VBox alignment="center" minWidth="1000" minHeight="600" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kurlyk.view.lab.LabController">
     <BorderPane fx:id="root" VBox.vgrow="ALWAYS">
         <right>
@@ -11,6 +12,7 @@
                 <Button fx:id="ramButton" text="RAM" maxWidth="Infinity"> </Button>
                 <Button fx:id="ioButton" text="IO" maxWidth="Infinity"> </Button>
                 <Button fx:id="pointButton" text="POINT" maxWidth="Infinity"> </Button>
+                <OnlyDoubleTextField fx:id="availabilityFactorField" > </OnlyDoubleTextField>
                 <Button fx:id="connect" text="CONNECT" maxWidth="Infinity"> </Button>
             </VBox>
         </right>

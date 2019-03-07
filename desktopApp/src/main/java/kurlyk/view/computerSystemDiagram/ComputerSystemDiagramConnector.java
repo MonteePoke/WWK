@@ -5,17 +5,18 @@ import javafx.scene.shape.Line;
 import javafx.scene.shape.StrokeLineCap;
 import kurlyk.view.common.draw.DiagramElement;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
 
 public class ComputerSystemDiagramConnector extends Line implements DiagramElement {
 
-    private ComputerSystemDiagramElement elementFrom;
-    private ComputerSystemDiagramElement elementTo;
+    private ComputerSystemDiagramDetail elementFrom;
+    private ComputerSystemDiagramDetail elementTo;
     private UUID uuid;
 
-    public ComputerSystemDiagramConnector(ComputerSystemDiagramElement elementFrom, ComputerSystemDiagramElement elementTo) {
+    public ComputerSystemDiagramConnector(ComputerSystemDiagramDetail elementFrom, ComputerSystemDiagramDetail elementTo) {
         super(elementFrom.getX() + elementFrom.getImage().getWidth() / 2,
                 elementFrom.getY() + elementFrom.getImage().getHeight() / 2,
                 elementTo.getX() + elementTo.getImage().getWidth() / 2,
@@ -44,17 +45,22 @@ public class ComputerSystemDiagramConnector extends Line implements DiagramEleme
         setSmooth(true);
     }
 
-    public ComputerSystemDiagramElement getElementFrom() {
+    public ComputerSystemDiagramDetail getElementFrom() {
         return elementFrom;
     }
 
-    public ComputerSystemDiagramElement getElementTo() {
+    public ComputerSystemDiagramDetail getElementTo() {
         return elementTo;
     }
 
     @Override
     public UUID getUuid() {
         return uuid;
+    }
+
+    @Override
+    public List<? extends DiagramElement> getDiagramElementsForRemove() {
+        return null;
     }
 
     //Условие равенства линий - совпадение элементов на обоих концах линии, независимо он порядка следования
