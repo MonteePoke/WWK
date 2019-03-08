@@ -6,6 +6,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import kurlyk.graph.ComputerSystem.ComputerSystemElement;
 import kurlyk.graph.ComputerSystem.ComputerSystemElementTypes;
+import kurlyk.view.common.draw.DiagramContextMenu;
 import kurlyk.view.common.draw.DiagramElement;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -16,7 +17,7 @@ import java.util.List;
 import java.util.UUID;
 
 
-@EqualsAndHashCode(exclude = {"pressurePoint", "connectors", "elements"}, callSuper = false)
+@EqualsAndHashCode(exclude = {"pressurePoint", "connectors", "elements", "diagramContextMenu"}, callSuper = false)
 public class ComputerSystemDiagramDetail extends ImageView implements DiagramElement {
 
 
@@ -25,6 +26,7 @@ public class ComputerSystemDiagramDetail extends ImageView implements DiagramEle
     @Getter private List<ComputerSystemDiagramDetail> elements; //Все элементы, соединённые с этим
     @Getter private UUID uuid;
     @Getter private ComputerSystemElement computerSystemElement;
+    @Getter @Setter private DiagramContextMenu diagramContextMenu;
 
     public ComputerSystemDiagramDetail(ComputerSystemElement computerSystemElement, Image image, double x, double y) {
         super(image);

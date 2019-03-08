@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
 import javafx.scene.Cursor;
 import javafx.scene.ImageCursor;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseButton;
@@ -36,15 +37,11 @@ public class LabController extends Controller {
     private ComputerSystemElementTypes currentElement; //Тип элемента, который рисуется на текущий момент
     private ComputerSystemDiagramDetail startElementForConnection; //Точки начала и конца рисования линии
     private ComputerSystemDiagramDetail stopElementForConnection;
-    private DiagramContextMenu diagramContextMenu; //Контекстное меню для элемента диограммы
 
     public void initialize(){
         // Что бы AnchorPane по размеру ScrollPane была, иначе она без элементов в минимальный размер уходит
         drawPanel.prefWidthProperty().bind(scrollPanel.widthProperty());
         drawPanel.prefHeightProperty().bind(scrollPanel.heightProperty());
-
-        //Создаётся контестное меню для элементов диограммы
-        diagramContextMenu = new DiagramContextMenu();
 
         cpuButton.setOnAction(event -> {
             drawPanel.setCursor(new ImageCursor(ComputerSystemPictures.CPU.getImage()));
@@ -79,28 +76,28 @@ public class LabController extends Controller {
             switch (currentElement){
                 case CPU:
                     if(event.getPickResult().getIntersectedNode().equals(drawPanel)){
-                        drawImage(ComputerSystemDiagramDetail.createCpuImage(event.getX(), event.getY(),
+                        drawDetail(ComputerSystemDiagramDetail.createCpuImage(event.getX(), event.getY(),
                                 availabilityFactorField.getDouble())
                         );
                     }
                     break;
                 case RAM:
                     if(event.getPickResult().getIntersectedNode().equals(drawPanel)) {
-                        drawImage(ComputerSystemDiagramDetail.createRamImage(event.getX(), event.getY(),
+                        drawDetail(ComputerSystemDiagramDetail.createRamImage(event.getX(), event.getY(),
                                 availabilityFactorField.getDouble())
                         );
                     }
                     break;
                 case IO:
                     if(event.getPickResult().getIntersectedNode().equals(drawPanel)) {
-                        drawImage(ComputerSystemDiagramDetail.createIoImage(event.getX(), event.getY(),
+                        drawDetail(ComputerSystemDiagramDetail.createIoImage(event.getX(), event.getY(),
                                 availabilityFactorField.getDouble())
                         );
                     }
                     break;
                 case POINT:
                     if(event.getPickResult().getIntersectedNode().equals(drawPanel)) {
-                        drawImage(ComputerSystemDiagramDetail.createPointImage(event.getX(), event.getY(),
+                        drawDetail(ComputerSystemDiagramDetail.createPointImage(event.getX(), event.getY(),
                                 availabilityFactorField.getDouble())
                         );
                     }
@@ -115,7 +112,7 @@ public class LabController extends Controller {
                     if(event.getPickResult().getIntersectedNode() instanceof ComputerSystemDiagramDetail) {
                         stopElementForConnection = (ComputerSystemDiagramDetail) event.getPickResult().getIntersectedNode();
                         currentElement = ComputerSystemElementTypes.DEFAULT;
-                        drawLine(startElementForConnection, stopElementForConnection);
+                        drawConnector(startElementForConnection, stopElementForConnection);
                     }
                     break;
                 case DEFAULT:
@@ -130,7 +127,7 @@ public class LabController extends Controller {
         currentElement = ComputerSystemElementTypes.DEFAULT;
     }
 
-    private void drawImage(ComputerSystemDiagramDetail element){
+    private void drawDetail(ComputerSystemDiagramDetail element){
         //Перемещение
         element.setOnMousePressed(event -> {
             Point2D point = new Point2D(event.getX() - element.getX(), event.getY() - element.getY());
@@ -141,29 +138,23 @@ public class LabController extends Controller {
             element.setY(event.getY() - element.getPressurePoint().getY());
         });
         //Контекстное меню
-        element.setOnContextMenuRequested(event -> {
-            diagramContextMenu.show(element, event.getScreenX(), event.getScreenY());
-        });
-        diagramContextMenu.setDeleteAction(() -> deleteDiagramElement(element));
-        element.setOnMouseClicked(event -> {
-//            if(MouseButton.SECONDARY == event.getButton()){         //Удаление на ПКМ
-//                deleteDiagramElement(element);
-//            }
-        });
+        drawDiagramContextMenu(element);
         drawPanel.getChildren().add(element);
         rebootDrawState();
     }
 
-    private void drawLine(ComputerSystemDiagramDetail elementFrom, ComputerSystemDiagramDetail elementTo){
+    private <T extends Node & DiagramElement> void drawDiagramContextMenu(T diagramElement){
+        DiagramContextMenu diagramContextMenu = new DiagramContextMenu();
+        diagramContextMenu.setDeleteAction(() -> deleteDiagramElement(diagramElement));
+
+        diagramElement.setOnContextMenuRequested(event -> {
+            diagramContextMenu.show(diagramElement, event.getScreenX(), event.getScreenY());
+        });
+    }
+
+    private void drawConnector(ComputerSystemDiagramDetail elementFrom, ComputerSystemDiagramDetail elementTo){
         if(!(elementFrom.isConnected(elementTo) || elementFrom.equals(elementTo))){
             ComputerSystemDiagramConnector connector = new ComputerSystemDiagramConnector(elementFrom, elementTo);
-//            connector.setOnMouseClicked(event -> {
-//                if(MouseButton.SECONDARY == event.getButton()){
-//                    drawPanel.getChildren().remove(connector);
-//                    return;
-//                }
-//
-//            });
             drawPanel.getChildren().add(connector);
             elementFrom.getConnectors().add(connector);
             elementTo.getConnectors().add(connector);

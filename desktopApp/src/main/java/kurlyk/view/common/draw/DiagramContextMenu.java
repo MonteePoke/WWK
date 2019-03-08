@@ -10,7 +10,9 @@ public class DiagramContextMenu extends ContextMenu {
     private MenuItem delete;
 
     public DiagramContextMenu() {
+        super();
         delete = new MenuItem(Properties.getInstance().getProperty("delete"));
+        getItems().addAll(delete);
     }
 
     public void setDeleteAction(Runnable deleteAction){
