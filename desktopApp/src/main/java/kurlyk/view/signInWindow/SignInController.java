@@ -1,4 +1,4 @@
-package kurlyk.view.signIn;
+package kurlyk.view.signInWindow;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -7,7 +7,7 @@ import javafx.scene.control.TextField;
 import kurlyk.view.common.Controller;
 import kurlyk.view.common.stage.StagePool;
 import kurlyk.view.common.stage.Stages;
-import kurlyk.view.lab.LabStage;
+import kurlyk.view.drawComputerSystemWindow.DrawComputerSystemStage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -38,10 +38,8 @@ public class SignInController extends Controller {
         });
 
         localRunButton.setOnAction(event -> {
-            LabStage labStage = new LabStage();
-            stagePool.pushStage(Stages.LAB, labStage);
+            stagePool.pushStageAndShow(Stages.DRAW_COMPUTER_SYSTEM, new DrawComputerSystemStage());
             stagePool.closeStage(Stages.SIGN_IN);
-            labStage.show();
         });
 
         serverRunButton.setOnAction(event -> {

@@ -15,6 +15,8 @@ public class Properties {
         properties = new HashMap<>();
         properties.put("mainTitle", "Адриатический свин");
         properties.put("delete", "Удалить");
+        properties.put("showCharacteristics", "Показать характеристики");
+        properties.put("connect", "Соединение");
     }
 
     public String getProperty(String name){

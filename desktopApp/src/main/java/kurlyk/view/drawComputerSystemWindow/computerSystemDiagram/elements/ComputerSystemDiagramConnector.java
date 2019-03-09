@@ -1,10 +1,12 @@
-package kurlyk.view.computerSystemDiagram;
+package kurlyk.view.drawComputerSystemWindow.computerSystemDiagram.elements;
 
 
 import javafx.scene.shape.Line;
 import javafx.scene.shape.StrokeLineCap;
-import kurlyk.view.common.draw.DiagramElement;
+import kurlyk.view.drawComputerSystemWindow.computerSystemDiagram.DiagramElement;
+import lombok.Getter;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -12,55 +14,43 @@ import java.util.UUID;
 
 public class ComputerSystemDiagramConnector extends Line implements DiagramElement {
 
-    private ComputerSystemDiagramDetail elementFrom;
-    private ComputerSystemDiagramDetail elementTo;
-    private UUID uuid;
+    @Getter private ComputerSystemDiagramDetail elementFrom;
+    @Getter private ComputerSystemDiagramDetail elementTo;
+    @Getter private UUID uuid;
 
     public ComputerSystemDiagramConnector(ComputerSystemDiagramDetail elementFrom, ComputerSystemDiagramDetail elementTo) {
-        super(elementFrom.getX() + elementFrom.getImage().getWidth() / 2,
-                elementFrom.getY() + elementFrom.getImage().getHeight() / 2,
-                elementTo.getX() + elementTo.getImage().getWidth() / 2,
-                elementTo.getY() + elementTo.getImage().getHeight() / 2);
+        super(elementFrom.getLayoutX() + elementFrom.getWidth() / 2,
+                elementFrom.getLayoutY() + elementFrom.getHeight() / 2,
+                elementTo.getLayoutX() + elementTo.getWidth() / 2,
+                elementTo.getLayoutY() + elementTo.getHeight() / 2);
         this.elementFrom = elementFrom;
         this.elementTo = elementTo;
         this.uuid = UUID.randomUUID();
-        elementFrom.xProperty().addListener((observable, oldValue, newValue) -> {
-            setStartX(newValue.doubleValue() + elementFrom.getImage().getWidth() / 2);
+        elementFrom.layoutXProperty().addListener((observable, oldValue, newValue) -> {
+            setStartX(newValue.doubleValue() + elementFrom.getWidth() / 2);
             elementFrom.toFront();
         });
-        elementFrom.yProperty().addListener((observable, oldValue, newValue) -> {
-            setStartY(newValue.doubleValue() + elementFrom.getImage().getHeight() / 2);
+        elementFrom.layoutYProperty().addListener((observable, oldValue, newValue) -> {
+            setStartY(newValue.doubleValue() + elementFrom.getHeight() / 2);
             elementFrom.toFront();
         });
-        elementTo.xProperty().addListener((observable, oldValue, newValue) -> {
-            setEndX(newValue.doubleValue() + elementTo.getImage().getWidth() / 2);
+        elementTo.layoutXProperty().addListener((observable, oldValue, newValue) -> {
+            setEndX(newValue.doubleValue() + elementTo.getWidth() / 2);
             elementTo.toFront();
         });
-        elementTo.yProperty().addListener((observable, oldValue, newValue) -> {
-            setEndY(newValue.doubleValue() + elementTo.getImage().getHeight() / 2);
+        elementTo.layoutYProperty().addListener((observable, oldValue, newValue) -> {
+            setEndY(newValue.doubleValue() + elementTo.getHeight() / 2);
             elementTo.toFront();
         });
         setStrokeWidth(5);
         setStrokeLineCap(StrokeLineCap.ROUND);
         setSmooth(true);
-    }
-
-    public ComputerSystemDiagramDetail getElementFrom() {
-        return elementFrom;
-    }
-
-    public ComputerSystemDiagramDetail getElementTo() {
-        return elementTo;
-    }
-
-    @Override
-    public UUID getUuid() {
-        return uuid;
+        //Добаввление элементов
     }
 
     @Override
     public List<? extends DiagramElement> getDiagramElementsForRemove() {
-        return null;
+        return Collections.emptyList();
     }
 
     //Условие равенства линий - совпадение элементов на обоих концах линии, независимо он порядка следования

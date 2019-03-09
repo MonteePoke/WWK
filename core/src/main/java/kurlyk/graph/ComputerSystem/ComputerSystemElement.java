@@ -1,14 +1,20 @@
 package kurlyk.graph.ComputerSystem;
 
-import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 @Getter
 @EqualsAndHashCode
-@AllArgsConstructor
 public class ComputerSystemElement {
     private ComputerSystemElementTypes type;
-    private double availabilityFactor;
+    private Double availabilityFactor;
 
+    public ComputerSystemElement(ComputerSystemElementTypes type, Double availabilityFactor) {
+        this.type = type;
+        this.availabilityFactor = availabilityFactor;
+    }
+
+    public ComputerSystemElement(ComputerSystemElementTypes type) {
+        this.type = type;
+    }
 }

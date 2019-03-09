@@ -2,5 +2,6 @@ package kurlyk.view.common.stage;
 
 public enum Stages {
     SIGN_IN,
-    LAB
+    DRAW_COMPUTER_SYSTEM,
+    CHARACTERISTIC
 }

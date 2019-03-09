@@ -1,4 +1,4 @@
-package kurlyk.view.computerSystemDiagram;
+package kurlyk.view.drawComputerSystemWindow.computerSystemDiagram;
 
 import javafx.scene.image.Image;
 

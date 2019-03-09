@@ -1,4 +1,4 @@
-package kurlyk.view.signIn;
+package kurlyk.view.signInWindow;
 
 import kurlyk.view.common.stage.BaseStage;
 
@@ -11,6 +11,6 @@ public class SignInStage extends BaseStage {
 
     @Override
     public String getPathToMainStage() {
-        return "signIn/main";
+        return "signInWindow/main";
     }
 }

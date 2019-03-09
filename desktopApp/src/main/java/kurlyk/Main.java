@@ -4,7 +4,7 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import kurlyk.view.common.stage.StagePool;
 import kurlyk.view.common.stage.Stages;
-import kurlyk.view.signIn.SignInStage;
+import kurlyk.view.signInWindow.SignInStage;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 
@@ -19,10 +19,8 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage){
-        SignInStage signInStage = new SignInStage();
         StagePool stagePool = (StagePool) context.getBean("stagePool");
-        stagePool.pushStage(Stages.SIGN_IN, signInStage);
-        signInStage.show();
+        stagePool.pushStageAndShow(Stages.SIGN_IN, new SignInStage());
     }
 
     @Override
