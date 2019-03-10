@@ -5,9 +5,11 @@ import javafx.scene.layout.GridPane;
 import kurlyk.view.common.Controller;
 import kurlyk.view.common.stage.StagePool;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 @Component
+@Scope("prototype")
 public class CharacteristicController extends Controller {
 
     @FXML private GridPane characteristicTable;

@@ -9,9 +9,11 @@ import kurlyk.view.common.stage.StagePool;
 import kurlyk.view.common.stage.Stages;
 import kurlyk.view.drawComputerSystemWindow.DrawComputerSystemStage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 @Component
+@Scope("prototype")
 public class SignInController extends Controller {
 
     @FXML private Label nameLabel;
@@ -27,6 +29,7 @@ public class SignInController extends Controller {
 
     @Autowired
     private StagePool stagePool;
+
 
     public void initialize(){
         serverConfigButton.setOnAction(event -> {

@@ -22,9 +22,11 @@ import kurlyk.view.drawComputerSystemWindow.computerSystemDiagram.DiagramElement
 import kurlyk.view.drawComputerSystemWindow.computerSystemDiagram.elements.ComputerSystemDiagramConnector;
 import kurlyk.view.drawComputerSystemWindow.computerSystemDiagram.elements.ComputerSystemDiagramDetail;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 @Component
+@Scope("prototype")
 public class DrawComputerSystemController extends Controller {
 
     @FXML private Button cpuButton;
