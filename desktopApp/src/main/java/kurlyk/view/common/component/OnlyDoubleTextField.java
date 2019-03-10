@@ -20,6 +20,7 @@ public class OnlyDoubleTextField extends TextField {
         });
     }
 
+
     public double getDouble(){
         return Double.parseDouble(getText());
     }

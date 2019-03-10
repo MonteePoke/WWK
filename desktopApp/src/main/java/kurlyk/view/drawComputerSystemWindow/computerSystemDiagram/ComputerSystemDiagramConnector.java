@@ -1,9 +1,8 @@
-package kurlyk.view.drawComputerSystemWindow.computerSystemDiagram.elements;
+package kurlyk.view.drawComputerSystemWindow.computerSystemDiagram;
 
 
 import javafx.scene.shape.Line;
 import javafx.scene.shape.StrokeLineCap;
-import kurlyk.view.drawComputerSystemWindow.computerSystemDiagram.DiagramElement;
 import lombok.Getter;
 
 import java.util.Collections;

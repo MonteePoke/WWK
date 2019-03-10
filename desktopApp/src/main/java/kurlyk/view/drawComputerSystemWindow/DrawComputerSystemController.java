@@ -9,7 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
-import kurlyk.graph.ComputerSystem.ComputerSystemElementTypes;
+import kurlyk.graph.ComputerSystem.ComputerSystemElementType;
 import kurlyk.graph.ComputerSystem.ComputerSystemGraph;
 import kurlyk.view.common.Controller;
 import kurlyk.view.common.component.DiagramContextMenu;
@@ -17,10 +17,10 @@ import kurlyk.view.common.component.OnlyDoubleTextField;
 import kurlyk.view.common.stage.StagePool;
 import kurlyk.view.common.stage.Stages;
 import kurlyk.view.drawComputerSystemWindow.characteristicWindow.CharacteristicStage;
+import kurlyk.view.drawComputerSystemWindow.computerSystemDiagram.ComputerSystemDiagramConnector;
+import kurlyk.view.drawComputerSystemWindow.computerSystemDiagram.ComputerSystemDiagramDetail;
 import kurlyk.view.drawComputerSystemWindow.computerSystemDiagram.ComputerSystemPictures;
 import kurlyk.view.drawComputerSystemWindow.computerSystemDiagram.DiagramElement;
-import kurlyk.view.drawComputerSystemWindow.computerSystemDiagram.elements.ComputerSystemDiagramConnector;
-import kurlyk.view.drawComputerSystemWindow.computerSystemDiagram.elements.ComputerSystemDiagramDetail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -42,7 +42,7 @@ public class DrawComputerSystemController extends Controller {
     private StagePool stagePool;
 
     private ComputerSystemGraph graph; //Граф
-    private ComputerSystemElementTypes currentElement; //Тип элемента, который рисуется на текущий момент
+    private ComputerSystemElementType currentElement; //Тип элемента, который рисуется на текущий момент
     private ComputerSystemDiagramDetail startElementForConnection; //Точки начала и конца рисования линии
     private ComputerSystemDiagramDetail stopElementForConnection;
 
@@ -53,27 +53,27 @@ public class DrawComputerSystemController extends Controller {
 
         cpuButton.setOnAction(event -> {
             drawPanel.setCursor(new ImageCursor(ComputerSystemPictures.CPU.getImage()));
-            currentElement = ComputerSystemElementTypes.CPU;
+            currentElement = ComputerSystemElementType.CPU;
         });
 
         ramButton.setOnAction(event -> {
             drawPanel.setCursor(new ImageCursor(ComputerSystemPictures.RAM.getImage()));
-            currentElement = ComputerSystemElementTypes.RAM;
+            currentElement = ComputerSystemElementType.RAM;
         });
 
         ioButton.setOnAction(event -> {
             drawPanel.setCursor(new ImageCursor(ComputerSystemPictures.IO.getImage()));
-            currentElement = ComputerSystemElementTypes.IO;
+            currentElement = ComputerSystemElementType.IO;
         });
 
         pointButton.setOnAction(event -> {
             drawPanel.setCursor(new ImageCursor(ComputerSystemPictures.POINT.getImage()));
-            currentElement = ComputerSystemElementTypes.POINT;
+            currentElement = ComputerSystemElementType.POINT;
         });
 
         connect.setOnAction(event -> {
             drawPanel.setCursor(Cursor.CROSSHAIR);
-            currentElement = ComputerSystemElementTypes.START_CONNECTION;
+            currentElement = ComputerSystemElementType.START_CONNECTION;
         });
 
         drawPanel.setOnMouseClicked(event -> {
@@ -111,13 +111,13 @@ public class DrawComputerSystemController extends Controller {
                 case START_CONNECTION:
                     if(event.getPickResult().getIntersectedNode().getParent() instanceof ComputerSystemDiagramDetail) {
                         startElementForConnection = (ComputerSystemDiagramDetail) event.getPickResult().getIntersectedNode().getParent();
-                        currentElement = ComputerSystemElementTypes.STOP_CONNECTION;
+                        currentElement = ComputerSystemElementType.STOP_CONNECTION;
                     }
                     break;
                 case STOP_CONNECTION:
                     if(event.getPickResult().getIntersectedNode().getParent() instanceof ComputerSystemDiagramDetail) {
                         stopElementForConnection = (ComputerSystemDiagramDetail) event.getPickResult().getIntersectedNode().getParent();
-                        currentElement = ComputerSystemElementTypes.DEFAULT;
+                        currentElement = ComputerSystemElementType.DEFAULT;
                         drawConnector(startElementForConnection, stopElementForConnection);
                     }
                     break;
@@ -130,7 +130,7 @@ public class DrawComputerSystemController extends Controller {
 
     private void rebootDrawState(){
         drawPanel.setCursor(Cursor.DEFAULT);
-        currentElement = ComputerSystemElementTypes.DEFAULT;
+        currentElement = ComputerSystemElementType.DEFAULT;
     }
 
     private void drawDetail(ComputerSystemDiagramDetail element){
@@ -147,14 +147,14 @@ public class DrawComputerSystemController extends Controller {
         //Контекстное меню
         DiagramContextMenu diagramContextMenu = new DiagramContextMenu();
         //Показать характеристики
-        if (element.getComputerSystemElement().getType() != ComputerSystemElementTypes.POINT) {
+        if (element.getComputerSystemElementProperty().getType() != ComputerSystemElementType.POINT) {
             diagramContextMenu.setShowCharacteristicsAction(() -> showCharacteristics(element));
         }
         //Рисовать коннектор
         diagramContextMenu.setConnectAction(() -> {
             drawPanel.setCursor(Cursor.CROSSHAIR);
             startElementForConnection = element;
-            currentElement = ComputerSystemElementTypes.STOP_CONNECTION;
+            currentElement = ComputerSystemElementType.STOP_CONNECTION;
         });
         //Удалить
         diagramContextMenu.setDeleteAction(() -> deleteDiagramElement(element));
@@ -206,6 +206,9 @@ public class DrawComputerSystemController extends Controller {
     }
 
     private void showCharacteristics(ComputerSystemDiagramDetail computerSystemDiagramDetail){
-        stagePool.pushStageAndShowModal(Stages.CHARACTERISTIC, stagePool.getStage(Stages.DRAW_COMPUTER_SYSTEM), new CharacteristicStage());
+        stagePool.pushStageAndShowModal(Stages.CHARACTERISTIC,
+                stagePool.getStage(Stages.DRAW_COMPUTER_SYSTEM),
+                new CharacteristicStage(computerSystemDiagramDetail.getComputerSystemElementProperty())
+        );
     }
 }

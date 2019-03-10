@@ -1,6 +1,6 @@
 package kurlyk.graph.ComputerSystem;
 
-public enum ComputerSystemElementTypes {
+public enum ComputerSystemElementType {
     RAM,
     CPU,
     IO,

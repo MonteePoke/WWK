@@ -5,16 +5,16 @@ import lombok.Getter;
 
 @Getter
 @EqualsAndHashCode
-public class ComputerSystemElement {
-    private ComputerSystemElementTypes type;
+public class ComputerSystemDto {
+    private ComputerSystemElementType type;
     private Double availabilityFactor;
 
-    public ComputerSystemElement(ComputerSystemElementTypes type, Double availabilityFactor) {
+    public ComputerSystemDto(ComputerSystemElementType type, Double availabilityFactor) {
         this.type = type;
         this.availabilityFactor = availabilityFactor;
     }
 
-    public ComputerSystemElement(ComputerSystemElementTypes type) {
+    public ComputerSystemDto(ComputerSystemElementType type) {
         this.type = type;
     }
 }

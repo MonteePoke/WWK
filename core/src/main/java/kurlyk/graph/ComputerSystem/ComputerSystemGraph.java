@@ -6,18 +6,18 @@ import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
 
 @EqualsAndHashCode(callSuper = true)
-public class ComputerSystemGraph extends SimpleGraph<ComputerSystemElement, DefaultEdge> implements FigureGraph {
+public class ComputerSystemGraph extends SimpleGraph<ComputerSystemDto, DefaultEdge> implements FigureGraph {
 
 
     public ComputerSystemGraph() {
         super(DefaultEdge.class);
     }
 
-    public void addElement(ComputerSystemElement computerSystemElement){
-        addVertex(computerSystemElement);
+    public void addElement(ComputerSystemDto computerSystemDto){
+        addVertex(computerSystemDto);
     }
 
-    public void connectElements(ComputerSystemElement elementFrom, ComputerSystemElement elementTo){
+    public void connectElements(ComputerSystemDto elementFrom, ComputerSystemDto elementTo){
         addEdge(elementFrom, elementTo);
     }
 }
