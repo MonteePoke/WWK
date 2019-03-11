@@ -1,4 +1,4 @@
-package kurlyk.view.common;
+package kurlyk.view.common.controller;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;

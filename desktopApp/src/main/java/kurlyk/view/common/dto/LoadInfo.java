@@ -1,7 +1,7 @@
 package kurlyk.view.common.dto;
 
 import javafx.scene.Scene;
-import kurlyk.view.common.Controller;
+import kurlyk.view.common.controller.Controller;
 import lombok.Data;
 
 @Data

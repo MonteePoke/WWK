@@ -1,4 +1,4 @@
-package kurlyk.view.common;
+package kurlyk.view.common.stage;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

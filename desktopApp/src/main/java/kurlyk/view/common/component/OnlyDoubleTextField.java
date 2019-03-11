@@ -12,7 +12,7 @@ public class OnlyDoubleTextField extends TextField {
     public OnlyDoubleTextField(Double number) {
         super(number.toString());
         textProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue.matches("\\d{0,1}([.]\\d{0,4})?") && !newValue.isEmpty() && !newValue.equals(".")) {
+            if (newValue.matches("\\d{0,2}([.]\\d{0,4})?")&& !newValue.equals(".") ) {
                 setText(newValue);
             } else {
                 setText(oldValue);
@@ -22,6 +22,6 @@ public class OnlyDoubleTextField extends TextField {
 
 
     public double getDouble(){
-        return Double.parseDouble(getText());
+        return Double.parseDouble(getText().isEmpty() ? "0" : getText());
     }
 }

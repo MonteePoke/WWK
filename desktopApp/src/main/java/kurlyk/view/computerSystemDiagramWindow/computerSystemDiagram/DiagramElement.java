@@ -1,4 +1,4 @@
-package kurlyk.view.drawComputerSystemWindow.computerSystemDiagram;
+package kurlyk.view.computerSystemDiagramWindow.computerSystemDiagram;
 
 import java.util.List;
 import java.util.UUID;

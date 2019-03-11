@@ -1,4 +1,4 @@
-package kurlyk.view.drawComputerSystemWindow.characteristicWindow;
+package kurlyk.view.computerSystemDiagramWindow.characteristicWindow;
 
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.StringProperty;
@@ -10,8 +10,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import kurlyk.view.common.Controller;
 import kurlyk.view.common.component.OnlyDoubleTextField;
+import kurlyk.view.common.controller.Controller;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 

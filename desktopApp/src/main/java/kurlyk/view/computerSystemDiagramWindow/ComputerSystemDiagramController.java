@@ -1,4 +1,4 @@
-package kurlyk.view.drawComputerSystemWindow;
+package kurlyk.view.computerSystemDiagramWindow;
 
 import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
@@ -11,23 +11,24 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import kurlyk.graph.ComputerSystem.ComputerSystem;
 import kurlyk.graph.ComputerSystem.ComputerSystemElementType;
-import kurlyk.view.common.Controller;
 import kurlyk.view.common.component.DiagramContextMenu;
 import kurlyk.view.common.component.OnlyDoubleTextField;
+import kurlyk.view.common.controller.Controller;
+import kurlyk.view.common.controller.TaskBodyController;
 import kurlyk.view.common.stage.StagePool;
 import kurlyk.view.common.stage.Stages;
-import kurlyk.view.drawComputerSystemWindow.characteristicWindow.CharacteristicStage;
-import kurlyk.view.drawComputerSystemWindow.computerSystemDiagram.ComputerSystemDiagramConnector;
-import kurlyk.view.drawComputerSystemWindow.computerSystemDiagram.ComputerSystemDiagramDetail;
-import kurlyk.view.drawComputerSystemWindow.computerSystemDiagram.ComputerSystemDiagramPictures;
-import kurlyk.view.drawComputerSystemWindow.computerSystemDiagram.DiagramElement;
+import kurlyk.view.computerSystemDiagramWindow.characteristicWindow.CharacteristicStage;
+import kurlyk.view.computerSystemDiagramWindow.computerSystemDiagram.ComputerSystemDiagramConnector;
+import kurlyk.view.computerSystemDiagramWindow.computerSystemDiagram.ComputerSystemDiagramDetail;
+import kurlyk.view.computerSystemDiagramWindow.computerSystemDiagram.ComputerSystemDiagramPictures;
+import kurlyk.view.computerSystemDiagramWindow.computerSystemDiagram.DiagramElement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 @Component
 @Scope("prototype")
-public class DrawComputerSystemController extends Controller {
+public class ComputerSystemDiagramController extends Controller implements TaskBodyController<ComputerSystem> {
 
     @FXML private Button cpuButton;
     @FXML private Button ramButton;
@@ -41,7 +42,7 @@ public class DrawComputerSystemController extends Controller {
     @Autowired
     private StagePool stagePool;
 
-    private ComputerSystem graph; //Граф
+    private ComputerSystem computerSystem; //Граф
     private ComputerSystemElementType currentElement; //Тип элемента, который рисуется на текущий момент
     private ComputerSystemDiagramDetail startElementForConnection; //Точки начала и конца рисования линии
     private ComputerSystemDiagramDetail stopElementForConnection;
@@ -147,7 +148,7 @@ public class DrawComputerSystemController extends Controller {
         //Контекстное меню
         DiagramContextMenu diagramContextMenu = new DiagramContextMenu();
         //Показать характеристики
-        if (element.getComputerSystemDiagramElementProperty().getType() != ComputerSystemElementType.POINT) {
+        if (element.getComputerSystemElement().getType() != ComputerSystemElementType.POINT) {
             diagramContextMenu.setShowCharacteristicsAction(() -> showCharacteristics(element));
         }
         //Рисовать коннектор
@@ -161,7 +162,8 @@ public class DrawComputerSystemController extends Controller {
         //Рисуем
         drawDiagramContextMenu(element, diagramContextMenu);
 
-        //На панель
+        //На работу
+        computerSystem.add(element.getComputerSystemElement());
         drawPanel.getChildren().add(element);
         rebootDrawState();
     }
@@ -183,7 +185,8 @@ public class DrawComputerSystemController extends Controller {
             elementFrom.getElements().add(elementTo);
             elementTo.getElements().add(elementFrom);
 
-            //На панель
+            //На работу
+            computerSystem.connect(elementFrom.getComputerSystemElement(), elementTo.getComputerSystemElement());
             drawPanel.getChildren().add(connector);
             //Что бы линия была всегда сзади
             elementFrom.toFront();
@@ -208,7 +211,12 @@ public class DrawComputerSystemController extends Controller {
     private void showCharacteristics(ComputerSystemDiagramDetail computerSystemDiagramDetail){
         stagePool.pushStageAndShowModal(Stages.CHARACTERISTIC,
                 stagePool.getStage(Stages.DRAW_COMPUTER_SYSTEM),
-                new CharacteristicStage(computerSystemDiagramDetail.getComputerSystemDiagramElementProperty())
+                new CharacteristicStage(computerSystemDiagramDetail.getComputerSystemElement())
         );
+    }
+
+    @Override
+    public ComputerSystem getResult() {
+        return computerSystem;
     }
 }

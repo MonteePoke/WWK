@@ -4,10 +4,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import kurlyk.view.common.Controller;
+import kurlyk.view.common.controller.Controller;
 import kurlyk.view.common.stage.StagePool;
 import kurlyk.view.common.stage.Stages;
-import kurlyk.view.drawComputerSystemWindow.DrawComputerSystemStage;
+import kurlyk.view.computerSystemDiagramWindow.ComputerSystemDiagramStage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -41,7 +41,7 @@ public class SignInController extends Controller {
         });
 
         localRunButton.setOnAction(event -> {
-            stagePool.pushStageAndShow(Stages.DRAW_COMPUTER_SYSTEM, new DrawComputerSystemStage());
+            stagePool.pushStageAndShow(Stages.DRAW_COMPUTER_SYSTEM, new ComputerSystemDiagramStage());
             stagePool.closeStage(Stages.SIGN_IN);
         });
 

@@ -1,9 +1,8 @@
 package kurlyk.view.common.stage;
 
 import javafx.stage.Stage;
-import kurlyk.view.common.Controller;
-import kurlyk.view.common.Loader;
 import kurlyk.view.common.Properties;
+import kurlyk.view.common.controller.Controller;
 import kurlyk.view.common.dto.LoadInfo;
 import lombok.Getter;
 

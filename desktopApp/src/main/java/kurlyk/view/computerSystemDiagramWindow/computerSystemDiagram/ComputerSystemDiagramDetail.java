@@ -1,4 +1,4 @@
-package kurlyk.view.drawComputerSystemWindow.computerSystemDiagram;
+package kurlyk.view.computerSystemDiagramWindow.computerSystemDiagram;
 
 
 import javafx.beans.binding.Bindings;
@@ -8,6 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.StringConverter;
 import javafx.util.converter.NumberStringConverter;
+import kurlyk.graph.ComputerSystem.ComputerSystemElement;
 import kurlyk.graph.ComputerSystem.ComputerSystemElementType;
 import kurlyk.view.common.component.DiagramContextMenu;
 import lombok.EqualsAndHashCode;
@@ -18,30 +19,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@EqualsAndHashCode(exclude = {"pressurePoint", "connectors", "elements", "computerSystemDiagramElementProperty"}, callSuper = true)
+@EqualsAndHashCode(exclude = {"pressurePoint", "connectors", "elements", "computerSystemElement"}, callSuper = true)
 public class ComputerSystemDiagramDetail extends ComputerSystemDiagramElement {
 
 
+    @Getter private ImageView imageView; //Картинка
+    @Getter @Setter private DiagramContextMenu diagramContextMenu; //Контекстное меню
     @Getter @Setter private Point2D pressurePoint;  //Точка нажатия на элементе
     @Getter private List<ComputerSystemDiagramConnector> connectors; //Все линии, которые подведены к этому элементу
     @Getter private List<ComputerSystemDiagramDetail> elements; //Все элементы, соединённые с этим
-    @Getter private ComputerSystemDiagramElementProperty computerSystemDiagramElementProperty; //Характеристики
-    @Getter @Setter private DiagramContextMenu diagramContextMenu; //Контекстное меню
-    @Getter private ImageView imageView; //Картинка
+    @Getter private ComputerSystemElement computerSystemElement; //Характеристики
 
-    public ComputerSystemDiagramDetail(ComputerSystemDiagramElementProperty computerSystemDiagramElementProperty, Image image, double x, double y) {
+
+    public ComputerSystemDiagramDetail(ComputerSystemElement computerSystemElement, Image image, double x, double y) {
         super(x, y);
         imageView = new ImageView(image);
         this.connectors = new ArrayList<>();
         this.elements = new ArrayList<>();
-        this.computerSystemDiagramElementProperty = computerSystemDiagramElementProperty;
+        this.computerSystemElement = computerSystemElement;
         getChildren().add(imageView);
         //Создание Лейбла
-        if (computerSystemDiagramElementProperty.getAvailabilityFactorProperty() != null) {
+        if (computerSystemElement.getAvailabilityFactor() != null) {
             Label label = new Label();
             StringConverter<Number> converter = new NumberStringConverter();
             Bindings.bindBidirectional(label.textProperty(),
-                    computerSystemDiagramElementProperty.getAvailabilityFactorProperty(),
+                    computerSystemElement.getAvailabilityFactor(),
                     converter
             );
             label.setStyle("-fx-font-weight: bold;");
@@ -50,7 +52,7 @@ public class ComputerSystemDiagramDetail extends ComputerSystemDiagramElement {
     }
 
     public static ComputerSystemDiagramDetail createCpuImage(double x, double y, double availabilityFactor){
-        return new ComputerSystemDiagramDetail(new ComputerSystemDiagramElementProperty(ComputerSystemElementType.CPU, availabilityFactor),
+        return new ComputerSystemDiagramDetail(new ComputerSystemElement(ComputerSystemElementType.CPU, availabilityFactor),
                 ComputerSystemDiagramPictures.CPU.getImage(),
                 x,
                 y
@@ -58,7 +60,7 @@ public class ComputerSystemDiagramDetail extends ComputerSystemDiagramElement {
     }
 
     public static ComputerSystemDiagramDetail createRamImage(double x, double y, double availabilityFactor){
-        return new ComputerSystemDiagramDetail(new ComputerSystemDiagramElementProperty(ComputerSystemElementType.RAM, availabilityFactor),
+        return new ComputerSystemDiagramDetail(new ComputerSystemElement(ComputerSystemElementType.RAM, availabilityFactor),
                 ComputerSystemDiagramPictures.RAM.getImage(),
                 x,
                 y
@@ -66,7 +68,7 @@ public class ComputerSystemDiagramDetail extends ComputerSystemDiagramElement {
     }
 
     public static ComputerSystemDiagramDetail createIoImage(double x, double y, double availabilityFactor){
-        return new ComputerSystemDiagramDetail(new ComputerSystemDiagramElementProperty(ComputerSystemElementType.IO, availabilityFactor),
+        return new ComputerSystemDiagramDetail(new ComputerSystemElement(ComputerSystemElementType.IO, availabilityFactor),
                 ComputerSystemDiagramPictures.IO.getImage(),
                 x,
                 y
@@ -74,7 +76,7 @@ public class ComputerSystemDiagramDetail extends ComputerSystemDiagramElement {
     }
 
     public static ComputerSystemDiagramDetail createPointImage(double x, double y){
-        return new ComputerSystemDiagramDetail(new ComputerSystemDiagramElementProperty(ComputerSystemElementType.POINT),
+        return new ComputerSystemDiagramDetail(new ComputerSystemElement(ComputerSystemElementType.POINT),
                 ComputerSystemDiagramPictures.POINT.getImage(),
                 x,
                 y

@@ -1,4 +1,4 @@
-package kurlyk.view.drawComputerSystemWindow.computerSystemDiagram;
+package kurlyk.view.computerSystemDiagramWindow.computerSystemDiagram;
 
 import javafx.geometry.Pos;
 import javafx.scene.layout.VBox;
