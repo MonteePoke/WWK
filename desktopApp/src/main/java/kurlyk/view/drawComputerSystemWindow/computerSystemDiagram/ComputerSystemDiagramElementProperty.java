@@ -8,16 +8,16 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ComputerSystemElementProperty {
+public class ComputerSystemDiagramElementProperty {
     private ComputerSystemElementType type;
     private DoubleProperty availabilityFactorProperty;
 
-    public ComputerSystemElementProperty(ComputerSystemElementType type, Double availabilityFactorProperty) {
+    public ComputerSystemDiagramElementProperty(ComputerSystemElementType type, Double availabilityFactorProperty) {
         this.type = type;
         this.availabilityFactorProperty = new SimpleDoubleProperty(availabilityFactorProperty);
     }
 
-    public ComputerSystemElementProperty(ComputerSystemElementType type) {
+    public ComputerSystemDiagramElementProperty(ComputerSystemElementType type) {
         this.type = type;
     }
 }

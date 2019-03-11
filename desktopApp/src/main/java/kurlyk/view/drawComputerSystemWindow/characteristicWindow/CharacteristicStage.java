@@ -2,16 +2,16 @@ package kurlyk.view.drawComputerSystemWindow.characteristicWindow;
 
 import kurlyk.view.common.Properties;
 import kurlyk.view.common.stage.BaseStage;
-import kurlyk.view.drawComputerSystemWindow.computerSystemDiagram.ComputerSystemElementProperty;
+import kurlyk.view.drawComputerSystemWindow.computerSystemDiagram.ComputerSystemDiagramElementProperty;
 
 public class CharacteristicStage extends BaseStage {
 
 
-    public CharacteristicStage(ComputerSystemElementProperty computerSystemElementProperty) {
+    public CharacteristicStage(ComputerSystemDiagramElementProperty computerSystemDiagramElementProperty) {
         super();
         CharacteristicController controller = (CharacteristicController) getController();
         controller.addCharacteristic(Properties.getInstance().getProperty("availabilityFactorProperty"),
-                computerSystemElementProperty.getAvailabilityFactorProperty()
+                computerSystemDiagramElementProperty.getAvailabilityFactorProperty()
         );
     }
 

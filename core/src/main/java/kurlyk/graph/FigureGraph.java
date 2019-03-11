@@ -1,9 +1,9 @@
 package kurlyk.graph;
 
-import kurlyk.graph.ComputerSystem.ComputerSystemDto;
+import kurlyk.graph.ComputerSystem.ComputerSystemElement;
 
 public interface FigureGraph {
 
-    void addElement(ComputerSystemDto computerSystemDto);
-    void connectElements(ComputerSystemDto elementFrom, ComputerSystemDto elementTo);
+    void add(ComputerSystemElement computerSystemElement);
+    void connect(ComputerSystemElement elementFrom, ComputerSystemElement elementTo);
 }

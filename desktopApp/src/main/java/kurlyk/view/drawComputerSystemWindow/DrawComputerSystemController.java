@@ -9,8 +9,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
+import kurlyk.graph.ComputerSystem.ComputerSystem;
 import kurlyk.graph.ComputerSystem.ComputerSystemElementType;
-import kurlyk.graph.ComputerSystem.ComputerSystemGraph;
 import kurlyk.view.common.Controller;
 import kurlyk.view.common.component.DiagramContextMenu;
 import kurlyk.view.common.component.OnlyDoubleTextField;
@@ -19,7 +19,7 @@ import kurlyk.view.common.stage.Stages;
 import kurlyk.view.drawComputerSystemWindow.characteristicWindow.CharacteristicStage;
 import kurlyk.view.drawComputerSystemWindow.computerSystemDiagram.ComputerSystemDiagramConnector;
 import kurlyk.view.drawComputerSystemWindow.computerSystemDiagram.ComputerSystemDiagramDetail;
-import kurlyk.view.drawComputerSystemWindow.computerSystemDiagram.ComputerSystemPictures;
+import kurlyk.view.drawComputerSystemWindow.computerSystemDiagram.ComputerSystemDiagramPictures;
 import kurlyk.view.drawComputerSystemWindow.computerSystemDiagram.DiagramElement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -41,7 +41,7 @@ public class DrawComputerSystemController extends Controller {
     @Autowired
     private StagePool stagePool;
 
-    private ComputerSystemGraph graph; //Граф
+    private ComputerSystem graph; //Граф
     private ComputerSystemElementType currentElement; //Тип элемента, который рисуется на текущий момент
     private ComputerSystemDiagramDetail startElementForConnection; //Точки начала и конца рисования линии
     private ComputerSystemDiagramDetail stopElementForConnection;
@@ -52,22 +52,22 @@ public class DrawComputerSystemController extends Controller {
         drawPanel.prefHeightProperty().bind(scrollPanel.heightProperty());
 
         cpuButton.setOnAction(event -> {
-            drawPanel.setCursor(new ImageCursor(ComputerSystemPictures.CPU.getImage()));
+            drawPanel.setCursor(new ImageCursor(ComputerSystemDiagramPictures.CPU.getImage()));
             currentElement = ComputerSystemElementType.CPU;
         });
 
         ramButton.setOnAction(event -> {
-            drawPanel.setCursor(new ImageCursor(ComputerSystemPictures.RAM.getImage()));
+            drawPanel.setCursor(new ImageCursor(ComputerSystemDiagramPictures.RAM.getImage()));
             currentElement = ComputerSystemElementType.RAM;
         });
 
         ioButton.setOnAction(event -> {
-            drawPanel.setCursor(new ImageCursor(ComputerSystemPictures.IO.getImage()));
+            drawPanel.setCursor(new ImageCursor(ComputerSystemDiagramPictures.IO.getImage()));
             currentElement = ComputerSystemElementType.IO;
         });
 
         pointButton.setOnAction(event -> {
-            drawPanel.setCursor(new ImageCursor(ComputerSystemPictures.POINT.getImage()));
+            drawPanel.setCursor(new ImageCursor(ComputerSystemDiagramPictures.POINT.getImage()));
             currentElement = ComputerSystemElementType.POINT;
         });
 
@@ -147,7 +147,7 @@ public class DrawComputerSystemController extends Controller {
         //Контекстное меню
         DiagramContextMenu diagramContextMenu = new DiagramContextMenu();
         //Показать характеристики
-        if (element.getComputerSystemElementProperty().getType() != ComputerSystemElementType.POINT) {
+        if (element.getComputerSystemDiagramElementProperty().getType() != ComputerSystemElementType.POINT) {
             diagramContextMenu.setShowCharacteristicsAction(() -> showCharacteristics(element));
         }
         //Рисовать коннектор
@@ -208,7 +208,7 @@ public class DrawComputerSystemController extends Controller {
     private void showCharacteristics(ComputerSystemDiagramDetail computerSystemDiagramDetail){
         stagePool.pushStageAndShowModal(Stages.CHARACTERISTIC,
                 stagePool.getStage(Stages.DRAW_COMPUTER_SYSTEM),
-                new CharacteristicStage(computerSystemDiagramDetail.getComputerSystemElementProperty())
+                new CharacteristicStage(computerSystemDiagramDetail.getComputerSystemDiagramElementProperty())
         );
     }
 }

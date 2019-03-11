@@ -2,7 +2,7 @@ package kurlyk.view.drawComputerSystemWindow.computerSystemDiagram;
 
 import javafx.scene.image.Image;
 
-public enum ComputerSystemPictures {
+public enum ComputerSystemDiagramPictures {
     RAM("/images/RAM.png"),
     CPU("/images/CPU.png"),
     IO("/images/IO.png"),
@@ -10,7 +10,7 @@ public enum ComputerSystemPictures {
 
     private String pathToImage;
 
-    ComputerSystemPictures(String pathToImage) {
+    ComputerSystemDiagramPictures(String pathToImage) {
         this.pathToImage = pathToImage;
     }
 
