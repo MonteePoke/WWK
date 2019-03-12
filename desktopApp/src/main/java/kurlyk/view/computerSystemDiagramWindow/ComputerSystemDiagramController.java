@@ -11,7 +11,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import kurlyk.graph.ComputerSystem.ComputerSystemElement;
 import kurlyk.graph.ComputerSystem.ComputerSystemElementType;
-import kurlyk.graph.ComputerSystem.ElementSystem;
+import kurlyk.graph.GraphSystem;
 import kurlyk.view.common.component.DiagramContextMenu;
 import kurlyk.view.common.component.OnlyDoubleTextField;
 import kurlyk.view.common.controller.Controller;
@@ -29,7 +29,9 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Scope("prototype")
-public class ComputerSystemDiagramController extends Controller implements TaskBodyController<ElementSystem<ComputerSystemElement>> {
+public class ComputerSystemDiagramController
+        extends Controller
+        implements TaskBodyController<GraphSystem<ComputerSystemElement>> {
 
     @FXML private Button cpuButton;
     @FXML private Button ramButton;
@@ -43,7 +45,7 @@ public class ComputerSystemDiagramController extends Controller implements TaskB
     @Autowired
     private StagePool stagePool;
 
-    private ElementSystem elementSystem = new ElementSystem(); //Граф
+    private GraphSystem<ComputerSystemElement> graphSystem = new GraphSystem<>(); //Граф
     private ComputerSystemElementType currentElement = ComputerSystemElementType.DEFAULT; //Тип элемента, который рисуется на текущий момент
     private ComputerSystemDiagramDetail startElementForConnection; //Точки начала и конца рисования линии
     private ComputerSystemDiagramDetail stopElementForConnection;
@@ -80,31 +82,32 @@ public class ComputerSystemDiagramController extends Controller implements TaskB
 
         drawPanel.setOnMouseClicked(event -> {
 
-            ElementSystem graphAnother = new ElementSystem();
-            ComputerSystemElement elementAnother1 = new ComputerSystemElement(ComputerSystemElementType.CPU, 1d);
-            ComputerSystemElement elementAnother2 = new ComputerSystemElement(ComputerSystemElementType.CPU, 1d);
+            //Это тест
+//            GraphSystem<ComputerSystemElement> graphAnother = new GraphSystem<>();
+//            ComputerSystemElement elementAnother1 = new ComputerSystemElement(ComputerSystemElementType.CPU, 0.1d);
+//            ComputerSystemElement elementAnother2 = new ComputerSystemElement(ComputerSystemElementType.CPU, 0d);
 //            ComputerSystemElement elementAnother3 = new ComputerSystemElement(ComputerSystemElementType.POINT);
 //            ComputerSystemElement elementAnother4 = new ComputerSystemElement(ComputerSystemElementType.RAM, 0d);
 //            ComputerSystemElement elementAnother5 = new ComputerSystemElement(ComputerSystemElementType.RAM, 0d);
 //            ComputerSystemElement elementAnother6 = new ComputerSystemElement(ComputerSystemElementType.POINT);
 //            ComputerSystemElement elementAnother7 = new ComputerSystemElement(ComputerSystemElementType.IO, 0d);
 //            ComputerSystemElement elementAnother8 = new ComputerSystemElement(ComputerSystemElementType.CPU, 0d);
-            graphAnother.addVertex(elementAnother1);
-            graphAnother.addVertex(elementAnother2);
-//            graphAnother.addVertex(elementAnother3);
-//            graphAnother.addVertex(elementAnother4);
-//            graphAnother.addVertex(elementAnother5);
-//            graphAnother.addVertex(elementAnother6);
-//            graphAnother.addVertex(elementAnother7);
-//            graphAnother.addVertex(elementAnother8);
-            graphAnother.addEdge(elementAnother1, elementAnother2);
-//            graphAnother.addEdge(elementAnother2, elementAnother3);
-//            graphAnother.addEdge(elementAnother3, elementAnother4);
-//            graphAnother.addEdge(elementAnother3, elementAnother5);
-//            graphAnother.addEdge(elementAnother4, elementAnother6);
-//            graphAnother.addEdge(elementAnother5, elementAnother6);
-//            graphAnother.addEdge(elementAnother6, elementAnother7);
-            System.out.println(elementSystem.isomorfic(graphAnother));
+//            graphAnother.add(elementAnother1);
+//            graphAnother.add(elementAnother2);
+//            graphAnother.add(elementAnother3);
+//            graphAnother.add(elementAnother4);
+//            graphAnother.add(elementAnother5);
+//            graphAnother.add(elementAnother6);
+//            graphAnother.add(elementAnother7);
+//            graphAnother.add(elementAnother8);
+//            graphAnother.connect(elementAnother1, elementAnother2);
+//            graphAnother.connect(elementAnother2, elementAnother3);
+//            graphAnother.connect(elementAnother3, elementAnother4);
+//            graphAnother.connect(elementAnother3, elementAnother5);
+//            graphAnother.connect(elementAnother4, elementAnother6);
+//            graphAnother.connect(elementAnother5, elementAnother6);
+//            graphAnother.connect(elementAnother6, elementAnother7);
+//            System.out.println(graphSystem.isomorfic(graphAnother));
 
             if(MouseButton.SECONDARY == event.getButton()){     //Отмена на ПКМ
                 rebootDrawState();
@@ -186,12 +189,12 @@ public class ComputerSystemDiagramController extends Controller implements TaskB
             diagramContextMenu.setShowCharacteristicsAction(() -> showCharacteristics(element));
         }
         //Удалить
-        diagramContextMenu.setDeleteAction(() -> deleteDiagramElement(element));
+        diagramContextMenu.setDeleteAction(() -> deleteComputerSystemDiagramDetail(element));
         //Рисуем
         drawDiagramContextMenu(element, diagramContextMenu);
 
         //На работу
-        elementSystem.add(element.getComputerSystemElement());
+        graphSystem.add(element.getComputerSystemElement());
         drawPanel.getChildren().add(element);
         rebootDrawState();
     }
@@ -202,7 +205,7 @@ public class ComputerSystemDiagramController extends Controller implements TaskB
             //Контекстное меню
             DiagramContextMenu diagramContextMenu = new DiagramContextMenu();
             //Удалить
-            diagramContextMenu.setDeleteAction(() -> deleteDiagramElement(connector));
+            diagramContextMenu.setDeleteAction(() -> deleteComputerSystemDiagramConnector(connector));
             //Рисуем
             drawDiagramContextMenu(connector, diagramContextMenu);
 
@@ -211,7 +214,7 @@ public class ComputerSystemDiagramController extends Controller implements TaskB
             elementTo.getConnectors().add(connector);
 
             //На работу
-            elementSystem.connect(elementFrom.getComputerSystemElement(), elementTo.getComputerSystemElement());
+            graphSystem.connect(elementFrom.getComputerSystemElement(), elementTo.getComputerSystemElement());
             drawPanel.getChildren().add(connector);
             //Что бы линия была всегда сзади
             elementFrom.toFront();
@@ -226,21 +229,21 @@ public class ComputerSystemDiagramController extends Controller implements TaskB
         });
     }
 
+    private void deleteComputerSystemDiagramDetail(ComputerSystemDiagramDetail detail){
+        graphSystem.remove(detail.getComputerSystemElement());
+        deleteDiagramElement(detail);
+    }
+
+    private void deleteComputerSystemDiagramConnector(ComputerSystemDiagramConnector connector){
+        graphSystem.disconnect(connector.getElementFrom().getComputerSystemElement(),
+                connector.getElementTo().getComputerSystemElement()
+        );
+        deleteDiagramElement(connector);
+    }
+
     private void deleteDiagramElement(DiagramElement diagramElement){
         diagramElement.prepareForRemoval();
-        for(DiagramElement diagramElementForRemove : diagramElement.getDiagramElementsForRemove()){
-            drawPanel.getChildren().remove(diagramElementForRemove);
-        }
-        if (diagramElement instanceof ComputerSystemDiagramDetail){
-            ComputerSystemDiagramDetail detail = (ComputerSystemDiagramDetail) diagramElement;
-            elementSystem.remove(detail.getComputerSystemElement());
-        }
-        if (diagramElement instanceof ComputerSystemDiagramConnector){
-            ComputerSystemDiagramConnector connector = ((ComputerSystemDiagramConnector) diagramElement);
-            elementSystem.disconnect(connector.getElementFrom().getComputerSystemElement(),
-                    connector.getElementTo().getComputerSystemElement()
-            );
-        }
+        diagramElement.getDiagramElementsForRemove().forEach(elementForRemove -> drawPanel.getChildren().remove(elementForRemove));
         drawPanel.getChildren().remove(diagramElement);
     }
 
@@ -252,7 +255,7 @@ public class ComputerSystemDiagramController extends Controller implements TaskB
     }
 
     @Override
-    public ElementSystem getResult() {
-        return elementSystem;
+    public GraphSystem<ComputerSystemElement> getResult() {
+        return graphSystem;
     }
 }

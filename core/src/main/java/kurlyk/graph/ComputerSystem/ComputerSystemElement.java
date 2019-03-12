@@ -1,6 +1,7 @@
 package kurlyk.graph.ComputerSystem;
 
 import kurlyk.common.classesMadeByStas.SelfMadeSimpleDoubleProperty;
+import kurlyk.graph.GraphElement;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
@@ -9,7 +10,7 @@ import java.util.UUID;
 
 @Getter
 @EqualsAndHashCode
-public class ComputerSystemElement {
+public class ComputerSystemElement implements GraphElement<ComputerSystemElement> {
     private UUID uuid;
     private ComputerSystemElementType type;
     private SelfMadeSimpleDoubleProperty availabilityFactor;
@@ -28,10 +29,11 @@ public class ComputerSystemElement {
         this(type, null);
     }
 
-    public boolean characteristicEquals(ComputerSystemElement computerSystemElement) {
-        if (this == computerSystemElement) return true;
-        if (!Objects.equals(type, computerSystemElement.type)) return false;
-        if (!Objects.equals(availabilityFactor, computerSystemElement.availabilityFactor)) return false;
+    @Override
+    public boolean characteristicEquals(ComputerSystemElement element) {
+        if (this == element) return true;
+        if (!Objects.equals(type, element.type)) return false;
+        if (!Objects.equals(availabilityFactor, element.availabilityFactor)) return false;
 
         return true;
     }
