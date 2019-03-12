@@ -10,6 +10,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import kurlyk.graph.ComputerSystem.ComputerSystem;
+import kurlyk.graph.ComputerSystem.ComputerSystemElement;
 import kurlyk.graph.ComputerSystem.ComputerSystemElementType;
 import kurlyk.view.common.component.DiagramContextMenu;
 import kurlyk.view.common.component.OnlyDoubleTextField;
@@ -42,8 +43,8 @@ public class ComputerSystemDiagramController extends Controller implements TaskB
     @Autowired
     private StagePool stagePool;
 
-    private ComputerSystem computerSystem; //Граф
-    private ComputerSystemElementType currentElement; //Тип элемента, который рисуется на текущий момент
+    private ComputerSystem computerSystem = new ComputerSystem(); //Граф
+    private ComputerSystemElementType currentElement = ComputerSystemElementType.DEFAULT; //Тип элемента, который рисуется на текущий момент
     private ComputerSystemDiagramDetail startElementForConnection; //Точки начала и конца рисования линии
     private ComputerSystemDiagramDetail stopElementForConnection;
 
@@ -78,6 +79,33 @@ public class ComputerSystemDiagramController extends Controller implements TaskB
         });
 
         drawPanel.setOnMouseClicked(event -> {
+
+            ComputerSystem graphAnother = new ComputerSystem();
+            ComputerSystemElement elementAnother1 = new ComputerSystemElement(ComputerSystemElementType.CPU, 1d);
+            ComputerSystemElement elementAnother2 = new ComputerSystemElement(ComputerSystemElementType.CPU, 1d);
+//            ComputerSystemElement elementAnother3 = new ComputerSystemElement(ComputerSystemElementType.POINT);
+//            ComputerSystemElement elementAnother4 = new ComputerSystemElement(ComputerSystemElementType.RAM, 0d);
+//            ComputerSystemElement elementAnother5 = new ComputerSystemElement(ComputerSystemElementType.RAM, 0d);
+//            ComputerSystemElement elementAnother6 = new ComputerSystemElement(ComputerSystemElementType.POINT);
+//            ComputerSystemElement elementAnother7 = new ComputerSystemElement(ComputerSystemElementType.IO, 0d);
+//            ComputerSystemElement elementAnother8 = new ComputerSystemElement(ComputerSystemElementType.CPU, 0d);
+            graphAnother.addVertex(elementAnother1);
+            graphAnother.addVertex(elementAnother2);
+//            graphAnother.addVertex(elementAnother3);
+//            graphAnother.addVertex(elementAnother4);
+//            graphAnother.addVertex(elementAnother5);
+//            graphAnother.addVertex(elementAnother6);
+//            graphAnother.addVertex(elementAnother7);
+//            graphAnother.addVertex(elementAnother8);
+            graphAnother.addEdge(elementAnother1, elementAnother2);
+//            graphAnother.addEdge(elementAnother2, elementAnother3);
+//            graphAnother.addEdge(elementAnother3, elementAnother4);
+//            graphAnother.addEdge(elementAnother3, elementAnother5);
+//            graphAnother.addEdge(elementAnother4, elementAnother6);
+//            graphAnother.addEdge(elementAnother5, elementAnother6);
+//            graphAnother.addEdge(elementAnother6, elementAnother7);
+            System.out.println(computerSystem.isomorfic(graphAnother));
+
             if(MouseButton.SECONDARY == event.getButton()){     //Отмена на ПКМ
                 rebootDrawState();
                 return;
@@ -147,16 +175,16 @@ public class ComputerSystemDiagramController extends Controller implements TaskB
 
         //Контекстное меню
         DiagramContextMenu diagramContextMenu = new DiagramContextMenu();
-        //Показать характеристики
-        if (element.getComputerSystemElement().getType() != ComputerSystemElementType.POINT) {
-            diagramContextMenu.setShowCharacteristicsAction(() -> showCharacteristics(element));
-        }
         //Рисовать коннектор
         diagramContextMenu.setConnectAction(() -> {
             drawPanel.setCursor(Cursor.CROSSHAIR);
             startElementForConnection = element;
             currentElement = ComputerSystemElementType.STOP_CONNECTION;
         });
+        //Показать характеристики
+        if (element.getComputerSystemElement().getType() != ComputerSystemElementType.POINT) {
+            diagramContextMenu.setShowCharacteristicsAction(() -> showCharacteristics(element));
+        }
         //Удалить
         diagramContextMenu.setDeleteAction(() -> deleteDiagramElement(element));
         //Рисуем
@@ -181,9 +209,6 @@ public class ComputerSystemDiagramController extends Controller implements TaskB
             //Добавление в элементы коннекторов
             elementFrom.getConnectors().add(connector);
             elementTo.getConnectors().add(connector);
-            //Добавление в элементы соседних элементов
-            elementFrom.getElements().add(elementTo);
-            elementTo.getElements().add(elementFrom);
 
             //На работу
             computerSystem.connect(elementFrom.getComputerSystemElement(), elementTo.getComputerSystemElement());
@@ -202,8 +227,19 @@ public class ComputerSystemDiagramController extends Controller implements TaskB
     }
 
     private void deleteDiagramElement(DiagramElement diagramElement){
+        diagramElement.prepareForRemoval();
         for(DiagramElement diagramElementForRemove : diagramElement.getDiagramElementsForRemove()){
             drawPanel.getChildren().remove(diagramElementForRemove);
+        }
+        if (diagramElement instanceof ComputerSystemDiagramDetail){
+            ComputerSystemDiagramDetail detail = (ComputerSystemDiagramDetail) diagramElement;
+            computerSystem.remove(detail.getComputerSystemElement());
+        }
+        if (diagramElement instanceof ComputerSystemDiagramConnector){
+            ComputerSystemDiagramConnector connector = ((ComputerSystemDiagramConnector) diagramElement);
+            computerSystem.disconnect(connector.getElementFrom().getComputerSystemElement(),
+                    connector.getElementTo().getComputerSystemElement()
+            );
         }
         drawPanel.getChildren().remove(diagramElement);
     }

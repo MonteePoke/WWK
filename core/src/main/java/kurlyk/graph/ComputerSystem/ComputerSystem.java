@@ -21,13 +21,22 @@ public class ComputerSystem extends SimpleGraph<ComputerSystemElement, DefaultEd
         addVertex(computerSystemElement);
     }
 
+    public void remove(ComputerSystemElement computerSystemElement){
+        removeVertex(computerSystemElement);
+    }
+
     public void connect(ComputerSystemElement elementFrom, ComputerSystemElement elementTo){
         addEdge(elementFrom, elementTo);
+    }
+
+    public void disconnect(ComputerSystemElement elementFrom, ComputerSystemElement elementTo){
+        removeEdge(elementFrom, elementTo);
     }
 
     public boolean isomorfic(ComputerSystem computerSystem){
         VF2GraphIsomorphismInspector<ComputerSystemElement, DefaultEdge> inspector = new VF2GraphIsomorphismInspector<>(this, computerSystem);
         Iterator<GraphMapping<ComputerSystemElement, DefaultEdge>> iterator = inspector.getMappings();
+        System.out.println("isomorphismExists: " + inspector.isomorphismExists());
         if (!inspector.isomorphismExists()){
             return false;
         }

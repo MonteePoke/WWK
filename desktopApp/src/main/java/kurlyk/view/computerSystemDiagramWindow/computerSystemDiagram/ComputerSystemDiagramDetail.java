@@ -17,9 +17,10 @@ import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 
-@EqualsAndHashCode(exclude = {"pressurePoint", "connectors", "elements", "computerSystemElement"}, callSuper = true)
+@EqualsAndHashCode(exclude = {"diagramContextMenu", "pressurePoint", "connectors"}, callSuper = true)
 public class ComputerSystemDiagramDetail extends ComputerSystemDiagramElement {
 
 
@@ -27,7 +28,6 @@ public class ComputerSystemDiagramDetail extends ComputerSystemDiagramElement {
     @Getter @Setter private DiagramContextMenu diagramContextMenu; //Контекстное меню
     @Getter @Setter private Point2D pressurePoint;  //Точка нажатия на элементе
     @Getter private List<ComputerSystemDiagramConnector> connectors; //Все линии, которые подведены к этому элементу
-    @Getter private List<ComputerSystemDiagramDetail> elements; //Все элементы, соединённые с этим
     @Getter private ComputerSystemElement computerSystemElement; //Характеристики
 
 
@@ -35,7 +35,6 @@ public class ComputerSystemDiagramDetail extends ComputerSystemDiagramElement {
         super(x, y);
         imageView = new ImageView(image);
         this.connectors = new ArrayList<>();
-        this.elements = new ArrayList<>();
         this.computerSystemElement = computerSystemElement;
         getChildren().add(imageView);
         //Создание Лейбла
@@ -88,9 +87,15 @@ public class ComputerSystemDiagramDetail extends ComputerSystemDiagramElement {
         return connectors;
     }
 
+    @Override
+    public void prepareForRemoval() {
+
+    }
+
     public boolean isConnected(ComputerSystemDiagramDetail suspectedElement){
-        return getElements()
+        return getConnectors()
                 .stream()
+                .flatMap(connector -> Stream.of(connector.getElementFrom(), connector.getElementTo()))
                 .anyMatch(element -> element.equals(suspectedElement));
     }
 }

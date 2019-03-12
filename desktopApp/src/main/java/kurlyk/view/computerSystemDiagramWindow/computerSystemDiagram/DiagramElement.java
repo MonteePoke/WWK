@@ -7,5 +7,6 @@ public interface DiagramElement {
 
     UUID getUuid();
 
+    void prepareForRemoval();
     List<? extends DiagramElement> getDiagramElementsForRemove();
 }

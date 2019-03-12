@@ -1,7 +1,6 @@
 package kurlyk.graph.ComputerSystem;
 
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
+import kurlyk.common.classesMadeByStas.SelfMadeSimpleDoubleProperty;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
@@ -13,16 +12,16 @@ import java.util.UUID;
 public class ComputerSystemElement {
     private UUID uuid;
     private ComputerSystemElementType type;
-    private DoubleProperty availabilityFactor;
+    private SelfMadeSimpleDoubleProperty availabilityFactor;
 
-    public ComputerSystemElement(ComputerSystemElementType type, DoubleProperty availabilityFactor) {
+    public ComputerSystemElement(ComputerSystemElementType type, SelfMadeSimpleDoubleProperty availabilityFactor) {
         this.uuid = UUID.randomUUID();
         this.type = type;
         this.availabilityFactor = availabilityFactor;
     }
 
     public ComputerSystemElement(ComputerSystemElementType type, double availabilityFactor) {
-        this(type, new SimpleDoubleProperty(availabilityFactor));
+        this(type, new SelfMadeSimpleDoubleProperty(availabilityFactor));
     }
 
     public ComputerSystemElement(ComputerSystemElementType type) {

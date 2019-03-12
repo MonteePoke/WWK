@@ -52,6 +52,13 @@ public class ComputerSystemDiagramConnector extends Line implements DiagramEleme
         return Collections.emptyList();
     }
 
+    @Override
+    public void prepareForRemoval() {
+        elementFrom.getConnectors().remove(this);
+        elementTo.getConnectors().remove(this);
+    }
+
+
     //Условие равенства линий - совпадение элементов на обоих концах линии, независимо он порядка следования
     @Override
     public boolean equals(Object o) {

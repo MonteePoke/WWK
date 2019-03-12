@@ -13,17 +13,21 @@ public class TestMain {
         ComputerSystemElement element3 = new ComputerSystemElement(ComputerSystemElementType.IO, 0d);
         graph.addVertex(element);
         graph.addVertex(element2);
-        graph.addVertex(element3);
+//        graph.addVertex(element3);
         graph.addEdge(element, element2);
 
         ComputerSystem graphAnother = new ComputerSystem();
         ComputerSystemElement elementAnother = new ComputerSystemElement(ComputerSystemElementType.CPU, 0d);
         ComputerSystemElement elementAnother2 = new ComputerSystemElement(ComputerSystemElementType.RAM, 0d);
-        ComputerSystemElement elementAnother3 = new ComputerSystemElement(ComputerSystemElementType.CPU, 0d);
+        ComputerSystemElement elementAnother3 = new ComputerSystemElement(ComputerSystemElementType.IO, 0d);
         graphAnother.addVertex(elementAnother);
         graphAnother.addVertex(elementAnother2);
-        graphAnother.addVertex(elementAnother3);
+//        graphAnother.addVertex(elementAnother3);
         graphAnother.addEdge(elementAnother2, elementAnother);
+
+        graphAnother.addVertex(elementAnother3);
+        graphAnother.addEdge(elementAnother2, elementAnother3);
+        graphAnother.remove(elementAnother3);
 
         System.out.println(graph.isomorfic(graphAnother));
     }
