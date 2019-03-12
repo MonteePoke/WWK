@@ -9,9 +9,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
-import kurlyk.graph.ComputerSystem.ComputerSystem;
 import kurlyk.graph.ComputerSystem.ComputerSystemElement;
 import kurlyk.graph.ComputerSystem.ComputerSystemElementType;
+import kurlyk.graph.ComputerSystem.ElementSystem;
 import kurlyk.view.common.component.DiagramContextMenu;
 import kurlyk.view.common.component.OnlyDoubleTextField;
 import kurlyk.view.common.controller.Controller;
@@ -29,7 +29,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Scope("prototype")
-public class ComputerSystemDiagramController extends Controller implements TaskBodyController<ComputerSystem> {
+public class ComputerSystemDiagramController extends Controller implements TaskBodyController<ElementSystem<ComputerSystemElement>> {
 
     @FXML private Button cpuButton;
     @FXML private Button ramButton;
@@ -43,7 +43,7 @@ public class ComputerSystemDiagramController extends Controller implements TaskB
     @Autowired
     private StagePool stagePool;
 
-    private ComputerSystem computerSystem = new ComputerSystem(); //Граф
+    private ElementSystem elementSystem = new ElementSystem(); //Граф
     private ComputerSystemElementType currentElement = ComputerSystemElementType.DEFAULT; //Тип элемента, который рисуется на текущий момент
     private ComputerSystemDiagramDetail startElementForConnection; //Точки начала и конца рисования линии
     private ComputerSystemDiagramDetail stopElementForConnection;
@@ -80,7 +80,7 @@ public class ComputerSystemDiagramController extends Controller implements TaskB
 
         drawPanel.setOnMouseClicked(event -> {
 
-            ComputerSystem graphAnother = new ComputerSystem();
+            ElementSystem graphAnother = new ElementSystem();
             ComputerSystemElement elementAnother1 = new ComputerSystemElement(ComputerSystemElementType.CPU, 1d);
             ComputerSystemElement elementAnother2 = new ComputerSystemElement(ComputerSystemElementType.CPU, 1d);
 //            ComputerSystemElement elementAnother3 = new ComputerSystemElement(ComputerSystemElementType.POINT);
@@ -104,7 +104,7 @@ public class ComputerSystemDiagramController extends Controller implements TaskB
 //            graphAnother.addEdge(elementAnother4, elementAnother6);
 //            graphAnother.addEdge(elementAnother5, elementAnother6);
 //            graphAnother.addEdge(elementAnother6, elementAnother7);
-            System.out.println(computerSystem.isomorfic(graphAnother));
+            System.out.println(elementSystem.isomorfic(graphAnother));
 
             if(MouseButton.SECONDARY == event.getButton()){     //Отмена на ПКМ
                 rebootDrawState();
@@ -191,7 +191,7 @@ public class ComputerSystemDiagramController extends Controller implements TaskB
         drawDiagramContextMenu(element, diagramContextMenu);
 
         //На работу
-        computerSystem.add(element.getComputerSystemElement());
+        elementSystem.add(element.getComputerSystemElement());
         drawPanel.getChildren().add(element);
         rebootDrawState();
     }
@@ -211,7 +211,7 @@ public class ComputerSystemDiagramController extends Controller implements TaskB
             elementTo.getConnectors().add(connector);
 
             //На работу
-            computerSystem.connect(elementFrom.getComputerSystemElement(), elementTo.getComputerSystemElement());
+            elementSystem.connect(elementFrom.getComputerSystemElement(), elementTo.getComputerSystemElement());
             drawPanel.getChildren().add(connector);
             //Что бы линия была всегда сзади
             elementFrom.toFront();
@@ -233,11 +233,11 @@ public class ComputerSystemDiagramController extends Controller implements TaskB
         }
         if (diagramElement instanceof ComputerSystemDiagramDetail){
             ComputerSystemDiagramDetail detail = (ComputerSystemDiagramDetail) diagramElement;
-            computerSystem.remove(detail.getComputerSystemElement());
+            elementSystem.remove(detail.getComputerSystemElement());
         }
         if (diagramElement instanceof ComputerSystemDiagramConnector){
             ComputerSystemDiagramConnector connector = ((ComputerSystemDiagramConnector) diagramElement);
-            computerSystem.disconnect(connector.getElementFrom().getComputerSystemElement(),
+            elementSystem.disconnect(connector.getElementFrom().getComputerSystemElement(),
                     connector.getElementTo().getComputerSystemElement()
             );
         }
@@ -252,7 +252,7 @@ public class ComputerSystemDiagramController extends Controller implements TaskB
     }
 
     @Override
-    public ComputerSystem getResult() {
-        return computerSystem;
+    public ElementSystem getResult() {
+        return elementSystem;
     }
 }
