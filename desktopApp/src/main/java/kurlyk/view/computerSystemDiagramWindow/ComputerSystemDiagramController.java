@@ -249,7 +249,7 @@ public class ComputerSystemDiagramController
 
     private void showCharacteristics(ComputerSystemDiagramDetail computerSystemDiagramDetail){
         stagePool.pushStageAndShowModal(Stages.CHARACTERISTIC,
-                stagePool.getStage(Stages.DRAW_COMPUTER_SYSTEM),
+                stagePool.getStage(Stages.COMPUTER_SYSTEM),
                 new CharacteristicStage(computerSystemDiagramDetail.getComputerSystemElement())
         );
     }
