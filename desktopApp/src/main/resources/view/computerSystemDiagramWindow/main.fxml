@@ -3,7 +3,7 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import kurlyk.view.common.component.OnlyDoubleTextField?>
+<?import kurlyk.view.common.component.NumberField?>
 <VBox alignment="center" minWidth="1000" minHeight="600" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kurlyk.view.computerSystemDiagramWindow.ComputerSystemDiagramController">
     <BorderPane fx:id="root" VBox.vgrow="ALWAYS">
         <top>
@@ -15,7 +15,7 @@
                 <Button fx:id="ramButton" text="RAM" maxWidth="Infinity"> </Button>
                 <Button fx:id="ioButton" text="IO" maxWidth="Infinity"> </Button>
                 <Button fx:id="pointButton" text="POINT" maxWidth="Infinity"> </Button>
-                <OnlyDoubleTextField fx:id="availabilityFactorField" > </OnlyDoubleTextField>
+                <NumberField fx:id="availabilityFactorField" > </NumberField>
                 <Button fx:id="connect" text="CONNECT" maxWidth="Infinity"> </Button>
             </VBox>
         </right>

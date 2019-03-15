@@ -69,10 +69,7 @@ public class StemmerPorterRU {
     }
 
     public static String stemSentence(String sentence){
-        StringBuilder result;
-//        for (String word : sentence.split("(?U)\\W+")) {
-//            result.append()
-//        }
+        sentence = sentence.trim();
         return Arrays.stream(sentence.split("(?U)\\W+"))
                 .map(StemmerPorterRU::stemWord)
                 .collect(Collectors.joining(" "));

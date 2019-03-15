@@ -13,7 +13,7 @@ import kurlyk.graph.ComputerSystem.ComputerSystemElement;
 import kurlyk.graph.ComputerSystem.ComputerSystemElementType;
 import kurlyk.graph.GraphSystem;
 import kurlyk.view.common.component.DiagramContextMenu;
-import kurlyk.view.common.component.OnlyDoubleTextField;
+import kurlyk.view.common.component.NumberField;
 import kurlyk.view.common.controller.Controller;
 import kurlyk.view.common.controller.TaskBodyController;
 import kurlyk.view.common.stage.StagePool;
@@ -40,7 +40,7 @@ public class ComputerSystemDiagramController
     @FXML private Button connect;
     @FXML private AnchorPane drawPanel;
     @FXML private ScrollPane scrollPanel;
-    @FXML private OnlyDoubleTextField availabilityFactorField;
+    @FXML private NumberField availabilityFactorField;
 
     @Autowired
     private StagePool stagePool;
@@ -117,21 +117,21 @@ public class ComputerSystemDiagramController
                 case CPU:
                     if(event.getPickResult().getIntersectedNode().equals(drawPanel)){
                         drawDetail(ComputerSystemDiagramDetail.createCpuImage(event.getX(), event.getY(),
-                                availabilityFactorField.getDouble())
+                                availabilityFactorField.getNumber())
                         );
                     }
                     break;
                 case RAM:
                     if(event.getPickResult().getIntersectedNode().equals(drawPanel)) {
                         drawDetail(ComputerSystemDiagramDetail.createRamImage(event.getX(), event.getY(),
-                                availabilityFactorField.getDouble())
+                                availabilityFactorField.getNumber())
                         );
                     }
                     break;
                 case IO:
                     if(event.getPickResult().getIntersectedNode().equals(drawPanel)) {
                         drawDetail(ComputerSystemDiagramDetail.createIoImage(event.getX(), event.getY(),
-                                availabilityFactorField.getDouble())
+                                availabilityFactorField.getNumber())
                         );
                     }
                     break;

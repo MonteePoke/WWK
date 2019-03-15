@@ -4,5 +4,7 @@ public enum Stages {
     SIGN_IN,
     COMPUTER_SYSTEM,
     CHARACTERISTIC,
-    FORMULA
+    FORMULA,
+    TEXT,
+    NUMBER
 }
