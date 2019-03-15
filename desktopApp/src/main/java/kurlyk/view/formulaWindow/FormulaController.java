@@ -7,6 +7,7 @@ import javafx.concurrent.Worker;
 import javafx.fxml.FXML;
 import javafx.scene.web.WebView;
 import kurlyk.view.common.controller.Controller;
+import kurlyk.view.common.controller.TaskBodyController;
 import netscape.javascript.JSObject;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -16,29 +17,21 @@ import java.io.IOException;
 
 @Component
 @Scope("prototype")
-public class FormulaController extends Controller {
+public class FormulaController extends Controller implements TaskBodyController<String> {
 
     @FXML private WebView browser;
+    private JSObject window;
 
-    public class Bridge {
-        public void showTime(String str) {
-            System.out.println(str);
-        }
-    }
 
     public void initialize(){
         browser.getEngine().setJavaScriptEnabled(true);
-
         browser.getEngine().getLoadWorker().stateProperty().addListener((observable, oldValue, newValue) -> {
             if (Worker.State.SUCCEEDED == newValue) {
-                JSObject window = (JSObject) browser.getEngine().executeScript("window");
-                window.setMember("myJavaMember", new Bridge());
+                window = (JSObject) browser.getEngine().executeScript("window");
             }
         });
         loadWebView();
     }
-
-
 
     private void loadWebView(){
         try {
@@ -48,5 +41,10 @@ public class FormulaController extends Controller {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public String getResult() {
+        return (String) window.call("getResult");
     }
 }

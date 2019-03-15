@@ -444,50 +444,41 @@
     .full_width{
       width: 100%;
     }
-   
-    .button7 {
-      font-weight: 700;
-      color: white;
-      text-decoration: none;
-      padding: .8em 1em calc(.8em + 3px);
-      border-radius: 3px;
-      background: rgb(64,199,129);
-      box-shadow: 0 -3px rgb(53,167,110) inset;
-      transition: 0.2s;
+    .border{
+       border-color: blue;
+       border-width: 1;
     }
-    .button7:hover { background: rgb(53, 167, 110); }
-    .button7:active {
-      background: rgb(33,147,90);
-      box-shadow: 0 3px rgb(33,147,90) inset;
+    .button{
+      font-size: 150%;
     }
   </style>
 </head>
 <body>
     <div>
-      <div class="padding10 full_width">
-          <button class="button7">&#8721</button>
-          <button>&#8719</button>
-      </div>
-      <div class="padding10 full_width">
-          <span id="math-field" style="width: 89%; border-color: blue; border-width: 1;"></span>
-          <button style="width: 10%;">123</button>
+      <!-- <div class="padding10 full_width">
+          <button class="button" name='sum'>&#8721</button>
+          <button class="button" name='mul'>&#8719</button>
+          <button class="button" name='sqrt'>&#8730</button>
+          <button class="button" name='up'>&#8593</button>
+          <button class="button" name='down'>&#8595</button>
+      </div> -->
+      <div>
+          <span id="math-field" class="full_width border" title="&#8721 = \sum + пробел&#13;&#8719 = \prod + пробел&#13;&#8730 = \sqrt + пробел&#13;Верхний индекс = ^&#13;Нижний индекс = _"></span>
       </div>
     </div>
 
   <script>
-    function printString(){
-
+    function getResult(){
+      return mathField.latex()
     }
-  var mathFieldSpan = document.getElementById('math-field');
-  var MQ = MathQuill.getInterface(2);
-  var mathField = MQ.MathField(mathFieldSpan, {
-    spaceBehavesLikeTab: true,
-    handlers: {
-      edit: function() {
-        myJavaMember.showTime(mathField.latex());
+    var mathFieldSpan = document.getElementById('math-field');
+    var MQ = MathQuill.getInterface(2);
+    var mathField = MQ.MathField(mathFieldSpan, {
+      spaceBehavesLikeTab: true,
+      handlers: {
+        edit: function() {}
       }
-    }
-  });
+    });
   </script>
 </body>
 </html>
