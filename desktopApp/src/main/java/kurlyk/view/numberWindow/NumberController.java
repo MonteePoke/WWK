@@ -2,6 +2,7 @@ package kurlyk.view.numberWindow;
 
 
 import javafx.fxml.FXML;
+import kurlyk.transfer.NumberDto;
 import kurlyk.view.common.component.NumberField;
 import kurlyk.view.common.controller.Controller;
 import kurlyk.view.common.controller.TaskBodyController;
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Scope("prototype")
-public class NumberController extends Controller implements TaskBodyController<Double> {
+public class NumberController extends Controller implements TaskBodyController<NumberDto> {
 
     @FXML private NumberField inputField;
 
@@ -20,7 +21,7 @@ public class NumberController extends Controller implements TaskBodyController<D
     }
 
     @Override
-    public Double getResult() {
-        return inputField.getNumber();
+    public NumberDto getResult() {
+        return new NumberDto(inputField.getNumber());
     }
 }

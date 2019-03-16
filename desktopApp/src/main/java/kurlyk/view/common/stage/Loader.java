@@ -3,7 +3,8 @@ package kurlyk.view.common.stage;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import kurlyk.view.common.dto.LoadInfo;
+import kurlyk.view.common.controller.Controller;
+import kurlyk.view.common.dto.LoadDto;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -17,7 +18,7 @@ public class Loader implements ApplicationContextAware {
     private static ApplicationContext staticContext;
     private static final String pathToView = "/view/";
 
-    public static LoadInfo load(String viewName){
+    public static <T extends Controller> LoadDto<T> load(String viewName){
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setControllerFactory(clazz -> staticContext.getBean(clazz));
@@ -26,7 +27,7 @@ public class Loader implements ApplicationContextAware {
             Parent parent = loader.load();
             parent.getStylesheets().add(pathToView + "common.css");
             parent.getStylesheets().add(pathToView + viewName + ".css");
-            return new LoadInfo(){{
+            return new LoadDto<T>(){{
                 setScene(new Scene(parent));
                 setController(loader.getController());
             }};

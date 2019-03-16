@@ -6,5 +6,8 @@ public enum Stages {
     CHARACTERISTIC,
     FORMULA,
     TEXT,
-    NUMBER
+    NUMBER,
+    MATCHING,
+    CHECK,
+    RADIO
 }

@@ -6,6 +6,7 @@ import com.google.common.io.Resources;
 import javafx.concurrent.Worker;
 import javafx.fxml.FXML;
 import javafx.scene.web.WebView;
+import kurlyk.transfer.FormulaDto;
 import kurlyk.view.common.controller.Controller;
 import kurlyk.view.common.controller.TaskBodyController;
 import netscape.javascript.JSObject;
@@ -17,7 +18,7 @@ import java.io.IOException;
 
 @Component
 @Scope("prototype")
-public class FormulaController extends Controller implements TaskBodyController<String> {
+public class FormulaController extends Controller implements TaskBodyController<FormulaDto> {
 
     @FXML private WebView browser;
     private JSObject window;
@@ -44,7 +45,7 @@ public class FormulaController extends Controller implements TaskBodyController<
     }
 
     @Override
-    public String getResult() {
-        return (String) window.call("getResult");
+    public FormulaDto getResult() {
+        return new FormulaDto((String) window.call("getResult"));
     }
 }

@@ -3,18 +3,17 @@ package kurlyk.view.common.stage;
 import javafx.stage.Stage;
 import kurlyk.view.common.Properties;
 import kurlyk.view.common.controller.Controller;
-import kurlyk.view.common.dto.LoadInfo;
-import lombok.Getter;
+import kurlyk.view.common.dto.LoadDto;
 
-public abstract class BaseStage extends Stage {
+public abstract class BaseStage <T extends Controller> extends Stage {
 
-    @Getter private Controller controller;
+    protected T controller;
 
     public BaseStage() {
         super();
-        LoadInfo loadInfo = Loader.load(getPathToMainStage());
-        controller = loadInfo.getController();
-        setScene(loadInfo.getScene());
+        LoadDto<T> loadDto = Loader.load(getPathToMainStage());
+        controller = loadDto.getController();
+        setScene(loadDto.getScene());
         setTitle(Properties.getInstance().getProperty("mainTitle"));
     }
 

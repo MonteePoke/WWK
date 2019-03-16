@@ -12,6 +12,7 @@ import javafx.scene.layout.AnchorPane;
 import kurlyk.graph.ComputerSystem.ComputerSystemElement;
 import kurlyk.graph.ComputerSystem.ComputerSystemElementType;
 import kurlyk.graph.GraphSystem;
+import kurlyk.transfer.ComputerSystemDto;
 import kurlyk.view.common.component.DiagramContextMenu;
 import kurlyk.view.common.component.NumberField;
 import kurlyk.view.common.controller.Controller;
@@ -29,9 +30,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Scope("prototype")
-public class ComputerSystemDiagramController
-        extends Controller
-        implements TaskBodyController<GraphSystem<ComputerSystemElement>> {
+public class ComputerSystemDiagramController extends Controller implements TaskBodyController<ComputerSystemDto> {
 
     @FXML private Button cpuButton;
     @FXML private Button ramButton;
@@ -255,7 +254,7 @@ public class ComputerSystemDiagramController
     }
 
     @Override
-    public GraphSystem<ComputerSystemElement> getResult() {
-        return graphSystem;
+    public ComputerSystemDto getResult() {
+        return new ComputerSystemDto(graphSystem);
     }
 }

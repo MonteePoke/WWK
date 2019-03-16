@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import kurlyk.common.classesMadeByStas.DraggingListView?>
+<VBox alignment="center" minWidth="1000" minHeight="600" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kurlyk.view.matchingWindow.MatchingController">
+    <HBox>
+        <DraggingListView fx:id="leftField" HBox.hgrow="ALWAYS"/>
+        <DraggingListView fx:id="rightField" HBox.hgrow="ALWAYS"/>
+    </HBox>
+</VBox>
