@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import kurlyk.view.common.component.NumberField?>
-<VBox alignment="center" minWidth="1000" minHeight="600" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kurlyk.view.computerSystemDiagramWindow.ComputerSystemDiagramController">
+<VBox xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kurlyk.view.computerSystemDiagramWindow.ComputerSystemDiagramController">
     <BorderPane fx:id="root" VBox.vgrow="ALWAYS">
         <top>
 

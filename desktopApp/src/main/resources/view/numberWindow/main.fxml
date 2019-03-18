@@ -2,7 +2,7 @@
 
 <?import javafx.scene.layout.VBox?>
 <?import kurlyk.view.common.component.NumberField?>
-<VBox alignment="center" minWidth="1000" minHeight="600" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kurlyk.view.numberWindow.NumberController">
+<VBox xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kurlyk.view.numberWindow.NumberController">
     <NumberField fx:id="inputField" VBox.vgrow="ALWAYS">
 
     </NumberField>

@@ -2,29 +2,35 @@ package kurlyk.view.common.component;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.scene.web.HTMLEditor;
 import lombok.Getter;
 
 public class EditableRadioButton extends HBox {
     @Getter private RadioButton radioButton;
-    @Getter private TextField textField;
+    @Getter private HTMLEditor htmlEditor;
 
     public EditableRadioButton(String text, boolean editable) {
         super();
         radioButton = new RadioButton();
-        textField = new TextField(text);
-        HBox.setHgrow(textField, Priority.SOMETIMES);
-        textField.setMaxWidth(Double.MAX_VALUE);
-        textField.setEditable(editable);
+        htmlEditor = new HTMLEditor();
+        HBox.setHgrow(htmlEditor, Priority.SOMETIMES);
+        htmlEditor.setMaxWidth(Double.MAX_VALUE);
+        hideHTMLEditorToolbars(htmlEditor);
+        htmlEditor.setHtmlText(text);
+        htmlEditor.setDisable(!editable);
+
 
         //Что бы дочерние элементы по центру были
         setAlignment(Pos.CENTER);
-        getChildren().addAll(radioButton, textField);
+        getChildren().addAll(radioButton, htmlEditor);
     }
 
-    public EditableRadioButton(String text) {
-        this(text, false);
+    private void hideHTMLEditorToolbars(final HTMLEditor editor) {
+        editor.lookupAll(".tool-bar").forEach(node -> {
+            node.setVisible(false);
+            node.setManaged(false);
+        });
     }
 }

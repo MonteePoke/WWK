@@ -1,8 +1,9 @@
-package kurlyk.view.signInWindow;
+package kurlyk.view.taskWindow;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.web.HTMLEditor;
 import javafx.util.Pair;
 import kurlyk.transfer.SelectDto;
 import kurlyk.view.checkWindow.CheckStage;
@@ -17,9 +18,9 @@ import java.util.Arrays;
 
 @Component
 @Scope("prototype")
-public class SignInController extends Controller {
+public class TaskController extends Controller {
 
-    @FXML public TextField loginInput;
+    @FXML public HTMLEditor htmlEditor;
     @FXML private TextField passwordInput;
     @FXML private Button guestRunButton;
     @FXML private Button userRunButton;

@@ -4,43 +4,22 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<VBox alignment="center" minWidth="500" minHeight="300" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kurlyk.view.signInWindow.SignInController">
+<VBox prefWidth="400" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kurlyk.view.signInWindow.SignInController">
     <VBox alignment="TOP_CENTER">
-        <Label fx:id="nameLabel" VBox.vgrow="ALWAYS" maxHeight="Infinity" text="Фамилия Имя Отчество"/>
-        <TextField fx:id="nameInput" VBox.vgrow="ALWAYS" maxHeight="Infinity"/>
-        <Label fx:id="groupLabel" VBox.vgrow="ALWAYS" maxHeight="Infinity" text="Группа"/>
-        <TextField fx:id="groupInput" VBox.vgrow="ALWAYS" maxHeight="Infinity"/>
-        <HBox>
-            <Region HBox.hgrow="ALWAYS" />
-            <BorderPane>
-                <padding>
-                    <Insets top="20" right="20" bottom="20" left="20"/>
-                </padding>
-                <top>
-                    <Label fx:id="configLabel" text="Конфигурация"/>
-                </top>
-                <left>
-                    <Button fx:id="localConfigButton" text="Конфигуратор"/>
-                </left>
-                <right>
-                    <Button fx:id="serverConfigButton" text="Сервер"/>
-                </right>
-            </BorderPane>
-            <BorderPane>
-                <padding>
-                    <Insets top="20" right="20" bottom="20" left="20"/>
-                </padding>
-                <top>
-                    <Label fx:id="runLabel" text="Запуск лабораторной работы"/>
-                </top>
-                <left>
-                    <Button fx:id="localRunButton" text="Локальный"/>
-                </left>
-                <right>
-                    <Button fx:id="serverRunButton" text="Удалённый"/>
-                </right>
-            </BorderPane>
-            <Region HBox.hgrow="ALWAYS" />
-        </HBox>
+        <Label VBox.vgrow="ALWAYS" maxHeight="Infinity" text="Логин"/>
+        <TextField fx:id="loginInput" VBox.vgrow="ALWAYS" maxHeight="Infinity"/>
+        <Label VBox.vgrow="ALWAYS" maxHeight="Infinity" text="Пароль"/>
+        <TextField fx:id="passwordInput" VBox.vgrow="ALWAYS" maxHeight="Infinity"/>
+        <BorderPane>
+            <padding>
+                <Insets top="10" right="70" bottom="10" left="70"/>
+            </padding>
+            <left>
+                <Button fx:id="guestRunButton" text="Гость"/>
+            </left>
+            <right>
+                <Button fx:id="userRunButton" text="Авторизация"/>
+            </right>
+        </BorderPane>
     </VBox>
 </VBox>

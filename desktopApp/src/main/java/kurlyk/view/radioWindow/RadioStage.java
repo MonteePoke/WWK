@@ -1,14 +1,14 @@
 package kurlyk.view.radioWindow;
 
 
-import kurlyk.transfer.RadioDto;
+import kurlyk.transfer.SelectDto;
 import kurlyk.view.common.stage.BaseStage;
 
 public class RadioStage extends BaseStage<RadioController> {
 
-    public RadioStage(RadioDto radioDto) {
+    public RadioStage(SelectDto selectDto) {
         super();
-        controller.setQuestion(radioDto, false);
+        controller.setQuestion(selectDto, false);
     }
 
     @Override

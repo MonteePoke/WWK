@@ -5,7 +5,8 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
-import kurlyk.transfer.RadioDto;
+import javafx.util.Pair;
+import kurlyk.transfer.SelectDto;
 import kurlyk.view.common.component.EditableRadioButton;
 import kurlyk.view.common.controller.Controller;
 import kurlyk.view.common.controller.TaskBodyController;
@@ -15,35 +16,31 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Scope("prototype")
-public class RadioController extends Controller implements TaskBodyController<RadioDto> {
+public class RadioController extends Controller implements TaskBodyController<SelectDto> {
 
     @FXML private VBox root;
 
     public void initialize(){
     }
 
-    public void setQuestion(RadioDto radioDto, boolean editable) {
+    public void setQuestion(SelectDto selectDto, boolean editable) {
         ToggleGroup group = new ToggleGroup();
-        for (String question : radioDto.getQuestions()){
-            EditableRadioButton editableRadioButton = new EditableRadioButton(question, editable);
+        for (Pair<String, Boolean> question : selectDto.getQuestions()){
+            EditableRadioButton editableRadioButton = new EditableRadioButton(question.getKey(), editable);
             editableRadioButton.getRadioButton().setToggleGroup(group);
             root.getChildren().add(editableRadioButton);
         }
-        //По умолчанию выбран первый
-        ((EditableRadioButton) root.getChildren().get(0)).getRadioButton().fire();
     }
 
     @Override
-    public RadioDto getResult() {
-        RadioDto radioDto = new RadioDto();
+    public SelectDto getResult() {
+        SelectDto selectDto = new SelectDto();
         for (Node node : root.getChildren()) {
             EditableRadioButton editableRadioButton = (EditableRadioButton) node;
-            radioDto.getQuestions().add(editableRadioButton.getTextField().getText());
-            if(editableRadioButton.getRadioButton().isSelected()){
-                //Порядковый номер только что добавленной штуки
-                radioDto.setCorrectAnswer(radioDto.getQuestions().size() - 1);
-            }
+            selectDto.getQuestions().add(new Pair<>(editableRadioButton.getHtmlEditor().getHtmlText(),
+                    editableRadioButton.getRadioButton().isSelected()
+            ));
         }
-        return radioDto;
+        return selectDto;
     }
 }

@@ -3,11 +3,12 @@ package kurlyk.common.classesMadeByStas;
 
 import javafx.event.Event;
 import javafx.geometry.Pos;
-import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.cell.TextFieldListCell;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
+import javafx.util.converter.DefaultStringConverter;
 
 import java.util.ArrayList;
 
@@ -17,12 +18,16 @@ public class DraggingListView extends ListView<String> {
     public DraggingListView() {
         super();
         setCellFactory(param -> new BirdCell());
+        setEditable(true);
+        setOnEditCommit(t -> getItems().set(t.getIndex(), t.getNewValue()));
+        setOnEditCancel(t -> System.out.println("setOnEditCancel"));
     }
 
 
-    private class BirdCell extends ListCell<String> {
+    private class BirdCell extends TextFieldListCell<String> {
 
         public BirdCell() {
+            super(new DefaultStringConverter());
             setAlignment(Pos.CENTER);
 
             //Начало
@@ -73,7 +78,7 @@ public class DraggingListView extends ListView<String> {
 
         //При каждой перерисовке списка
         @Override
-        protected void updateItem(String item, boolean empty) {
+        public void updateItem(String item, boolean empty) {
             super.updateItem(item, empty);
             setText((empty || item == null) ? null : item);
         }
