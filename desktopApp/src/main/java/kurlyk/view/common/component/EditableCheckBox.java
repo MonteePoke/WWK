@@ -20,7 +20,7 @@ public class EditableCheckBox extends HBox {
         hideHTMLEditorToolbars(htmlEditor);
         htmlEditor.setHtmlText(text);
         htmlEditor.setDisable(!editable);
-        htmlEditor.setPrefHeight(100);
+        htmlEditor.setPrefHeight(50);
 
         //Что бы дочерние элементы по центру были
         setAlignment(Pos.CENTER);

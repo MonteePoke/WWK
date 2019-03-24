@@ -13,7 +13,7 @@ public class MainProperties {
 
     private MainProperties(){
         properties = new HashMap<>();
-        properties.put("addr", "127.0.0.1:8080");
+        properties.put("addr", "http://localhost:8080");
     }
 
     public String getProperty(String name){

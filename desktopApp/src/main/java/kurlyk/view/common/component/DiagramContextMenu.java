@@ -2,7 +2,7 @@ package kurlyk.view.common.component;
 
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
-import kurlyk.view.common.Properties;
+import kurlyk.view.common.ViewProperties;
 
 
 public class DiagramContextMenu extends ContextMenu {
@@ -13,9 +13,9 @@ public class DiagramContextMenu extends ContextMenu {
 
     public DiagramContextMenu() {
         super();
-        delete = new MenuItem(Properties.getInstance().getProperty("delete"));
-        showCharacteristics = new MenuItem(Properties.getInstance().getProperty("showCharacteristics"));
-        connect = new MenuItem(Properties.getInstance().getProperty("connect"));
+        delete = new MenuItem(ViewProperties.getInstance().getProperty("delete"));
+        showCharacteristics = new MenuItem(ViewProperties.getInstance().getProperty("showCharacteristics"));
+        connect = new MenuItem(ViewProperties.getInstance().getProperty("connect"));
     }
 
     public void setDeleteAction(Runnable action){

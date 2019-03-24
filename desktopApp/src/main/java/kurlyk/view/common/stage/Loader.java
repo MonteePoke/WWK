@@ -20,6 +20,12 @@ public class Loader implements ApplicationContextAware {
 
     public static <T extends Controller> LoadDto<T> load(String viewName){
         try {
+            if(viewName == null || viewName.equals("")){
+                return new LoadDto<T>(){{
+                    setScene(new Scene(new Parent(){}));
+                    setController(null);
+                }};
+            }
             FXMLLoader loader = new FXMLLoader();
             loader.setControllerFactory(clazz -> staticContext.getBean(clazz));
             loader.setLocation(Loader.class.getResource(pathToView + viewName + ".fxml"));

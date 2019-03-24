@@ -1,7 +1,6 @@
 package kurlyk.view.common.stage;
 
 public enum Stages {
-    SIGN_IN,
     COMPUTER_SYSTEM,
     CHARACTERISTIC,
     FORMULA,
@@ -9,5 +8,10 @@ public enum Stages {
     NUMBER,
     MATCHING,
     CHECK,
-    RADIO
+    RADIO,
+
+    SIGN_IN,
+    START,
+    CREATE_LAB,
+    PERFORM_LAB
 }

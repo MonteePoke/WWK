@@ -1,6 +1,7 @@
 package kurlyk.models;
 
-import kurlyk.forms.UserForm;
+import kurlyk.transfer.Role;
+import kurlyk.transfer.State;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,21 +20,27 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String firstName;
-    private String lastName;
-
+    @Column(nullable = false, unique = true)
     private String login;
+    @Column(nullable = false)
     private String hashPassword;
 
     @Enumerated(value = EnumType.STRING)
+    @Column(nullable = false)
     private Role role;
     @Enumerated(value = EnumType.STRING)
+    @Column(nullable = false)
     private State state;
 
-    public static User from(UserForm form) {
-        return User.builder()
-                .firstName(form.getFirstName())
-                .lastName(form.getLastName())
-                .build();
+    @Column(nullable = false)
+    private String firstName;
+    @Column(nullable = false)
+    private String middleName;
+    private String secondName;
+
+    private String studyGroup;
+
+    public String getFullName() {
+        return middleName + " " + firstName + " " + secondName;
     }
 }

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<VBox prefHeight="600" prefWidth="800" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kurlyk.view.createLabWindow.CreateLabController">
+    <VBox alignment="TOP_CENTER">
+        <AnchorPane prefHeight="48.0" prefWidth="800.0">
+            <children>
+                <Label alignment="TOP_LEFT" layoutX="313.0" layoutY="17.0" prefHeight="17.0" prefWidth="87.0" text="Название">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="name" alignment="TOP_CENTER" layoutX="400.0" layoutY="13.0" prefHeight="25.0" prefWidth="257.0">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </TextField>
+            </children>
+        </AnchorPane>
+        <AnchorPane layoutX="10.0" layoutY="116.0" prefHeight="48.0" prefWidth="800.0">
+            <children>
+                <Label contentDisplay="TOP" layoutX="314.0" layoutY="13.0" prefHeight="21.0" prefWidth="62.0" text="Лаба">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </Label>
+                <ComboBox fx:id="labNumber" layoutX="400.0" layoutY="11.0" />
+            </children>
+        </AnchorPane>
+        <AnchorPane layoutX="10.0" layoutY="164.0" prefHeight="48.0" prefWidth="800.0">
+            <children>
+                <Label alignment="TOP_LEFT" layoutX="313.0" layoutY="17.0" prefHeight="17.0" prefWidth="87.0" text="Тип">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </Label>
+                <ComboBox fx:id="labType" layoutX="400.0" layoutY="12.0" />
+            </children>
+        </AnchorPane>
+        <AnchorPane layoutX="10.0" layoutY="212.0" prefHeight="48.0" prefWidth="800.0">
+            <children>
+                <Button fx:id="further" alignment="CENTER" layoutX="342.0" layoutY="14.0" text="Далее" />
+            </children>
+        </AnchorPane>
+    </VBox>
+</VBox>

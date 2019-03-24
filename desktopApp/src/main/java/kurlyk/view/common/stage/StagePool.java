@@ -33,6 +33,10 @@ public class StagePool {
         stage.showAndWait();
     }
 
+    public void showStage(Stages key){
+        pool.get(key).show();
+    }
+
     public Stage popStage(Stages key){
         return pool.remove(key);
     }

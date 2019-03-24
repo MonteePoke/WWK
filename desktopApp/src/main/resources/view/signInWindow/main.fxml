@@ -9,7 +9,7 @@
         <Label VBox.vgrow="ALWAYS" maxHeight="Infinity" text="Логин"/>
         <TextField fx:id="loginInput" VBox.vgrow="ALWAYS" maxHeight="Infinity"/>
         <Label VBox.vgrow="ALWAYS" maxHeight="Infinity" text="Пароль"/>
-        <TextField fx:id="passwordInput" VBox.vgrow="ALWAYS" maxHeight="Infinity"/>
+        <PasswordField fx:id="passwordInput" VBox.vgrow="ALWAYS" maxHeight="Infinity"/>
         <BorderPane>
             <padding>
                 <Insets top="10" right="70" bottom="10" left="70"/>

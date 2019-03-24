@@ -1,22 +1,22 @@
 package kurlyk.controllers;
 
-import org.springframework.security.core.Authentication;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
+import kurlyk.services.login.LoginService;
+import kurlyk.transfer.LoginDto;
+import kurlyk.transfer.TokenDto;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
-
-@Controller
+@RestController
 public class LoginController {
-    @GetMapping("/login")
-    public String getLoginPage(Authentication authentication, ModelMap model, HttpServletRequest request) {
-        if (authentication != null) {
-            return "redirect:/";
-        }
-        if (request.getParameterMap().containsKey("error")) {
-            model.addAttribute("error", true);
-        }
-        return "login";
+
+    @Autowired
+    private LoginService loginService;
+
+    @PostMapping("/login")
+    public ResponseEntity<TokenDto> login(@RequestBody LoginDto loginDto) {
+        return ResponseEntity.ok(loginService.login(loginDto));
     }
 }

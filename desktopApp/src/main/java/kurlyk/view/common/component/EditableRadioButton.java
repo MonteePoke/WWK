@@ -20,6 +20,7 @@ public class EditableRadioButton extends HBox {
         hideHTMLEditorToolbars(htmlEditor);
         htmlEditor.setHtmlText(text);
         htmlEditor.setDisable(!editable);
+        htmlEditor.setPrefHeight(50);
 
 
         //Что бы дочерние элементы по центру были
