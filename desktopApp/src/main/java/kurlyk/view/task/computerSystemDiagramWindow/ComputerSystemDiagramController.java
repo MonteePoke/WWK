@@ -14,7 +14,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import kurlyk.communication.Communicator;
 import kurlyk.communication.UserProgress;
-import kurlyk.graph.ComputerSystem.ComputerSystemElement;
 import kurlyk.graph.ComputerSystem.ComputerSystemElementType;
 import kurlyk.graph.GraphSystem;
 import kurlyk.transfer.TaskDto;
@@ -65,7 +64,7 @@ public class ComputerSystemDiagramController extends Controller implements TaskB
     @Autowired
     private UserProgress userProgress;
 
-    private GraphSystem<ComputerSystemElement> graphSystem = new GraphSystem<>(); //Граф
+    private GraphSystem graphSystem = new GraphSystem(); //Граф
     private ComputerSystemElementType currentElement = ComputerSystemElementType.DEFAULT; //Тип элемента, который рисуется на текущий момент
     private ComputerSystemDiagramDetail startElementForConnection; //Точки начала и конца рисования линии
     private ComputerSystemDiagramDetail stopElementForConnection;

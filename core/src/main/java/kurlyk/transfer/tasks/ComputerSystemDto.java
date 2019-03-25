@@ -1,6 +1,5 @@
 package kurlyk.transfer.tasks;
 
-import kurlyk.graph.ComputerSystem.ComputerSystemElement;
 import kurlyk.graph.GraphSystem;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -10,9 +9,9 @@ import lombok.Getter;
 @EqualsAndHashCode
 @AllArgsConstructor
 public class ComputerSystemDto {
-    private GraphSystem<ComputerSystemElement> graphSystem;
+    private GraphSystem graphSystem;
 
     public ComputerSystemDto() {
-        this.graphSystem = new GraphSystem<>();
+        this.graphSystem = new GraphSystem();
     }
 }
