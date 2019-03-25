@@ -9,11 +9,16 @@ import javafx.scene.layout.VBox;
 import kurlyk.communication.Communicator;
 import kurlyk.communication.UserInfo;
 import kurlyk.transfer.TaskDto;
-import kurlyk.transfer.tasks.SelectDto;
+import kurlyk.transfer.tasks.*;
 import kurlyk.view.common.controller.Controller;
 import kurlyk.view.common.stage.StagePool;
 import kurlyk.view.task.checkWindow.CheckSceneCreator;
+import kurlyk.view.task.computerSystemDiagramWindow.ComputerSystemDiagramSceneCreator;
+import kurlyk.view.task.formulaWindow.FormulaSceneCreator;
+import kurlyk.view.task.matchingWindow.MatchingSceneCreator;
+import kurlyk.view.task.numberWindow.NumberSceneCreator;
 import kurlyk.view.task.radioWindow.RadioSceneCreator;
+import kurlyk.view.task.textWindow.TextSceneCreator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -56,14 +61,24 @@ public class PerformLabController extends Controller {
                     scene = new CheckSceneCreator(taskDto, chekDto, false).getScene();
                     break;
                 case MATCHING:
+                    MatchingDto matchingDto = new Gson().fromJson(content, MatchingDto.class);
+                    scene = new MatchingSceneCreator(taskDto, matchingDto, false).getScene();
                     break;
                 case NUMBER:
+                    NumberDto numberDto = new Gson().fromJson(content, NumberDto.class);
+                    scene = new NumberSceneCreator(taskDto, numberDto, false).getScene();
                     break;
                 case TEXT:
+                    TextDto textDto = new Gson().fromJson(content, TextDto.class);
+                    scene = new TextSceneCreator(taskDto, textDto, false).getScene();
                     break;
                 case FORMULA:
+                    FormulaDto formulaDto = new Gson().fromJson(content, FormulaDto.class);
+                    scene = new FormulaSceneCreator(taskDto, formulaDto, false).getScene();
                     break;
-                case GRAPH:
+                case COMPUTER_SYSTEM:
+                    ComputerSystemDto computerSystemDto = new Gson().fromJson(content, ComputerSystemDto.class);
+                    scene = new ComputerSystemDiagramSceneCreator(taskDto, computerSystemDto, false).getScene();
                     break;
             }
             tab.setContent(scene.getRoot());

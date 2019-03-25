@@ -1,7 +1,6 @@
 package kurlyk.view.task.computerSystemDiagramWindow.computerSystemDiagram;
 
 
-import javafx.beans.binding.Bindings;
 import javafx.geometry.Point2D;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -41,10 +40,10 @@ public class ComputerSystemDiagramDetail extends ComputerSystemDiagramElement {
         if (computerSystemElement.getAvailabilityFactor() != null) {
             Label label = new Label();
             StringConverter<Number> converter = new NumberStringConverter();
-            Bindings.bindBidirectional(label.textProperty(),
-                    computerSystemElement.getAvailabilityFactor(),
-                    converter
-            );
+//            Bindings.bindBidirectional(label.textProperty(),
+//                    computerSystemElement.getAvailabilityFactor(),
+//                    converter
+//            );
             label.setStyle("-fx-font-weight: bold;");
             getChildren().add(label);
         }

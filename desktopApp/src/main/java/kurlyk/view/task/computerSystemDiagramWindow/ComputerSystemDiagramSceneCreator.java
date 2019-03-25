@@ -4,10 +4,10 @@ import kurlyk.transfer.TaskDto;
 import kurlyk.transfer.tasks.ComputerSystemDto;
 import kurlyk.view.common.stage.BaseStage;
 
-public class ComputerSystemDiagramStage extends BaseStage<ComputerSystemDiagramController> {
+public class ComputerSystemDiagramSceneCreator extends BaseStage<ComputerSystemDiagramController> {
 
 
-    public ComputerSystemDiagramStage(TaskDto taskDto, ComputerSystemDto computerSystemDto, boolean editable) {
+    public ComputerSystemDiagramSceneCreator(TaskDto taskDto, ComputerSystemDto computerSystemDto, boolean editable) {
         super();
         controller.setQuestion(taskDto, computerSystemDto, editable);
     }

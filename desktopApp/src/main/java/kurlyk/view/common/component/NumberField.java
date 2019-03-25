@@ -35,4 +35,8 @@ public class NumberField extends TextField {
     public double getNumber(){
         return Double.parseDouble(getText().isEmpty() || getText().equals("-") ? "0" : getText());
     }
+
+    public void setNumber(double number){
+        setText(Double.toString(number));
+    }
 }

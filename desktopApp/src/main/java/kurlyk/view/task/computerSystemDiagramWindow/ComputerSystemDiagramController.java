@@ -1,5 +1,6 @@
 package kurlyk.view.task.computerSystemDiagramWindow;
 
+import com.google.gson.Gson;
 import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
 import javafx.scene.Cursor;
@@ -7,11 +8,16 @@ import javafx.scene.ImageCursor;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
+import kurlyk.communication.Communicator;
+import kurlyk.communication.UserProgress;
 import kurlyk.graph.ComputerSystem.ComputerSystemElement;
 import kurlyk.graph.ComputerSystem.ComputerSystemElementType;
 import kurlyk.graph.GraphSystem;
+import kurlyk.transfer.TaskDto;
 import kurlyk.transfer.tasks.ComputerSystemDto;
 import kurlyk.view.common.component.DiagramContextMenu;
 import kurlyk.view.common.component.NumberField;
@@ -19,18 +25,27 @@ import kurlyk.view.common.controller.Controller;
 import kurlyk.view.common.controller.TaskBodyController;
 import kurlyk.view.common.stage.StagePool;
 import kurlyk.view.common.stage.Stages;
+import kurlyk.view.createLabWindow.CreateLabSceneCreator;
 import kurlyk.view.task.computerSystemDiagramWindow.characteristicWindow.CharacteristicStage;
 import kurlyk.view.task.computerSystemDiagramWindow.computerSystemDiagram.ComputerSystemDiagramConnector;
 import kurlyk.view.task.computerSystemDiagramWindow.computerSystemDiagram.ComputerSystemDiagramDetail;
 import kurlyk.view.task.computerSystemDiagramWindow.computerSystemDiagram.ComputerSystemDiagramPictures;
 import kurlyk.view.task.computerSystemDiagramWindow.computerSystemDiagram.DiagramElement;
+import kurlyk.view.utils.FxDialogs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
+import java.util.function.Supplier;
+
 @Component
 @Scope("prototype")
 public class ComputerSystemDiagramController extends Controller implements TaskBodyController<ComputerSystemDto> {
+
+    @FXML private VBox root;
+    @FXML private Button submit;
+    @FXML private TextArea textArea;
 
     @FXML private Button cpuButton;
     @FXML private Button ramButton;
@@ -42,7 +57,13 @@ public class ComputerSystemDiagramController extends Controller implements TaskB
     @FXML private NumberField availabilityFactorField;
 
     @Autowired
+    private Communicator communicator;
+
+    @Autowired
     private StagePool stagePool;
+
+    @Autowired
+    private UserProgress userProgress;
 
     private GraphSystem<ComputerSystemElement> graphSystem = new GraphSystem<>(); //Граф
     private ComputerSystemElementType currentElement = ComputerSystemElementType.DEFAULT; //Тип элемента, который рисуется на текущий момент
@@ -80,34 +101,6 @@ public class ComputerSystemDiagramController extends Controller implements TaskB
         });
 
         drawPanel.setOnMouseClicked(event -> {
-
-            //Это тест
-//            GraphSystem<ComputerSystemElement> graphAnother = new GraphSystem<>();
-//            ComputerSystemElement elementAnother1 = new ComputerSystemElement(ComputerSystemElementType.CPU, 0.1d);
-//            ComputerSystemElement elementAnother2 = new ComputerSystemElement(ComputerSystemElementType.CPU, 0d);
-//            ComputerSystemElement elementAnother3 = new ComputerSystemElement(ComputerSystemElementType.POINT);
-//            ComputerSystemElement elementAnother4 = new ComputerSystemElement(ComputerSystemElementType.RAM, 0d);
-//            ComputerSystemElement elementAnother5 = new ComputerSystemElement(ComputerSystemElementType.RAM, 0d);
-//            ComputerSystemElement elementAnother6 = new ComputerSystemElement(ComputerSystemElementType.POINT);
-//            ComputerSystemElement elementAnother7 = new ComputerSystemElement(ComputerSystemElementType.IO, 0d);
-//            ComputerSystemElement elementAnother8 = new ComputerSystemElement(ComputerSystemElementType.CPU, 0d);
-//            graphAnother.add(elementAnother1);
-//            graphAnother.add(elementAnother2);
-//            graphAnother.add(elementAnother3);
-//            graphAnother.add(elementAnother4);
-//            graphAnother.add(elementAnother5);
-//            graphAnother.add(elementAnother6);
-//            graphAnother.add(elementAnother7);
-//            graphAnother.add(elementAnother8);
-//            graphAnother.connect(elementAnother1, elementAnother2);
-//            graphAnother.connect(elementAnother2, elementAnother3);
-//            graphAnother.connect(elementAnother3, elementAnother4);
-//            graphAnother.connect(elementAnother3, elementAnother5);
-//            graphAnother.connect(elementAnother4, elementAnother6);
-//            graphAnother.connect(elementAnother5, elementAnother6);
-//            graphAnother.connect(elementAnother6, elementAnother7);
-//            System.out.println(graphSystem.isomorfic(graphAnother));
-
             if(MouseButton.SECONDARY == event.getButton()){     //Отмена на ПКМ
                 rebootDrawState();
                 return;
@@ -251,6 +244,40 @@ public class ComputerSystemDiagramController extends Controller implements TaskB
                 stagePool.getStage(Stages.COMPUTER_SYSTEM),
                 new CharacteristicStage(computerSystemDiagramDetail.getComputerSystemElement())
         );
+    }
+
+    public void setQuestion(TaskDto taskDto, ComputerSystemDto computerSystemDto, boolean editable) {
+        final ComputerSystemDto rightComputerSystemDto = computerSystemDto;
+        commonConfiguration(taskDto, () -> isRightAnswer(rightComputerSystemDto), editable);
+//        if (editable && formulaDto.getLatexFormula() != null) {
+//            inputField.setText(formulaDto.getLatexFormula());
+//        }
+    }
+
+    private void commonConfiguration(TaskDto taskDto, Supplier<Boolean> isRightAnswer, boolean editable) {
+        textArea.setEditable(editable);
+        if (editable){
+            submit.setOnAction(event -> {
+                taskDto.setQuestion(textArea.getText());
+                taskDto.setAnswer(new Gson().toJson(getResult()));
+                try {
+                    communicator.postTask(taskDto);
+                    stagePool.getStage(Stages.CREATE_LAB).setScene(new CreateLabSceneCreator().getScene());
+                } catch (IOException e) {
+                    FxDialogs.showError("", "Ошибка отправки данных");
+                }
+            });
+        } else{
+            textArea.setText(taskDto.getQuestion());
+            submit.setOnAction(event -> {
+                userProgress.getProgress().put(taskDto.getId(), isRightAnswer.get() ? 100 : 0);
+                FxDialogs.showInformation("Результат", isRightAnswer.get() ? "Верно" : "Неверно");
+            });
+        }
+    }
+
+    public boolean isRightAnswer(ComputerSystemDto computerSystemDto){
+        return computerSystemDto.getGraphSystem().isomorfic(getResult().getGraphSystem());
     }
 
     @Override

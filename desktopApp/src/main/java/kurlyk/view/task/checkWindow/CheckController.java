@@ -48,7 +48,8 @@ public class CheckController extends Controller implements TaskBodyController<Se
     }
 
     public void setQuestion(TaskDto taskDto, SelectDto selectDto, boolean editable) {
-        commonConfiguration(taskDto, () -> isRightAnswer(selectDto), editable);
+        final SelectDto rightSelectDto = selectDto;
+        commonConfiguration(taskDto, () -> isRightAnswer(rightSelectDto), editable);
 
         for (Pair<String, Boolean> question : selectDto.getQuestions()){
             root.getChildren().add(new EditableCheckBox(question.getKey(), editable));

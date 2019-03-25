@@ -1,7 +1,7 @@
 package kurlyk;
 
 public enum LabType {
-    GRAPH,
+    COMPUTER_SYSTEM,
 
     FORMULA,
     TEXT,

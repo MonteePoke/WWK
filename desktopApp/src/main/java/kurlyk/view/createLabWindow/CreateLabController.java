@@ -9,12 +9,17 @@ import javafx.util.Pair;
 import kurlyk.LabType;
 import kurlyk.communication.UserInfo;
 import kurlyk.transfer.TaskDto;
-import kurlyk.transfer.tasks.SelectDto;
+import kurlyk.transfer.tasks.*;
 import kurlyk.view.common.controller.Controller;
 import kurlyk.view.common.stage.StagePool;
 import kurlyk.view.common.stage.Stages;
 import kurlyk.view.task.checkWindow.CheckSceneCreator;
+import kurlyk.view.task.computerSystemDiagramWindow.ComputerSystemDiagramSceneCreator;
+import kurlyk.view.task.formulaWindow.FormulaSceneCreator;
+import kurlyk.view.task.matchingWindow.MatchingSceneCreator;
+import kurlyk.view.task.numberWindow.NumberSceneCreator;
 import kurlyk.view.task.radioWindow.RadioSceneCreator;
+import kurlyk.view.task.textWindow.TextSceneCreator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -41,7 +46,7 @@ public class CreateLabController extends Controller {
     public void initialize(){
         labNumber.getItems().addAll(1, 2, 3, 4, 5, 6, 7);
         labType.getItems().addAll(
-                LabType.GRAPH,
+                LabType.COMPUTER_SYSTEM,
                 LabType.FORMULA,
                 LabType.TEXT,
                 LabType.NUMBER,
@@ -77,14 +82,27 @@ public class CreateLabController extends Controller {
                     scene = new CheckSceneCreator(taskDto, chekDto, true).getScene();
                     break;
                 case MATCHING:
+                    MatchingDto matchingDto = new MatchingDto(
+                            Arrays.asList("", "", "", ""),
+                            Arrays.asList("", "", "", "")
+                    );
+                    scene = new MatchingSceneCreator(taskDto, matchingDto, true).getScene();
                     break;
                 case NUMBER:
+                    NumberDto numberDto = new NumberDto();
+                    scene = new NumberSceneCreator(taskDto, numberDto, true).getScene();
                     break;
                 case TEXT:
+                    TextDto textDto = new TextDto();
+                    scene = new TextSceneCreator(taskDto, textDto, true).getScene();
                     break;
                 case FORMULA:
+                    FormulaDto formulaDto = new FormulaDto();
+                    scene = new FormulaSceneCreator(taskDto, formulaDto, true).getScene();
                     break;
-                case GRAPH:
+                case COMPUTER_SYSTEM:
+                    ComputerSystemDto computerSystemDto = new ComputerSystemDto();
+                    scene = new ComputerSystemDiagramSceneCreator(taskDto, computerSystemDto, true).getScene();
                     break;
             }
             stagePool.getStage(Stages.CREATE_LAB).setScene(scene);

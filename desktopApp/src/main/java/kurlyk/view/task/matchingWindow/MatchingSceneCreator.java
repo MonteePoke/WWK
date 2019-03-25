@@ -3,11 +3,11 @@ package kurlyk.view.task.matchingWindow;
 
 import kurlyk.transfer.TaskDto;
 import kurlyk.transfer.tasks.MatchingDto;
-import kurlyk.view.common.stage.BaseStage;
+import kurlyk.view.common.stage.BaseSceneCreator;
 
-public class MatchingStage extends BaseStage<MatchingController> {
+public class MatchingSceneCreator extends BaseSceneCreator<MatchingController> {
 
-    public MatchingStage(TaskDto taskDto, MatchingDto matchingDto, boolean editable) {
+    public MatchingSceneCreator(TaskDto taskDto, MatchingDto matchingDto, boolean editable) {
         super();
         controller.setItemsToView(taskDto, matchingDto, editable);
     }
@@ -16,5 +16,4 @@ public class MatchingStage extends BaseStage<MatchingController> {
     public String getPathToMainStage() {
         return "task/matchingWindow/main";
     }
-
 }

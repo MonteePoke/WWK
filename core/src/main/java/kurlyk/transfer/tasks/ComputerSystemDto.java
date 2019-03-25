@@ -11,4 +11,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public class ComputerSystemDto {
     private GraphSystem<ComputerSystemElement> graphSystem;
+
+    public ComputerSystemDto() {
+        this.graphSystem = new GraphSystem<>();
+    }
 }
