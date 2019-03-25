@@ -63,12 +63,12 @@ public class SignInController extends Controller {
         userRunButton.setOnAction(event -> {
             LoginDto loginDto = LoginDto
                     .builder()
-//                    .login(loginInput.getText())
-//                    .password(passwordInput.getText())
+                    .login(loginInput.getText())
+                    .password(passwordInput.getText())
 //                    .login("admin")
 //                    .password("admin")
-                    .login("student")
-                    .password("student")
+//                    .login("student")
+//                    .password("student")
                     .build();
 
             try {

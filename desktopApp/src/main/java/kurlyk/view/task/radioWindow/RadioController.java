@@ -10,6 +10,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
 import javafx.util.Pair;
 import kurlyk.communication.Communicator;
+import kurlyk.communication.UserProgress;
 import kurlyk.transfer.TaskDto;
 import kurlyk.transfer.tasks.SelectDto;
 import kurlyk.view.common.component.EditableRadioButton;
@@ -24,6 +25,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.function.Supplier;
 
 
 @Component
@@ -40,11 +42,14 @@ public class RadioController extends Controller implements TaskBodyController<Se
     @Autowired
     private StagePool stagePool;
 
+    @Autowired
+    private UserProgress userProgress;
+
     public void initialize(){
     }
 
     public void setQuestion(TaskDto taskDto, SelectDto selectDto, boolean editable) {
-        commonConfiguration(taskDto, editable);
+        commonConfiguration(taskDto, () -> isRightAnswer(selectDto), editable);
 
         ToggleGroup group = new ToggleGroup();
         for (Pair<String, Boolean> question : selectDto.getQuestions()){
@@ -54,7 +59,7 @@ public class RadioController extends Controller implements TaskBodyController<Se
         }
     }
 
-    private void commonConfiguration(TaskDto taskDto, boolean editable) {
+    private void commonConfiguration(TaskDto taskDto, Supplier<Boolean> isRightAnswer, boolean editable) {
         textArea.setEditable(editable);
         if (editable){
             submit.setOnAction(event -> {
@@ -67,7 +72,17 @@ public class RadioController extends Controller implements TaskBodyController<Se
                     FxDialogs.showError("", "Ошибка отправки данных");
                 }
             });
+        } else{
+            textArea.setText(taskDto.getQuestion());
+            submit.setOnAction(event -> {
+                userProgress.getProgress().put(taskDto.getId(), isRightAnswer.get() ? 100 : 0);
+                FxDialogs.showInformation("Результат", isRightAnswer.get() ? "Верно" : "Неверно");
+            });
         }
+    }
+
+    public boolean isRightAnswer(SelectDto selectDto){
+        return selectDto.equals(getResult());
     }
 
     @Override
