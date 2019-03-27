@@ -6,9 +6,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.util.Pair;
-import kurlyk.LabType;
+import kurlyk.QuestionType;
 import kurlyk.communication.UserInfo;
-import kurlyk.transfer.TaskDto;
+import kurlyk.transfer.QuestionDto;
 import kurlyk.transfer.tasks.*;
 import kurlyk.view.common.controller.Controller;
 import kurlyk.view.common.stage.StagePool;
@@ -32,7 +32,7 @@ public class CreateLabController extends Controller {
 
     @FXML private TextField name;
     @FXML private ComboBox<Integer> labNumber;
-    @FXML private ComboBox<LabType> labType;
+    @FXML private ComboBox<QuestionType> labType;
     @FXML private Button further;
 
 
@@ -46,23 +46,23 @@ public class CreateLabController extends Controller {
     public void initialize(){
         labNumber.getItems().addAll(1, 2, 3, 4, 5, 6, 7);
         labType.getItems().addAll(
-                LabType.COMPUTER_SYSTEM,
-                LabType.FORMULA,
-                LabType.TEXT,
-                LabType.NUMBER,
-                LabType.MATCHING,
-                LabType.CHEK,
-                LabType.RADIO
+                QuestionType.COMPUTER_SYSTEM,
+                QuestionType.FORMULA,
+                QuestionType.TEXT,
+                QuestionType.NUMBER,
+                QuestionType.MATCHING,
+                QuestionType.CHEK,
+                QuestionType.RADIO
         );
 
         further.setOnAction(event -> {
-            TaskDto taskDto = TaskDto.builder()
+            QuestionDto questionDto = QuestionDto.builder()
                     .name(name.getText())
                     .labNumber(labNumber.getValue())
-                    .labType(labType.getValue())
+                    .questionType(labType.getValue())
                     .build();
             Scene scene = null;
-            switch (taskDto.getLabType()){
+            switch (questionDto.getQuestionType()){
                 case RADIO:
                     SelectDto radioDto = new SelectDto(Arrays.asList(
                             new Pair<>("", false),
@@ -70,7 +70,7 @@ public class CreateLabController extends Controller {
                             new Pair<>("", false),
                             new Pair<>("", false)
                     ));
-                    scene = new RadioSceneCreator(taskDto, radioDto, true).getScene();
+                    scene = new RadioSceneCreator(questionDto, radioDto, true).getScene();
                     break;
                 case CHEK:
                     SelectDto chekDto = new SelectDto(Arrays.asList(
@@ -79,30 +79,30 @@ public class CreateLabController extends Controller {
                             new Pair<>("", false),
                             new Pair<>("", false)
                     ));
-                    scene = new CheckSceneCreator(taskDto, chekDto, true).getScene();
+                    scene = new CheckSceneCreator(questionDto, chekDto, true).getScene();
                     break;
                 case MATCHING:
                     MatchingDto matchingDto = new MatchingDto(
                             Arrays.asList("", "", "", ""),
                             Arrays.asList("", "", "", "")
                     );
-                    scene = new MatchingSceneCreator(taskDto, matchingDto, true).getScene();
+                    scene = new MatchingSceneCreator(questionDto, matchingDto, true).getScene();
                     break;
                 case NUMBER:
                     NumberDto numberDto = new NumberDto();
-                    scene = new NumberSceneCreator(taskDto, numberDto, true).getScene();
+                    scene = new NumberSceneCreator(questionDto, numberDto, true).getScene();
                     break;
                 case TEXT:
                     TextDto textDto = new TextDto();
-                    scene = new TextSceneCreator(taskDto, textDto, true).getScene();
+                    scene = new TextSceneCreator(questionDto, textDto, true).getScene();
                     break;
                 case FORMULA:
                     FormulaDto formulaDto = new FormulaDto();
-                    scene = new FormulaSceneCreator(taskDto, formulaDto, true).getScene();
+                    scene = new FormulaSceneCreator(questionDto, formulaDto, true).getScene();
                     break;
                 case COMPUTER_SYSTEM:
                     ComputerSystemDto computerSystemDto = new ComputerSystemDto();
-                    scene = new ComputerSystemDiagramSceneCreator(taskDto, computerSystemDto, true).getScene();
+                    scene = new ComputerSystemDiagramSceneCreator(questionDto, computerSystemDto, true).getScene();
                     break;
             }
             stagePool.getStage(Stages.CREATE_LAB).setScene(scene);

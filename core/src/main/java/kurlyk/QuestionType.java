@@ -1,6 +1,6 @@
 package kurlyk;
 
-public enum LabType {
+public enum QuestionType {
     COMPUTER_SYSTEM,
 
     FORMULA,

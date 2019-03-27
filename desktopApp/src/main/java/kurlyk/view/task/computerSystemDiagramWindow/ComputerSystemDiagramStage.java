@@ -1,15 +1,15 @@
 package kurlyk.view.task.computerSystemDiagramWindow;
 
-import kurlyk.transfer.TaskDto;
+import kurlyk.transfer.QuestionDto;
 import kurlyk.transfer.tasks.ComputerSystemDto;
 import kurlyk.view.common.stage.BaseStage;
 
 public class ComputerSystemDiagramStage extends BaseStage<ComputerSystemDiagramController> {
 
 
-    public ComputerSystemDiagramStage(TaskDto taskDto, ComputerSystemDto computerSystemDto, boolean editable) {
+    public ComputerSystemDiagramStage(QuestionDto questionDto, ComputerSystemDto computerSystemDto, boolean editable) {
         super();
-        controller.setQuestion(taskDto, computerSystemDto, editable);
+        controller.setQuestion(questionDto, computerSystemDto, editable);
     }
 
     @Override

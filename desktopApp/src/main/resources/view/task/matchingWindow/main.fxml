@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 <?import kurlyk.common.classesMadeByStas.DraggingListView?>
-<VBox xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kurlyk.view.task.matchingWindow.MatchingController">
+<VBox xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kurlyk.view.question.matchingWindow.MatchingController">
     <HBox>
         <TextArea fx:id="textArea" HBox.hgrow="ALWAYS">
             <font>

@@ -38,12 +38,12 @@ public class UsersServiceImpl implements UsersService {
     @Override
     public List<UserDto> findAll() {
         List<UserDto> userDtos = new ArrayList<>();
-        usersRepository.findAll().forEach(user -> userDtos.add(Converter.userToUserDto(user)));
+        usersRepository.findAll().forEach(user -> userDtos.add(Converter.userConverter(user)));
         return userDtos;
     }
 
     @Override
     public UserDto findOne(Long userId) {
-        return Converter.userToUserDto(usersRepository.getOne(userId));
+        return Converter.userConverter(usersRepository.getOne(userId));
     }
 }

@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class TaskDto {
+public class LabWorkDto {
     private Long id;
     private String name;
-    private Integer score;
+    private Integer atemptsNumber;
 }

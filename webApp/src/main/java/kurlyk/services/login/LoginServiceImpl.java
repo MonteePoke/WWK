@@ -42,7 +42,7 @@ public class LoginServiceImpl implements LoginService {
                         .build();
 
                 tokenService.saveAndDeleteOld(token);
-                return Converter.tokenToTokenDto(token);
+                return Converter.tokenConverter(token);
             }
         } throw new IllegalArgumentException("User not found");
     }

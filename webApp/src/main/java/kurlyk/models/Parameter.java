@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
 
 
 @Data
@@ -15,15 +14,13 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Entity
-public class Task {
+public class Parameter {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
     private String name;
-    private Integer score;
-
-    @ManyToMany
-    private List<Question> questions;
+    private String defaultValueFrom;
+    private String defaultValueTo;
 }

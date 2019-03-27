@@ -15,15 +15,17 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Entity
-public class Task {
+public class LabWork {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
     private String name;
-    private Integer score;
+    private Integer atemptsNumber;
 
     @ManyToMany
-    private List<Question> questions;
+    private List<Task> tasks;
+    @ManyToMany
+    private List<Parameter> parameters;
 }

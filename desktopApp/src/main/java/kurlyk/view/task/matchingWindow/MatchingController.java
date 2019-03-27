@@ -9,7 +9,7 @@ import javafx.scene.layout.VBox;
 import kurlyk.common.classesMadeByStas.DraggingListView;
 import kurlyk.communication.Communicator;
 import kurlyk.communication.UserProgress;
-import kurlyk.transfer.TaskDto;
+import kurlyk.transfer.QuestionDto;
 import kurlyk.transfer.tasks.MatchingDto;
 import kurlyk.view.common.controller.Controller;
 import kurlyk.view.common.controller.TaskBodyController;
@@ -49,9 +49,9 @@ public class MatchingController extends Controller implements TaskBodyController
     public void initialize(){
     }
 
-    public void setItemsToView(TaskDto taskDto, MatchingDto matchingDto, boolean editable){
+    public void setItemsToView(QuestionDto questionDto, MatchingDto matchingDto, boolean editable){
         final MatchingDto rightMatchingDto = matchingDto;
-        commonConfiguration(taskDto, () -> isRightAnswer(rightMatchingDto), editable);
+        commonConfiguration(questionDto, () -> isRightAnswer(rightMatchingDto), editable);
         if(!editable){
             matchingDto = getMixMatching(matchingDto);
         }
@@ -62,23 +62,23 @@ public class MatchingController extends Controller implements TaskBodyController
         rightField.setEditable(editable);
     }
 
-    private void commonConfiguration(TaskDto taskDto, Supplier<Boolean> isRightAnswer, boolean editable) {
+    private void commonConfiguration(QuestionDto questionDto, Supplier<Boolean> isRightAnswer, boolean editable) {
         textArea.setEditable(editable);
         if (editable){
             submit.setOnAction(event -> {
-                taskDto.setQuestion(textArea.getText());
-                taskDto.setAnswer(new Gson().toJson(getResult()));
+                questionDto.setQuestion(textArea.getText());
+                questionDto.setAnswer(new Gson().toJson(getResult()));
                 try {
-                    communicator.postTask(taskDto);
+                    communicator.postTask(questionDto);
                     stagePool.getStage(Stages.CREATE_LAB).setScene(new CreateLabSceneCreator().getScene());
                 } catch (IOException e) {
                     FxDialogs.showError("", "Ошибка отправки данных");
                 }
             });
         } else{
-            textArea.setText(taskDto.getQuestion());
+            textArea.setText(questionDto.getQuestion());
             submit.setOnAction(event -> {
-                userProgress.getProgress().put(taskDto.getId(), isRightAnswer.get() ? 100 : 0);
+                userProgress.getProgress().put(questionDto.getId(), isRightAnswer.get() ? 100 : 0);
                 FxDialogs.showInformation("Результат", isRightAnswer.get() ? "Верно" : "Неверно");
             });
         }

@@ -10,7 +10,7 @@ import javafx.scene.layout.VBox;
 import javafx.util.Pair;
 import kurlyk.communication.Communicator;
 import kurlyk.communication.UserProgress;
-import kurlyk.transfer.TaskDto;
+import kurlyk.transfer.QuestionDto;
 import kurlyk.transfer.tasks.SelectDto;
 import kurlyk.view.common.component.EditableCheckBox;
 import kurlyk.view.common.controller.Controller;
@@ -47,32 +47,32 @@ public class CheckController extends Controller implements TaskBodyController<Se
     public void initialize(){
     }
 
-    public void setQuestion(TaskDto taskDto, SelectDto selectDto, boolean editable) {
+    public void setQuestion(QuestionDto questionDto, SelectDto selectDto, boolean editable) {
         final SelectDto rightSelectDto = selectDto;
-        commonConfiguration(taskDto, () -> isRightAnswer(rightSelectDto), editable);
+        commonConfiguration(questionDto, () -> isRightAnswer(rightSelectDto), editable);
 
         for (Pair<String, Boolean> question : selectDto.getQuestions()){
             root.getChildren().add(new EditableCheckBox(question.getKey(), editable));
         }
     }
 
-    private void commonConfiguration(TaskDto taskDto, Supplier<Boolean> isRightAnswer, boolean editable) {
+    private void commonConfiguration(QuestionDto questionDto, Supplier<Boolean> isRightAnswer, boolean editable) {
         textArea.setEditable(editable);
         if (editable){
             submit.setOnAction(event -> {
-                taskDto.setQuestion(textArea.getText());
-                taskDto.setAnswer(new Gson().toJson(getResult()));
+                questionDto.setQuestion(textArea.getText());
+                questionDto.setAnswer(new Gson().toJson(getResult()));
                 try {
-                    communicator.postTask(taskDto);
+                    communicator.postTask(questionDto);
                     stagePool.getStage(Stages.CREATE_LAB).setScene(new CreateLabSceneCreator().getScene());
                 } catch (IOException e) {
                     FxDialogs.showError("", "Ошибка отправки данных");
                 }
             });
         } else{
-            textArea.setText(taskDto.getQuestion());
+            textArea.setText(questionDto.getQuestion());
             submit.setOnAction(event -> {
-                userProgress.getProgress().put(taskDto.getId(), isRightAnswer.get() ? 100 : 0);
+                userProgress.getProgress().put(questionDto.getId(), isRightAnswer.get() ? 100 : 0);
                 FxDialogs.showInformation("Результат", isRightAnswer.get() ? "Верно" : "Неверно");
             });
         }

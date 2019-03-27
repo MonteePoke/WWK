@@ -10,7 +10,7 @@ import javafx.scene.layout.VBox;
 import kurlyk.common.classesMadeByStas.StemmerPorterRU;
 import kurlyk.communication.Communicator;
 import kurlyk.communication.UserProgress;
-import kurlyk.transfer.TaskDto;
+import kurlyk.transfer.QuestionDto;
 import kurlyk.transfer.tasks.TextDto;
 import kurlyk.view.common.controller.Controller;
 import kurlyk.view.common.controller.TaskBodyController;
@@ -48,31 +48,31 @@ public class TextController extends Controller implements TaskBodyController<Tex
 
     }
 
-    public void setQuestion(TaskDto taskDto, TextDto textDto, boolean editable) {
+    public void setQuestion(QuestionDto questionDto, TextDto textDto, boolean editable) {
         final TextDto rightTextDto = textDto;
-        commonConfiguration(taskDto, () -> isRightAnswer(rightTextDto), editable);
+        commonConfiguration(questionDto, () -> isRightAnswer(rightTextDto), editable);
         if (editable && textDto.getText() != null) {
             inputField.setText(textDto.getText());
         }
     }
 
-    private void commonConfiguration(TaskDto taskDto, Supplier<Boolean> isRightAnswer, boolean editable) {
+    private void commonConfiguration(QuestionDto questionDto, Supplier<Boolean> isRightAnswer, boolean editable) {
         textArea.setEditable(editable);
         if (editable){
             submit.setOnAction(event -> {
-                taskDto.setQuestion(textArea.getText());
-                taskDto.setAnswer(new Gson().toJson(getResult()));
+                questionDto.setQuestion(textArea.getText());
+                questionDto.setAnswer(new Gson().toJson(getResult()));
                 try {
-                    communicator.postTask(taskDto);
+                    communicator.postTask(questionDto);
                     stagePool.getStage(Stages.CREATE_LAB).setScene(new CreateLabSceneCreator().getScene());
                 } catch (IOException e) {
                     FxDialogs.showError("", "Ошибка отправки данных");
                 }
             });
         } else{
-            textArea.setText(taskDto.getQuestion());
+            textArea.setText(questionDto.getQuestion());
             submit.setOnAction(event -> {
-                userProgress.getProgress().put(taskDto.getId(), isRightAnswer.get() ? 100 : 0);
+                userProgress.getProgress().put(questionDto.getId(), isRightAnswer.get() ? 100 : 0);
                 FxDialogs.showInformation("Результат", isRightAnswer.get() ? "Верно" : "Неверно");
             });
         }

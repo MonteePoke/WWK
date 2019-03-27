@@ -3,7 +3,7 @@ package kurlyk.communication;
 
 import com.google.gson.reflect.TypeToken;
 import kurlyk.transfer.LoginDto;
-import kurlyk.transfer.TaskDto;
+import kurlyk.transfer.QuestionDto;
 import kurlyk.transfer.TokenDto;
 import kurlyk.transfer.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,12 +47,12 @@ public class Communicator extends AbstractCommunicator{
         return getData(type, "/users");
     }
 
-    public void postTask(TaskDto taskDto) throws ConnectException, IOException {
-        postData(null, taskDto, "/task");
+    public void postTask(QuestionDto questionDto) throws ConnectException, IOException {
+        postData(null, questionDto, "/task");
     }
 
-    public List<TaskDto> getLab(Integer labNumber) throws ConnectException, IOException {
-        Type type = new TypeToken<ArrayList<TaskDto>>(){}.getType();
+    public List<QuestionDto> getLab(Integer labNumber) throws ConnectException, IOException {
+        Type type = new TypeToken<ArrayList<QuestionDto>>(){}.getType();
         return getData(type, "/lab" + "/" + labNumber.toString());
     }
 }

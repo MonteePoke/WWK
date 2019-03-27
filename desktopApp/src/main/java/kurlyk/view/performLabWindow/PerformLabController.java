@@ -8,7 +8,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.layout.VBox;
 import kurlyk.communication.Communicator;
 import kurlyk.communication.UserInfo;
-import kurlyk.transfer.TaskDto;
+import kurlyk.transfer.QuestionDto;
 import kurlyk.transfer.tasks.*;
 import kurlyk.view.common.controller.Controller;
 import kurlyk.view.common.stage.StagePool;
@@ -44,41 +44,41 @@ public class PerformLabController extends Controller {
     public void initialize(){
     }
 
-    public void createQuestion(List<TaskDto> taskDtos){
+    public void createQuestion(List<QuestionDto> questionDtos){
         TabPane tabPane = new TabPane();
-        for (TaskDto taskDto : taskDtos) {
-            Tab tab = new Tab(taskDto.getName());
+        for (QuestionDto questionDto : questionDtos) {
+            Tab tab = new Tab(questionDto.getName());
 
             Scene scene = null;
-            String content = taskDto.getAnswer();
-            switch (taskDto.getLabType()){
+            String content = questionDto.getAnswer();
+            switch (questionDto.getQuestionType()){
                 case RADIO:
                     SelectDto radioDto = new Gson().fromJson(content, SelectDto.class);
-                    scene = new RadioSceneCreator(taskDto, radioDto, false).getScene();
+                    scene = new RadioSceneCreator(questionDto, radioDto, false).getScene();
                     break;
                 case CHEK:
                     SelectDto chekDto = new Gson().fromJson(content, SelectDto.class);
-                    scene = new CheckSceneCreator(taskDto, chekDto, false).getScene();
+                    scene = new CheckSceneCreator(questionDto, chekDto, false).getScene();
                     break;
                 case MATCHING:
                     MatchingDto matchingDto = new Gson().fromJson(content, MatchingDto.class);
-                    scene = new MatchingSceneCreator(taskDto, matchingDto, false).getScene();
+                    scene = new MatchingSceneCreator(questionDto, matchingDto, false).getScene();
                     break;
                 case NUMBER:
                     NumberDto numberDto = new Gson().fromJson(content, NumberDto.class);
-                    scene = new NumberSceneCreator(taskDto, numberDto, false).getScene();
+                    scene = new NumberSceneCreator(questionDto, numberDto, false).getScene();
                     break;
                 case TEXT:
                     TextDto textDto = new Gson().fromJson(content, TextDto.class);
-                    scene = new TextSceneCreator(taskDto, textDto, false).getScene();
+                    scene = new TextSceneCreator(questionDto, textDto, false).getScene();
                     break;
                 case FORMULA:
                     FormulaDto formulaDto = new Gson().fromJson(content, FormulaDto.class);
-                    scene = new FormulaSceneCreator(taskDto, formulaDto, false).getScene();
+                    scene = new FormulaSceneCreator(questionDto, formulaDto, false).getScene();
                     break;
                 case COMPUTER_SYSTEM:
                     ComputerSystemDto computerSystemDto = new Gson().fromJson(content, ComputerSystemDto.class);
-                    scene = new ComputerSystemDiagramSceneCreator(taskDto, computerSystemDto, false).getScene();
+                    scene = new ComputerSystemDiagramSceneCreator(questionDto, computerSystemDto, false).getScene();
                     break;
             }
             tab.setContent(scene.getRoot());

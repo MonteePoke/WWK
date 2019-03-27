@@ -1,6 +1,6 @@
 package kurlyk.models;
 
-
+import kurlyk.QuestionType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,15 +15,25 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Entity
-public class Task {
+public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Enumerated(value = EnumType.STRING)
     @Column(nullable = false)
-    private String name;
+    private QuestionType questionType;
+
+    @Lob
+    @Column(columnDefinition="CLOB")
+    private String question;
+    @Lob
+    @Column(columnDefinition="CLOB")
+    private String answer;
+
     private Integer score;
+    private String description;
 
     @ManyToMany
-    private List<Question> questions;
+    private List<Competence> competences;
 }

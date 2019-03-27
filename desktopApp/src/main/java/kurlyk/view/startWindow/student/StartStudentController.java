@@ -4,7 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import kurlyk.communication.Communicator;
-import kurlyk.transfer.TaskDto;
+import kurlyk.transfer.QuestionDto;
 import kurlyk.view.common.controller.Controller;
 import kurlyk.view.common.stage.StagePool;
 import kurlyk.view.common.stage.Stages;
@@ -36,8 +36,8 @@ public class StartStudentController extends Controller {
         labNumber.getItems().addAll(1, 2, 3, 4, 5, 6, 7);
         further.setOnAction(event -> {
             try{
-                List<TaskDto> taskDtos = communicator.getLab(labNumber.getValue());
-                stagePool.pushStageAndShow(Stages.PERFORM_LAB, new PerformLabStage(taskDtos));
+                List<QuestionDto> questionDtos = communicator.getLab(labNumber.getValue());
+                stagePool.pushStageAndShow(Stages.PERFORM_LAB, new PerformLabStage(questionDtos));
                 stagePool.closeStage(Stages.START);
             } catch (IOException e) {
                 FxDialogs.showError("", "Ошибка отправки данных");

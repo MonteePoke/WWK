@@ -1,8 +1,7 @@
 package kurlyk.services.task;
 
-import kurlyk.models.Task;
 import kurlyk.repositories.TaskRepository;
-import kurlyk.transfer.TaskDto;
+import kurlyk.transfer.QuestionDto;
 import kurlyk.utils.Converter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,32 +15,24 @@ public class TaskServiceImpl implements TaskService {
     private TaskRepository taskRepository;
 
     @Override
-    public void post(TaskDto taskDto) {
-        Task task = Task.builder()
-                .id(null)
-                .name(taskDto.getName())
-                .labNumber(taskDto.getLabNumber())
-                .labType(taskDto.getLabType())
-                .question(taskDto.getQuestion())
-                .answer(taskDto.getAnswer())
-                .build();
-        taskRepository.save(task);
+    public void post(QuestionDto questionDto) {
+        taskRepository.save(Converter.questionConverter(questionDto));
     }
 
     @Override
-    public TaskDto getTaskByName(String name){
-        return Converter.taskToTaskDto(
+    public QuestionDto getTaskByName(String name){
+        return Converter.questionConverter(
                 taskRepository
                         .findOneByName(name)
-                        .orElseThrow(() -> new IllegalArgumentException("Task not found"))
+                        .orElseThrow(() -> new IllegalArgumentException("Question not found"))
         );
     }
 
     @Override
-    public List<TaskDto> getLab(Integer labNumber){
+    public List<QuestionDto> getLab(Integer labNumber){
         return Converter.listToList(
                 taskRepository.findAllByLabNumber(labNumber),
-                Converter::taskToTaskDto
+                Converter::questionConverter
         );
     }
 }

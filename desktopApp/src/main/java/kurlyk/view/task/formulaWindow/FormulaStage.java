@@ -1,15 +1,15 @@
 package kurlyk.view.task.formulaWindow;
 
-import kurlyk.transfer.TaskDto;
+import kurlyk.transfer.QuestionDto;
 import kurlyk.transfer.tasks.FormulaDto;
 import kurlyk.view.common.stage.BaseStage;
 
 public class FormulaStage extends BaseStage<FormulaController> {
 
 
-    public FormulaStage(TaskDto taskDto, FormulaDto formulaDto, boolean editable) {
+    public FormulaStage(QuestionDto questionDto, FormulaDto formulaDto, boolean editable) {
         super();
-        controller.setQuestion(taskDto, formulaDto, editable);
+        controller.setQuestion(questionDto, formulaDto, editable);
     }
 
 

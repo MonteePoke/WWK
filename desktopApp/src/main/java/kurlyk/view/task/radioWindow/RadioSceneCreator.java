@@ -1,15 +1,15 @@
 package kurlyk.view.task.radioWindow;
 
-import kurlyk.transfer.TaskDto;
+import kurlyk.transfer.QuestionDto;
 import kurlyk.transfer.tasks.SelectDto;
 import kurlyk.view.common.stage.BaseSceneCreator;
 
 public class RadioSceneCreator extends BaseSceneCreator<RadioController> {
 
 
-    public RadioSceneCreator(TaskDto taskDto, SelectDto selectDto, boolean editable) {
+    public RadioSceneCreator(QuestionDto questionDto, SelectDto selectDto, boolean editable) {
         super();
-        controller.setQuestion(taskDto, selectDto, editable);
+        controller.setQuestion(questionDto, selectDto, editable);
     }
 
     @Override

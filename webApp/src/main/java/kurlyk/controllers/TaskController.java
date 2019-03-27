@@ -1,7 +1,7 @@
 package kurlyk.controllers;
 
 import kurlyk.services.task.TaskService;
-import kurlyk.transfer.TaskDto;
+import kurlyk.transfer.QuestionDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,18 +15,18 @@ public class TaskController {
     private TaskService taskService;
 
     @PostMapping("/task")
-    public ResponseEntity<Object> postTask(@RequestBody TaskDto taskDto) {
-        taskService.post(taskDto);
+    public ResponseEntity<Object> postTask(@RequestBody QuestionDto questionDto) {
+        taskService.post(questionDto);
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("/task")
-    public TaskDto getTask(@RequestBody String taskName) {
+    public QuestionDto getTask(@RequestBody String taskName) {
         return taskService.getTaskByName(taskName);
     }
 
     @GetMapping("/lab/{lab-number}")
-    public List<TaskDto> getLab(@PathVariable("lab-number") Integer labNumber) {
+    public List<QuestionDto> getLab(@PathVariable("lab-number") Integer labNumber) {
         return taskService.getLab(labNumber);
     }
 }

@@ -1,7 +1,7 @@
 package kurlyk.view.task.radioWindow;
 
 
-import kurlyk.transfer.TaskDto;
+import kurlyk.transfer.QuestionDto;
 import kurlyk.transfer.tasks.SelectDto;
 import kurlyk.view.common.stage.BaseStage;
 
@@ -9,7 +9,7 @@ public class RadioStage extends BaseStage<RadioController> {
 
     public RadioStage(SelectDto selectDto) {
         super();
-        controller.setQuestion(new TaskDto(), selectDto, false);
+        controller.setQuestion(new QuestionDto(), selectDto, false);
     }
 
     @Override

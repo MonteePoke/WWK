@@ -1,15 +1,15 @@
 package kurlyk.view.task.textWindow;
 
 
-import kurlyk.transfer.TaskDto;
+import kurlyk.transfer.QuestionDto;
 import kurlyk.transfer.tasks.TextDto;
 import kurlyk.view.common.stage.BaseStage;
 
 public class TextStage extends BaseStage<TextController> {
 
-    public TextStage(TaskDto taskDto, TextDto textDto, boolean editable) {
+    public TextStage(QuestionDto questionDto, TextDto textDto, boolean editable) {
         super();
-        controller.setQuestion(taskDto, textDto, editable);
+        controller.setQuestion(questionDto, textDto, editable);
     }
 
     @Override
