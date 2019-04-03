@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
 
 
 @Data
@@ -31,9 +30,6 @@ public class Question {
     @Column(columnDefinition="CLOB")
     private String answer;
 
-    private Integer score;
+    private Double score;
     private String description;
-
-    @ManyToMany
-    private List<Competence> competences;
 }

@@ -1,6 +1,5 @@
 package kurlyk.view.task.computerSystemDiagramWindow;
 
-import com.google.gson.Gson;
 import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
 import javafx.scene.Cursor;
@@ -13,34 +12,27 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import kurlyk.communication.Communicator;
-import kurlyk.communication.UserProgress;
 import kurlyk.graph.ComputerSystem.ComputerSystemElementType;
 import kurlyk.graph.GraphSystem;
-import kurlyk.transfer.QuestionDto;
+import kurlyk.models.UserProgress;
 import kurlyk.transfer.tasks.ComputerSystemDto;
 import kurlyk.view.common.component.DiagramContextMenu;
 import kurlyk.view.common.component.NumberField;
-import kurlyk.view.common.controller.Controller;
-import kurlyk.view.common.controller.TaskBodyController;
 import kurlyk.view.common.stage.StagePool;
 import kurlyk.view.common.stage.Stages;
-import kurlyk.view.createLabWindow.CreateLabSceneCreator;
+import kurlyk.view.task.CommonTaskController;
 import kurlyk.view.task.computerSystemDiagramWindow.characteristicWindow.CharacteristicStage;
 import kurlyk.view.task.computerSystemDiagramWindow.computerSystemDiagram.ComputerSystemDiagramConnector;
 import kurlyk.view.task.computerSystemDiagramWindow.computerSystemDiagram.ComputerSystemDiagramDetail;
 import kurlyk.view.task.computerSystemDiagramWindow.computerSystemDiagram.ComputerSystemDiagramPictures;
 import kurlyk.view.task.computerSystemDiagramWindow.computerSystemDiagram.DiagramElement;
-import kurlyk.view.utils.FxDialogs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
-import java.util.function.Supplier;
-
 @Component
 @Scope("prototype")
-public class ComputerSystemDiagramController extends Controller implements TaskBodyController<ComputerSystemDto> {
+public class ComputerSystemDiagramController extends CommonTaskController<ComputerSystemDto> {
 
     @FXML private VBox root;
     @FXML private Button submit;
@@ -61,8 +53,6 @@ public class ComputerSystemDiagramController extends Controller implements TaskB
     @Autowired
     private StagePool stagePool;
 
-    @Autowired
-    private UserProgress userProgress;
 
     private GraphSystem graphSystem = new GraphSystem(); //Граф
     private ComputerSystemElementType currentElement = ComputerSystemElementType.DEFAULT; //Тип элемента, который рисуется на текущий момент
@@ -245,38 +235,28 @@ public class ComputerSystemDiagramController extends Controller implements TaskB
         );
     }
 
-    public void setQuestion(QuestionDto questionDto, ComputerSystemDto computerSystemDto, boolean editable) {
+    public void setQuestion(UserProgress userProgress, ComputerSystemDto computerSystemDto, boolean editable) {
         final ComputerSystemDto rightComputerSystemDto = computerSystemDto;
-        commonConfiguration(questionDto, () -> isRightAnswer(rightComputerSystemDto), editable);
+        commonConfiguration(
+                userProgress,
+                () -> isRightAnswer(rightComputerSystemDto, userProgress),
+                editable,
+                textArea,
+                submit,
+                communicator,
+                stagePool
+        );
 //        if (editable && formulaDto.getLatexFormula() != null) {
 //            inputField.setText(formulaDto.getLatexFormula());
 //        }
     }
 
-    private void commonConfiguration(QuestionDto questionDto, Supplier<Boolean> isRightAnswer, boolean editable) {
-        textArea.setEditable(editable);
-        if (editable){
-            submit.setOnAction(event -> {
-                questionDto.setQuestion(textArea.getText());
-                questionDto.setAnswer(new Gson().toJson(getResult()));
-                try {
-                    communicator.postTask(questionDto);
-                    stagePool.getStage(Stages.CREATE_LAB).setScene(new CreateLabSceneCreator().getScene());
-                } catch (IOException e) {
-                    FxDialogs.showError("", "Ошибка отправки данных");
-                }
-            });
-        } else{
-            textArea.setText(questionDto.getQuestion());
-            submit.setOnAction(event -> {
-                userProgress.getProgress().put(questionDto.getId(), isRightAnswer.get() ? 100 : 0);
-                FxDialogs.showInformation("Результат", isRightAnswer.get() ? "Верно" : "Неверно");
-            });
+    private Double isRightAnswer(ComputerSystemDto computerSystemDto,UserProgress userProgress){
+        double score = 0d;
+        if (computerSystemDto.getGraphSystem().isomorfic(getResult().getGraphSystem())){
+            score = userProgress.getTask().getScore() * userProgress.getQuestion().getScore();
         }
-    }
-
-    public boolean isRightAnswer(ComputerSystemDto computerSystemDto){
-        return computerSystemDto.getGraphSystem().isomorfic(getResult().getGraphSystem());
+        return score;
     }
 
     @Override

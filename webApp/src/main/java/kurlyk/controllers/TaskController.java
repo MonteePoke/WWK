@@ -1,10 +1,12 @@
 package kurlyk.controllers;
 
+
+import kurlyk.models.Task;
 import kurlyk.services.task.TaskService;
-import kurlyk.transfer.QuestionDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -14,19 +16,13 @@ public class TaskController {
     @Autowired
     private TaskService taskService;
 
-    @PostMapping("/task")
-    public ResponseEntity<Object> postTask(@RequestBody QuestionDto questionDto) {
-        taskService.post(questionDto);
-        return ResponseEntity.ok().build();
+    @GetMapping("/task/{id}")
+    public Task getTask(@PathVariable("id") Long id) {
+        return taskService.getTask(id).orElseThrow(RuntimeException::new);
     }
 
-    @GetMapping("/task")
-    public QuestionDto getTask(@RequestBody String taskName) {
-        return taskService.getTaskByName(taskName);
-    }
-
-    @GetMapping("/lab/{lab-number}")
-    public List<QuestionDto> getLab(@PathVariable("lab-number") Integer labNumber) {
-        return taskService.getLab(labNumber);
+    @GetMapping("/tasks/{lab-work-id}")
+    public List<Task> getTasks(@PathVariable("lab-work-id") Long labWorkId) {
+        return taskService.getTasks(labWorkId);
     }
 }

@@ -1,15 +1,15 @@
 package kurlyk.view.task.matchingWindow;
 
 
-import kurlyk.transfer.QuestionDto;
+import kurlyk.models.UserProgress;
 import kurlyk.transfer.tasks.MatchingDto;
 import kurlyk.view.common.stage.BaseSceneCreator;
 
 public class MatchingSceneCreator extends BaseSceneCreator<MatchingController> {
 
-    public MatchingSceneCreator(QuestionDto questionDto, MatchingDto matchingDto, boolean editable) {
+    public MatchingSceneCreator(UserProgress userProgress, MatchingDto matchingDto, boolean editable) {
         super();
-        controller.setItemsToView(questionDto, matchingDto, editable);
+        controller.setItemsToView(userProgress, matchingDto, editable);
     }
 
     @Override

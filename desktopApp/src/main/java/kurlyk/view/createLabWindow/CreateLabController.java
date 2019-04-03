@@ -8,7 +8,10 @@ import javafx.scene.control.TextField;
 import javafx.util.Pair;
 import kurlyk.QuestionType;
 import kurlyk.communication.UserInfo;
-import kurlyk.transfer.QuestionDto;
+import kurlyk.models.LabWork;
+import kurlyk.models.Question;
+import kurlyk.models.Task;
+import kurlyk.models.UserProgress;
 import kurlyk.transfer.tasks.*;
 import kurlyk.view.common.controller.Controller;
 import kurlyk.view.common.stage.StagePool;
@@ -56,13 +59,9 @@ public class CreateLabController extends Controller {
         );
 
         further.setOnAction(event -> {
-            QuestionDto questionDto = QuestionDto.builder()
-                    .name(name.getText())
-                    .labNumber(labNumber.getValue())
-                    .questionType(labType.getValue())
-                    .build();
+            UserProgress userProgress = createUserProgress();
             Scene scene = null;
-            switch (questionDto.getQuestionType()){
+            switch (userProgress.getQuestion().getQuestionType()){
                 case RADIO:
                     SelectDto radioDto = new SelectDto(Arrays.asList(
                             new Pair<>("", false),
@@ -70,7 +69,7 @@ public class CreateLabController extends Controller {
                             new Pair<>("", false),
                             new Pair<>("", false)
                     ));
-                    scene = new RadioSceneCreator(questionDto, radioDto, true).getScene();
+                    scene = new RadioSceneCreator(userProgress, radioDto, true).getScene();
                     break;
                 case CHEK:
                     SelectDto chekDto = new SelectDto(Arrays.asList(
@@ -79,33 +78,52 @@ public class CreateLabController extends Controller {
                             new Pair<>("", false),
                             new Pair<>("", false)
                     ));
-                    scene = new CheckSceneCreator(questionDto, chekDto, true).getScene();
+                    scene = new CheckSceneCreator(userProgress, chekDto, true).getScene();
                     break;
                 case MATCHING:
                     MatchingDto matchingDto = new MatchingDto(
                             Arrays.asList("", "", "", ""),
                             Arrays.asList("", "", "", "")
                     );
-                    scene = new MatchingSceneCreator(questionDto, matchingDto, true).getScene();
+                    scene = new MatchingSceneCreator(userProgress, matchingDto, true).getScene();
                     break;
                 case NUMBER:
                     NumberDto numberDto = new NumberDto();
-                    scene = new NumberSceneCreator(questionDto, numberDto, true).getScene();
+                    scene = new NumberSceneCreator(userProgress, numberDto, true).getScene();
                     break;
                 case TEXT:
                     TextDto textDto = new TextDto();
-                    scene = new TextSceneCreator(questionDto, textDto, true).getScene();
+                    scene = new TextSceneCreator(userProgress, textDto, true).getScene();
                     break;
                 case FORMULA:
                     FormulaDto formulaDto = new FormulaDto();
-                    scene = new FormulaSceneCreator(questionDto, formulaDto, true).getScene();
+                    scene = new FormulaSceneCreator(userProgress, formulaDto, true).getScene();
                     break;
                 case COMPUTER_SYSTEM:
                     ComputerSystemDto computerSystemDto = new ComputerSystemDto();
-                    scene = new ComputerSystemDiagramSceneCreator(questionDto, computerSystemDto, true).getScene();
+                    scene = new ComputerSystemDiagramSceneCreator(userProgress, computerSystemDto, true).getScene();
                     break;
             }
             stagePool.getStage(Stages.CREATE_LAB).setScene(scene);
         });
+    }
+
+    private UserProgress createUserProgress(){
+        LabWork labWork = LabWork.builder()
+                .build();
+        Task task = Task.builder()
+                .isTest(false)
+                .score(1d)
+                .build();
+        Question question = Question.builder()
+                .questionType(labType.getValue())
+                .score(1d)
+                .build();
+
+        return UserProgress.builder()
+                .labWork(labWork)
+                .task(task)
+                .question(question)
+                .build();
     }
 }

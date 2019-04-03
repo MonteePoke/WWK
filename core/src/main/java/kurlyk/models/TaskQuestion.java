@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
 
 
 @Data
@@ -15,17 +14,13 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Entity
-public class LabWork {
+public class TaskQuestion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String name;
-    private Integer atemptsNumber;
-
-    @ManyToMany
-    private List<Task> tasks;
-    @ManyToMany
-    private List<Parameter> parameters;
+    @ManyToOne
+    private Task task;
+    @ManyToOne
+    private Question question;
 }

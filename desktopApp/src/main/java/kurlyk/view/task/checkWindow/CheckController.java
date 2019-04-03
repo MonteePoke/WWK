@@ -1,7 +1,6 @@
 package kurlyk.view.task.checkWindow;
 
 
-import com.google.gson.Gson;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -9,27 +8,19 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
 import javafx.util.Pair;
 import kurlyk.communication.Communicator;
-import kurlyk.communication.UserProgress;
-import kurlyk.transfer.QuestionDto;
+import kurlyk.models.UserProgress;
 import kurlyk.transfer.tasks.SelectDto;
 import kurlyk.view.common.component.EditableCheckBox;
-import kurlyk.view.common.controller.Controller;
-import kurlyk.view.common.controller.TaskBodyController;
 import kurlyk.view.common.stage.StagePool;
-import kurlyk.view.common.stage.Stages;
-import kurlyk.view.createLabWindow.CreateLabSceneCreator;
-import kurlyk.view.utils.FxDialogs;
+import kurlyk.view.task.CommonTaskController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
-import java.util.function.Supplier;
-
 
 @Component
 @Scope("prototype")
-public class CheckController extends Controller implements TaskBodyController<SelectDto> {
+public class CheckController extends CommonTaskController<SelectDto> {
 
     @FXML private VBox root;
     @FXML private Button submit;
@@ -41,45 +32,32 @@ public class CheckController extends Controller implements TaskBodyController<Se
     @Autowired
     private StagePool stagePool;
 
-    @Autowired
-    private UserProgress userProgress;
-
     public void initialize(){
     }
 
-    public void setQuestion(QuestionDto questionDto, SelectDto selectDto, boolean editable) {
+    public void setQuestion(UserProgress userProgress, SelectDto selectDto, boolean editable) {
         final SelectDto rightSelectDto = selectDto;
-        commonConfiguration(questionDto, () -> isRightAnswer(rightSelectDto), editable);
+        commonConfiguration(
+                userProgress,
+                () -> isRightAnswer(rightSelectDto, userProgress),
+                editable,
+                textArea,
+                submit,
+                communicator,
+                stagePool
+        );
 
-        for (Pair<String, Boolean> question : selectDto.getQuestions()){
-            root.getChildren().add(new EditableCheckBox(question.getKey(), editable));
+        for (Pair<String, Boolean> option : selectDto.getOptions()){
+            root.getChildren().add(new EditableCheckBox(option.getKey(), editable));
         }
     }
 
-    private void commonConfiguration(QuestionDto questionDto, Supplier<Boolean> isRightAnswer, boolean editable) {
-        textArea.setEditable(editable);
-        if (editable){
-            submit.setOnAction(event -> {
-                questionDto.setQuestion(textArea.getText());
-                questionDto.setAnswer(new Gson().toJson(getResult()));
-                try {
-                    communicator.postTask(questionDto);
-                    stagePool.getStage(Stages.CREATE_LAB).setScene(new CreateLabSceneCreator().getScene());
-                } catch (IOException e) {
-                    FxDialogs.showError("", "Ошибка отправки данных");
-                }
-            });
-        } else{
-            textArea.setText(questionDto.getQuestion());
-            submit.setOnAction(event -> {
-                userProgress.getProgress().put(questionDto.getId(), isRightAnswer.get() ? 100 : 0);
-                FxDialogs.showInformation("Результат", isRightAnswer.get() ? "Верно" : "Неверно");
-            });
+    private Double isRightAnswer(SelectDto selectDto, UserProgress userProgress){
+        double score = 0d;
+        if (selectDto.equals(getResult())){
+            score = userProgress.getTask().getScore() * userProgress.getQuestion().getScore();
         }
-    }
-
-    public boolean isRightAnswer(SelectDto selectDto){
-        return selectDto.equals(getResult());
+        return score;
     }
 
     @Override
@@ -87,7 +65,7 @@ public class CheckController extends Controller implements TaskBodyController<Se
         SelectDto selectDto = new SelectDto();
         for (Node node : root.getChildren()) {
             EditableCheckBox editableCheckBox = (EditableCheckBox) node;
-            selectDto.getQuestions().add(new Pair<>(editableCheckBox.getHtmlEditor().getHtmlText(),
+            selectDto.getOptions().add(new Pair<>(editableCheckBox.getHtmlEditor().getHtmlText(),
                     editableCheckBox.getCheckBox().isSelected()
             ));
         }

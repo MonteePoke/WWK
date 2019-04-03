@@ -28,8 +28,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/users/**").hasAuthority("ADMIN")
                 .antMatchers("/login").permitAll()
-                .antMatchers("/lab/**").permitAll()
+                .antMatchers("/lab-work/**").permitAll()
+                .antMatchers("/lab-works/**").permitAll()
                 .antMatchers("/task/**").permitAll()
+                .antMatchers("/tasks/**").permitAll()
+                .antMatchers("/question/**").permitAll()
+                .antMatchers("/questions/**").permitAll()
                 .antMatchers("/h2-console/**").permitAll();
         http.headers().frameOptions().disable();
         http.csrf().disable();

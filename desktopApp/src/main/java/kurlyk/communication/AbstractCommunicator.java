@@ -91,5 +91,4 @@ public abstract class AbstractCommunicator {
     }
 
     public abstract String getToken();
-
 }

@@ -13,5 +13,6 @@ public enum Stages {
     SIGN_IN,
     START,
     CREATE_LAB,
+    PERFORM_TEST,
     PERFORM_LAB
 }

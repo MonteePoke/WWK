@@ -1,12 +1,13 @@
 package kurlyk.services.task;
 
-
-import kurlyk.transfer.QuestionDto;
+import kurlyk.models.Task;
 
 import java.util.List;
+import java.util.Optional;
+
 
 public interface TaskService {
-    void post(QuestionDto questionDto);
-    QuestionDto getTaskByName(String name);
-    List<QuestionDto> getLab(Integer labNumber);
+
+    Optional<Task> getTask(Long id);
+    List<Task> getTasks(Long labWorkId);
 }

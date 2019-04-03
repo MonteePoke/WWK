@@ -1,15 +1,15 @@
 package kurlyk.view.task.textWindow;
 
 
-import kurlyk.transfer.QuestionDto;
+import kurlyk.models.UserProgress;
 import kurlyk.transfer.tasks.TextDto;
 import kurlyk.view.common.stage.BaseStage;
 
 public class TextSceneCreator extends BaseStage<TextController> {
 
-    public TextSceneCreator(QuestionDto questionDto, TextDto textDto, boolean editable) {
+    public TextSceneCreator(UserProgress userProgress, TextDto textDto, boolean editable) {
         super();
-        controller.setQuestion(questionDto, textDto, editable);
+        controller.setQuestion(userProgress, textDto, editable);
     }
 
     @Override

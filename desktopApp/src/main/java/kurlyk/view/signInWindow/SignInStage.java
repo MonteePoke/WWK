@@ -1,5 +1,6 @@
 package kurlyk.view.signInWindow;
 
+import javafx.scene.input.KeyCode;
 import kurlyk.view.common.stage.BaseStage;
 
 public class SignInStage extends BaseStage<SignInController> {
@@ -7,6 +8,12 @@ public class SignInStage extends BaseStage<SignInController> {
 
     public SignInStage() {
         super();
+
+        addEventHandler(javafx.scene.input.KeyEvent.KEY_RELEASED, event -> {
+            if (KeyCode.ENTER == event.getCode()) {
+                controller.signIn();
+            }
+        });
     }
 
     @Override

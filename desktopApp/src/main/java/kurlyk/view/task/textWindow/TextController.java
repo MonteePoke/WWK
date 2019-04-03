@@ -1,7 +1,6 @@
 package kurlyk.view.task.textWindow;
 
 
-import com.google.gson.Gson;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
@@ -9,26 +8,18 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import kurlyk.common.classesMadeByStas.StemmerPorterRU;
 import kurlyk.communication.Communicator;
-import kurlyk.communication.UserProgress;
-import kurlyk.transfer.QuestionDto;
+import kurlyk.models.UserProgress;
 import kurlyk.transfer.tasks.TextDto;
-import kurlyk.view.common.controller.Controller;
-import kurlyk.view.common.controller.TaskBodyController;
 import kurlyk.view.common.stage.StagePool;
-import kurlyk.view.common.stage.Stages;
-import kurlyk.view.createLabWindow.CreateLabSceneCreator;
-import kurlyk.view.utils.FxDialogs;
+import kurlyk.view.task.CommonTaskController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
-import java.util.function.Supplier;
-
 
 @Component
 @Scope("prototype")
-public class TextController extends Controller implements TaskBodyController<TextDto> {
+public class TextController extends CommonTaskController<TextDto> {
 
     @FXML private VBox root;
     @FXML private Button submit;
@@ -41,45 +32,33 @@ public class TextController extends Controller implements TaskBodyController<Tex
     @Autowired
     private StagePool stagePool;
 
-    @Autowired
-    private UserProgress userProgress;
-
     public void initialize(){
 
     }
 
-    public void setQuestion(QuestionDto questionDto, TextDto textDto, boolean editable) {
+    public void setQuestion(UserProgress userProgress, TextDto textDto, boolean editable) {
         final TextDto rightTextDto = textDto;
-        commonConfiguration(questionDto, () -> isRightAnswer(rightTextDto), editable);
+        commonConfiguration(
+                userProgress,
+                () -> isRightAnswer(rightTextDto, userProgress),
+                editable,
+                textArea,
+                submit,
+                communicator,
+                stagePool
+        );
         if (editable && textDto.getText() != null) {
             inputField.setText(textDto.getText());
         }
     }
 
-    private void commonConfiguration(QuestionDto questionDto, Supplier<Boolean> isRightAnswer, boolean editable) {
-        textArea.setEditable(editable);
-        if (editable){
-            submit.setOnAction(event -> {
-                questionDto.setQuestion(textArea.getText());
-                questionDto.setAnswer(new Gson().toJson(getResult()));
-                try {
-                    communicator.postTask(questionDto);
-                    stagePool.getStage(Stages.CREATE_LAB).setScene(new CreateLabSceneCreator().getScene());
-                } catch (IOException e) {
-                    FxDialogs.showError("", "Ошибка отправки данных");
-                }
-            });
-        } else{
-            textArea.setText(questionDto.getQuestion());
-            submit.setOnAction(event -> {
-                userProgress.getProgress().put(questionDto.getId(), isRightAnswer.get() ? 100 : 0);
-                FxDialogs.showInformation("Результат", isRightAnswer.get() ? "Верно" : "Неверно");
-            });
-        }
-    }
 
-    public boolean isRightAnswer(TextDto textDto){
-        return textDto.equals(getResult());
+    private Double isRightAnswer(TextDto textDto, UserProgress userProgress){
+        double score = 0d;
+        if (textDto.equals(getResult())){
+            score = userProgress.getTask().getScore() * userProgress.getQuestion().getScore();
+        }
+        return score;
     }
 
     @Override

@@ -1,7 +1,6 @@
 package kurlyk.view.task.checkWindow;
 
 
-import kurlyk.transfer.QuestionDto;
 import kurlyk.transfer.tasks.SelectDto;
 import kurlyk.view.common.stage.BaseStage;
 
@@ -9,7 +8,7 @@ public class CheckStage extends BaseStage<CheckController> {
 
     public CheckStage(SelectDto selectDto) {
         super();
-        controller.setQuestion(new QuestionDto(), selectDto, true);
+//        controller.setQuestion(new Question(), selectDto, true);
     }
 
     @Override

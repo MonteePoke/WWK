@@ -1,0 +1,13 @@
+package kurlyk.services.labWork;
+
+import kurlyk.models.LabWork;
+
+import java.util.List;
+import java.util.Optional;
+
+
+public interface LabWorkService {
+
+    List<LabWork> getLabWorks();
+    Optional<LabWork> getLabWork(Long id);
+}

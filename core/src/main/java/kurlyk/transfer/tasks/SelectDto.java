@@ -12,17 +12,17 @@ import java.util.List;
 @EqualsAndHashCode
 public class SelectDto implements Serializable {
 
-    private List<Pair<String, Boolean>> questions;
+    private List<Pair<String, Boolean>> options;
 
     public SelectDto() {
-        questions = new ArrayList<>();
+        options = new ArrayList<>();
     }
 
-    public SelectDto(List<Pair<String, Boolean>> questions) {
-        this.questions = questions;
+    public SelectDto(List<Pair<String, Boolean>> options) {
+        this.options = options;
     }
 
     public SelectDto(SelectDto selectDto) {
-        questions = new ArrayList<>(selectDto.questions);
+        options = new ArrayList<>(selectDto.options);
     }
 }

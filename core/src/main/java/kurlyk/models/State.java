@@ -1,4 +1,4 @@
-package kurlyk.transfer;
+package kurlyk.models;
 
 
 public enum State {

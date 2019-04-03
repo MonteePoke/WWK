@@ -6,7 +6,6 @@ import kurlyk.repositories.UsersRepository;
 import kurlyk.services.token.TokenService;
 import kurlyk.transfer.LoginDto;
 import kurlyk.transfer.TokenDto;
-import kurlyk.utils.Converter;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -34,7 +33,7 @@ public class LoginServiceImpl implements LoginService {
         if (userCandidate.isPresent()) {
             User user = userCandidate.get();
 
-            if (passwordEncoder.matches(loginDto.getPassword(), user.getHashPassword())) {
+            if (passwordEncoder.matches(loginDto.getPassword(), user.getPassword())) {
                 Token token = Token.builder()
                         .user(user)
                         .value(RandomStringUtils.random(10, true, true))
@@ -42,7 +41,7 @@ public class LoginServiceImpl implements LoginService {
                         .build();
 
                 tokenService.saveAndDeleteOld(token);
-                return Converter.tokenConverter(token);
+                return TokenDto.fromToken(token);
             }
         } throw new IllegalArgumentException("User not found");
     }

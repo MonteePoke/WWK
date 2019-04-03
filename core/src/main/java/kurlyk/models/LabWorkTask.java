@@ -14,16 +14,13 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Builder
 @Entity
-public class UserProgress {
+public class LabWorkTask {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Question question;
-    private Task task;
-    private LabWork labWork;
-    private Integer score;
-
     @ManyToOne
-    private User user;
+    private LabWork labWork;
+    @ManyToOne
+    private Task task;
 }

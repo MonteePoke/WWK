@@ -1,4 +1,4 @@
-package kurlyk.view.utils;
+package kurlyk.view.common.component;
 
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;

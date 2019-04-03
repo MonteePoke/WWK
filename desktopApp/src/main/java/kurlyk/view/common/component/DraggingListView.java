@@ -1,4 +1,4 @@
-package kurlyk.common.classesMadeByStas;
+package kurlyk.view.common.component;
 
 
 import javafx.event.Event;

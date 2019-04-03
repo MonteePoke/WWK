@@ -1,14 +1,12 @@
 package kurlyk.repositories;
 
 
-import kurlyk.models.Question;
+import kurlyk.models.Task;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
 import java.util.Optional;
 
-public interface TaskRepository extends JpaRepository<Question, Long> {
+public interface TaskRepository extends JpaRepository<Task, Long> {
 
-    Optional<Question> findOneByName(String name);
-    List<Question> findAllByLabNumber(Integer labNumber);
+    Optional<Task> findOneById(Long id);
 }

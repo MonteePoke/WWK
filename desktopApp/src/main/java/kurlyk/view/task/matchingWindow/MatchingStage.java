@@ -1,15 +1,15 @@
 package kurlyk.view.task.matchingWindow;
 
 
-import kurlyk.transfer.QuestionDto;
+import kurlyk.models.Question;
 import kurlyk.transfer.tasks.MatchingDto;
 import kurlyk.view.common.stage.BaseStage;
 
 public class MatchingStage extends BaseStage<MatchingController> {
 
-    public MatchingStage(QuestionDto questionDto, MatchingDto matchingDto, boolean editable) {
+    public MatchingStage(Question question, MatchingDto matchingDto, boolean editable) {
         super();
-        controller.setItemsToView(questionDto, matchingDto, editable);
+//        controller.setItemsToView(question, matchingDto, editable);
     }
 
     @Override

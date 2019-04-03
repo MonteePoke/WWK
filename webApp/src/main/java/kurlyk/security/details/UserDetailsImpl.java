@@ -1,7 +1,7 @@
 package kurlyk.security.details;
 
+import kurlyk.models.State;
 import kurlyk.models.User;
-import kurlyk.transfer.State;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,7 +26,7 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public String getPassword() {
-        return user.getHashPassword();
+        return user.getPassword();
     }
 
     @Override

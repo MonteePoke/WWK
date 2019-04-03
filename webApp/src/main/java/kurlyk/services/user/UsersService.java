@@ -1,14 +1,14 @@
 package kurlyk.services.user;
 
-import kurlyk.transfer.UserDto;
+import kurlyk.models.User;
 
 import java.util.List;
 
 
 public interface UsersService {
-    void signUp(UserDto userDto);
+    void signUp(User user);
 
-    List<UserDto> findAll();
+    List<User> findAll();
 
-    UserDto findOne(Long userId);
+    User findOne(Long userId);
 }

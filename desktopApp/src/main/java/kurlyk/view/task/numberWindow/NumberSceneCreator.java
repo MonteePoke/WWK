@@ -1,15 +1,15 @@
 package kurlyk.view.task.numberWindow;
 
 
-import kurlyk.transfer.QuestionDto;
+import kurlyk.models.UserProgress;
 import kurlyk.transfer.tasks.NumberDto;
 import kurlyk.view.common.stage.BaseStage;
 
 public class NumberSceneCreator extends BaseStage<NumberController> {
 
-    public NumberSceneCreator(QuestionDto questionDto, NumberDto numberDto, boolean editable) {
+    public NumberSceneCreator(UserProgress userProgress, NumberDto numberDto, boolean editable) {
         super();
-        controller.setQuestion(questionDto, numberDto, editable);
+        controller.setQuestion(userProgress, numberDto, editable);
     }
 
     @Override
