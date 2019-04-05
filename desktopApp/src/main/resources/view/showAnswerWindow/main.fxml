@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<VBox prefHeight="200" prefWidth="300" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kurlyk.view.showAnswerWindow.ShowAnswerController">
+    <VBox fx:id="root" alignment="TOP_CENTER">
+        <Label VBox.vgrow="ALWAYS" maxHeight="Infinity" text="Код"/>
+        <PasswordField fx:id="masterKodField" VBox.vgrow="ALWAYS" maxHeight="Infinity"/>
+        <Label VBox.vgrow="ALWAYS" maxHeight="Infinity" text="Ответ"/>
+        <TextField fx:id="answerField" editable="false" VBox.vgrow="ALWAYS" maxHeight="Infinity"/>
+        <Button fx:id="showAnswer" text="Показать ответ"/>
+    </VBox>
+</VBox>

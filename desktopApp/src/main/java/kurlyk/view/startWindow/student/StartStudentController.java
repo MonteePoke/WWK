@@ -49,8 +49,8 @@ public class StartStudentController extends Controller {
         further.setOnAction(event -> {
 
             Map<Boolean, List<UserProgress>> userProgresses = getUserProgresses(labNumber.getValue());
-            stagePool.pushStage(Stages.PERFORM_LAB, new ExecuteLabStage(userProgresses.get(false)));
-            stagePool.pushStageAndShow(Stages.PERFORM_TEST, new ExecuteLabStage(userProgresses.get(true)));
+            stagePool.pushStage(Stages.PERFORM_LAB, new ExecuteLabStage(userProgresses.get(false), false));
+            stagePool.pushStageAndShow(Stages.PERFORM_TEST, new ExecuteLabStage(userProgresses.get(true), true));
             stagePool.closeStage(Stages.START);
         });
     }

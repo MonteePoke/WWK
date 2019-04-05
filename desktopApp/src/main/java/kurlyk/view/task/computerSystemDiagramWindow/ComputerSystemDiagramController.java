@@ -7,7 +7,6 @@ import javafx.scene.ImageCursor;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -17,6 +16,7 @@ import kurlyk.graph.GraphSystem;
 import kurlyk.models.UserProgress;
 import kurlyk.transfer.tasks.ComputerSystemDto;
 import kurlyk.view.common.component.DiagramContextMenu;
+import kurlyk.view.common.component.MyHTMLEditor;
 import kurlyk.view.common.component.NumberField;
 import kurlyk.view.common.stage.StagePool;
 import kurlyk.view.common.stage.Stages;
@@ -36,7 +36,7 @@ public class ComputerSystemDiagramController extends CommonTaskController<Comput
 
     @FXML private VBox root;
     @FXML private Button submit;
-    @FXML private TextArea textArea;
+    @FXML private MyHTMLEditor textArea;
 
     @FXML private Button cpuButton;
     @FXML private Button ramButton;
@@ -251,7 +251,7 @@ public class ComputerSystemDiagramController extends CommonTaskController<Comput
 //        }
     }
 
-    private Double isRightAnswer(ComputerSystemDto computerSystemDto,UserProgress userProgress){
+    private Double isRightAnswer(ComputerSystemDto computerSystemDto, UserProgress userProgress){
         double score = 0d;
         if (computerSystemDto.getGraphSystem().isomorfic(getResult().getGraphSystem())){
             score = userProgress.getTask().getScore() * userProgress.getQuestion().getScore();

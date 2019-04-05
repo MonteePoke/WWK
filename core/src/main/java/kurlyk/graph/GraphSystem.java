@@ -2,6 +2,8 @@ package kurlyk.graph;
 
 import javafx.util.Pair;
 import kurlyk.graph.ComputerSystem.ComputerSystemElement;
+import lombok.Getter;
+import lombok.Setter;
 import org.jgrapht.GraphMapping;
 import org.jgrapht.alg.isomorphism.VF2GraphIsomorphismInspector;
 import org.jgrapht.graph.DefaultEdge;
@@ -14,8 +16,8 @@ import java.util.stream.Collectors;
 
 public class GraphSystem{
 
-    private Set<ComputerSystemElement> elementSet;
-    private Set<Pair<ComputerSystemElement, ComputerSystemElement>> connectionSet;
+    @Getter @Setter private Set<ComputerSystemElement> elementSet;
+    @Getter @Setter private Set<Pair<ComputerSystemElement, ComputerSystemElement>> connectionSet;
 
 
     public GraphSystem() {
@@ -42,7 +44,7 @@ public class GraphSystem{
     private SimpleGraph<ComputerSystemElement, DefaultEdge> buildGraph(){
         SimpleGraph<ComputerSystemElement, DefaultEdge> graph = new SimpleGraph<>(DefaultEdge.class);
 
-        //Блять
+        //
         Set<Pair<ComputerSystemElement, ComputerSystemElement>> newConnectionSet = new HashSet<>();
         connectionSet.forEach(connection -> {
             ComputerSystemElement keyElement = elementSet.stream()

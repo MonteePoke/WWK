@@ -3,11 +3,11 @@ package kurlyk.view.task.numberWindow;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
 import kurlyk.communication.Communicator;
 import kurlyk.models.UserProgress;
 import kurlyk.transfer.tasks.NumberDto;
+import kurlyk.view.common.component.MyHTMLEditor;
 import kurlyk.view.common.component.NumberField;
 import kurlyk.view.common.stage.StagePool;
 import kurlyk.view.task.CommonTaskController;
@@ -22,7 +22,7 @@ public class NumberController extends CommonTaskController<NumberDto> {
 
     @FXML private VBox root;
     @FXML private Button submit;
-    @FXML private TextArea textArea;
+    @FXML private MyHTMLEditor textArea;
     @FXML private NumberField inputField;
 
     @Autowired
@@ -53,10 +53,30 @@ public class NumberController extends CommonTaskController<NumberDto> {
 
     private Double isRightAnswer(NumberDto numberDto, UserProgress userProgress){
         double score = 0d;
-        if (numberDto.equals(getResult())){
+        if (equalsTwoNumbers(numberDto.getNumber(), getResult().getNumber(), 6)){
             score = userProgress.getTask().getScore() * userProgress.getQuestion().getScore();
         }
         return score;
+    }
+
+    /*
+        n - точность сравнения
+        // Далее идёт код сверхразума.
+        // Attention! Не пытайтесь разобраться!
+     */
+    public boolean equalsTwoNumbers(double value1, double value2, int n){
+        for (int i = 0; i < n; i++){
+            value1 *= 10;
+            value2 *= 10;
+        }
+        long result1 = Math.round(value1);
+        long result2 = Math.round(value2);
+
+        if((result1 == result2) || (result1 + 1 == result2) || (result1 - 1 == result2)){
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override

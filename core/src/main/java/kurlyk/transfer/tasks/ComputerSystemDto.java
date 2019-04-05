@@ -1,17 +1,24 @@
 package kurlyk.transfer.tasks;
 
 import kurlyk.graph.GraphSystem;
-import lombok.AllArgsConstructor;
+import kurlyk.graph.SimpleGraphSystem;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 @Getter
 @EqualsAndHashCode
-@AllArgsConstructor
 public class ComputerSystemDto {
-    private GraphSystem graphSystem;
+    private SimpleGraphSystem simpleGraphSystem;
 
     public ComputerSystemDto() {
-        this.graphSystem = new GraphSystem();
+        this.simpleGraphSystem = new SimpleGraphSystem();
+    }
+
+    public ComputerSystemDto(GraphSystem graphSystem) {
+        this.simpleGraphSystem = new SimpleGraphSystem(graphSystem);
+    }
+
+    public GraphSystem getGraphSystem(){
+        return simpleGraphSystem.toGraphSystem();
     }
 }

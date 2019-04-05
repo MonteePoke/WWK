@@ -54,7 +54,7 @@ public class SignInController extends Controller {
 //            SelectDto radioDto = new SelectDto(Arrays.asList(new Pair<>("a1", false), new Pair<>("b2", true), new Pair<>("c3", false), new Pair<>("d4", false)));
 //            stagePool.pushStageAndShow(Stages.RADIO, new RadioStage(radioDto));
 
-//            stagePool.closeStage(Stages.SIGN_IN);
+//            stagePool.deleteStage(Stages.SIGN_IN);
         });
 
         userRunButton.setOnAction(event -> signIn());
@@ -80,7 +80,7 @@ public class SignInController extends Controller {
                 stagePool.getStage(Stages.START).setScene(new StartStudentSceneCreator().getScene());
             }
             stagePool.showStage(Stages.START);
-            stagePool.closeStage(Stages.SIGN_IN);
+            stagePool.deleteStage(Stages.SIGN_IN);
         } catch (ConnectException e) {
             System.out.println("Нет соединения с сервером");
         } catch (IOException e){

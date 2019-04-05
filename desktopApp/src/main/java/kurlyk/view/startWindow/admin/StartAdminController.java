@@ -28,7 +28,7 @@ public class StartAdminController extends Controller {
     public void initialize(){
         create.setOnAction(event -> {
             stagePool.pushStageAndShow(Stages.CREATE_LAB, new CreateLabStage());
-            stagePool.closeStage(Stages.START);
+            stagePool.deleteStage(Stages.START);
         });
     }
 }

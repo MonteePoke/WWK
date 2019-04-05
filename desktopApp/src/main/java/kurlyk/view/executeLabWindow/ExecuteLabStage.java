@@ -8,9 +8,10 @@ import java.util.List;
 public class ExecuteLabStage extends BaseStage<ExecuteLabController> {
 
 
-    public ExecuteLabStage(List<UserProgress> userProgresses) {
+    public ExecuteLabStage(List<UserProgress> userProgresses, boolean isTest) {
         super();
-        controller.setTasks(userProgresses);
+        controller.setTasks(userProgresses, isTest);
+        controller.setStage(this);
     }
 
     @Override

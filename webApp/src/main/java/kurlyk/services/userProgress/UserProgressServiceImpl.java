@@ -62,9 +62,8 @@ public class UserProgressServiceImpl implements UserProgressService {
             throw new RuntimeException("Почему-то в базе лежит два одинаковых прогресса пользователя");
         }
         if (savedUserProgresses.size() == 1){
-            userProgressRepository.save(savedUserProgresses.get(0));
-        } else{
-            userProgressRepository.save(userProgress);
+            userProgress.setId(savedUserProgresses.get(0).getId());
         }
+        userProgressRepository.save(userProgress);
     }
 }

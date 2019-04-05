@@ -77,17 +77,23 @@ public abstract class AbstractCommunicator {
         StringBuilder result = new StringBuilder();
         try {
             for (Map.Entry<String, String> entry : params.entrySet()) {
-                result.append(URLEncoder.encode(entry.getKey(), "UTF-8"));
-                result.append("=");
-                result.append(URLEncoder.encode(entry.getValue(), "UTF-8"));
-                result.append("&");
+                if (entry.getKey() != null && entry.getValue() != null) {
+                    result.append(URLEncoder.encode(entry.getKey(), "UTF-8"));
+                    result.append("=");
+                    result.append(URLEncoder.encode(entry.getValue(), "UTF-8"));
+                    result.append("&");
+                }
             }
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
 
         String resultString = result.toString();
-        return "?" + resultString.substring(0, resultString.length() - 1);
+        if (resultString.isEmpty()){
+            return "";
+        } else {
+            return "?" + resultString.substring(0, resultString.length() - 1);
+        }
     }
 
     public abstract String getToken();

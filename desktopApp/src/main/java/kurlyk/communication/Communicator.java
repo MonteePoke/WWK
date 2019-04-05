@@ -128,10 +128,10 @@ public class Communicator extends AbstractCommunicator{
 
     private Map<String, String> userProgressDtoToParameters(UserProgressDto userProgressDto){
         Map<String, String> parameters = new HashMap<>();
-        parameters.put("userId", userProgressDto.getUserId().toString());
-        parameters.put("labWorkId", userProgressDto.getLabWorkId().toString());
-        parameters.put("taskId", userProgressDto.getTaskId().toString());
-        parameters.put("questionId", userProgressDto.getQuestionId().toString());
+        parameters.put("userId", userProgressDto.getUserId() != null ? userProgressDto.getUserId().toString() : null);
+        parameters.put("labWorkId", userProgressDto.getLabWorkId() != null ? userProgressDto.getLabWorkId().toString() : null);
+        parameters.put("taskId", userProgressDto.getTaskId() != null ? userProgressDto.getTaskId().toString() : null);
+        parameters.put("questionId", userProgressDto.getQuestionId() != null ? userProgressDto.getQuestionId().toString() : null);
         return parameters;
     }
 

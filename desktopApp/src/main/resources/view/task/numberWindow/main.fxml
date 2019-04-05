@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
+<?import kurlyk.view.common.component.MyHTMLEditor?>
 <?import kurlyk.view.common.component.NumberField?>
 <VBox xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kurlyk.view.task.numberWindow.NumberController">
     <HBox>
-        <TextArea fx:id="textArea" HBox.hgrow="ALWAYS">
-            <font>
-                <Font size="15.0" />
-            </font>
-        </TextArea>
+        <MyHTMLEditor fx:id="textArea" HBox.hgrow="ALWAYS">
+
+        </MyHTMLEditor>
     </HBox>
     <VBox fx:id="root" alignment="TOP_CENTER">
         <NumberField fx:id="inputField" VBox.vgrow="ALWAYS"/>

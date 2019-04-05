@@ -3,15 +3,21 @@ package kurlyk.view.executeLabWindow;
 import com.google.gson.Gson;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import kurlyk.communication.Communicator;
 import kurlyk.communication.UserInfo;
 import kurlyk.models.UserProgress;
 import kurlyk.transfer.tasks.*;
+import kurlyk.view.common.component.UserProgressTab;
 import kurlyk.view.common.controller.Controller;
 import kurlyk.view.common.stage.StagePool;
+import kurlyk.view.showAnswerWindow.ShowAnswerStage;
+import kurlyk.view.showResultWindow.ShowResultSceneCreator;
 import kurlyk.view.task.checkWindow.CheckSceneCreator;
 import kurlyk.view.task.computerSystemDiagramWindow.ComputerSystemDiagramSceneCreator;
 import kurlyk.view.task.formulaWindow.FormulaSceneCreator;
@@ -30,6 +36,9 @@ import java.util.List;
 public class ExecuteLabController extends Controller {
 
     @FXML private VBox root;
+    @FXML private MenuItem showAnswer;
+    private TabPane tabPane;
+    private Stage stage;
 
     @Autowired
     private StagePool stagePool;
@@ -42,12 +51,13 @@ public class ExecuteLabController extends Controller {
 
 
     public void initialize(){
+        createMenu();
     }
 
-    public void setTasks(List<UserProgress> userProgresses){
-        TabPane tabPane = new TabPane();
+    public void setTasks(List<UserProgress> userProgresses, boolean isTest){
+        tabPane = new TabPane();
         for (UserProgress userProgress : userProgresses) {
-            Tab tab = new Tab("Вопрос №" + (tabPane.getTabs().size() + 1));
+            UserProgressTab tab = new UserProgressTab("Вопрос №" + (tabPane.getTabs().size() + 1), userProgress);
             Scene scene = null;
             switch (userProgress.getQuestion().getQuestionType()){
                 case RADIO:
@@ -81,8 +91,54 @@ public class ExecuteLabController extends Controller {
             }
             tab.setContent(scene.getRoot());
             tabPane.getTabs().add(tab);
-            tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
         }
+        if (userProgresses.size() > 0) {
+            tabPane.getTabs().add(createResultTab(
+                    userProgresses.get(0).getLabWork().getId(),
+                    userProgresses.get(0).getUser().getId(),
+                    isTest,
+                    createStartLabCallback(),
+                    createShowResultCallback()
+            ));
+        }
+        tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
         root.getChildren().add(tabPane);
+    }
+
+    private Tab createResultTab(Long labWorkId, Long userId, boolean isTest, Runnable startLabCallback, Runnable showResultCallback){
+        Tab tab = new Tab("Результаты");
+        tab.setContent(new ShowResultSceneCreator(labWorkId, userId, isTest, startLabCallback, showResultCallback).getScene().getRoot());
+        return tab;
+    }
+
+    private Runnable createStartLabCallback(){
+        return () ->{
+
+        };
+    }
+
+    private Runnable createShowResultCallback(){
+        return () ->{
+            tabPane.getTabs().forEach(tab -> tab.setDisable(true));
+            tabPane.getTabs().get(tabPane.getTabs().size() - 1).setDisable(false);
+        };
+    }
+
+    private void createMenu(){
+        showAnswer.setOnAction(event -> {
+            try {
+                ShowAnswerStage showAnswerStage = new ShowAnswerStage(
+                        ((UserProgressTab) tabPane.getSelectionModel().getSelectedItem()).getUserProgress().getQuestion()
+                );
+                showAnswerStage.initOwner(this.stage);
+                showAnswerStage.initModality(Modality.APPLICATION_MODAL);
+                showAnswerStage.showAndWait();
+            } catch (Exception ignored) {
+            }
+        });
+    }
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
     }
 }

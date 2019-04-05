@@ -1,24 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.web.WebView?>
-<VBox xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kurlyk.view.task.formulaWindow.FormulaController">
+<?import kurlyk.view.common.component.MyHTMLEditor?>
+<VBox xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kurlyk.view.task.formulaWindow.FormulaController">
     <HBox>
-        <TextArea fx:id="textArea" HBox.hgrow="ALWAYS">
-            <font>
-                <Font size="15.0" />
-            </font>
-        </TextArea>
+        <MyHTMLEditor fx:id="textArea" HBox.hgrow="ALWAYS">
+
+        </MyHTMLEditor>
     </HBox>
-    <VBox fx:id="root" alignment="TOP_CENTER">
-        <StackPane>
-            <WebView fx:id="browser"/>
-        </StackPane>
-    </VBox>
+   <BorderPane prefHeight="200.0" prefWidth="200.0">
+      <left>
+          <VBox fx:id="root" alignment="TOP_CENTER" prefHeight="128.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+              <StackPane>
+                  <WebView fx:id="browser" />
+              </StackPane>
+          </VBox>
+      </left>
+      <right>
+         <TextArea editable="false" prefHeight="200.0" prefWidth="200.0" text="Сумма = \sum + пробел&#10;Произведение = \prod + пробел&#10;Квадрат = \sqrt + пробел&#10;Верхний индекс = ^&#10;Нижний индекс = _" BorderPane.alignment="CENTER" />
+      </right>
+   </BorderPane>
     <HBox alignment="CENTER" HBox.hgrow="ALWAYS">
         <Button fx:id="submit" text="Ответ">
             <font>

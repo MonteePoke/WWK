@@ -15,18 +15,18 @@ public class ComputerSystemElement implements GraphElement<ComputerSystemElement
     private ComputerSystemElementType type;
     private SelfMadeSimpleDoubleProperty availabilityFactor;
 
-    public ComputerSystemElement(ComputerSystemElementType type, SelfMadeSimpleDoubleProperty availabilityFactor) {
-        this.uuid = UUID.randomUUID();
+    public ComputerSystemElement(ComputerSystemElementType type, double availabilityFactor) {
+        this(UUID.randomUUID(), type, new SelfMadeSimpleDoubleProperty(availabilityFactor));
+    }
+
+    public ComputerSystemElement(UUID uuid, ComputerSystemElementType type, double availabilityFactor) {
+        this(uuid, type, new SelfMadeSimpleDoubleProperty(availabilityFactor));
+    }
+
+    public ComputerSystemElement(UUID uuid, ComputerSystemElementType type, SelfMadeSimpleDoubleProperty availabilityFactor) {
+        this.uuid = uuid;
         this.type = type;
         this.availabilityFactor = availabilityFactor;
-    }
-
-    public ComputerSystemElement(ComputerSystemElementType type, double availabilityFactor) {
-        this(type, new SelfMadeSimpleDoubleProperty(availabilityFactor));
-    }
-
-    public ComputerSystemElement(ComputerSystemElementType type) {
-        this(type, null);
     }
 
     @Override

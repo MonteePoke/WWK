@@ -4,7 +4,6 @@ package kurlyk.view.task.radioWindow;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
 import javafx.util.Pair;
@@ -12,6 +11,7 @@ import kurlyk.communication.Communicator;
 import kurlyk.models.UserProgress;
 import kurlyk.transfer.tasks.SelectDto;
 import kurlyk.view.common.component.EditableRadioButton;
+import kurlyk.view.common.component.MyHTMLEditor;
 import kurlyk.view.common.stage.StagePool;
 import kurlyk.view.task.CommonTaskController;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ public class RadioController extends CommonTaskController<SelectDto> {
 
     @FXML private VBox root;
     @FXML private Button submit;
-    @FXML private TextArea textArea;
+    @FXML private MyHTMLEditor textArea;
 
     @Autowired
     private Communicator communicator;

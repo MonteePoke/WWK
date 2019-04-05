@@ -23,6 +23,9 @@ public class ViewProperties {
 
         //Названия различных терминов
         properties.put("availabilityFactorProperty", "Коэффициент готовности");
+
+        //Мастер-код
+        properties.put("masterKod", "1234");
     }
 
     public String getProperty(String name){

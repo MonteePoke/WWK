@@ -29,5 +29,5 @@ public class UserProgress {
     @ManyToOne
     private User user;
     private Double score;
-    private Integer errorNumber;
+    private Integer errorsNumber;
 }

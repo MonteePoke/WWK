@@ -45,7 +45,11 @@ public class StagePool {
         return pool.get(key);
     }
 
-    public void closeStage(Stages key){
+    public void deleteStage(Stages key){
         pool.remove(key).close();
+    }
+
+    public void closeStage(Stages key){
+        pool.get(key).close();
     }
 }

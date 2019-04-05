@@ -3,13 +3,13 @@ package kurlyk.view.task.textWindow;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import kurlyk.common.classesMadeByStas.StemmerPorterRU;
 import kurlyk.communication.Communicator;
 import kurlyk.models.UserProgress;
 import kurlyk.transfer.tasks.TextDto;
+import kurlyk.view.common.component.MyHTMLEditor;
 import kurlyk.view.common.stage.StagePool;
 import kurlyk.view.task.CommonTaskController;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ public class TextController extends CommonTaskController<TextDto> {
 
     @FXML private VBox root;
     @FXML private Button submit;
-    @FXML private TextArea textArea;
+    @FXML private MyHTMLEditor textArea;
     @FXML private TextField inputField;
 
     @Autowired
@@ -55,14 +55,16 @@ public class TextController extends CommonTaskController<TextDto> {
 
     private Double isRightAnswer(TextDto textDto, UserProgress userProgress){
         double score = 0d;
-        if (textDto.equals(getResult())){
-            score = userProgress.getTask().getScore() * userProgress.getQuestion().getScore();
+        for (String possibleAnswer : textDto.getText().split(";")) {
+            if(StemmerPorterRU.stemSentence(getResult().getText()).equals(StemmerPorterRU.stemSentence(possibleAnswer))){
+                score = userProgress.getTask().getScore() * userProgress.getQuestion().getScore();
+            }
         }
         return score;
     }
 
     @Override
     public TextDto getResult() {
-        return new TextDto(StemmerPorterRU.stemSentence(inputField.getText()));
+        return new TextDto(inputField.getText());
     }
 }
