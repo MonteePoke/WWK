@@ -1,4 +1,4 @@
-package kurlyk.view.createLabWindow;
+package kurlyk.create.createQuestionWindow;
 
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -31,7 +31,7 @@ import java.util.Arrays;
 
 @Component
 @Scope("prototype")
-public class CreateLabController extends Controller {
+public class CreateQuestionController extends Controller {
 
     @FXML private TextField name;
     @FXML private ComboBox<Integer> labNumber;

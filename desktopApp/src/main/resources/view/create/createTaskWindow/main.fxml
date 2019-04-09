@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<VBox prefHeight="154.0" prefWidth="673.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kurlyk.create.createTaskWindow.CreateTaskController">
+    <VBox alignment="TOP_CENTER">
+        <AnchorPane prefHeight="48.0" prefWidth="800.0">
+            <children>
+                <Label alignment="TOP_LEFT" layoutX="250.0" layoutY="18.0" prefHeight="17.0" prefWidth="87.0" text="Название">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="name" alignment="TOP_CENTER" layoutX="337.0" layoutY="13.0" prefHeight="25.0" prefWidth="257.0">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </TextField>
+            </children>
+        </AnchorPane>
+        <AnchorPane layoutX="10.0" layoutY="164.0" prefHeight="48.0" prefWidth="800.0">
+            <children>
+                <Label alignment="TOP_LEFT" layoutX="250.0" layoutY="14.0" prefHeight="17.0" prefWidth="87.0" text="Тип">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </Label>
+                <ComboBox fx:id="labType" layoutX="337.0" layoutY="12.0" />
+            </children>
+        </AnchorPane>
+        <AnchorPane layoutX="10.0" layoutY="212.0" prefHeight="48.0" prefWidth="800.0">
+            <children>
+                <Button fx:id="further" alignment="CENTER" layoutX="312.0" layoutY="12.0" text="Далее" />
+            </children>
+        </AnchorPane>
+    </VBox>
+</VBox>
