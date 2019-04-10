@@ -1,4 +1,4 @@
-package kurlyk.create.createTaskWindow;
+package kurlyk.view.create.createTaskWindow;
 
 import kurlyk.view.common.stage.BaseStage;
 

@@ -1,4 +1,4 @@
-package kurlyk.create.createQuestionWindow;
+package kurlyk.view.create.createQuestionWindow;
 
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -104,7 +104,7 @@ public class CreateQuestionController extends Controller {
                     scene = new ComputerSystemDiagramSceneCreator(userProgress, computerSystemDto, true).getScene();
                     break;
             }
-            stagePool.getStage(Stages.CREATE_LAB).setScene(scene);
+            stagePool.getStage(Stages.COMMON_CREATE).setScene(scene);
         });
     }
 

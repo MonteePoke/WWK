@@ -3,7 +3,6 @@ package kurlyk.view.task;
 import com.google.gson.Gson;
 import javafx.scene.control.Button;
 import kurlyk.communication.Communicator;
-import kurlyk.create.createQuestionWindow.CreateQuestionSceneCreator;
 import kurlyk.models.UserProgress;
 import kurlyk.view.common.component.FxDialogs;
 import kurlyk.view.common.component.MyHTMLEditor;
@@ -11,6 +10,7 @@ import kurlyk.view.common.controller.Controller;
 import kurlyk.view.common.controller.TaskBodyController;
 import kurlyk.view.common.stage.StagePool;
 import kurlyk.view.common.stage.Stages;
+import kurlyk.view.create.createQuestionWindow.CreateQuestionSceneCreator;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -39,7 +39,7 @@ public abstract class CommonTaskController <T> extends Controller implements Tas
                 userProgress.getQuestion().setAnswer(new Gson().toJson(getResult()));
                 try {
                     communicator.postQuestion(userProgress.getQuestion());
-                    stagePool.getStage(Stages.CREATE_LAB).setScene(new CreateQuestionSceneCreator().getScene());
+                    stagePool.getStage(Stages.COMMON_CREATE).setScene(new CreateQuestionSceneCreator().getScene());
                 } catch (IOException e) {
                     FxDialogs.showError("", "Ошибка отправки данных");
                 }

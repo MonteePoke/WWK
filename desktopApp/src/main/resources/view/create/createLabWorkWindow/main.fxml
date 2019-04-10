@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<VBox prefHeight="154.0" prefWidth="673.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kurlyk.create.createLabWorkWindow.CreateLabWorkController">
+<VBox prefHeight="154.0" prefWidth="673.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kurlyk.view.create.createLabWorkWindow.CreateLabWorkController">
     <VBox alignment="TOP_CENTER">
         <AnchorPane prefHeight="48.0" prefWidth="800.0">
             <children>

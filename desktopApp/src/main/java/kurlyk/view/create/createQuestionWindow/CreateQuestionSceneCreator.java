@@ -1,4 +1,4 @@
-package kurlyk.create.createQuestionWindow;
+package kurlyk.view.create.createQuestionWindow;
 
 import kurlyk.view.common.stage.BaseSceneCreator;
 

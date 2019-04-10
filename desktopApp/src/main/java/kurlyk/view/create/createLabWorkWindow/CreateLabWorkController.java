@@ -1,4 +1,4 @@
-package kurlyk.create.commonCreateWindow;
+package kurlyk.view.create.createLabWorkWindow;
 
 import kurlyk.communication.UserInfo;
 import kurlyk.view.common.controller.Controller;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Scope("prototype")
-public class CommonCreateController extends Controller {
+public class CreateLabWorkController extends Controller {
 
 
 

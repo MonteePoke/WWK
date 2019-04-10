@@ -1,4 +1,4 @@
-package kurlyk.create.createLabWorkWindow;
+package kurlyk.view.create.createLabWorkWindow;
 
 import kurlyk.view.common.stage.BaseStage;
 

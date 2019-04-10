@@ -1,4 +1,4 @@
-package kurlyk.create.commonCreateWindow;
+package kurlyk.view.create.commonCreateWindow;
 
 import kurlyk.view.common.stage.BaseSceneCreator;
 

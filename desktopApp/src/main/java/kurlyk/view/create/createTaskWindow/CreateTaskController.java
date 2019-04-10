@@ -1,4 +1,4 @@
-package kurlyk.create.createLabWorkWindow;
+package kurlyk.view.create.createTaskWindow;
 
 import kurlyk.communication.UserInfo;
 import kurlyk.view.common.controller.Controller;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Scope("prototype")
-public class CreateLabWorkController extends Controller {
+public class CreateTaskController extends Controller {
 
 
 

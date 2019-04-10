@@ -12,7 +12,10 @@ public enum Stages {
 
     SIGN_IN,
     START,
-    CREATE_LAB,
+    COMMON_CREATE,
+    CREATE_LAB_WORK,
+    CREATE_TEST,
+    CREATE_QUESTION,
     PERFORM_TEST,
     PERFORM_LAB
 }
