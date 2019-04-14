@@ -58,7 +58,7 @@ public class StartStudentController extends Controller {
     private Map<Boolean, List<UserProgress>> getUserProgresses(LabWork labWork){
         Map<Boolean, List<UserProgress>> userProgresses = new HashMap<>();
         try{
-            Map<Boolean, List<Task>> tasks = communicator.getTasks(labWork.getId())
+            Map<Boolean, List<Task>> tasks = communicator.getTasks(labWork)
                     .stream()
                     .collect(Collectors.partitioningBy(Task::getIsTest));
             List<UserProgress> userProgressLabs = createUserProgressFromGarbage(
@@ -82,7 +82,7 @@ public class StartStudentController extends Controller {
     private List<UserProgress> createUserProgressFromGarbage(List<Task> tasks, LabWork labWork, User user) throws IOException{
         List<UserProgress> userProgresses = new ArrayList<>();
         for (Task task : tasks) {
-            for (Question question : communicator.getQuestions(task.getId())) {
+            for (Question question : communicator.getQuestions(task)) {
                 userProgresses.add(
                         UserProgress.builder()
                                 .question(question)

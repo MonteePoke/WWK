@@ -3,14 +3,30 @@ package kurlyk.view.common.component;
 
 import javafx.scene.control.TextField;
 
-public class NumberField extends TextField {
+public class DoubleField extends TextField {
 
-    private NumberField(String text) {
+    private DoubleField(String text) {
         super(text);
         setFocusTraversable(false);
         textProperty().addListener((observable, oldValue, newValue) -> {
             setText(numberFilter(newValue) ? newValue : oldValue);
         });
+    }
+
+    public DoubleField(Double number) {
+        this(number == null ? "" : number.toString());
+    }
+
+    public DoubleField() {
+        this("");
+    }
+
+    public double getNumber(){
+        return Double.parseDouble(getText().isEmpty() || getText().equals("-") ? "0" : getText());
+    }
+
+    public void setNumber(double number){
+        setText(Double.toString(number));
     }
 
     private boolean numberFilter(String str){
@@ -21,22 +37,5 @@ public class NumberField extends TextField {
             return false;
         }
         return true;
-    }
-
-
-    public NumberField(Double number) {
-        this(number.toString());
-    }
-
-    public NumberField() {
-        this("");
-    }
-
-    public double getNumber(){
-        return Double.parseDouble(getText().isEmpty() || getText().equals("-") ? "0" : getText());
-    }
-
-    public void setNumber(double number){
-        setText(Double.toString(number));
     }
 }

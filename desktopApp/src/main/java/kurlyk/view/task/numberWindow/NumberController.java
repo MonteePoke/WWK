@@ -7,8 +7,8 @@ import javafx.scene.layout.VBox;
 import kurlyk.communication.Communicator;
 import kurlyk.models.UserProgress;
 import kurlyk.transfer.tasks.NumberDto;
+import kurlyk.view.common.component.DoubleField;
 import kurlyk.view.common.component.MyHTMLEditor;
-import kurlyk.view.common.component.NumberField;
 import kurlyk.view.common.stage.StagePool;
 import kurlyk.view.task.CommonTaskController;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ public class NumberController extends CommonTaskController<NumberDto> {
     @FXML private VBox root;
     @FXML private Button submit;
     @FXML private MyHTMLEditor textArea;
-    @FXML private NumberField inputField;
+    @FXML private DoubleField inputField;
 
     @Autowired
     private Communicator communicator;

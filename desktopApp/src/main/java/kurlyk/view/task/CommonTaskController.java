@@ -10,7 +10,6 @@ import kurlyk.view.common.controller.Controller;
 import kurlyk.view.common.controller.TaskBodyController;
 import kurlyk.view.common.stage.StagePool;
 import kurlyk.view.common.stage.Stages;
-import kurlyk.view.create.createQuestionWindow.CreateQuestionSceneCreator;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -38,8 +37,9 @@ public abstract class CommonTaskController <T> extends Controller implements Tas
                 userProgress.getQuestion().setQuestion(textArea.getHtmlText());
                 userProgress.getQuestion().setAnswer(new Gson().toJson(getResult()));
                 try {
-                    communicator.postQuestion(userProgress.getQuestion());
-                    stagePool.getStage(Stages.COMMON_CREATE).setScene(new CreateQuestionSceneCreator().getScene());
+                    communicator.saveQuestion(userProgress.getQuestion());
+                    stagePool.showStage(Stages.COMMON_CREATE);
+                    stagePool.closeStage(Stages.CREATE_QUESTION);
                 } catch (IOException e) {
                     FxDialogs.showError("", "Ошибка отправки данных");
                 }
@@ -52,7 +52,7 @@ public abstract class CommonTaskController <T> extends Controller implements Tas
                 modifyButton(submit, userProgress.getScore());
                 userProgress.setErrorsNumber(errorsNumber);
                 try {
-                    communicator.postUserProgress(userProgress);
+                    communicator.saveUserProgress(userProgress);
                 } catch (IOException e) {
                     FxDialogs.showError("", "Ошибка отправки данных");
                 }

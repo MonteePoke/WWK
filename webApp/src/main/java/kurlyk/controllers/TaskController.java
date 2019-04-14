@@ -2,11 +2,11 @@ package kurlyk.controllers;
 
 
 import kurlyk.models.Task;
+import kurlyk.models.TaskQuestion;
 import kurlyk.services.task.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,5 +24,44 @@ public class TaskController {
     @GetMapping("/tasks/{lab-work-id}")
     public List<Task> getTasks(@PathVariable("lab-work-id") Long labWorkId) {
         return taskService.getTasks(labWorkId);
+    }
+
+    @GetMapping("/tasks")
+    public List<Task> getTasks() {
+        return taskService.getTasks();
+    }
+
+    @PostMapping("/task")
+    public ResponseEntity<Object> saveTask(@RequestBody Task task) {
+        taskService.saveTask(task);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/task/delete/{id}")
+    public ResponseEntity<Object> deleteTask(@PathVariable("id") Long id) {
+        taskService.deleteTask(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/task-question-matching")
+    public List<TaskQuestion> getTaskQuestionMatching() {
+        return taskService.getTaskQuestionMatching();
+    }
+
+    @GetMapping("/task-question-matching/{id}")
+    public List<TaskQuestion> getTaskQuestionMatching(@PathVariable("id") Long taskId) {
+        return taskService.getTaskQuestionMatching(taskId);
+    }
+
+    @PostMapping("/task-question-matching")
+    public ResponseEntity<Object> saveTaskQuestionMatching(@RequestBody TaskQuestion taskQuestion) {
+        taskService.saveTaskQuestionMatching(taskQuestion);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/task-question-matching/delete/{id}")
+    public ResponseEntity<Object> deleteTaskQuestionMatching(@PathVariable("id") Long id) {
+        taskService.deleteTaskQuestionMatching(id);
+        return ResponseEntity.ok().build();
     }
 }

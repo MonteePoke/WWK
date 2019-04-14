@@ -25,9 +25,25 @@ public class QuestionController {
         return questionService.getQuestions(taskId);
     }
 
+    @GetMapping("/question-headers/{task-id}")
+    public List<Question> getQuestionHeaders(@PathVariable("task-id") Long taskId) {
+        return questionService.getQuestionHeaders(taskId);
+    }
+
+    @GetMapping("/questions")
+    public List<Question> getQuestions() {
+        return questionService.getQuestions();
+    }
+
     @PostMapping("/question")
     public ResponseEntity<Object> saveQuestion(@RequestBody Question question) {
         questionService.saveQuestion(question);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/question/delete/{id}")
+    public ResponseEntity<Object> deleteQuestion(@PathVariable("id") Long id) {
+        questionService.deleteQuestion(id);
         return ResponseEntity.ok().build();
     }
 }

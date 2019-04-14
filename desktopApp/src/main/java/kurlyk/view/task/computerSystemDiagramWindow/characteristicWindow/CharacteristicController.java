@@ -10,7 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import kurlyk.view.common.component.NumberField;
+import kurlyk.view.common.component.DoubleField;
 import kurlyk.view.common.controller.Controller;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -49,7 +49,7 @@ public class CharacteristicController extends Controller {
         Label keyLabel = new Label(name);
         setupPropertiesForKey(keyLabel);
 
-        NumberField valueField = new NumberField(property.getValue());
+        DoubleField valueField = new DoubleField(property.getValue());
         valueField.textProperty().addListener((observable, oldValue, newValue) -> {
             property.set(new Double(newValue));
         });

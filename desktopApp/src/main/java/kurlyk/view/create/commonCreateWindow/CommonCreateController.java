@@ -31,12 +31,15 @@ public class CommonCreateController extends Controller {
     public void initialize() {
         createLabWork.setOnAction(event -> {
             stagePool.pushStageAndShow(Stages.CREATE_LAB_WORK, new CreateLabWorkStage());
+            stagePool.closeStage(Stages.COMMON_CREATE);
         });
         createTask.setOnAction(event -> {
-            stagePool.pushStageAndShow(Stages.CREATE_TEST, new CreateTaskStage());
+            stagePool.pushStageAndShow(Stages.CREATE_TASK, new CreateTaskStage());
+            stagePool.closeStage(Stages.COMMON_CREATE);
         });
         createQuestion.setOnAction(event -> {
             stagePool.pushStageAndShow(Stages.CREATE_QUESTION, new CreateQuestionStage());
+            stagePool.closeStage(Stages.COMMON_CREATE);
         });
     }
 }

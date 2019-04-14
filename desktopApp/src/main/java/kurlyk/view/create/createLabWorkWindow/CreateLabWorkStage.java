@@ -11,6 +11,6 @@ public class CreateLabWorkStage extends BaseStage<CreateLabWorkController> {
 
     @Override
     public String getPathToMainStage() {
-        return "create/CreateLabWorkWindow/main";
+        return "create/createLabWorkWindow/main";
     }
 }

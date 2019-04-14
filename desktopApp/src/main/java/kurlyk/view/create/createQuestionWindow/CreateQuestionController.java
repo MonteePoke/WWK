@@ -33,8 +33,7 @@ import java.util.Arrays;
 @Scope("prototype")
 public class CreateQuestionController extends Controller {
 
-    @FXML private TextField name;
-    @FXML private ComboBox<Integer> labNumber;
+    @FXML private TextField nameField;
     @FXML private ComboBox<QuestionType> labType;
     @FXML private Button further;
 
@@ -47,7 +46,6 @@ public class CreateQuestionController extends Controller {
 
 
     public void initialize(){
-        labNumber.getItems().addAll(1, 2, 3, 4, 5, 6, 7);
         labType.getItems().addAll(
                 QuestionType.COMPUTER_SYSTEM,
                 QuestionType.FORMULA,
@@ -104,7 +102,7 @@ public class CreateQuestionController extends Controller {
                     scene = new ComputerSystemDiagramSceneCreator(userProgress, computerSystemDto, true).getScene();
                     break;
             }
-            stagePool.getStage(Stages.COMMON_CREATE).setScene(scene);
+            stagePool.getStage(Stages.CREATE_QUESTION).setScene(scene);
         });
     }
 
@@ -117,6 +115,7 @@ public class CreateQuestionController extends Controller {
                 .build();
         Question question = Question.builder()
                 .questionType(labType.getValue())
+                .name(nameField.getText())
                 .score(1d)
                 .build();
 

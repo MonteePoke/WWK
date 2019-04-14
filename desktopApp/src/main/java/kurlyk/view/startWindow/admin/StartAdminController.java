@@ -6,7 +6,7 @@ import kurlyk.communication.Communicator;
 import kurlyk.view.common.controller.Controller;
 import kurlyk.view.common.stage.StagePool;
 import kurlyk.view.common.stage.Stages;
-import kurlyk.view.create.createQuestionWindow.CreateQuestionStage;
+import kurlyk.view.create.commonCreateWindow.CommonCreateStage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -27,8 +27,8 @@ public class StartAdminController extends Controller {
 
     public void initialize(){
         create.setOnAction(event -> {
-            stagePool.pushStageAndShow(Stages.COMMON_CREATE, new CreateQuestionStage());
-            stagePool.deleteStage(Stages.START);
+            stagePool.pushStageAndShow(Stages.COMMON_CREATE, new CommonCreateStage());
+            stagePool.closeStage(Stages.START);
         });
     }
 }

@@ -16,8 +16,8 @@ import kurlyk.graph.GraphSystem;
 import kurlyk.models.UserProgress;
 import kurlyk.transfer.tasks.ComputerSystemDto;
 import kurlyk.view.common.component.DiagramContextMenu;
+import kurlyk.view.common.component.DoubleField;
 import kurlyk.view.common.component.MyHTMLEditor;
-import kurlyk.view.common.component.NumberField;
 import kurlyk.view.common.stage.StagePool;
 import kurlyk.view.common.stage.Stages;
 import kurlyk.view.task.CommonTaskController;
@@ -45,7 +45,7 @@ public class ComputerSystemDiagramController extends CommonTaskController<Comput
     @FXML private Button connect;
     @FXML private AnchorPane drawPanel;
     @FXML private ScrollPane scrollPanel;
-    @FXML private NumberField availabilityFactorField;
+    @FXML private DoubleField availabilityFactorField;
 
     @Autowired
     private Communicator communicator;

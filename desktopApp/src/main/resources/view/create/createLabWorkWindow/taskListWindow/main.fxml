@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<VBox prefHeight="504.0" prefWidth="687.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kurlyk.view.create.createLabWorkWindow.taskListWindow.TaskListController">
+    <VBox alignment="TOP_CENTER">
+        <AnchorPane layoutX="10.0" layoutY="212.0" prefHeight="48.0" prefWidth="800.0">
+            <children>
+                <Button fx:id="ok" alignment="CENTER" layoutX="14.0" layoutY="12.0" text="OK" />
+            </children>
+        </AnchorPane>
+    </VBox>
+   <TableView fx:id="taskTable" prefHeight="456.0" prefWidth="687.0">
+     <columns>
+       <TableColumn fx:id="taskNumber" prefWidth="75.0" text="№" />
+       <TableColumn fx:id="taskName" prefWidth="609.9999847412109" text="Задание" />
+     </columns>
+   </TableView>
+</VBox>

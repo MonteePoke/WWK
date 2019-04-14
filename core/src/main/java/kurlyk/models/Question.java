@@ -23,6 +23,8 @@ public class Question {
     @Column(nullable = false)
     private QuestionType questionType;
 
+    private String name;
+
     @Lob
     @Column(columnDefinition="CLOB")
     private String question;
@@ -32,4 +34,10 @@ public class Question {
 
     private Double score;
     private String description;
+
+    public Question(Long id, QuestionType questionType, String name) {
+        this.id = id;
+        this.questionType = questionType;
+        this.name = name;
+    }
 }

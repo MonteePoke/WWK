@@ -23,4 +23,10 @@ public class TaskQuestion {
     private Task task;
     @ManyToOne
     private Question question;
+
+    public TaskQuestion(Long id, Long taskId, String taskName, Long questionId, String questionName) {
+        this.id = id;
+        this.task = Task.builder().id(taskId).name(taskName).build();
+        this.question = Question.builder().id(questionId).name(questionName).build();
+    }
 }
