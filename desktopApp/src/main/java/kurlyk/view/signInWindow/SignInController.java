@@ -2,6 +2,7 @@ package kurlyk.view.signInWindow;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import kurlyk.communication.Communicator;
@@ -25,10 +26,14 @@ import java.net.ConnectException;
 @Scope("prototype")
 public class SignInController extends Controller {
 
-    @FXML public TextField loginInput;
-    @FXML private PasswordField passwordInput;
-    @FXML private Button guestRunButton;
-    @FXML private Button userRunButton;
+    @FXML public TextField loginField;
+    @FXML private PasswordField passwordField;
+    @FXML private Button logInButton;
+    @FXML private Button logInAsGuestButton;
+    @FXML private Label feedback;
+
+    private boolean loginFieldEmpty = false;
+    private boolean passwordFieldEmpty = false;
 
     @Autowired
     private StagePool stagePool;
@@ -42,7 +47,7 @@ public class SignInController extends Controller {
 
     public void initialize(){
 
-        guestRunButton.setOnAction(event -> {
+        logInAsGuestButton.setOnAction(event -> {
 //            stagePool.pushStageAndShow(Stages.COMPUTER_SYSTEM, new ComputerSystemDiagramStage());
 //            stagePool.pushStageAndShow(Stages.FORMULA, new FormulaStage());
 //            stagePool.pushStageAndShow(Stages.TEXT, new TextStage());
@@ -57,22 +62,47 @@ public class SignInController extends Controller {
 //            stagePool.deleteStage(Stages.SIGN_IN);
         });
 
-        userRunButton.setOnAction(event -> signIn());
+        logInButton.setOnAction(event -> signIn());
+
+        loginField.textProperty().addListener((observable, oldValue, newValue) -> {
+            validateButtons();
+
+        });
+
+        passwordField.textProperty().addListener((observable, oldValue, newValue) -> {
+            validateButtons();
+        });
+    }
+
+    private void validateButtons(){
+        loginFieldEmpty = loginField.getText().equals("");
+        passwordFieldEmpty = passwordField.getText().equals("");
+
+        if(loginFieldEmpty){
+            logInButton.setDisable(true);
+            logInAsGuestButton.setDisable(true);
+        } else if (passwordFieldEmpty){
+            logInButton.setDisable(true);
+            logInAsGuestButton.setDisable(false);
+        } else {
+            logInButton.setDisable(false);
+            logInAsGuestButton.setDisable(false);
+        }
     }
 
     public void signIn(){
         LoginDto loginDto = LoginDto
                 .builder()
-                .login(loginInput.getText())
-                .password(passwordInput.getText())
-//                    .login("admin")
-//                    .password("admin")
-//                    .login("student")
-//                    .password("student")
+                .login(loginField.getText())
+                .password(passwordField.getText())
                 .build();
-
         try {
-            communicator.login(loginDto);
+            if(!communicator.login(loginDto)){
+                feedback.setVisible(true);
+                return;
+            } else {
+                feedback.setVisible(false);
+            }
             stagePool.pushStage(Stages.START, new StartStage());
             if (userInfo.getTokenDto().getUserRole() == Role.ADMIN) {
                 stagePool.getStage(Stages.START).setScene(new StartAdminScaneCreator().getScene());

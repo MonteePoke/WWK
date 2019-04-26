@@ -41,10 +41,15 @@ public class Communicator extends AbstractCommunicator{
     /*
         User
      */
-    public void login(LoginDto loginDto) throws ConnectException, IOException {
+    public boolean login(LoginDto loginDto) throws ConnectException, IOException {
         Type type = new TypeToken<TokenDto>(){}.getType();
         TokenDto tokenDto = postData(type, loginDto, "/login");
-        userInfo.setTokenDto(tokenDto);
+        if(tokenDto.getValue().equals("")){
+            return false;
+        } else {
+            userInfo.setTokenDto(tokenDto);
+            return true;
+        }
     }
 
     public User getUser() throws ConnectException, IOException {

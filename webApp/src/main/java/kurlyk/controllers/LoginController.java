@@ -17,6 +17,12 @@ public class LoginController {
 
     @PostMapping("/login")
     public ResponseEntity<TokenDto> login(@RequestBody LoginDto loginDto) {
-        return ResponseEntity.ok(loginService.login(loginDto));
+        TokenDto tokenDto = new TokenDto();
+        try {
+            tokenDto = loginService.login(loginDto);
+        } catch (IllegalArgumentException e) {
+            tokenDto.setValue("");
+        }
+        return ResponseEntity.ok(tokenDto);
     }
 }

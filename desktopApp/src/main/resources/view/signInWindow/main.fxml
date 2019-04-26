@@ -1,25 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<VBox prefWidth="400" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kurlyk.view.signInWindow.SignInController">
-    <VBox alignment="TOP_CENTER">
-        <Label VBox.vgrow="ALWAYS" maxHeight="Infinity" text="Логин"/>
-        <TextField fx:id="loginInput" VBox.vgrow="ALWAYS" maxHeight="Infinity"/>
-        <Label VBox.vgrow="ALWAYS" maxHeight="Infinity" text="Пароль"/>
-        <PasswordField fx:id="passwordInput" VBox.vgrow="ALWAYS" maxHeight="Infinity"/>
-        <BorderPane>
-            <padding>
-                <Insets top="10" right="70" bottom="10" left="70"/>
-            </padding>
-            <left>
-                <Button fx:id="guestRunButton" text="Гость"/>
-            </left>
-            <right>
-                <Button fx:id="userRunButton" text="Авторизация"/>
-            </right>
-        </BorderPane>
-    </VBox>
-</VBox>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.*?>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="477.0" prefWidth="305.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kurlyk.view.signInWindow.SignInController">
+   <children>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="32.0" layoutY="50.0" prefHeight="56.0" prefWidth="241.0" text="Авторизация">
+         <font>
+            <Font name="Serif Bold" size="27.0" />
+         </font>
+      </Label>
+      <PasswordField fx:id="passwordField" layoutX="114.0" layoutY="272.0">
+         <font>
+            <Font name="Serif Regular" size="14.0" />
+         </font>
+      </PasswordField>
+      <TextField fx:id="loginField" layoutX="114.0" layoutY="211.0">
+         <font>
+            <Font name="SansSerif Regular" size="14.0" />
+         </font>
+      </TextField>
+      <Label layoutX="36.0" layoutY="214.0" text="Логин">
+         <font>
+            <Font name="Serif Regular" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="33.0" layoutY="274.0" text="Пароль">
+         <font>
+            <Font name="Serif Regular" size="18.0" />
+         </font>
+      </Label>
+      <Button fx:id="logInButton" disable="true" layoutX="83.0" layoutY="334.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="140.0" text="Войти">
+         <font>
+            <Font name="Serif Regular" size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="logInAsGuestButton" disable="true" layoutX="86.0" layoutY="389.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="140.0" text="Войти, как гость">
+         <font>
+            <Font name="Serif Regular" size="14.0" />
+         </font>
+      </Button>
+      <Label fx:id="feedback" alignment="CENTER" contentDisplay="CENTER" layoutX="36.0" layoutY="124.0" prefHeight="63.0" prefWidth="255.0" text="Пользователь не найден" textAlignment="CENTER" textFill="RED" visible="false">
+         <font>
+            <Font name="Serif Regular" size="18.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

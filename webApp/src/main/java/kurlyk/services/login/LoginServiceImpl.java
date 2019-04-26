@@ -27,7 +27,7 @@ public class LoginServiceImpl implements LoginService {
     private UsersRepository usersRepository;
 
     @Override
-    public TokenDto login(LoginDto loginDto) {
+    public TokenDto login(LoginDto loginDto) throws IllegalArgumentException {
         Optional<User> userCandidate = usersRepository.findOneByLogin(loginDto.getLogin());
 
         if (userCandidate.isPresent()) {
