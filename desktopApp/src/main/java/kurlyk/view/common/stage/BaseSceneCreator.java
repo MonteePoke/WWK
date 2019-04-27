@@ -12,6 +12,7 @@ public abstract class BaseSceneCreator<T extends Controller> implements SceneCre
     public BaseSceneCreator() {
         LoadDto<T> loadDto = Loader.load(getPathToMainStage());
         controller = loadDto.getController();
+        BaseStage.setMenuToScene(loadDto.getScene());
         scene = loadDto.getScene();
     }
 

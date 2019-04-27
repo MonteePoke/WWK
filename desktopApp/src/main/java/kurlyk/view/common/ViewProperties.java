@@ -26,6 +26,12 @@ public class ViewProperties {
 
         //Мастер-код
         properties.put("masterKod", "1234");
+
+        //Пункты верхнего меню
+        properties.put("actions", "Действия");
+        properties.put("help", "Справка");
+        properties.put("exit", "Выйти");
+        properties.put("something", "что-то");
     }
 
     public String getProperty(String name){

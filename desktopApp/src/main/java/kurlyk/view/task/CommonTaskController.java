@@ -5,7 +5,7 @@ import javafx.scene.control.Button;
 import kurlyk.communication.Communicator;
 import kurlyk.models.UserProgress;
 import kurlyk.view.common.component.FxDialogs;
-import kurlyk.view.common.component.MyHTMLEditor;
+import kurlyk.view.common.component.MyHtmlEditor;
 import kurlyk.view.common.controller.Controller;
 import kurlyk.view.common.controller.TaskBodyController;
 import kurlyk.view.common.stage.StagePool;
@@ -25,7 +25,7 @@ public abstract class CommonTaskController <T> extends Controller implements Tas
             Supplier<Double> isRightAnswer,
             boolean editable,
 
-            MyHTMLEditor textArea,
+            MyHtmlEditor textArea,
             Button submit,
             Communicator communicator,
             StagePool stagePool

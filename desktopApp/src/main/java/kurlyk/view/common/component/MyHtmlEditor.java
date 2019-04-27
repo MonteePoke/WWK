@@ -2,9 +2,9 @@ package kurlyk.view.common.component;
 
 import javafx.scene.web.HTMLEditor;
 
-public class MyHTMLEditor extends HTMLEditor {
+public class MyHtmlEditor extends HTMLEditor {
 
-    public MyHTMLEditor() {
+    public MyHtmlEditor() {
         setPrefHeight(200);
         setMaxWidth(Double.MAX_VALUE);
         setPrefHeight(50);

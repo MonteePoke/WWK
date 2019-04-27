@@ -4,12 +4,12 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 <?import kurlyk.view.common.component.DoubleField?>
-<?import kurlyk.view.common.component.MyHTMLEditor?>
+<?import kurlyk.view.common.component.MyHtmlEditor?>
 <VBox xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kurlyk.view.task.numberWindow.NumberController">
     <HBox>
-        <MyHTMLEditor fx:id="textArea" HBox.hgrow="ALWAYS">
+        <MyHtmlEditor fx:id="textArea" HBox.hgrow="ALWAYS">
 
-        </MyHTMLEditor>
+        </MyHtmlEditor>
     </HBox>
     <VBox fx:id="root" alignment="TOP_CENTER">
         <DoubleField fx:id="inputField" VBox.vgrow="ALWAYS"/>

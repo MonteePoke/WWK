@@ -17,7 +17,7 @@ import kurlyk.models.UserProgress;
 import kurlyk.transfer.tasks.ComputerSystemDto;
 import kurlyk.view.common.component.DiagramContextMenu;
 import kurlyk.view.common.component.DoubleField;
-import kurlyk.view.common.component.MyHTMLEditor;
+import kurlyk.view.common.component.MyHtmlEditor;
 import kurlyk.view.common.stage.StagePool;
 import kurlyk.view.common.stage.Stages;
 import kurlyk.view.task.CommonTaskController;
@@ -36,7 +36,7 @@ public class ComputerSystemDiagramController extends CommonTaskController<Comput
 
     @FXML private VBox root;
     @FXML private Button submit;
-    @FXML private MyHTMLEditor textArea;
+    @FXML private MyHtmlEditor textArea;
 
     @FXML private Button cpuButton;
     @FXML private Button ramButton;

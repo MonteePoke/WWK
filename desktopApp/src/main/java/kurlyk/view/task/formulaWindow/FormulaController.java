@@ -11,7 +11,7 @@ import javafx.scene.web.WebView;
 import kurlyk.communication.Communicator;
 import kurlyk.models.UserProgress;
 import kurlyk.transfer.tasks.FormulaDto;
-import kurlyk.view.common.component.MyHTMLEditor;
+import kurlyk.view.common.component.MyHtmlEditor;
 import kurlyk.view.common.stage.StagePool;
 import kurlyk.view.task.CommonTaskController;
 import netscape.javascript.JSObject;
@@ -28,7 +28,7 @@ public class FormulaController extends CommonTaskController<FormulaDto> {
 
     @FXML private VBox root;
     @FXML private Button submit;
-    @FXML private MyHTMLEditor textArea;
+    @FXML private MyHtmlEditor textArea;
     @FXML private WebView browser;
     private JSObject window;
 

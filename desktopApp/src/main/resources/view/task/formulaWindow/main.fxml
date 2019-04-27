@@ -5,12 +5,12 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.web.WebView?>
-<?import kurlyk.view.common.component.MyHTMLEditor?>
+<?import kurlyk.view.common.component.MyHtmlEditor?>
 <VBox xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kurlyk.view.task.formulaWindow.FormulaController">
     <HBox>
-        <MyHTMLEditor fx:id="textArea" HBox.hgrow="ALWAYS">
+        <MyHtmlEditor fx:id="textArea" HBox.hgrow="ALWAYS">
 
-        </MyHTMLEditor>
+        </MyHtmlEditor>
     </HBox>
    <BorderPane prefHeight="200.0" prefWidth="200.0">
       <left>

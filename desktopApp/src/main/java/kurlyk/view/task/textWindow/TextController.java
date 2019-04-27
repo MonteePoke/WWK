@@ -9,7 +9,7 @@ import kurlyk.common.classesMadeByStas.StemmerPorterRU;
 import kurlyk.communication.Communicator;
 import kurlyk.models.UserProgress;
 import kurlyk.transfer.tasks.TextDto;
-import kurlyk.view.common.component.MyHTMLEditor;
+import kurlyk.view.common.component.MyHtmlEditor;
 import kurlyk.view.common.stage.StagePool;
 import kurlyk.view.task.CommonTaskController;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ public class TextController extends CommonTaskController<TextDto> {
 
     @FXML private VBox root;
     @FXML private Button submit;
-    @FXML private MyHTMLEditor textArea;
+    @FXML private MyHtmlEditor textArea;
     @FXML private TextField inputField;
 
     @Autowired

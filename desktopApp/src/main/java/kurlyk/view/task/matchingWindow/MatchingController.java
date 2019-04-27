@@ -8,7 +8,7 @@ import kurlyk.communication.Communicator;
 import kurlyk.models.UserProgress;
 import kurlyk.transfer.tasks.MatchingDto;
 import kurlyk.view.common.component.DraggingListView;
-import kurlyk.view.common.component.MyHTMLEditor;
+import kurlyk.view.common.component.MyHtmlEditor;
 import kurlyk.view.common.stage.StagePool;
 import kurlyk.view.task.CommonTaskController;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ public class MatchingController extends CommonTaskController<MatchingDto> {
 
     @FXML private VBox root;
     @FXML private Button submit;
-    @FXML private MyHTMLEditor textArea;
+    @FXML private MyHtmlEditor textArea;
     @FXML private DraggingListView leftField;
     @FXML private DraggingListView rightField;
 
