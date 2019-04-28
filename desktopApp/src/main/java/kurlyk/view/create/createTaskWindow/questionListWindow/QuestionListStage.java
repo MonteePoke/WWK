@@ -1,7 +1,7 @@
 package kurlyk.view.create.createTaskWindow.questionListWindow;
 
 import kurlyk.models.Question;
-import kurlyk.view.common.stage.BaseStage;
+import kurlyk.view.common.stage.base.BaseStage;
 
 import java.util.function.Consumer;
 

@@ -2,7 +2,7 @@ package kurlyk.view.task.radioWindow;
 
 import kurlyk.models.UserProgress;
 import kurlyk.transfer.tasks.SelectDto;
-import kurlyk.view.common.stage.BaseSceneCreator;
+import kurlyk.view.common.stage.base.BaseSceneCreator;
 
 public class RadioSceneCreator extends BaseSceneCreator<RadioController> {
 

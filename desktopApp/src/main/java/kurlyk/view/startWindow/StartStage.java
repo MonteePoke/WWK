@@ -1,6 +1,6 @@
 package kurlyk.view.startWindow;
 
-import kurlyk.view.common.stage.BaseStage;
+import kurlyk.view.common.stage.base.BaseStage;
 
 public class StartStage extends BaseStage<StartController> {
 

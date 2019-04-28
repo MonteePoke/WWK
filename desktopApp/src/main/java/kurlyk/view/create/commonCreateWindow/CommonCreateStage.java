@@ -1,6 +1,6 @@
 package kurlyk.view.create.commonCreateWindow;
 
-import kurlyk.view.common.stage.BaseStage;
+import kurlyk.view.common.stage.base.BaseStage;
 
 public class CommonCreateStage extends BaseStage<CommonCreateController> {
 

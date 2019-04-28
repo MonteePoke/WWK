@@ -28,10 +28,11 @@ public class ViewProperties {
         properties.put("masterKod", "1234");
 
         //Пункты верхнего меню
-        properties.put("actions", "Действия");
+        properties.put("open", "Открыть");
         properties.put("help", "Справка");
         properties.put("exit", "Выйти");
-        properties.put("something", "что-то");
+        properties.put("labWorks", "Лабораторные работы");
+        properties.put("dataBase", "База знаний");
     }
 
     public String getProperty(String name){

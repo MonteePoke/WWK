@@ -2,7 +2,7 @@ package kurlyk.view.task.computerSystemDiagramWindow;
 
 import kurlyk.models.Question;
 import kurlyk.transfer.tasks.ComputerSystemDto;
-import kurlyk.view.common.stage.BaseStage;
+import kurlyk.view.common.stage.base.BaseStage;
 
 public class ComputerSystemDiagramStage extends BaseStage<ComputerSystemDiagramController> {
 

@@ -1,7 +1,7 @@
 package kurlyk.view.create.createTaskWindow.taskQuestionMatchingWindow;
 
 import kurlyk.models.Task;
-import kurlyk.view.common.stage.BaseStage;
+import kurlyk.view.common.stage.base.BaseStage;
 
 public class TaskQuestionMatchingStage extends BaseStage<TaskQuestionMatchingController> {
 

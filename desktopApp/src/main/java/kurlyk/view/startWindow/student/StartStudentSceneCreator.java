@@ -1,6 +1,6 @@
 package kurlyk.view.startWindow.student;
 
-import kurlyk.view.common.stage.BaseSceneCreator;
+import kurlyk.view.common.stage.base.BaseSceneCreator;
 
 public class StartStudentSceneCreator extends BaseSceneCreator<StartStudentController> {
 

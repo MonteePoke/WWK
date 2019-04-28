@@ -3,7 +3,7 @@ package kurlyk.view.task.matchingWindow;
 
 import kurlyk.models.Question;
 import kurlyk.transfer.tasks.MatchingDto;
-import kurlyk.view.common.stage.BaseStage;
+import kurlyk.view.common.stage.base.BaseStage;
 
 public class MatchingStage extends BaseStage<MatchingController> {
 

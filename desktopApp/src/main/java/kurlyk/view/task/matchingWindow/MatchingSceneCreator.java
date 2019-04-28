@@ -3,7 +3,7 @@ package kurlyk.view.task.matchingWindow;
 
 import kurlyk.models.UserProgress;
 import kurlyk.transfer.tasks.MatchingDto;
-import kurlyk.view.common.stage.BaseSceneCreator;
+import kurlyk.view.common.stage.base.BaseSceneCreator;
 
 public class MatchingSceneCreator extends BaseSceneCreator<MatchingController> {
 

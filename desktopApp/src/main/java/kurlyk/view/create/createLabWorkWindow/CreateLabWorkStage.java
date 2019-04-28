@@ -1,6 +1,6 @@
 package kurlyk.view.create.createLabWorkWindow;
 
-import kurlyk.view.common.stage.BaseStage;
+import kurlyk.view.common.stage.base.BaseStage;
 
 public class CreateLabWorkStage extends BaseStage<CreateLabWorkController> {
 

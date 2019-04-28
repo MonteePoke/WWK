@@ -16,7 +16,7 @@ import java.io.IOException;
 public class Loader implements ApplicationContextAware {
 
     private static ApplicationContext staticContext;
-    private static final String pathToView = "/view/";
+    public static final String pathToView = "/view/";
 
     public static <T extends Controller> LoadDto<T> load(String viewName){
         try {

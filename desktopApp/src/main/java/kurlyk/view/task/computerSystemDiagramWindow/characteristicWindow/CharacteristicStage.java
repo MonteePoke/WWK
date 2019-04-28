@@ -4,7 +4,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import kurlyk.graph.ComputerSystem.ComputerSystemElement;
 import kurlyk.view.common.ViewProperties;
-import kurlyk.view.common.stage.BaseStage;
+import kurlyk.view.common.stage.base.BaseStage;
 
 public class CharacteristicStage extends BaseStage<CharacteristicController> {
 

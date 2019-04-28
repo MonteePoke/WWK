@@ -1,7 +1,7 @@
 package kurlyk.view.create.createLabWorkWindow.labWorkTaskMatchingWindow;
 
 import kurlyk.models.LabWork;
-import kurlyk.view.common.stage.BaseStage;
+import kurlyk.view.common.stage.base.BaseStage;
 
 public class LabWorkTaskMatchingStage extends BaseStage<LabWorkTaskMatchingController> {
 

@@ -3,7 +3,7 @@ package kurlyk.view.task.numberWindow;
 
 import kurlyk.models.Question;
 import kurlyk.transfer.tasks.NumberDto;
-import kurlyk.view.common.stage.BaseStage;
+import kurlyk.view.common.stage.base.BaseStage;
 
 public class NumberStage extends BaseStage<NumberController> {
 

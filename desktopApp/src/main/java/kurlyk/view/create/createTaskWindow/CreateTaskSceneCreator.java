@@ -1,6 +1,6 @@
 package kurlyk.view.create.createTaskWindow;
 
-import kurlyk.view.common.stage.BaseSceneCreator;
+import kurlyk.view.common.stage.base.BaseSceneCreator;
 
 public class CreateTaskSceneCreator extends BaseSceneCreator<CreateTaskController> {
 

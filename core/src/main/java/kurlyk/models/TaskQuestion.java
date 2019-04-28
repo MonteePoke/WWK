@@ -18,6 +18,7 @@ public class TaskQuestion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private Integer number;
 
     @ManyToOne
     private Task task;

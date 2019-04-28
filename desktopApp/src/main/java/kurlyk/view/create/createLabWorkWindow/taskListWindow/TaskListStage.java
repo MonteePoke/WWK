@@ -1,7 +1,7 @@
 package kurlyk.view.create.createLabWorkWindow.taskListWindow;
 
 import kurlyk.models.Task;
-import kurlyk.view.common.stage.BaseStage;
+import kurlyk.view.common.stage.base.BaseStage;
 
 import java.util.function.Consumer;
 

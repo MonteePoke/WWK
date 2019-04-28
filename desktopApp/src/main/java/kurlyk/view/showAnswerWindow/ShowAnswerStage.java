@@ -1,7 +1,7 @@
 package kurlyk.view.showAnswerWindow;
 
 import kurlyk.models.Question;
-import kurlyk.view.common.stage.BaseStage;
+import kurlyk.view.common.stage.base.BaseStage;
 
 public class ShowAnswerStage extends BaseStage<ShowAnswerController> {
 

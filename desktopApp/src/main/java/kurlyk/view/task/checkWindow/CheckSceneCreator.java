@@ -3,7 +3,7 @@ package kurlyk.view.task.checkWindow;
 
 import kurlyk.models.UserProgress;
 import kurlyk.transfer.tasks.SelectDto;
-import kurlyk.view.common.stage.BaseSceneCreator;
+import kurlyk.view.common.stage.base.BaseSceneCreator;
 
 public class CheckSceneCreator extends BaseSceneCreator<CheckController> {
 

@@ -2,7 +2,7 @@ package kurlyk.view.task.computerSystemDiagramWindow;
 
 import kurlyk.models.UserProgress;
 import kurlyk.transfer.tasks.ComputerSystemDto;
-import kurlyk.view.common.stage.BaseStage;
+import kurlyk.view.common.stage.base.BaseStage;
 
 public class ComputerSystemDiagramSceneCreator extends BaseStage<ComputerSystemDiagramController> {
 

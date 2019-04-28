@@ -1,6 +1,6 @@
 package kurlyk.view.create.createTaskWindow;
 
-import kurlyk.view.common.stage.BaseStage;
+import kurlyk.view.common.stage.base.BaseStage;
 
 public class CreateTaskStage extends BaseStage<CreateTaskController> {
 

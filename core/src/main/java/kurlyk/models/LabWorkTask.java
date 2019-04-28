@@ -18,6 +18,7 @@ public class LabWorkTask {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private Integer number;
 
     @ManyToOne
     private LabWork labWork;

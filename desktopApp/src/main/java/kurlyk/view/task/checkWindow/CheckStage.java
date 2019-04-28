@@ -2,7 +2,7 @@ package kurlyk.view.task.checkWindow;
 
 
 import kurlyk.transfer.tasks.SelectDto;
-import kurlyk.view.common.stage.BaseStage;
+import kurlyk.view.common.stage.base.BaseStage;
 
 public class CheckStage extends BaseStage<CheckController> {
 

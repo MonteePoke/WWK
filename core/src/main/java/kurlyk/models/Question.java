@@ -20,10 +20,11 @@ public class Question {
     private Long id;
 
     @Enumerated(value = EnumType.STRING)
-    @Column(nullable = false)
     private QuestionType questionType;
-
     private String name;
+    private Integer atemptsNumber;
+    private Double score;
+    private String description;
 
     @Lob
     @Column(columnDefinition="CLOB")
@@ -31,9 +32,6 @@ public class Question {
     @Lob
     @Column(columnDefinition="CLOB")
     private String answer;
-
-    private Double score;
-    private String description;
 
     public Question(Long id, QuestionType questionType, String name) {
         this.id = id;

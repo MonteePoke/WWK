@@ -2,7 +2,7 @@ package kurlyk.view.task.radioWindow;
 
 
 import kurlyk.transfer.tasks.SelectDto;
-import kurlyk.view.common.stage.BaseStage;
+import kurlyk.view.common.stage.base.BaseStage;
 
 public class RadioStage extends BaseStage<RadioController> {
 

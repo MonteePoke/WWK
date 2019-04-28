@@ -1,6 +1,6 @@
 package kurlyk.view.startWindow.admin;
 
-import kurlyk.view.common.stage.BaseSceneCreator;
+import kurlyk.view.common.stage.base.BaseSceneCreator;
 
 public class StartAdminScaneCreator extends BaseSceneCreator<StartAdminController> {
 

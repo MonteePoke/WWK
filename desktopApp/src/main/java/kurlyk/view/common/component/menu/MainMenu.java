@@ -8,14 +8,15 @@ import kurlyk.view.common.ViewProperties;
 public class MainMenu extends MenuBar {
 
     public MainMenu() {
-        Menu actionsMenu = new Menu(ViewProperties.getInstance().getProperty("actions"));
+        Menu openMenu = new Menu(ViewProperties.getInstance().getProperty("open"));
         Menu helpMenu = new Menu(ViewProperties.getInstance().getProperty("help"));
         Menu exitMenu = new Menu(ViewProperties.getInstance().getProperty("exit"));
 
-        actionsMenu.getItems().addAll(
-                new MenuItem(ViewProperties.getInstance().getProperty("something"))
+        openMenu.getItems().addAll(
+                new MenuItem(ViewProperties.getInstance().getProperty("labWorks")),
+                new MenuItem(ViewProperties.getInstance().getProperty("dataBase"))
         );
 
-        getMenus().addAll(actionsMenu, helpMenu, exitMenu);
+        getMenus().addAll(openMenu, helpMenu, exitMenu);
     }
 }

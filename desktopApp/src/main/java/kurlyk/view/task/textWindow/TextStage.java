@@ -3,7 +3,7 @@ package kurlyk.view.task.textWindow;
 
 import kurlyk.models.Question;
 import kurlyk.transfer.tasks.TextDto;
-import kurlyk.view.common.stage.BaseStage;
+import kurlyk.view.common.stage.base.BaseStage;
 
 public class TextStage extends BaseStage<TextController> {
 

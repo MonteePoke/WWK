@@ -1,7 +1,7 @@
 package kurlyk.view.executeLabWindow;
 
 import kurlyk.models.UserProgress;
-import kurlyk.view.common.stage.BaseStage;
+import kurlyk.view.common.stage.base.BaseStage;
 
 import java.util.List;
 

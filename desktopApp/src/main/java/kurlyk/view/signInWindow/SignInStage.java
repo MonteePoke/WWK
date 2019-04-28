@@ -1,10 +1,9 @@
 package kurlyk.view.signInWindow;
 
 import javafx.scene.input.KeyCode;
-import kurlyk.view.common.stage.BaseStage;
+import kurlyk.view.common.stage.base.BaseStage;
 
 public class SignInStage extends BaseStage<SignInController> {
-
 
     public SignInStage() {
         super();

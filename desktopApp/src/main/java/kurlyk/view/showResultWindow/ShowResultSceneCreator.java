@@ -1,6 +1,6 @@
 package kurlyk.view.showResultWindow;
 
-import kurlyk.view.common.stage.BaseSceneCreator;
+import kurlyk.view.common.stage.base.BaseSceneCreator;
 
 public class ShowResultSceneCreator extends BaseSceneCreator<ShowResultController> {
 

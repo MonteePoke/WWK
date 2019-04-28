@@ -2,7 +2,7 @@ package kurlyk.view.task.formulaWindow;
 
 import kurlyk.models.Question;
 import kurlyk.transfer.tasks.FormulaDto;
-import kurlyk.view.common.stage.BaseStage;
+import kurlyk.view.common.stage.base.BaseStage;
 
 public class FormulaStage extends BaseStage<FormulaController> {
 
