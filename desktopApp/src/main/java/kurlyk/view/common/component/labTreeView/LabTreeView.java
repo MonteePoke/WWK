@@ -1,28 +1,22 @@
 package kurlyk.view.common.component.labTreeView;
 
-import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 
-public class LabTreeView extends TreeView {
+public class LabTreeView extends TreeView<TreeDto> {
+    private CustomTreeItem root;
 
     public LabTreeView() {
-        BookCategory catJava = new BookCategory("JAVA-00", "Java");
-        BookCategory catJSP = new BookCategory("JAVA-01", "Jsp");
-        BookCategory catSpring = new BookCategory("JAVA-02", "Spring");
+        setRoot(root = createRootItem());
+    }
 
-        // Root Item
-        TreeItem<BookCategory> rootItem = new TreeItem<BookCategory>(catJava);
+    private CustomTreeItem createRootItem(){
+        TreeDto defaultTreeDto = new TreeDto(-1L, TreeDtoType.NONE, "ВВК");
+        CustomTreeItem rootItem = new CustomTreeItem(defaultTreeDto);
         rootItem.setExpanded(true);
+        return rootItem;
+    }
 
-        // JSP Item
-        TreeItem<BookCategory> itemJSP = new TreeItem<BookCategory>(catJSP);
-
-        // Spring Item
-        TreeItem<BookCategory> itemSpring = new TreeItem<>(catSpring);
-
-        // Add to Root
-        rootItem.getChildren().addAll(itemJSP, itemSpring);
-
-        TreeView<BookCategory> tree = new TreeView<BookCategory>(rootItem);
+    private void add(CustomTreeItem parent, CustomTreeItem children){
+        parent.getChildren().add(children);
     }
 }

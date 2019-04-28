@@ -22,6 +22,7 @@ public class Question {
     @Enumerated(value = EnumType.STRING)
     private QuestionType questionType;
     private String name;
+    private Integer number;
     private Integer atemptsNumber;
     private Double score;
     private String description;
