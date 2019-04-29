@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.Pane?>
+
+<ToolBar fx:id="toolbar" prefHeight="56.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
+   <items>
+      <Pane fx:id="navigate_controls" prefHeight="35.0" prefWidth="346.0">
+         <children>
+            <Button fx:id="question_dictionary" layoutX="319.0" layoutY="5.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" />
+            <Button fx:id="lab_works" layoutX="285.0" layoutY="5.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" />
+            <ChoiceBox fx:id="discipline" layoutX="98.0" layoutY="5.0" prefHeight="27.0" prefWidth="177.0" />
+            <Label fx:id="discipline_label" layoutX="7.0" layoutY="10.0" text="Дисциплина" />
+         </children>
+      </Pane>
+      <Pane fx:id="lector_action_controls" prefHeight="29.0" prefWidth="97.0">
+         <children>
+            <Button fx:id="delete" layoutX="69.0" layoutY="5.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" />
+            <Button fx:id="edit" layoutX="35.0" layoutY="5.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" />
+            <Button fx:id="add" layoutX="1.0" layoutY="5.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" />
+         </children>
+      </Pane>
+      <Pane fx:id="student_action_controls1" prefHeight="44.0" prefWidth="95.0">
+         <children>
+            <Button fx:id="export_report" layoutX="35.0" layoutY="5.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" />
+            <Button fx:id="execute_lab" layoutX="1.0" layoutY="5.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" />
+            <Button fx:id="help" layoutX="68.0" layoutY="5.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" />
+         </children>
+      </Pane>
+      <Pane fx:id="admin_actions" layoutX="560.0" layoutY="10.0" prefHeight="40.0" prefWidth="63.0">
+         <children>
+            <Button fx:id="roles" layoutX="35.0" layoutY="5.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" />
+            <Button fx:id="users" layoutX="1.0" layoutY="5.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" />
+         </children>
+      </Pane>
+      <Pane fx:id="common_actions" prefHeight="40.0" prefWidth="63.0">
+         <children>
+            <Button fx:id="exit" layoutX="35.0" layoutY="5.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" />
+            <Button fx:id="settings" layoutX="1.0" layoutY="5.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" />
+         </children>
+      </Pane>
+   </items>
+</ToolBar>
