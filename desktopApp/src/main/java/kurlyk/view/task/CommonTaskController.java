@@ -4,12 +4,12 @@ import com.google.gson.Gson;
 import javafx.scene.control.Button;
 import kurlyk.communication.Communicator;
 import kurlyk.models.UserProgress;
-import kurlyk.view.common.component.FxDialogs;
-import kurlyk.view.common.component.MyHtmlEditor;
 import kurlyk.view.common.controller.Controller;
 import kurlyk.view.common.controller.TaskBodyController;
 import kurlyk.view.common.stage.StagePool;
 import kurlyk.view.common.stage.Stages;
+import kurlyk.view.components.FxDialogs;
+import kurlyk.view.components.MyHtmlEditor;
 import lombok.Getter;
 import lombok.Setter;
 

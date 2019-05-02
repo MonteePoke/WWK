@@ -2,12 +2,14 @@ package kurlyk.view.common.stage.base;
 
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import kurlyk.view.common.ViewProperties;
-import kurlyk.view.common.component.menu.MainMenu;
 import kurlyk.view.common.controller.Controller;
 import kurlyk.view.common.dto.LoadDto;
 import kurlyk.view.common.stage.Loader;
+import kurlyk.view.components.menu.MainMenu;
+import kurlyk.view.components.toolbar.ToolbarSceneCreator;
 
 public abstract class BaseStage <T extends Controller> extends Stage {
 
@@ -32,7 +34,10 @@ public abstract class BaseStage <T extends Controller> extends Stage {
 
     public static void setMenuToScene(Scene scene){
         BorderPane root = new BorderPane();
-        root.setTop(new MainMenu());
+        root.setTop(new VBox(
+                new MainMenu(),
+                new ToolbarSceneCreator().getScene().getRoot()
+        ));
         root.setCenter(scene.getRoot());
         scene.setRoot(root);
     }

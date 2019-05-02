@@ -10,7 +10,7 @@ import javafx.util.StringConverter;
 import javafx.util.converter.NumberStringConverter;
 import kurlyk.graph.ComputerSystem.ComputerSystemElement;
 import kurlyk.graph.ComputerSystem.ComputerSystemElementType;
-import kurlyk.view.common.component.DiagramContextMenu;
+import kurlyk.view.components.DiagramContextMenu;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;

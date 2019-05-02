@@ -2,9 +2,9 @@ package kurlyk.view.common.stage.labTree;
 
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
-import kurlyk.view.common.component.labTreeView.LabTreeView;
 import kurlyk.view.common.controller.Controller;
 import kurlyk.view.common.stage.base.BaseStage;
+import kurlyk.view.components.labTreeView.LabTreeView;
 
 public abstract class LabTreeStage<T extends Controller> extends BaseStage<T> {
 
