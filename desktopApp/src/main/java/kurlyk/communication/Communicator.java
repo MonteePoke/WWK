@@ -43,7 +43,7 @@ public class Communicator extends AbstractCommunicator{
      */
     public boolean login(LoginDto loginDto) throws ConnectException, IOException {
         Type type = new TypeToken<TokenDto>(){}.getType();
-        TokenDto tokenDto = postData(type, loginDto, "/login");
+        TokenDto tokenDto = postData(type, loginDto, "/login/");
         if(tokenDto.getValue().equals("")){
             return false;
         } else {
@@ -54,12 +54,12 @@ public class Communicator extends AbstractCommunicator{
 
     public User getUser() throws ConnectException, IOException {
         Type type = new TypeToken<User>(){}.getType();
-        return getData(type, "/users");
+        return getData(type, "/users/");
     }
 
     public List<User> getUsers() throws ConnectException, IOException {
         Type type = new TypeToken<ArrayList<User>>(){}.getType();
-        return getData(type, "/users");
+        return getData(type, "/users/");
     }
 
 
@@ -73,11 +73,11 @@ public class Communicator extends AbstractCommunicator{
 
     public List<LabWork> getLabWorks() throws ConnectException, IOException {
         Type type = new TypeToken<ArrayList<LabWork>>(){}.getType();
-        return getData(type, "/lab-works");
+        return getData(type, "/lab-works/");
     }
 
     public void saveLabWork(LabWork labWork) throws ConnectException, IOException {
-        postData(null, labWork, "/lab-work");
+        postData(null, labWork, "/lab-work/");
     }
 
     public void deleteLabWork(LabWork labWork) throws ConnectException, IOException {
@@ -86,7 +86,7 @@ public class Communicator extends AbstractCommunicator{
 
     public List<LabWorkTask> getLabWorkTaskMatching() throws ConnectException, IOException {
         Type type = new TypeToken<ArrayList<LabWorkTask>>(){}.getType();
-        return getData(type, "/lab-work-task-matching");
+        return getData(type, "/lab-work-task-matching/");
     }
 
     public List<LabWorkTask> getLabWorkTaskMatching(LabWork labWork) throws ConnectException, IOException {
@@ -95,7 +95,7 @@ public class Communicator extends AbstractCommunicator{
     }
 
     public void saveLabWorkTaskMatching(LabWorkTask labWorkTask) throws ConnectException, IOException {
-        postData(null, labWorkTask, "/lab-work-task-matching");
+        postData(null, labWorkTask, "/lab-work-task-matching/");
     }
 
     public void deleteLabWorkTaskMatching(LabWorkTask labWorkTask) throws ConnectException, IOException {
@@ -118,11 +118,11 @@ public class Communicator extends AbstractCommunicator{
 
     public List<Task> getTasks() throws ConnectException, IOException {
         Type type = new TypeToken<ArrayList<Task>>(){}.getType();
-        return getData(type, "/tasks");
+        return getData(type, "/tasks/");
     }
 
     public void saveTask(Task task) throws ConnectException, IOException {
-        postData(null, task, "/task");
+        postData(null, task, "/task/");
     }
 
     public void deleteTask(Task task) throws ConnectException, IOException {
@@ -131,7 +131,7 @@ public class Communicator extends AbstractCommunicator{
 
     public List<TaskQuestion> getTaskQuestionMatching() throws ConnectException, IOException {
         Type type = new TypeToken<ArrayList<TaskQuestion>>(){}.getType();
-        return getData(type, "/task-question-matching");
+        return getData(type, "/task-question-matching/");
     }
 
     public List<TaskQuestion> getTaskQuestionMatching(Task task) throws ConnectException, IOException {
@@ -140,7 +140,7 @@ public class Communicator extends AbstractCommunicator{
     }
 
     public void saveTaskQuestionMatching(TaskQuestion taskQuestion) throws ConnectException, IOException {
-        postData(null, taskQuestion, "/task-question-matching");
+        postData(null, taskQuestion, "/task-question-matching/");
     }
 
     public void deleteTaskQuestionMatching(TaskQuestion taskQuestion) throws ConnectException, IOException {
@@ -168,11 +168,11 @@ public class Communicator extends AbstractCommunicator{
 
     public List<Question> getQuestions() throws ConnectException, IOException {
         Type type = new TypeToken<ArrayList<Question>>(){}.getType();
-        return getData(type, "/questions");
+        return getData(type, "/questions/");
     }
 
     public void saveQuestion(Question question) throws ConnectException, IOException {
-        postData(null, question, "/question");
+        postData(null, question, "/question/");
     }
 
     public void deleteQuestion(Question question) throws ConnectException, IOException {
@@ -190,16 +190,16 @@ public class Communicator extends AbstractCommunicator{
 
     public List<UserProgressDto> getUserProgress(UserProgressDto userProgressDto) throws ConnectException, IOException {
         Type type = new TypeToken<ArrayList<UserProgressDto>>(){}.getType();
-        return getData(type, userProgressDtoToParameters(userProgressDto), "/user/progress");
+        return getData(type, userProgressDtoToParameters(userProgressDto), "/user/progress/");
     }
 
     public List<UserProgress> getFullUserProgress(UserProgressDto userProgressDto) throws ConnectException, IOException {
         Type type = new TypeToken<ArrayList<UserProgress>>(){}.getType();
-        return getData(type, userProgressDtoToParameters(userProgressDto), "/user/full-progress");
+        return getData(type, userProgressDtoToParameters(userProgressDto), "/user/full-progress/");
     }
 
     public void saveUserProgress(UserProgress userProgress) throws ConnectException, IOException {
-        postData(null, userProgress, "/user/progress");
+        postData(null, userProgress, "/user/progress/");
     }
 
     private Map<String, String> userProgressDtoToParameters(UserProgressDto userProgressDto){
@@ -211,5 +211,25 @@ public class Communicator extends AbstractCommunicator{
         return parameters;
     }
 
+    /*
+        Subject
+    */
+    public Subject getSubject(Long id) throws ConnectException, IOException {
+        Type type = new TypeToken<Subject>(){}.getType();
+        return getData(type, "/subjects/" + id.toString());
+    }
+
+    public List<Subject> getSubjects() throws ConnectException, IOException {
+        Type type = new TypeToken<ArrayList<Subject>>(){}.getType();
+        return getData(type, "/subject/");
+    }
+
+    public void saveSubject(Subject subject) throws ConnectException, IOException {
+        postData(null, subject, "/subject/");
+    }
+
+    public void deleteSubject(Long id) throws ConnectException, IOException {
+        deleteData(null, id, "/subject/");
+    }
 }
 

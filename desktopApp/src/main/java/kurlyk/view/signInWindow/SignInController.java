@@ -46,7 +46,6 @@ public class SignInController extends Controller {
 
 
     public void initialize(){
-
         logInAsGuestButton.setOnAction(event -> {
 //            stagePool.pushStageAndShow(Stages.COMPUTER_SYSTEM, new ComputerSystemDiagramStage());
 //            stagePool.pushStageAndShow(Stages.FORMULA, new FormulaStage());

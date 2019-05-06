@@ -20,7 +20,11 @@ public abstract class AbstractCommunicator {
 
     protected <OUT> OUT getData(Type outType, Map<String, String> parameters, String addr){
         try {
-            URL url = new URL(MainProperties.getInstance().getProperty("addr") + addr + getParamsString(parameters));
+            URL url = new URL(
+                    MainProperties.getInstance().getProperty("addr") +
+                            deleteSlashIfExist(addr) +
+                            getParamsString(parameters)
+            );
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Authorization", "Token " + getToken());
@@ -46,6 +50,22 @@ public abstract class AbstractCommunicator {
             conn.setDoOutput(true);
 
             conn.getOutputStream().write(dataBytes);
+
+            return request(conn, outType);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    //DELETE - запрос
+    protected <OUT> OUT deleteData(Type outType, Long id, String addr){
+        try {
+            URL url = new URL(MainProperties.getInstance().getProperty("addr") + addr + id.toString());
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("DELETE");
+            conn.setRequestProperty("Authorization", "Token " + getToken());
+            conn.setDoOutput(true);
 
             return request(conn, outType);
         } catch (IOException e) {
@@ -94,6 +114,11 @@ public abstract class AbstractCommunicator {
         } else {
             return "?" + resultString.substring(0, resultString.length() - 1);
         }
+    }
+
+    //удалить последний слешь для GET запросов
+    private String deleteSlashIfExist(String addr){
+        return addr.charAt(addr.length() - 1) == '/' ? addr.substring(0, addr.length() - 1) : addr;
     }
 
     public abstract String getToken();

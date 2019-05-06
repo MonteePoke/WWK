@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <VBox xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kurlyk.view.components.toolbar.ToolbarController">
     <ToolBar prefHeight="56.0" prefWidth="600.0">
-        <Pane prefHeight="35.0" prefWidth="346.0">
+        <Pane fx:id="navigateControls" prefHeight="35.0" prefWidth="346.0">
             <Button fx:id="questionDictionary" layoutX="319.0" layoutY="5.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0">
                 <graphic>
                     <ImageView fitHeight="16.0" fitWidth="12.0">
@@ -23,7 +23,7 @@
             <ChoiceBox fx:id="discipline" layoutX="98.0" layoutY="5.0" prefHeight="27.0" prefWidth="177.0"/>
             <Label layoutX="7.0" layoutY="10.0" text="Дисциплина"/>
         </Pane>
-        <Pane prefHeight="29.0" prefWidth="97.0">
+        <Pane fx:id="lectorActionControls" prefHeight="29.0" prefWidth="97.0">
             <Button fx:id="delete" layoutX="69.0" layoutY="5.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0">
                 <graphic>
                     <ImageView fitHeight="16.0" fitWidth="12.0">
@@ -46,7 +46,7 @@
                 </graphic>
             </Button>
         </Pane>
-        <Pane prefHeight="44.0" prefWidth="95.0">
+        <Pane fx:id="studentActionControls1" prefHeight="44.0" prefWidth="95.0">
             <Button fx:id="exportReport" layoutX="35.0" layoutY="5.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0">
                 <graphic>
                     <ImageView fitHeight="16.0" fitWidth="12.0">
@@ -69,7 +69,7 @@
                 </graphic>
             </Button>
         </Pane>
-        <Pane layoutX="560.0" layoutY="10.0" prefHeight="40.0" prefWidth="63.0">
+        <Pane fx:id="adminActions" layoutX="560.0" layoutY="10.0" prefHeight="40.0" prefWidth="63.0">
             <Button fx:id="roles" layoutX="35.0" layoutY="5.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0">
                 <graphic>
                     <ImageView fitHeight="16.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
@@ -85,7 +85,7 @@
                 </graphic>
             </Button>
         </Pane>
-        <Pane prefHeight="40.0" prefWidth="63.0">
+        <Pane fx:id="commonActions" prefHeight="40.0" prefWidth="63.0">
             <Button fx:id="exit" layoutX="35.0" layoutY="5.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0">
                 <graphic>
                     <ImageView fitHeight="16.0" fitWidth="12.0">

@@ -2,36 +2,39 @@ package kurlyk.view.components.labTreeView;
 
 import kurlyk.models.LabWork;
 import kurlyk.models.Question;
+import kurlyk.models.Subject;
 import kurlyk.models.Task;
 import lombok.Data;
 
 @Data
 public class TreeDto {
-    private Long id;
     private TreeDtoType type;
-    private String name;
+    private Subject subject;
+    private LabWork labWork;
+    private Task task;
+    private Question question;
+
+    public TreeDto(Subject subject) {
+        this.type = TreeDtoType.SUBJECT;
+        this.subject = subject;
+    }
 
     public TreeDto(LabWork labWork) {
-        this.id = labWork.getId();
         this.type = TreeDtoType.LAB_WORK;
-        this.name = labWork.getName();
+        this.labWork = labWork;
     }
 
     public TreeDto(Task task) {
-        this.id = task.getId();
         this.type = TreeDtoType.TASK;
-        this.name = task.getNumber().toString();
+        this.task = task;
     }
 
     public TreeDto(Question question) {
-        this.id = question.getId();
         this.type = TreeDtoType.QUESTION;
-        this.name = question.getNumber().toString();
+        this.question = question;
     }
 
-    public TreeDto(Long id, TreeDtoType type, String name) {
-        this.id = id;
+    public TreeDto(TreeDtoType type) {
         this.type = type;
-        this.name = name;
     }
 }

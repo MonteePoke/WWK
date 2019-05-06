@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.layout.Pane;
 import kurlyk.communication.Communicator;
 import kurlyk.view.common.controller.Controller;
 import kurlyk.view.common.stage.StagePool;
@@ -14,6 +15,12 @@ import org.springframework.stereotype.Component;
 @Component
 @Scope("prototype")
 public class ToolbarController extends Controller {
+    @FXML private Pane navigateControls;
+    @FXML private Pane lectorActionControls;
+    @FXML private Pane studentActionControls1;
+    @FXML private Pane adminActions;
+    @FXML private Pane commonActions;
+
     @FXML private ChoiceBox<String> discipline;
     @FXML private Button questionDictionary;
     @FXML private Button labWorks;
@@ -37,7 +44,8 @@ public class ToolbarController extends Controller {
 
     public void initialize() {
         discipline.setItems(FXCollections.observableArrayList("ВВК"));
-//        questionDictionary.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/view/components/toolbar/icons/questionDictionary.png"))));
+        discipline.getSelectionModel().selectFirst();
+
         questionDictionary.setOnAction(event -> {
 
         });

@@ -1,17 +1,16 @@
-package kurlyk.view.components.toolbar;
+package kurlyk.view.components.labTreeView.tree;
 
 import kurlyk.view.common.dto.BaseStageDto;
 import kurlyk.view.common.stage.base.BaseSceneCreator;
 
-public class ToolbarSceneCreator extends BaseSceneCreator<ToolbarController> {
+public class TreeSceneCreator extends BaseSceneCreator<TreeController> {
 
-
-    public ToolbarSceneCreator() {
+    public TreeSceneCreator() {
         super(BaseStageDto.allOff());
     }
 
     @Override
     public String getPathToMainStage() {
-        return "components/toolbar/main";
+        return "components/labTreeView/tree/main";
     }
 }
