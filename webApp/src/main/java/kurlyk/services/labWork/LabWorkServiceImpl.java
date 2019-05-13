@@ -58,4 +58,14 @@ public class LabWorkServiceImpl implements LabWorkService {
     public void deleteLabWorkTaskMatching(Long id){
         labWorkTaskRepository.deleteById(id);
     }
+
+    @Override
+    public void deleteLabWorkTaskMatchingByLabWorkId(Long id){
+        labWorkTaskRepository.deleteByLabWorkId(id);
+    }
+
+    @Override
+    public void deleteLabWorkTaskMatchingByTaskId(Long id){
+        labWorkTaskRepository.deleteByTaskId(id);
+    }
 }

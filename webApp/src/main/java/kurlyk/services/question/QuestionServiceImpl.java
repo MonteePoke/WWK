@@ -36,12 +36,12 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public List<Question> getQuestionHeaders(Long taskId){
-        return taskQuestionRepository.getQuestionByTaskId(taskId);
+        return taskQuestionRepository.getQuestionHeadersByTaskId(taskId);
     }
 
     @Override
-    public List<Question> getQuestions(){
-        return questionRepository.findAllWithoutMeat();
+    public List<Question> getQuestionHeaders(){
+        return questionRepository.getQuestionHeaders();
     }
 
     @Override

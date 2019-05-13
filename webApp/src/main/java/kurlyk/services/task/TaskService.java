@@ -18,4 +18,6 @@ public interface TaskService {
     void saveTask(Task task);
     void deleteTask(Long id);
     void deleteTaskQuestionMatching(Long id);
+    void deleteTaskQuestionMatchingByTaskId(Long id);
+    void deleteTaskQuestionMatchingByQuestionId(Long id);
 }

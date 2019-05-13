@@ -5,6 +5,7 @@ import kurlyk.models.Task;
 import kurlyk.models.TaskQuestion;
 import kurlyk.services.task.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -62,6 +63,26 @@ public class TaskController {
     @GetMapping("/task-question-matching/delete/{id}")
     public ResponseEntity<Object> deleteTaskQuestionMatching(@PathVariable("id") Long id) {
         taskService.deleteTaskQuestionMatching(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/task-question-matching/task/{id}")
+    public ResponseEntity<Object> deleteTaskQuestionMatchingByTask(@PathVariable("id") Long id) {
+        try {
+            taskService.deleteTaskQuestionMatchingByTaskId(id);
+        } catch (EmptyResultDataAccessException e) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/task-question-matching/question/{id}")
+    public ResponseEntity<Object> deleteTaskQuestionMatchingByQuestion(@PathVariable("id") Long id) {
+        try {
+            taskService.deleteTaskQuestionMatchingByQuestionId(id);
+        } catch (EmptyResultDataAccessException e) {
+            return ResponseEntity.notFound().build();
+        }
         return ResponseEntity.ok().build();
     }
 }

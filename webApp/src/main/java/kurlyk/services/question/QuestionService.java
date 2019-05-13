@@ -11,7 +11,7 @@ public interface QuestionService {
     Optional<Question> getQuestion(Long id);
     List<Question> getQuestions(Long taskId);
     List<Question> getQuestionHeaders(Long taskId);
-    List<Question> getQuestions();
+    List<Question> getQuestionHeaders();
     void saveQuestion(Question question);
     void deleteQuestion(Long id);
 }

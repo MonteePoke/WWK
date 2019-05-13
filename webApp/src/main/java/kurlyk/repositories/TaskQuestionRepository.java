@@ -12,12 +12,34 @@ public interface TaskQuestionRepository extends JpaRepository<TaskQuestion, Long
 
     List<TaskQuestion> findByTaskId(Long id);
 
-    @Query("SELECT new TaskQuestion(tq.id, tq.task.id, tq.task.name, tq.question.id, tq.question.name) FROM TaskQuestion as tq")
+    @Query("SELECT new TaskQuestion(" +
+            "tq.id, " +
+            "tq.task.id, " +
+            "tq.task.name, " +
+            "tq.question.id, " +
+            "tq.question.name" +
+            ") FROM TaskQuestion as tq")
     List<TaskQuestion> getTaskQuestionMatching();
 
-    @Query("SELECT new Question(tq.question.id, tq.question.questionType, tq.question.name) FROM TaskQuestion as tq WHERE tq.task.id = ?1")
-    List<Question> getQuestionByTaskId(Long id);
+    @Query("SELECT new Question(" +
+            "tq.question.id, " +
+            "tq.question.questionType, " +
+            "tq.question.score, " +
+            "tq.question.name, " +
+            "tq.question.atemptsNumber, " +
+            "tq.question.number" +
+            ") FROM TaskQuestion as tq WHERE tq.task.id = ?1")
+    List<Question> getQuestionHeadersByTaskId(Long id);
 
-    @Query("SELECT new TaskQuestion(tq.id, tq.task.id, tq.task.name, tq.question.id, tq.question.name) FROM TaskQuestion as tq WHERE tq.task.id = ?1")
+    @Query("SELECT new TaskQuestion(" +
+            "tq.id, " +
+            "tq.task.id, " +
+            "tq.task.name, " +
+            "tq.question.id, " +
+            "tq.question.name" +
+            ") FROM TaskQuestion as tq WHERE tq.task.id = ?1")
     List<TaskQuestion> getTaskQuestionMatchingByTaskId(Long id);
+
+    void deleteByTaskId(Long id);
+    void deleteByQuestionId(Long id);
 }

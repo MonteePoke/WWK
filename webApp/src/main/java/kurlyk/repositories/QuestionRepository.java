@@ -12,6 +12,13 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
 
     Optional<Question> findOneById(Long id);
 
-    @Query("SELECT new Question(q.id, q.questionType, q.name) FROM Question as q")
-    List<Question> findAllWithoutMeat();
+    @Query("SELECT new Question(" +
+            "q.id, " +
+            "q.questionType, " +
+            "q.score, " +
+            "q.name, " +
+            "q.atemptsNumber, " +
+            "q.number" +
+            ") FROM Question as q")
+    List<Question> getQuestionHeaders();
 }

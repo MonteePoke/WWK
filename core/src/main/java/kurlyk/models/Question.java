@@ -34,9 +34,19 @@ public class Question {
     @Column(columnDefinition="CLOB")
     private String answer;
 
-    public Question(Long id, QuestionType questionType, String name) {
+    public Question(
+            Long id,
+            QuestionType questionType,
+            Double score,
+            String name,
+            Integer atemptsNumber,
+            Integer number
+    ) {
         this.id = id;
         this.questionType = questionType;
+        this.score = score;
         this.name = name;
+        this.atemptsNumber = atemptsNumber;
+        this.number = number;
     }
 }

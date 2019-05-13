@@ -17,4 +17,6 @@ public interface LabWorkService {
     void saveLabWork(LabWork labWork);
     void deleteLabWork(Long id);
     void deleteLabWorkTaskMatching(Long id);
+    void deleteLabWorkTaskMatchingByLabWorkId(Long id);
+    void deleteLabWorkTaskMatchingByTaskId(Long id);
 }

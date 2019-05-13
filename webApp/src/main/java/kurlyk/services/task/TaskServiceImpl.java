@@ -73,4 +73,14 @@ public class TaskServiceImpl implements TaskService {
     public void deleteTaskQuestionMatching(Long id){
         taskQuestionRepository.deleteById(id);
     }
+
+    @Override
+    public void deleteTaskQuestionMatchingByTaskId(Long id){
+        taskQuestionRepository.deleteByTaskId(id);
+    }
+
+    @Override
+    public void deleteTaskQuestionMatchingByQuestionId(Long id){
+        taskQuestionRepository.deleteByQuestionId(id);
+    }
 }

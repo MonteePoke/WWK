@@ -30,9 +30,9 @@ public class QuestionController {
         return questionService.getQuestionHeaders(taskId);
     }
 
-    @GetMapping("/questions")
-    public List<Question> getQuestions() {
-        return questionService.getQuestions();
+    @GetMapping("/questions-headers")
+    public List<Question> getQuestionHeaders() {
+        return questionService.getQuestionHeaders();
     }
 
     @PostMapping("/question")
