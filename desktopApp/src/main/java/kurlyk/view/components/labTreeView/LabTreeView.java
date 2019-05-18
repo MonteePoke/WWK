@@ -1,6 +1,7 @@
 package kurlyk.view.components.labTreeView;
 
 import javafx.scene.control.TreeView;
+import kurlyk.WorkEntityType;
 import kurlyk.communication.Communicator;
 import kurlyk.models.Subject;
 
@@ -20,7 +21,7 @@ public class LabTreeView extends TreeView<TreeDto> {
     }
 
     private void createRootItem(){
-        TreeDto defaultTreeDto = new TreeDto(TreeDtoType.NONE);
+        TreeDto defaultTreeDto = new TreeDto(WorkEntityType.NONE);
         root = new CustomTreeItem(defaultTreeDto);
         root.setExpanded(true);
     }

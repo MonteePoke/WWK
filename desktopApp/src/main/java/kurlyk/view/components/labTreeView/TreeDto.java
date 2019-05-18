@@ -1,5 +1,6 @@
 package kurlyk.view.components.labTreeView;
 
+import kurlyk.WorkEntityType;
 import kurlyk.models.LabWork;
 import kurlyk.models.Question;
 import kurlyk.models.Subject;
@@ -11,33 +12,33 @@ import java.util.stream.Collectors;
 
 @Data
 public class TreeDto {
-    private TreeDtoType type;
+    private WorkEntityType type;
     private Subject subject;
     private LabWork labWork;
     private Task task;
     private Question question;
 
     public TreeDto(Subject subject) {
-        this.type = TreeDtoType.SUBJECT;
+        this.type = WorkEntityType.SUBJECT;
         this.subject = subject;
     }
 
     public TreeDto(LabWork labWork) {
-        this.type = TreeDtoType.LAB_WORK;
+        this.type = WorkEntityType.LAB_WORK;
         this.labWork = labWork;
     }
 
     public TreeDto(Task task) {
-        this.type = TreeDtoType.TASK;
+        this.type = WorkEntityType.TASK;
         this.task = task;
     }
 
     public TreeDto(Question question) {
-        this.type = TreeDtoType.QUESTION;
+        this.type = WorkEntityType.QUESTION;
         this.question = question;
     }
 
-    public TreeDto(TreeDtoType type) {
+    public TreeDto(WorkEntityType type) {
         this.type = type;
     }
 
