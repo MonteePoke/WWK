@@ -1,22 +1,33 @@
 package kurlyk.view.create.createLtqWindow;
 
 import kurlyk.WorkEntityType;
+import kurlyk.models.LabWork;
+import kurlyk.models.Question;
+import kurlyk.models.Task;
+import kurlyk.view.common.dto.BaseStageDto;
 import kurlyk.view.common.stage.base.BaseStage;
+
+import java.util.Optional;
+import java.util.function.Consumer;
 
 public class CreateLtqStage extends BaseStage<CreateLtqController> {
 
 
-    public CreateLtqStage(WorkEntityType type) {
-        super();
+    public CreateLtqStage(WorkEntityType type, Optional<?> model, Consumer<?> saveAction) {
+        super(BaseStageDto.allOff());
+        if(!model.isPresent()){
+            throw new RuntimeException();
+        }
+        controller.setCloseStage(this::close);
         switch (type){
             case LAB_WORK:
-                controller.createLabWork();
+                controller.editLabWork((LabWork)model.get(), (Consumer<LabWork>)saveAction);
                 break;
             case TASK:
-                controller.createTask();
+                controller.editTask((Task)model.get(), (Consumer<Task>)saveAction);
                 break;
             case QUESTION:
-                controller.createQuestion();
+                controller.editQuestion((Question)model.get(), (Consumer<Question>)saveAction);
                 break;
         }
     }

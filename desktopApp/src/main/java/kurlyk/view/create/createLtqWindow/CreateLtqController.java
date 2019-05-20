@@ -1,20 +1,36 @@
 package kurlyk.view.create.createLtqWindow;
 
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import kurlyk.communication.Communicator;
 import kurlyk.communication.UserInfo;
+import kurlyk.models.LabWork;
+import kurlyk.models.Question;
+import kurlyk.models.Task;
 import kurlyk.view.common.controller.Controller;
 import kurlyk.view.common.stage.StagePool;
+import kurlyk.view.components.DoubleField;
+import kurlyk.view.components.IntegerField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 @Component
 @Scope("prototype")
 public class CreateLtqController extends Controller {
 
     @FXML private VBox root;
+    @FXML private Button submit;
+    private Runnable closeStage;
 
     @Autowired
     private StagePool stagePool;
@@ -29,15 +45,64 @@ public class CreateLtqController extends Controller {
     public void initialize(){
     }
 
-    public void createLabWork(){
+    public void setCloseStage(Runnable closeStage) {
+        this.closeStage = closeStage;
+    }
+
+    public void editLabWork(LabWork labWork, Consumer<LabWork> saveAction){
+        Supplier<String> nameSupplier = createStringField("Название", labWork.getName());
+        Supplier<Integer> numberSupplier = createIntegerField("Номер", labWork.getNumber());
+        Supplier<Integer> atemptsNumberSupplier = createIntegerField("Количество попыток", labWork.getAtemptsNumber());
+
+        submit.setOnAction(event -> {
+            labWork.setName(nameSupplier.get());
+            labWork.setNumber(numberSupplier.get());
+            labWork.setAtemptsNumber(atemptsNumberSupplier.get());
+            saveAction.accept(labWork);
+            closeStage.run();
+        });
+    }
+
+    public void editTask(Task task, Consumer<Task> saveAction){
 
     }
 
-    public void createTask(){
+    public void editQuestion(Question question, Consumer<Question> saveAction){
 
     }
 
-    public void createQuestion(){
+    private Supplier<String> createStringField(String name, String value){
+        TextField field = new TextField(value);
+        setTextField(name, field);
+        return field::getText;
+    }
 
+    private Supplier<Integer> createIntegerField(String name, Integer value){
+        IntegerField field = new IntegerField(value);
+        setTextField(name, field);
+        return field::getNumber;
+    }
+
+    private Supplier<Double> createDoubleField(String name, Double value){
+        DoubleField field = new DoubleField(value);
+        setTextField(name, field);
+        return field::getNumber;
+    }
+
+    private <T extends TextField> void setTextField(String name, T field){
+        HBox.setHgrow(field, Priority.ALWAYS);
+        field.setMaxWidth(Double.MAX_VALUE);
+        field.setStyle("-fx-font-size: 20px;");
+
+        root.getChildren().add(new HBox(createNameLabel(name), field));
+    }
+
+    private Label createNameLabel(String name){
+        Label label = new Label(name);
+        HBox.setHgrow(label, Priority.ALWAYS);
+        label.setMaxWidth(Double.MAX_VALUE);
+        label.setStyle("-fx-font-size: 20px;");
+        label.setAlignment(Pos.BASELINE_CENTER);
+        return label;
     }
 }

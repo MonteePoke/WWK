@@ -26,9 +26,15 @@ public class StagePool {
         stage.show();
     }
 
-    public void pushStageAndShowModal(Stages key, Stage parentStage, Stage stage){
+//    public void pushStageAndShowModal(Stages key, Stage parentStage, Stage stage){
+//        pushStage(key, stage);
+//        stage.initOwner(parentStage);
+//        stage.initModality(Modality.APPLICATION_MODAL);
+//        stage.showAndWait();
+//    }
+
+    public void pushStageAndShowModal(Stages key, Stage stage){
         pushStage(key, stage);
-        stage.initOwner(parentStage);
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.showAndWait();
     }

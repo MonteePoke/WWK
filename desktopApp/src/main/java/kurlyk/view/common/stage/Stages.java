@@ -24,5 +24,7 @@ public enum Stages {
 
     CREATE_QUESTION,
     PERFORM_TEST,
-    PERFORM_LAB
+    PERFORM_LAB,
+
+    LTQ_CREATE
 }

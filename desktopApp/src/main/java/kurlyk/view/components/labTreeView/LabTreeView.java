@@ -4,18 +4,19 @@ import javafx.scene.control.TreeView;
 import kurlyk.WorkEntityType;
 import kurlyk.communication.Communicator;
 import kurlyk.models.Subject;
+import kurlyk.view.common.stage.StagePool;
 
 import java.io.IOException;
 
 public class LabTreeView extends TreeView<TreeDto> {
     private CustomTreeItem root;
 
-    public LabTreeView(Communicator communicator) {
+    public LabTreeView(Communicator communicator, StagePool stagePool) {
         createRootItem();
         setRoot(root);
         setShowRoot(false);
         setCellFactory(e ->
-                new CustomTreeCell(communicator, this::addItem, this::deleteItem)
+                new CustomTreeCell(communicator, stagePool, this::addItem, this::deleteItem)
         );
         createWorld(communicator);
     }

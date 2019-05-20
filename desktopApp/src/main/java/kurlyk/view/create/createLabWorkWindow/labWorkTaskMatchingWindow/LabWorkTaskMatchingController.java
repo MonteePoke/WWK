@@ -94,7 +94,7 @@ public class LabWorkTaskMatchingController extends Controller {
         addTask.setOnAction(event -> {
             stagePool.pushStageAndShowModal(
                     Stages.TASK_LIST,
-                    stagePool.getStage(Stages.LAB_WORK_TASK_MATCHING),
+//                    stagePool.getStage(Stages.LAB_WORK_TASK_MATCHING),
                     new TaskListStage((task -> {
                         try {
                             LabWorkTask labWorkTask = LabWorkTask

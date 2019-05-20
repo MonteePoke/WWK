@@ -94,7 +94,7 @@ public class TaskQuestionMatchingController extends Controller {
         addQuestion.setOnAction(event -> {
             stagePool.pushStageAndShowModal(
                     Stages.QUESTION_LIST,
-                    stagePool.getStage(Stages.TASK_QUESTION_MATCHING),
+//                    stagePool.getStage(Stages.TASK_QUESTION_MATCHING),
                     new QuestionListStage((question -> {
                         try {
                             TaskQuestion taskQuestion = TaskQuestion

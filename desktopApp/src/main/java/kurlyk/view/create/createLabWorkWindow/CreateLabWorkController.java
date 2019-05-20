@@ -115,7 +115,7 @@ public class CreateLabWorkController extends Controller {
             if (selectedLabWork != null) {
                 stagePool.pushStageAndShowModal(
                         Stages.LAB_WORK_TASK_MATCHING,
-                        stagePool.getStage(Stages.CREATE_LAB_WORK),
+//                        stagePool.getStage(Stages.CREATE_LAB_WORK),
                         new LabWorkTaskMatchingStage(selectedLabWork)
                 );
             }

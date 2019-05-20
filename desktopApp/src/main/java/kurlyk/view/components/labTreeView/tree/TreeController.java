@@ -23,6 +23,6 @@ public class TreeController extends Controller {
 
 
     public void initialize() {
-        root.getChildren().add(new LabTreeView(communicator));
+        root.getChildren().add(new LabTreeView(communicator, stagePool));
     }
 }

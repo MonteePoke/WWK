@@ -122,7 +122,7 @@ public class CreateTaskController extends Controller {
             if (selectedTask != null) {
                 stagePool.pushStageAndShowModal(
                         Stages.TASK_QUESTION_MATCHING,
-                        stagePool.getStage(Stages.CREATE_TASK),
+//                        stagePool.getStage(Stages.CREATE_TASK),
                         new TaskQuestionMatchingStage(selectedTask)
                 );
             }

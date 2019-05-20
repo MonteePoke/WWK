@@ -6,11 +6,16 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TreeCell;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
+import kurlyk.WorkEntityType;
 import kurlyk.communication.Communicator;
 import kurlyk.models.*;
+import kurlyk.view.common.stage.StagePool;
+import kurlyk.view.common.stage.Stages;
+import kurlyk.view.create.createLtqWindow.CreateLtqStage;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -25,14 +30,17 @@ public class CustomTreeCell extends TreeCell<TreeDto> {
     private Button deleteButton;
     private Button editButton;
     private Communicator communicator;
+    private StagePool stagePool;
     private Consumer<CustomTreeItem> addItem;
     private Supplier<CustomTreeItem> deleteItem;
 
     public CustomTreeCell(
             Communicator communicator,
+            StagePool stagePool,
             BiConsumer<CustomTreeItem, CustomTreeItem> addItem,
             Function<CustomTreeItem, CustomTreeItem> deleteItem) {
         this.communicator = communicator;
+        this.stagePool = stagePool;
         this.addItem = (customTreeItem) -> addItem.accept(getSelectedItem(), customTreeItem);
         this.deleteItem = () -> deleteItem.apply(getSelectedItem());
     }
@@ -170,7 +178,18 @@ public class CustomTreeCell extends TreeCell<TreeDto> {
         }
     }
     private void editLabWork(){
-
+        Optional<LabWork> labWorkModel = Optional.of(getSelectedItem().getValue().getLabWork());
+        stagePool.pushStageAndShowModal(Stages.LTQ_CREATE, new CreateLtqStage(
+                WorkEntityType.LAB_WORK,
+                labWorkModel,
+                (LabWork labWork) -> {
+                    try {
+                        communicator.saveLabWork(labWork);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+        ));
     }
 
 
@@ -210,7 +229,18 @@ public class CustomTreeCell extends TreeCell<TreeDto> {
         }
     }
     private void editTask(){
-
+        Optional<Task> taskModel = Optional.of(getSelectedItem().getValue().getTask());
+        stagePool.pushStageAndShowModal(Stages.LTQ_CREATE, new CreateLtqStage(
+                WorkEntityType.TASK,
+                taskModel,
+                (Task task) -> {
+                    try {
+                        communicator.saveTask(task);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+        ));
     }
 
 
@@ -248,6 +278,17 @@ public class CustomTreeCell extends TreeCell<TreeDto> {
         }
     }
     private void editQuestion(){
-
+        Optional<Question> questionModel = Optional.of(getSelectedItem().getValue().getQuestion());
+        stagePool.pushStageAndShowModal(Stages.LTQ_CREATE, new CreateLtqStage(
+                WorkEntityType.QUESTION,
+                questionModel,
+                (Question question) -> {
+                    try {
+                        communicator.saveQuestion(question);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+        ));
     }
 }
