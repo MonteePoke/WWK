@@ -23,8 +23,8 @@ public class Question {
     private QuestionType questionType;
     private String name;
     private Integer number;
-    private Integer atemptsNumber;
     private Double score;
+    private Integer atemptsNumber;
     private String description;
 
     @Lob

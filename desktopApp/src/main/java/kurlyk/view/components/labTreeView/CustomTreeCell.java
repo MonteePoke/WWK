@@ -244,7 +244,6 @@ public class CustomTreeCell extends TreeCell<TreeDto> {
     }
 
 
-
     private void createQuestion(){
         Question question = Question.builder().number(1).name("question_1").build();
         addItem.accept(new CustomTreeItem(new TreeDto(question)));
