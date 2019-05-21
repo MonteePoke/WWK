@@ -25,6 +25,11 @@ public class QuestionController {
         return questionService.getQuestions(taskId);
     }
 
+    @GetMapping("/questions")
+    public List<Question> getQuestions(@RequestParam("pageNumber") Integer pageNumber, @RequestParam("contentSize") Integer contentSize) {
+        return questionService.getQuestions(pageNumber, contentSize);
+    }
+
     @GetMapping("/question-headers/{task-id}")
     public List<Question> getQuestionHeaders(@PathVariable("task-id") Long taskId) {
         return questionService.getQuestionHeaders(taskId);

@@ -14,4 +14,5 @@ public interface QuestionService {
     List<Question> getQuestionHeaders();
     void saveQuestion(Question question);
     void deleteQuestion(Long id);
+    List<Question> getQuestions(int pageNumber, int contentSize);
 }

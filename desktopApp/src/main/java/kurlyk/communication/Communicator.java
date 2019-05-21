@@ -195,6 +195,18 @@ public class Communicator extends AbstractCommunicator{
         getData(null, "/question/delete/" + question.getId().toString());
     }
 
+    public List<Question> getQuestions(Integer pageNumber, Integer contentSize) throws ConnectException, IOException {
+        Type type = new TypeToken<ArrayList<Question>>(){}.getType();
+        return getData(type, pageInfoToParameters(pageNumber, contentSize), "/questions/");
+    }
+
+    private Map<String, String> pageInfoToParameters(Integer pageNumber, Integer contentSize){
+        Map<String, String> parameters = new HashMap<>();
+        parameters.put("pageNumber", pageNumber != null ? pageNumber.toString() : null);
+        parameters.put("contentSize", contentSize != null ? contentSize.toString() : null);
+        return parameters;
+    }
+
 
     /*
         UserProgress

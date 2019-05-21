@@ -5,6 +5,7 @@ import kurlyk.models.TaskQuestion;
 import kurlyk.repositories.QuestionRepository;
 import kurlyk.repositories.TaskQuestionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -52,5 +53,10 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public void deleteQuestion(Long id) {
         questionRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Question> getQuestions(int pageNumber, int contentSize){
+        return questionRepository.findAll(PageRequest.of(pageNumber, contentSize)).getContent();
     }
 }
