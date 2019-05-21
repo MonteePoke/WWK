@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<VBox alignment="TOP_CENTER" prefHeight="600" prefWidth="800" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kurlyk.view.create.createLtqWindow.CreateLtqController">
-    <VBox fx:id="root">
+<?import javafx.scene.layout.GridPane?>
+<GridPane alignment="TOP_CENTER" prefHeight="600" prefWidth="800" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kurlyk.view.create.createLtqWindow.CreateLtqController">
+    <GridPane fx:id="root">
 
-    </VBox>
+    </GridPane>
     <Button fx:id="submit" alignment="CENTER" contentDisplay="CENTER" prefHeight="25.0" prefWidth="296.0" text="Ок" textAlignment="CENTER">
       <font>
          <Font size="16.0" />
       </font></Button>
-</VBox>
+</GridPane>

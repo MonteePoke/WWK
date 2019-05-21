@@ -5,9 +5,9 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
 import kurlyk.communication.Communicator;
 import kurlyk.communication.UserInfo;
 import kurlyk.models.LabWork;
@@ -28,7 +28,7 @@ import java.util.function.Supplier;
 @Scope("prototype")
 public class CreateLtqController extends Controller {
 
-    @FXML private VBox root;
+    @FXML private GridPane root;
     @FXML private Button submit;
     private Runnable closeStage;
 
@@ -92,7 +92,7 @@ public class CreateLtqController extends Controller {
     private <T extends TextField> void setTextField(String name, T field){
         HBox.setHgrow(field, Priority.ALWAYS);
         field.setMaxWidth(Double.MAX_VALUE);
-        field.setStyle("-fx-font-size: 20px;");
+        field.setStyle("-fx-font-size: 14px;");
 
         root.getChildren().add(new HBox(createNameLabel(name), field));
     }
@@ -101,7 +101,7 @@ public class CreateLtqController extends Controller {
         Label label = new Label(name);
         HBox.setHgrow(label, Priority.ALWAYS);
         label.setMaxWidth(Double.MAX_VALUE);
-        label.setStyle("-fx-font-size: 20px;");
+        label.setStyle("-fx-font-size: 14px;");
         label.setAlignment(Pos.BASELINE_CENTER);
         return label;
     }
