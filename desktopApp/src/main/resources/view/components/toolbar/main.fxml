@@ -4,101 +4,57 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <VBox xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kurlyk.view.components.toolbar.ToolbarController">
-    <ToolBar prefHeight="56.0" prefWidth="600.0">
-        <Pane fx:id="navigateControls" prefHeight="35.0" prefWidth="346.0">
-            <Button fx:id="questionDictionary" layoutX="319.0" layoutY="5.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0">
-                <graphic>
-                    <ImageView fitHeight="16.0" fitWidth="12.0">
-                        <Image url="@icons/questionDictionary.png"/>
-                    </ImageView>
-                </graphic>
+    <ToolBar prefHeight="60.0" prefWidth="600.0">
+        <Pane fx:id="navigateControls" prefHeight="40.0" prefWidth="350.0">
+            <Button fx:id="questionDictionary" layoutX="320.0" layoutY="10.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0">
+
             </Button>
-            <Button fx:id="labWorks" layoutX="285.0" layoutY="5.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0">
-                <graphic>
-                    <ImageView fitHeight="16.0" fitWidth="12.0">
-                        <Image url="@icons/labWorks.png"/>
-                    </ImageView>
-                </graphic>
+            <Button fx:id="labWorks" layoutX="285.0" layoutY="10.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0">
+
             </Button>
-            <ChoiceBox fx:id="discipline" layoutX="98.0" layoutY="5.0" prefHeight="27.0" prefWidth="177.0"/>
-            <Label layoutX="7.0" layoutY="10.0" text="Дисциплина"/>
+            <ChoiceBox fx:id="discipline" layoutX="100.0" layoutY="10.0" prefHeight="30.0" prefWidth="177.0"/>
+            <Label layoutX="5.0" layoutY="15.0" text="Дисциплина"/>
         </Pane>
-        <Pane fx:id="lectorActionControls" prefHeight="29.0" prefWidth="97.0">
-            <Button fx:id="delete" layoutX="69.0" layoutY="5.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0">
+        <Pane fx:id="lectorActionControls" prefHeight="40.0" prefWidth="100.0">
+            <Button fx:id="delete" layoutX="70.0" layoutY="10.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0">
                 <graphic>
                     <ImageView fitHeight="16.0" fitWidth="12.0">
                         <Image url="@icons/delete.png"/>
                     </ImageView>
                 </graphic>
             </Button>
-            <Button fx:id="edit" layoutX="35.0" layoutY="5.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0">
-                <graphic>
-                    <ImageView fitHeight="16.0" fitWidth="12.0">
-                        <Image url="@icons/edit.png"/>
-                    </ImageView>
-                </graphic>
+            <Button fx:id="edit" layoutX="35.0" layoutY="10.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0">
+
             </Button>
-            <Button fx:id="add" layoutX="1.0" layoutY="5.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0">
-                <graphic>
-                    <ImageView fitHeight="16.0" fitWidth="12.0">
-                        <Image url="@icons/add.png"/>
-                    </ImageView>
-                </graphic>
+            <Button fx:id="add" layoutX="1.0" layoutY="10.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0">
+
             </Button>
         </Pane>
-        <Pane fx:id="studentActionControls1" prefHeight="44.0" prefWidth="95.0">
-            <Button fx:id="exportReport" layoutX="35.0" layoutY="5.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0">
-                <graphic>
-                    <ImageView fitHeight="16.0" fitWidth="12.0">
-                        <Image url="@icons/exportReport.png"/>
-                    </ImageView>
-                </graphic>
+        <Pane fx:id="studentActionControls1" prefHeight="40.0" prefWidth="100.0">
+            <Button fx:id="exportReport" layoutX="35.0" layoutY="10.0" mnemonicParsing="false" prefHeight="30" prefWidth="30.0">
+
             </Button>
-            <Button fx:id="executeLab" layoutX="1.0" layoutY="5.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0">
-                <graphic>
-                    <ImageView fitHeight="16.0" fitWidth="12.0">
-                        <Image url="@icons/executeLab.png"/>
-                    </ImageView>
-                </graphic>
+            <Button fx:id="executeLab" layoutX="1.0" layoutY="10.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0">
+
             </Button>
-            <Button fx:id="help" layoutX="68.0" layoutY="5.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0">
-                <graphic>
-                    <ImageView fitHeight="16.0" fitWidth="12.0">
-                        <Image url="@icons/help.png"/>
-                    </ImageView>
-                </graphic>
+            <Button fx:id="help" layoutX="70.0" layoutY="10.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0">
+
             </Button>
         </Pane>
-        <Pane fx:id="adminActions" layoutX="560.0" layoutY="10.0" prefHeight="40.0" prefWidth="63.0">
-            <Button fx:id="roles" layoutX="35.0" layoutY="5.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0">
-                <graphic>
-                    <ImageView fitHeight="16.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
-                        <Image url="@icons/roles.png"/>
-                    </ImageView>
-                </graphic>
+        <Pane fx:id="adminActions" layoutX="560.0" layoutY="10.0" prefHeight="40.0" prefWidth="65.0">
+            <Button fx:id="roles" layoutX="35.0" layoutY="10.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0">
+
             </Button>
-            <Button fx:id="users" layoutX="1.0" layoutY="5.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0">
-                <graphic>
-                    <ImageView fitHeight="16.0" fitWidth="12.0">
-                        <Image url="@icons/users.png"/>
-                    </ImageView>
-                </graphic>
+            <Button fx:id="users" layoutX="1.0" layoutY="10.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0">
+
             </Button>
         </Pane>
-        <Pane fx:id="commonActions" prefHeight="40.0" prefWidth="63.0">
-            <Button fx:id="exit" layoutX="35.0" layoutY="5.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0">
-                <graphic>
-                    <ImageView fitHeight="16.0" fitWidth="12.0">
-                        <Image url="@icons/exit.png"/>
-                    </ImageView>
-                </graphic>
+        <Pane fx:id="commonActions" prefHeight="40.0" prefWidth="65.0">
+            <Button fx:id="exit" layoutX="35.0" layoutY="10.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0">
+
             </Button>
-            <Button fx:id="settings" layoutX="1.0" layoutY="5.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0">
-                <graphic>
-                    <ImageView fitHeight="16.0" fitWidth="12.0">
-                        <Image url="@icons/settings.png"/>
-                    </ImageView>
-                </graphic>
+            <Button fx:id="settings" layoutX="1.0" layoutY="10.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0">
+
             </Button>
         </Pane>
     </ToolBar>
