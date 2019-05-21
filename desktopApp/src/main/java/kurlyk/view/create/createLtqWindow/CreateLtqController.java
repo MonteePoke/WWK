@@ -90,15 +90,13 @@ public class CreateLtqController extends Controller {
     }
 
     public void editQuestion(Question question, Consumer<Question> saveAction) {
-        Supplier<Integer> numberSupplier = createIntegerField("Название", question.getNumber());
-        Supplier<String> nameSupplier = createStringField("Номер", question.getName());
+        Supplier<Integer> numberSupplier = createIntegerField("Номер", question.getNumber());
         Supplier<Double> scoreSupplier = createDoubleField("Количество баллов", question.getScore());
         Supplier<Integer> attemptsNumberSupplier = createIntegerField("Количество попыток", question.getAtemptsNumber());
         Supplier<String> descriptionSupplier = createStringField("Описание", question.getDescription());
 
         submit.setOnAction(event -> {
             question.setNumber(numberSupplier.get());
-            question.setName(nameSupplier.get());
             question.setScore(scoreSupplier.get());
             question.setAtemptsNumber(attemptsNumberSupplier.get());
             question.setDescription(descriptionSupplier.get());
