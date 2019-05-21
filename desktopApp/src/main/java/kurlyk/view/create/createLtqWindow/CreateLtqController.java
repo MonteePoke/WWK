@@ -9,8 +9,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
-import kurlyk.communication.Communicator;
 import javafx.scene.layout.Region;
+import kurlyk.communication.Communicator;
 import kurlyk.communication.UserInfo;
 import kurlyk.models.LabWork;
 import kurlyk.models.Question;
@@ -33,6 +33,7 @@ public class CreateLtqController extends Controller {
     @FXML private GridPane root;
     @FXML private Button submit;
     private Runnable closeStage;
+    private int rowCounter;
 
     @Autowired
     private StagePool stagePool;
@@ -45,6 +46,12 @@ public class CreateLtqController extends Controller {
 
 
     public void initialize(){
+        rowCounter = 1; //потому что первая строка - название колонок
+        Label nameParameter = new Label("Название параметра");
+        Label parameterValue = new Label("Значение параметра");
+        GridPane.setColumnIndex(nameParameter, 0);
+        GridPane.setColumnIndex(parameterValue, 1);
+        root.getChildren().addAll(nameParameter, parameterValue);
     }
 
     public void setCloseStage(Runnable closeStage) {
@@ -103,34 +110,39 @@ public class CreateLtqController extends Controller {
 
     private Supplier<String> createStringField(String name, String value){
         TextField field = new TextField(value);
-        setTextField(name, field);
+        setRow(name, field);
         return field::getText;
     }
 
     private Supplier<Integer> createIntegerField(String name, Integer value){
         IntegerField field = new IntegerField(value);
-        setTextField(name, field);
+        setRow(name, field);
         return field::getNumber;
     }
 
     private Supplier<Double> createDoubleField(String name, Double value){
         DoubleField field = new DoubleField(value);
-        setTextField(name, field);
+        setRow(name, field);
         return field::getNumber;
     }
 
     private Supplier<Boolean> createBooleanField(String name, Boolean value){
         CheckBox field = new CheckBox();
         field.setSelected(value);
-        setTextField(name, field);
+        setRow(name, field);
         return field::isSelected;
     }
 
-    private <T extends Region> void setTextField(String name, T field){
+    private <T extends Region> void setRow(String name, T field){
         HBox.setHgrow(field, Priority.ALWAYS);
         field.setMaxWidth(Double.MAX_VALUE);
         field.setStyle("-fx-font-size: 14px;");
-        root.getChildren().add(new HBox(createNameLabel(name), field));
+
+        Label label = createNameLabel(name);
+        GridPane.setConstraints(label, 0, rowCounter);
+        GridPane.setConstraints(field, 1, rowCounter);
+        rowCounter++;
+        root.getChildren().addAll(label, field);
     }
 
     private Label createNameLabel(String name){
