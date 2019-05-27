@@ -55,13 +55,18 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public void saveTaskQuestionMatching(TaskQuestion taskQuestion){
-        taskQuestionRepository.save(taskQuestion);
+    public Long saveTaskQuestionMatching(TaskQuestion taskQuestion){
+        Optional<TaskQuestion> taskQuestionOptional = taskQuestionRepository.findByTaskIdAndQuestionId(
+                taskQuestion.getTask().getId(),
+                taskQuestion.getQuestion().getId()
+        );
+        taskQuestionOptional.ifPresent(question -> taskQuestion.setId(question.getId()));
+        return taskQuestionRepository.save(taskQuestion).getId();
     }
 
     @Override
-    public void saveTask(Task task) {
-        taskRepository.save(task);
+    public Long saveTask(Task task) {
+        return taskRepository.save(task).getId();
     }
 
     @Override

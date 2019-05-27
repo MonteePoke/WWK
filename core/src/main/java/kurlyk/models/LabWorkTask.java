@@ -25,8 +25,9 @@ public class LabWorkTask {
     @ManyToOne
     private Task task;
 
-    public LabWorkTask(Long id, Long labWorkId, String labWorkName, Long taskId, String taskName) {
+    public LabWorkTask(Long id, Integer number, Long labWorkId, String labWorkName, Long taskId, String taskName) {
         this.id = id;
+        this.number = number;
         this.labWork = LabWork.builder().id(labWorkId).name(labWorkName).build();
         this.task = Task.builder().id(taskId).name(taskName).build();
     }

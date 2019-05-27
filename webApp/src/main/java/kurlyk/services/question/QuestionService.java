@@ -12,7 +12,7 @@ public interface QuestionService {
     List<Question> getQuestions(Long taskId);
     List<Question> getQuestionHeaders(Long taskId);
     List<Question> getQuestionHeaders();
-    void saveQuestion(Question question);
+    Long saveQuestion(Question question);
     void deleteQuestion(Long id);
     List<Question> getQuestions(int pageNumber, int contentSize);
 }

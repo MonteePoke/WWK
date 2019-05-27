@@ -33,9 +33,8 @@ public class TaskController {
     }
 
     @PostMapping("/task")
-    public ResponseEntity<Object> saveTask(@RequestBody Task task) {
-        taskService.saveTask(task);
-        return ResponseEntity.ok().build();
+    public Long saveTask(@RequestBody Task task) {
+        return taskService.saveTask(task);
     }
 
     @GetMapping("/task/delete/{id}")
@@ -55,9 +54,8 @@ public class TaskController {
     }
 
     @PostMapping("/task-question-matching")
-    public ResponseEntity<Object> saveTaskQuestionMatching(@RequestBody TaskQuestion taskQuestion) {
-        taskService.saveTaskQuestionMatching(taskQuestion);
-        return ResponseEntity.ok().build();
+    public Long saveTaskQuestionMatching(@RequestBody TaskQuestion taskQuestion) {
+        return taskService.saveTaskQuestionMatching(taskQuestion);
     }
 
     @GetMapping("/task-question-matching/delete/{id}")

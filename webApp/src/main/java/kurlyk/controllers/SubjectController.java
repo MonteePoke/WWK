@@ -27,9 +27,8 @@ public class SubjectController {
     }
 
     @PostMapping("/subject")
-    public ResponseEntity<Object> saveSubject(@RequestBody Subject subject) {
-        subjectService.saveSubject(subject);
-        return ResponseEntity.ok().build();
+    public Long saveSubject(@RequestBody Subject subject) {
+        return subjectService.saveSubject(subject);
     }
 
     @DeleteMapping("/subject/{id}")

@@ -26,7 +26,10 @@ public class QuestionController {
     }
 
     @GetMapping("/questions")
-    public List<Question> getQuestions(@RequestParam("pageNumber") Integer pageNumber, @RequestParam("contentSize") Integer contentSize) {
+    public List<Question> getQuestions(
+            @RequestParam("pageNumber") Integer pageNumber,
+            @RequestParam("contentSize") Integer contentSize
+    ) {
         return questionService.getQuestions(pageNumber, contentSize);
     }
 
@@ -41,9 +44,8 @@ public class QuestionController {
     }
 
     @PostMapping("/question")
-    public ResponseEntity<Object> saveQuestion(@RequestBody Question question) {
-        questionService.saveQuestion(question);
-        return ResponseEntity.ok().build();
+    public Long saveQuestion(@RequestBody Question question) {
+        return questionService.saveQuestion(question);
     }
 
     @GetMapping("/question/delete/{id}")

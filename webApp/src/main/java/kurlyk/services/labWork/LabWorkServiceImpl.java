@@ -40,13 +40,13 @@ public class LabWorkServiceImpl implements LabWorkService {
     }
 
     @Override
-    public void saveLabWorkTaskMatching(LabWorkTask labWorkTask){
-        labWorkTaskRepository.save(labWorkTask);
+    public Long saveLabWorkTaskMatching(LabWorkTask labWorkTask){
+        return labWorkTaskRepository.save(labWorkTask).getId();
     }
 
     @Override
-    public void saveLabWork(LabWork labWork){
-        labWorkRepository.save(labWork);
+    public Long saveLabWork(LabWork labWork){
+        return labWorkRepository.save(labWork).getId();
     }
 
     @Override

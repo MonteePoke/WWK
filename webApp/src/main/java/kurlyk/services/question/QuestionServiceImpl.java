@@ -46,8 +46,8 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public void saveQuestion(Question question){
-        questionRepository.save(question);
+    public Long saveQuestion(Question question){
+        return questionRepository.save(question).getId();
     }
 
     @Override

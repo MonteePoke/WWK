@@ -13,8 +13,8 @@ public interface LabWorkService {
     Optional<LabWork> getLabWork(Long id);
     List<LabWorkTask> getLabWorkTaskMatching();
     List<LabWorkTask> getLabWorkTaskMatching(Long labWorkId);
-    void saveLabWorkTaskMatching(LabWorkTask labWorkTask);
-    void saveLabWork(LabWork labWork);
+    Long saveLabWorkTaskMatching(LabWorkTask labWorkTask);
+    Long saveLabWork(LabWork labWork);
     void deleteLabWork(Long id);
     void deleteLabWorkTaskMatching(Long id);
     void deleteLabWorkTaskMatchingByLabWorkId(Long id);

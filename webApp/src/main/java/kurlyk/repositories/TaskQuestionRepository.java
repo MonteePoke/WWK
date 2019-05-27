@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface TaskQuestionRepository extends JpaRepository<TaskQuestion, Long> {
 
@@ -14,6 +15,7 @@ public interface TaskQuestionRepository extends JpaRepository<TaskQuestion, Long
 
     @Query("SELECT new TaskQuestion(" +
             "tq.id, " +
+            "tq.number, " +
             "tq.task.id, " +
             "tq.task.name, " +
             "tq.question.id, " +
@@ -33,12 +35,15 @@ public interface TaskQuestionRepository extends JpaRepository<TaskQuestion, Long
 
     @Query("SELECT new TaskQuestion(" +
             "tq.id, " +
+            "tq.number, " +
             "tq.task.id, " +
             "tq.task.name, " +
             "tq.question.id, " +
             "tq.question.name" +
             ") FROM TaskQuestion as tq WHERE tq.task.id = ?1")
     List<TaskQuestion> getTaskQuestionMatchingByTaskId(Long id);
+
+    Optional<TaskQuestion> findByTaskIdAndQuestionId(Long taskId, Long questionId);
 
     void deleteByTaskId(Long id);
     void deleteByQuestionId(Long id);

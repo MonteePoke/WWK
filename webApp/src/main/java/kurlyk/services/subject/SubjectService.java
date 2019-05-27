@@ -10,6 +10,6 @@ public interface SubjectService {
 
     Optional<Subject> getSubject(Long id);
     List<Subject> getSubjects();
-    void saveSubject(Subject subject);
+    Long saveSubject(Subject subject);
     void deleteSubject(Long id);
 }

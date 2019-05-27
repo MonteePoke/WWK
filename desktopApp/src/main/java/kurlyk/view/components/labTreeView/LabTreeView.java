@@ -23,7 +23,7 @@ public class LabTreeView extends TreeView<TreeDto> {
 
     private void createRootItem(){
         TreeDto defaultTreeDto = new TreeDto(WorkEntityType.NONE);
-        root = new CustomTreeItem(defaultTreeDto);
+        root = new CustomTreeItem(null, defaultTreeDto);
         root.setExpanded(true);
     }
 
@@ -38,6 +38,7 @@ public class LabTreeView extends TreeView<TreeDto> {
 
     private void createWorld(Communicator communicator){
         CustomTreeItem subjectItem = new CustomTreeItem(
+                null,
                 new TreeDto(Subject.builder().id(1L).name("ВВК").build())
         );
         root.getChildren().add(subjectItem);
@@ -54,18 +55,17 @@ public class LabTreeView extends TreeView<TreeDto> {
                 switch (item.getValue().getType()){
                     case SUBJECT:
                         item.getChildren().addAll(
-                                TreeDto.itemsOfLabWorks(communicator.getLabWorks())
+                                TreeDto.itemsOfLabWorks(item, communicator.getLabWorks())
                         );
                         break;
-
                     case LAB_WORK:
                         item.getChildren().addAll(
-                                TreeDto.itemsOfTasks(communicator.getTasks(item.getValue().getLabWork()))
+                                TreeDto.itemsOfTasks(item, communicator.getTasks(item.getValue().getLabWork()))
                         );
                         break;
                     case TASK:
                         item.getChildren().addAll(
-                                TreeDto.itemsOfQuestions(communicator.getQuestionHeaders(item.getValue().getTask()))
+                                TreeDto.itemsOfQuestions(item, communicator.getQuestionHeaders(item.getValue().getTask()))
                         );
                         break;
                     case QUESTION:

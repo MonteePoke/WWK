@@ -4,10 +4,12 @@ import javafx.scene.control.TreeItem;
 
 public class CustomTreeItem extends TreeItem<TreeDto> {
     private boolean childrenIsSetted;
+    private CustomTreeItem itemParent;
 
-    public CustomTreeItem(TreeDto value) {
+    public CustomTreeItem(CustomTreeItem itemParent, TreeDto value) {
         super(value);
-        childrenIsSetted = false;
+        this.childrenIsSetted = false;
+        this.itemParent = itemParent;
     }
 
     public boolean isChildrenIsSetted() {
@@ -16,5 +18,9 @@ public class CustomTreeItem extends TreeItem<TreeDto> {
 
     public void setChildrenIsSetted(boolean childrenIsSetted) {
         this.childrenIsSetted = childrenIsSetted;
+    }
+
+    public CustomTreeItem getItemParent() {
+        return itemParent;
     }
 }

@@ -28,9 +28,8 @@ public class LabWorkController {
     }
 
     @PostMapping("/lab-work")
-    public ResponseEntity<Object> saveLabWork(@RequestBody LabWork labWork) {
-        labWorkService.saveLabWork(labWork);
-        return ResponseEntity.ok().build();
+    public Long saveLabWork(@RequestBody LabWork labWork) {
+        return labWorkService.saveLabWork(labWork);
     }
 
     @GetMapping("/lab-work/delete/{id}")
@@ -50,9 +49,8 @@ public class LabWorkController {
     }
 
     @PostMapping("/lab-work-task-matching")
-    public ResponseEntity<Object> saveLabWorkTaskMatching(@RequestBody LabWorkTask labWorkTask) {
-        labWorkService.saveLabWorkTaskMatching(labWorkTask);
-        return ResponseEntity.ok().build();
+    public Long saveLabWorkTaskMatching(@RequestBody LabWorkTask labWorkTask) {
+        return labWorkService.saveLabWorkTaskMatching(labWorkTask);
     }
 
     @GetMapping("/lab-work-task-matching/delete/{id}")

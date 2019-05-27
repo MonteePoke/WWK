@@ -14,8 +14,8 @@ public interface TaskService {
     List<Task> getTasks();
     List<TaskQuestion> getTaskQuestionMatching();
     List<TaskQuestion> getTaskQuestionMatching(Long taskId);
-    void saveTaskQuestionMatching(TaskQuestion taskQuestion);
-    void saveTask(Task task);
+    Long saveTaskQuestionMatching(TaskQuestion taskQuestion);
+    Long saveTask(Task task);
     void deleteTask(Long id);
     void deleteTaskQuestionMatching(Long id);
     void deleteTaskQuestionMatchingByTaskId(Long id);

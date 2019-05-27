@@ -46,19 +46,19 @@ public class TreeDto {
 
     //Создание CustomTreeItem
     public static CustomTreeItem itemOf(Subject subject){
-        return new CustomTreeItem(new TreeDto(subject));
+        return new CustomTreeItem(null, new TreeDto(subject));
     }
 
-    public static CustomTreeItem itemOf(LabWork labWork){
-        return new CustomTreeItem(new TreeDto(labWork));
+    public static CustomTreeItem itemOf(CustomTreeItem itemParent, LabWork labWork){
+        return new CustomTreeItem(itemParent, new TreeDto(labWork));
     }
 
-    public static CustomTreeItem itemOf(Task task){
-        return new CustomTreeItem(new TreeDto(task));
+    public static CustomTreeItem itemOf(CustomTreeItem itemParent, Task task){
+        return new CustomTreeItem(itemParent, new TreeDto(task));
     }
 
-    public static CustomTreeItem itemOf(Question question){
-        return new CustomTreeItem(new TreeDto(question));
+    public static CustomTreeItem itemOf(CustomTreeItem itemParent, Question question){
+        return new CustomTreeItem(itemParent, new TreeDto(question));
     }
 
     public static List<CustomTreeItem> itemsOfSubjects(List<Subject> subjects){
@@ -68,24 +68,24 @@ public class TreeDto {
                 .collect(Collectors.toList());
     }
 
-    public static List<CustomTreeItem> itemsOfLabWorks(List<LabWork> labWorks){
+    public static List<CustomTreeItem> itemsOfLabWorks(CustomTreeItem itemParent, List<LabWork> labWorks){
         return labWorks
                 .stream()
-                .map(TreeDto::itemOf)
+                .map(labWork -> itemOf(itemParent, labWork))
                 .collect(Collectors.toList());
     }
 
-    public static List<CustomTreeItem> itemsOfTasks(List<Task> tasks){
+    public static List<CustomTreeItem> itemsOfTasks(CustomTreeItem itemParent, List<Task> tasks){
         return tasks
                 .stream()
-                .map(TreeDto::itemOf)
+                .map(task -> itemOf(itemParent, task))
                 .collect(Collectors.toList());
     }
 
-    public static List<CustomTreeItem> itemsOfQuestions(List<Question> questions){
+    public static List<CustomTreeItem> itemsOfQuestions(CustomTreeItem itemParent, List<Question> questions){
         return questions
                 .stream()
-                .map(TreeDto::itemOf)
+                .map(question -> itemOf(itemParent, question))
                 .collect(Collectors.toList());
     }
 }
