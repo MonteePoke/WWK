@@ -1,21 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.VBox?>
 <VBox prefHeight="600" prefWidth="800" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kurlyk.view.executeLabWindow.ExecuteLabController">
-    <MenuBar focusTraversable="true" >
-        <menus>
-            <Menu text="File">
-                <items>
-                    <MenuItem fx:id="showAnswer" text="Показать ответ"/>
-                </items>
-            </Menu>
-            <Menu text="Help">
-            </Menu>
-        </menus>
-    </MenuBar>
     <VBox fx:id="root" alignment="TOP_CENTER">
 
     </VBox>

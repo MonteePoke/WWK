@@ -3,18 +3,17 @@ package kurlyk.view.executeLabWindow;
 import com.google.gson.Gson;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
-import javafx.stage.Stage;
 import kurlyk.communication.Communicator;
 import kurlyk.communication.UserInfo;
 import kurlyk.models.UserProgress;
 import kurlyk.transfer.tasks.*;
 import kurlyk.view.common.controller.Controller;
 import kurlyk.view.common.stage.StagePool;
+import kurlyk.view.common.stage.base.BaseStage;
 import kurlyk.view.components.UserProgressTab;
 import kurlyk.view.showAnswerWindow.ShowAnswerStage;
 import kurlyk.view.showResultWindow.ShowResultSceneCreator;
@@ -36,9 +35,8 @@ import java.util.List;
 public class ExecuteLabController extends Controller {
 
     @FXML private VBox root;
-    @FXML private MenuItem showAnswer;
     private TabPane tabPane;
-    private Stage stage;
+    private BaseStage stage;
 
     @Autowired
     private StagePool stagePool;
@@ -51,7 +49,6 @@ public class ExecuteLabController extends Controller {
 
 
     public void initialize(){
-        createMenu();
     }
 
     public void setTasks(List<UserProgress> userProgresses, boolean isTest){
@@ -125,7 +122,7 @@ public class ExecuteLabController extends Controller {
     }
 
     private void createMenu(){
-        showAnswer.setOnAction(event -> {
+        stage.getMainMenu().getShowAnswerItem().setOnAction(event -> {
             try {
                 ShowAnswerStage showAnswerStage = new ShowAnswerStage(
                         ((UserProgressTab) tabPane.getSelectionModel().getSelectedItem()).getUserProgress().getQuestion()
@@ -138,7 +135,8 @@ public class ExecuteLabController extends Controller {
         });
     }
 
-    public void setStage(Stage stage) {
+    public void setStage(BaseStage stage) {
         this.stage = stage;
+        createMenu();
     }
 }

@@ -4,13 +4,14 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import kurlyk.graph.ComputerSystem.ComputerSystemElement;
 import kurlyk.view.common.ViewProperties;
+import kurlyk.view.common.dto.BaseStageDto;
 import kurlyk.view.common.stage.base.BaseStage;
 
 public class CharacteristicStage extends BaseStage<CharacteristicController> {
 
 
     public CharacteristicStage(ComputerSystemElement computerSystemElement) {
-        super();
+        super(BaseStageDto.allOff());
         controller.addCharacteristic(ViewProperties.getInstance().getProperty("availabilityFactorProperty"),
                 computerSystemElement.getAvailabilityFactor()
         );

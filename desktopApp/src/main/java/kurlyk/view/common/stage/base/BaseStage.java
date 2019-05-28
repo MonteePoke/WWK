@@ -18,6 +18,7 @@ public abstract class BaseStage <T extends Controller> extends Stage {
 
     protected T controller;
     protected BorderPane root;
+    protected MainMenu mainMenu;
 
     public BaseStage() {
         this(BaseStageDto.allInclusive());
@@ -36,7 +37,7 @@ public abstract class BaseStage <T extends Controller> extends Stage {
         setMinWidth(800);
         setMinHeight(400);
         if (baseStageDto.isNeedMenu()) {
-            setMenuToScene(root);
+            mainMenu = setMenuToScene(root);
         }
         if (baseStageDto.isNeedTree()) {
             setTreeViewToScene(root);
@@ -50,11 +51,13 @@ public abstract class BaseStage <T extends Controller> extends Stage {
         return scene;
     }
 
-    public static void setMenuToScene(BorderPane root){
+    public static MainMenu setMenuToScene(BorderPane root){
+        MainMenu mainMenu = new MainMenu();
         root.setTop(new VBox(
-                new MainMenu(),
+                mainMenu,
                 new ToolbarSceneCreator().getScene().getRoot()
         ));
+        return mainMenu;
     }
 
     public static void setTreeViewToScene(BorderPane root){
@@ -64,4 +67,8 @@ public abstract class BaseStage <T extends Controller> extends Stage {
     }
 
     public abstract String getPathToMainStage();
+
+    public MainMenu getMainMenu() {
+        return mainMenu;
+    }
 }

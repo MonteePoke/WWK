@@ -35,6 +35,7 @@ public class TaskServiceImpl implements TaskService {
     public List<Task> getTasks(Long labWorkId) {
         return labWorkTaskRepository.findByLabWorkId(labWorkId)
                         .stream()
+                        .peek(labWorkTask -> labWorkTask.getTask().setNumber(labWorkTask.getNumber()))
                         .map(LabWorkTask::getTask)
                         .collect(Collectors.toList());
     }

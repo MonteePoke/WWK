@@ -31,6 +31,7 @@ public class QuestionServiceImpl implements QuestionService {
     public List<Question> getQuestions(Long taskId){
         return taskQuestionRepository.findByTaskId(taskId)
                         .stream()
+                        .peek(taskQuestion -> taskQuestion.getQuestion().setNumber(taskQuestion.getNumber()))
                         .map(TaskQuestion::getQuestion)
                         .collect(Collectors.toList());
     }
