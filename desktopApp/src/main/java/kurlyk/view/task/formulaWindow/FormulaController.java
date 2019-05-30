@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebView;
 import kurlyk.communication.Communicator;
+import kurlyk.models.Question;
 import kurlyk.models.UserProgress;
 import kurlyk.transfer.tasks.FormulaDto;
 import kurlyk.view.common.stage.StagePool;
@@ -20,6 +21,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.function.Consumer;
 
 
 @Component
@@ -59,7 +61,7 @@ public class FormulaController extends CommonTaskController<FormulaDto> {
         }
     }
 
-    public void setQuestion(UserProgress userProgress, FormulaDto formulaDto, boolean editable) {
+    public void setQuestion(UserProgress userProgress, FormulaDto formulaDto, boolean editable, Consumer<Question> callbackAction) {
         final FormulaDto rightFormulaDto = formulaDto;
         commonConfiguration(
                 userProgress,
@@ -68,7 +70,8 @@ public class FormulaController extends CommonTaskController<FormulaDto> {
                 textArea,
                 submit,
                 communicator,
-                stagePool
+                stagePool,
+                callbackAction
         );
 //        if (editable && formulaDto.getLatexFormula() != null) {
 //            inputField.setText(formulaDto.getLatexFormula());

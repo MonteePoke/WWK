@@ -13,6 +13,7 @@ import javafx.scene.layout.VBox;
 import kurlyk.communication.Communicator;
 import kurlyk.graph.ComputerSystem.ComputerSystemElementType;
 import kurlyk.graph.GraphSystem;
+import kurlyk.models.Question;
 import kurlyk.models.UserProgress;
 import kurlyk.transfer.tasks.ComputerSystemDto;
 import kurlyk.view.common.stage.StagePool;
@@ -29,6 +30,8 @@ import kurlyk.view.task.computerSystemDiagramWindow.computerSystemDiagram.Diagra
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+
+import java.util.function.Consumer;
 
 @Component
 @Scope("prototype")
@@ -235,7 +238,7 @@ public class ComputerSystemDiagramController extends CommonTaskController<Comput
         );
     }
 
-    public void setQuestion(UserProgress userProgress, ComputerSystemDto computerSystemDto, boolean editable) {
+    public void setQuestion(UserProgress userProgress, ComputerSystemDto computerSystemDto, boolean editable, Consumer<Question> callbackAction) {
         final ComputerSystemDto rightComputerSystemDto = computerSystemDto;
         commonConfiguration(
                 userProgress,
@@ -244,7 +247,8 @@ public class ComputerSystemDiagramController extends CommonTaskController<Comput
                 textArea,
                 submit,
                 communicator,
-                stagePool
+                stagePool,
+                callbackAction
         );
 //        if (editable && formulaDto.getLatexFormula() != null) {
 //            inputField.setText(formulaDto.getLatexFormula());

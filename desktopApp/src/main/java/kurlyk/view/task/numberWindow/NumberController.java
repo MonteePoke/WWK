@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import kurlyk.communication.Communicator;
+import kurlyk.models.Question;
 import kurlyk.models.UserProgress;
 import kurlyk.transfer.tasks.NumberDto;
 import kurlyk.view.common.stage.StagePool;
@@ -14,6 +15,8 @@ import kurlyk.view.task.CommonTaskController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+
+import java.util.function.Consumer;
 
 
 @Component
@@ -35,7 +38,7 @@ public class NumberController extends CommonTaskController<NumberDto> {
 
     }
 
-    public void setQuestion(UserProgress userProgress, NumberDto numberDto, boolean editable) {
+    public void setQuestion(UserProgress userProgress, NumberDto numberDto, boolean editable, Consumer<Question> callbackAction) {
         final NumberDto rightNumberDto = numberDto;
         commonConfiguration(
                 userProgress,
@@ -44,7 +47,8 @@ public class NumberController extends CommonTaskController<NumberDto> {
                 textArea,
                 submit,
                 communicator,
-                stagePool
+                stagePool,
+                callbackAction
         );
         if (editable && numberDto.getNumber() != null) {
             inputField.setNumber(numberDto.getNumber());

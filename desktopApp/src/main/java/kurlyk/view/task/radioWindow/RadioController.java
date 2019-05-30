@@ -8,6 +8,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
 import javafx.util.Pair;
 import kurlyk.communication.Communicator;
+import kurlyk.models.Question;
 import kurlyk.models.UserProgress;
 import kurlyk.transfer.tasks.SelectDto;
 import kurlyk.view.common.stage.StagePool;
@@ -17,6 +18,8 @@ import kurlyk.view.task.CommonTaskController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+
+import java.util.function.Consumer;
 
 
 @Component
@@ -36,7 +39,7 @@ public class RadioController extends CommonTaskController<SelectDto> {
     public void initialize(){
     }
 
-    public void setQuestion(UserProgress userProgress, SelectDto selectDto, boolean editable) {
+    public void setQuestion(UserProgress userProgress, SelectDto selectDto, boolean editable, Consumer<Question> callbackAction) {
         final SelectDto rightSelectDto = selectDto;
         commonConfiguration(
                 userProgress,
@@ -45,7 +48,8 @@ public class RadioController extends CommonTaskController<SelectDto> {
                 textArea,
                 submit,
                 communicator,
-                stagePool
+                stagePool,
+                callbackAction
         );
         ToggleGroup group = new ToggleGroup();
         for (Pair<String, Boolean> option : selectDto.getOptions()){

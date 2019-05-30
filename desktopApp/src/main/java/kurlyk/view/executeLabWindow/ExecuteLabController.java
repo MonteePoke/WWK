@@ -59,31 +59,31 @@ public class ExecuteLabController extends Controller {
             switch (userProgress.getQuestion().getQuestionType()){
                 case RADIO:
                     SelectDto radioDto = new Gson().fromJson(userProgress.getQuestion().getAnswer(), SelectDto.class);
-                    scene = new RadioSceneCreator(userProgress, radioDto, false).getScene();
+                    scene = new RadioSceneCreator(userProgress, radioDto, false, (question -> {})).getScene();
                     break;
                 case CHEK:
                     SelectDto checkDto = new Gson().fromJson(userProgress.getQuestion().getAnswer(), SelectDto.class);
-                    scene = new CheckSceneCreator(userProgress, checkDto, false).getScene();
+                    scene = new CheckSceneCreator(userProgress, checkDto, false, (question -> {})).getScene();
                     break;
                 case MATCHING:
                     MatchingDto matchingDto = new Gson().fromJson(userProgress.getQuestion().getAnswer(), MatchingDto.class);
-                    scene = new MatchingSceneCreator(userProgress, matchingDto, false).getScene();
+                    scene = new MatchingSceneCreator(userProgress, matchingDto, false, (question -> {})).getScene();
                     break;
                 case NUMBER:
                     NumberDto numberDto = new Gson().fromJson(userProgress.getQuestion().getAnswer(), NumberDto.class);
-                    scene = new NumberSceneCreator(userProgress, numberDto, false).getScene();
+                    scene = new NumberSceneCreator(userProgress, numberDto, false, (question -> {})).getScene();
                     break;
                 case TEXT:
                     TextDto textDto = new Gson().fromJson(userProgress.getQuestion().getAnswer(), TextDto.class);
-                    scene = new TextSceneCreator(userProgress, textDto, false).getScene();
+                    scene = new TextSceneCreator(userProgress, textDto, false, (question -> {})).getScene();
                     break;
                 case FORMULA:
                     FormulaDto formulaDto = new Gson().fromJson(userProgress.getQuestion().getAnswer(), FormulaDto.class);
-                    scene = new FormulaSceneCreator(userProgress, formulaDto, false).getScene();
+                    scene = new FormulaSceneCreator(userProgress, formulaDto, false, (question -> {})).getScene();
                     break;
                 case COMPUTER_SYSTEM:
                     ComputerSystemDto computerSystemDto = new Gson().fromJson(userProgress.getQuestion().getAnswer(), ComputerSystemDto.class);
-                    scene = new ComputerSystemDiagramSceneCreator(userProgress, computerSystemDto, false).getScene();
+                    scene = new ComputerSystemDiagramSceneCreator(userProgress, computerSystemDto, false, (question -> {})).getScene();
                     break;
             }
             tab.setContent(scene.getRoot());

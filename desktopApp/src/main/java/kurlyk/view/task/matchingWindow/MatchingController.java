@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import kurlyk.communication.Communicator;
+import kurlyk.models.Question;
 import kurlyk.models.UserProgress;
 import kurlyk.transfer.tasks.MatchingDto;
 import kurlyk.view.common.stage.StagePool;
@@ -16,6 +17,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;
+import java.util.function.Consumer;
 
 
 @Component
@@ -38,7 +40,7 @@ public class MatchingController extends CommonTaskController<MatchingDto> {
     public void initialize(){
     }
 
-    public void setItemsToView(UserProgress userProgress, MatchingDto matchingDto, boolean editable){
+    public void setItemsToView(UserProgress userProgress, MatchingDto matchingDto, boolean editable, Consumer<Question> callbackAction){
         final MatchingDto rightMatchingDto = matchingDto;
         commonConfiguration(
                 userProgress,
@@ -47,7 +49,8 @@ public class MatchingController extends CommonTaskController<MatchingDto> {
                 textArea,
                 submit,
                 communicator,
-                stagePool
+                stagePool,
+                callbackAction
         );
         if(!editable){
             matchingDto = getMixMatching(matchingDto);

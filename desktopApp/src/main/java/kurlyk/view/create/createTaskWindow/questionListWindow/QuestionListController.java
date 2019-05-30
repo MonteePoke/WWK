@@ -14,6 +14,7 @@ import kurlyk.view.common.controller.Controller;
 import kurlyk.view.common.stage.StagePool;
 import kurlyk.view.common.stage.Stages;
 import kurlyk.view.components.table.StringCell;
+import kurlyk.view.create.createQuestionWindow.CreateQuestionStage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -72,11 +73,25 @@ public class QuestionListController extends Controller {
         });
     }
 
-    public void setOk(Consumer<Question> applySelection){
-        if (selectedQuestion != null) {
+    public void setOk(Consumer<Question> applySelection) {
+        setOk(applySelection, false);
+    }
+
+    public void setOk(Consumer<Question> applySelection, boolean isBaseStage){
+        if (!isBaseStage) {
+            if (selectedQuestion != null) {
+                ok.setOnAction(event -> {
+                    applySelection.accept(selectedQuestion);
+                    stagePool.deleteStage(Stages.QUESTION_LIST);
+                });
+            }
+        } else {
+            ok.setText("Создать");
             ok.setOnAction(event -> {
-                applySelection.accept(selectedQuestion);
-                stagePool.deleteStage(Stages.QUESTION_LIST);
+                stagePool.pushStageAndShow(
+                        Stages.CREATE_QUESTION,
+                        new CreateQuestionStage((question -> questionTable.getItems().add(question)))
+                );
             });
         }
     }

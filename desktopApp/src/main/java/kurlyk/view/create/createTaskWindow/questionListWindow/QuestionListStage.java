@@ -8,10 +8,13 @@ import java.util.function.Consumer;
 
 public class QuestionListStage extends BaseStage<QuestionListController> {
 
-
     public QuestionListStage(Consumer<Question> applySelection) {
+        this(applySelection, false);
+    }
+
+    public QuestionListStage(Consumer<Question> applySelection, boolean isBaseStage) {
         super(BaseStageDto.allOff());
-        controller.setOk(applySelection);
+        controller.setOk(applySelection, isBaseStage);
     }
 
     @Override

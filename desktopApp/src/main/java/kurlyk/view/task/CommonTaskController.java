@@ -3,6 +3,7 @@ package kurlyk.view.task;
 import com.google.gson.Gson;
 import javafx.scene.control.Button;
 import kurlyk.communication.Communicator;
+import kurlyk.models.Question;
 import kurlyk.models.UserProgress;
 import kurlyk.view.common.controller.Controller;
 import kurlyk.view.common.controller.TaskBodyController;
@@ -14,6 +15,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.IOException;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public abstract class CommonTaskController <T> extends Controller implements TaskBodyController<T> {
@@ -28,7 +30,8 @@ public abstract class CommonTaskController <T> extends Controller implements Tas
             MyHtmlEditor textArea,
             Button submit,
             Communicator communicator,
-            StagePool stagePool
+            StagePool stagePool,
+            Consumer<Question> callback
     ) {
         textArea.setDisable(!editable);
         textArea.setMinHeight(200);
@@ -38,7 +41,11 @@ public abstract class CommonTaskController <T> extends Controller implements Tas
                 userProgress.getQuestion().setAnswer(new Gson().toJson(getResult()));
                 try {
                     communicator.saveQuestion(userProgress.getQuestion());
-                    stagePool.showStage(Stages.COMMON_CREATE);
+                    callback.accept(userProgress.getQuestion());
+                    try {
+                        stagePool.showStage(Stages.COMMON_CREATE);
+                    } catch (Exception e) {
+                    }
                     stagePool.closeStage(Stages.CREATE_QUESTION);
                 } catch (IOException e) {
                     FxDialogs.showError("", "Ошибка отправки данных");

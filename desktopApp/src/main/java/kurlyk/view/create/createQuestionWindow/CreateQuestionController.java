@@ -28,6 +28,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
+import java.util.function.Consumer;
 
 @Component
 @Scope("prototype")
@@ -36,7 +37,7 @@ public class CreateQuestionController extends Controller {
     @FXML private TextField nameField;
     @FXML private ComboBox<QuestionType> labType;
     @FXML private Button further;
-
+    private Consumer<Question> callbackAction;
 
     @Autowired
     private StagePool stagePool;
@@ -67,7 +68,7 @@ public class CreateQuestionController extends Controller {
                             new Pair<>("", false),
                             new Pair<>("", false)
                     ));
-                    scene = new RadioSceneCreator(userProgress, radioDto, true).getScene();
+                    scene = new RadioSceneCreator(userProgress, radioDto, true, callbackAction).getScene();
                     break;
                 case CHEK:
                     SelectDto chekDto = new SelectDto(Arrays.asList(
@@ -76,30 +77,30 @@ public class CreateQuestionController extends Controller {
                             new Pair<>("", false),
                             new Pair<>("", false)
                     ));
-                    scene = new CheckSceneCreator(userProgress, chekDto, true).getScene();
+                    scene = new CheckSceneCreator(userProgress, chekDto, true, callbackAction).getScene();
                     break;
                 case MATCHING:
                     MatchingDto matchingDto = new MatchingDto(
                             Arrays.asList("", "", "", ""),
                             Arrays.asList("", "", "", "")
                     );
-                    scene = new MatchingSceneCreator(userProgress, matchingDto, true).getScene();
+                    scene = new MatchingSceneCreator(userProgress, matchingDto, true, callbackAction).getScene();
                     break;
                 case NUMBER:
                     NumberDto numberDto = new NumberDto();
-                    scene = new NumberSceneCreator(userProgress, numberDto, true).getScene();
+                    scene = new NumberSceneCreator(userProgress, numberDto, true, callbackAction).getScene();
                     break;
                 case TEXT:
                     TextDto textDto = new TextDto();
-                    scene = new TextSceneCreator(userProgress, textDto, true).getScene();
+                    scene = new TextSceneCreator(userProgress, textDto, true, callbackAction).getScene();
                     break;
                 case FORMULA:
                     FormulaDto formulaDto = new FormulaDto();
-                    scene = new FormulaSceneCreator(userProgress, formulaDto, true).getScene();
+                    scene = new FormulaSceneCreator(userProgress, formulaDto, true, callbackAction).getScene();
                     break;
                 case COMPUTER_SYSTEM:
                     ComputerSystemDto computerSystemDto = new ComputerSystemDto();
-                    scene = new ComputerSystemDiagramSceneCreator(userProgress, computerSystemDto, true).getScene();
+                    scene = new ComputerSystemDiagramSceneCreator(userProgress, computerSystemDto, true, callbackAction).getScene();
                     break;
             }
             stagePool.getStage(Stages.CREATE_QUESTION).setScene(scene);
@@ -124,5 +125,9 @@ public class CreateQuestionController extends Controller {
                 .task(task)
                 .question(question)
                 .build();
+    }
+
+    public void setQuestionConsumer(Consumer<Question> callbackAction){
+        this.callbackAction = callbackAction;
     }
 }

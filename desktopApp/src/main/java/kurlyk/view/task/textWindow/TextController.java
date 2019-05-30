@@ -7,6 +7,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import kurlyk.common.classesMadeByStas.StemmerPorterRU;
 import kurlyk.communication.Communicator;
+import kurlyk.models.Question;
 import kurlyk.models.UserProgress;
 import kurlyk.transfer.tasks.TextDto;
 import kurlyk.view.common.stage.StagePool;
@@ -15,6 +16,8 @@ import kurlyk.view.task.CommonTaskController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+
+import java.util.function.Consumer;
 
 
 @Component
@@ -36,7 +39,7 @@ public class TextController extends CommonTaskController<TextDto> {
 
     }
 
-    public void setQuestion(UserProgress userProgress, TextDto textDto, boolean editable) {
+    public void setQuestion(UserProgress userProgress, TextDto textDto, boolean editable, Consumer<Question> callbackAction) {
         final TextDto rightTextDto = textDto;
         commonConfiguration(
                 userProgress,
@@ -45,7 +48,8 @@ public class TextController extends CommonTaskController<TextDto> {
                 textArea,
                 submit,
                 communicator,
-                stagePool
+                stagePool,
+                callbackAction
         );
         if (editable && textDto.getText() != null) {
             inputField.setText(textDto.getText());
