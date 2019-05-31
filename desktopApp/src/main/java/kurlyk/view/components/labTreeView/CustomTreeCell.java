@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TreeCell;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
+import kurlyk.QuestionType;
 import kurlyk.WorkEntityType;
 import kurlyk.communication.Communicator;
 import kurlyk.models.*;
@@ -276,7 +277,7 @@ public class CustomTreeCell extends TreeCell<TreeDto> {
 
 
     private void createQuestion(){
-        Question question = Question.builder().number(1).name("question_1").build();
+        Question question = Question.builder().number(1).name("question_1").questionType(QuestionType.TEXT).build();
         addItem.accept(new CustomTreeItem(getSelectedItem(), new TreeDto(question)));
         try {
             Long id = communicator.saveQuestion(question);
