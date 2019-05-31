@@ -206,7 +206,7 @@ public class CustomTreeCell extends TreeCell<TreeDto> {
             communicator.saveLabWorkTaskMatching(
                     LabWorkTask
                     .builder()
-                    .labWork(getParentSelectedItem().getValue().getLabWork())
+                    .labWork(getSelectedItem().getValue().getLabWork())
                     .task(task)
                     .number(0)
                     .build()
@@ -284,7 +284,7 @@ public class CustomTreeCell extends TreeCell<TreeDto> {
             communicator.saveTaskQuestionMatching(
                     TaskQuestion
                             .builder()
-                            .task(getParentSelectedItem().getValue().getTask())
+                            .task(getSelectedItem().getValue().getTask())
                             .question(question)
                             .number(0)
                             .build()

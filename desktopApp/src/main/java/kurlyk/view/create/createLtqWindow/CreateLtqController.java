@@ -154,7 +154,7 @@ public class CreateLtqController extends Controller {
     }
 
     private MyFunction<String> createStringField(String name, String value, boolean editable) {
-        TextField field = new TextField(value);
+        TextField field = new TextField(value != null ? value : "");
         field.setEditable(editable);
         setRow(name, field);
         return new MyFunction<>(field::setText, field::getText);
@@ -176,7 +176,7 @@ public class CreateLtqController extends Controller {
 
     private MyFunction<Boolean> createBooleanField(String name, Boolean value, boolean editable) {
         CheckBox field = new CheckBox();
-        field.setSelected(value);
+        field.setSelected(value != null ? value : false);
         field.setDisable(!editable);
         setRow(name, field);
         return new MyFunction<>(field::setSelected, field::isSelected);
