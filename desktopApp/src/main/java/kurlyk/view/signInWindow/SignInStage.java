@@ -1,12 +1,13 @@
 package kurlyk.view.signInWindow;
 
 import javafx.scene.input.KeyCode;
+import kurlyk.view.common.dto.BaseStageDto;
 import kurlyk.view.common.stage.base.BaseStage;
 
 public class SignInStage extends BaseStage<SignInController> {
 
     public SignInStage() {
-        super();
+        super(BaseStageDto.allOff());
         setMinWidth(0);
         setMinHeight(0);
         addEventHandler(javafx.scene.input.KeyEvent.KEY_RELEASED, event -> {
