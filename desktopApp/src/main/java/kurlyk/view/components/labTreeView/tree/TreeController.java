@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 @Scope("prototype")
 public class TreeController extends Controller {
     @FXML private HBox root;
+    private LabTreeView labTreeView;
 
     @Autowired
     private StagePool stagePool;
@@ -23,6 +24,12 @@ public class TreeController extends Controller {
 
 
     public void initialize() {
-        root.getChildren().add(new LabTreeView(communicator, stagePool));
+        labTreeView = new LabTreeView(communicator, stagePool);
+        root.getChildren().add(labTreeView);
+    }
+
+    public void extendTreeToAllScene(){
+        root.setMinWidth(Double.MAX_VALUE);
+        labTreeView.setMinWidth(Double.MAX_VALUE);
     }
 }

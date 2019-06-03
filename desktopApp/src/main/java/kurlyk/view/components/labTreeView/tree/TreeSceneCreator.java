@@ -5,6 +5,11 @@ import kurlyk.view.common.stage.base.BaseSceneCreator;
 
 public class TreeSceneCreator extends BaseSceneCreator<TreeController> {
 
+    public TreeSceneCreator(BaseStageDto baseStageDto) {
+        super(baseStageDto);
+        controller.extendTreeToAllScene();
+    }
+
     public TreeSceneCreator() {
         super(BaseStageDto.allOff());
     }
