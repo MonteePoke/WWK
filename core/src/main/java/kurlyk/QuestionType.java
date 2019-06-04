@@ -1,13 +1,26 @@
 package kurlyk;
 
-public enum QuestionType {
-    COMPUTER_SYSTEM,
+import kurlyk.common.Codable;
 
-    FORMULA,
-    TEXT,
-    NUMBER,
+public enum QuestionType implements Codable<String> {
+    COMPUTER_SYSTEM("Схема"),
 
-    MATCHING,
-    CHEK,
-    RADIO
+    FORMULA("Формула"),
+    TEXT("Текст"),
+    NUMBER("Числовое значение"),
+
+    MATCHING("Соответствие"),
+    СHECK("Множественный выбор"),
+    RADIO("Одиночный выбор");
+
+    private String code;
+
+    QuestionType(String code) {
+        this.code = code;
+    }
+
+    @Override
+    public String getCode() {
+        return code;
+    }
 }

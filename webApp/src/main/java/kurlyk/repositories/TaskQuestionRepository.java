@@ -28,7 +28,7 @@ public interface TaskQuestionRepository extends JpaRepository<TaskQuestion, Long
             "tq.question.questionType, " +
             "tq.question.score, " +
             "tq.question.name, " +
-            "tq.question.atemptsNumber, " +
+            "tq.question.attemptsNumber, " +
             "tq.number" +
             ") FROM TaskQuestion as tq WHERE tq.task.id = ?1")
     List<Question> getQuestionHeadersByTaskId(Long id);
@@ -46,5 +46,6 @@ public interface TaskQuestionRepository extends JpaRepository<TaskQuestion, Long
     Optional<TaskQuestion> findByTaskIdAndQuestionId(Long taskId, Long questionId);
 
     void deleteByTaskId(Long id);
+
     void deleteByQuestionId(Long id);
 }

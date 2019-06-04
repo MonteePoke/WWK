@@ -25,6 +25,6 @@ public class Task {
     private Integer number;
     private String name;
     private Double score;
-    private Integer atemptsNumber;
+    private Integer attemptsNumber;
     private Boolean isTest;
 }

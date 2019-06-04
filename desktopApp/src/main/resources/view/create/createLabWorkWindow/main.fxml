@@ -18,7 +18,7 @@
      <columns>
        <TableColumn fx:id="labWorkNumber" prefWidth="75.0" text="№" />
        <TableColumn fx:id="labWorkName" prefWidth="405.99998474121094" text="Лабораторная работа" />
-         <TableColumn fx:id="labWorkAtemptsNumber" prefWidth="205.0" text="Количество попыток" />
+         <TableColumn fx:id="labWorkAttemptsNumber" prefWidth="205.0" text="Количество попыток" />
      </columns>
    </TableView>
 </VBox>

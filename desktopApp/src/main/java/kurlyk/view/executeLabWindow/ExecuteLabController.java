@@ -34,7 +34,8 @@ import java.util.List;
 @Scope("prototype")
 public class ExecuteLabController extends Controller {
 
-    @FXML private VBox root;
+    @FXML
+    private VBox root;
     private TabPane tabPane;
     private BaseStage stage;
 
@@ -48,42 +49,49 @@ public class ExecuteLabController extends Controller {
     private Communicator communicator;
 
 
-    public void initialize(){
+    public void initialize() {
     }
 
-    public void setTasks(List<UserProgress> userProgresses, boolean isTest){
+    public void setTasks(List<UserProgress> userProgresses, boolean isTest) {
         tabPane = new TabPane();
         for (UserProgress userProgress : userProgresses) {
             UserProgressTab tab = new UserProgressTab("Вопрос №" + (tabPane.getTabs().size() + 1), userProgress);
             Scene scene = null;
-            switch (userProgress.getQuestion().getQuestionType()){
+            switch (userProgress.getQuestion().getQuestionType()) {
                 case RADIO:
                     SelectDto radioDto = new Gson().fromJson(userProgress.getQuestion().getAnswer(), SelectDto.class);
-                    scene = new RadioSceneCreator(userProgress, radioDto, false, (question -> {})).getScene();
+                    scene = new RadioSceneCreator(userProgress, radioDto, false, (question -> {
+                    })).getScene();
                     break;
-                case CHEK:
+                case СHECK:
                     SelectDto checkDto = new Gson().fromJson(userProgress.getQuestion().getAnswer(), SelectDto.class);
-                    scene = new CheckSceneCreator(userProgress, checkDto, false, (question -> {})).getScene();
+                    scene = new CheckSceneCreator(userProgress, checkDto, false, (question -> {
+                    })).getScene();
                     break;
                 case MATCHING:
                     MatchingDto matchingDto = new Gson().fromJson(userProgress.getQuestion().getAnswer(), MatchingDto.class);
-                    scene = new MatchingSceneCreator(userProgress, matchingDto, false, (question -> {})).getScene();
+                    scene = new MatchingSceneCreator(userProgress, matchingDto, false, (question -> {
+                    })).getScene();
                     break;
                 case NUMBER:
                     NumberDto numberDto = new Gson().fromJson(userProgress.getQuestion().getAnswer(), NumberDto.class);
-                    scene = new NumberSceneCreator(userProgress, numberDto, false, (question -> {})).getScene();
+                    scene = new NumberSceneCreator(userProgress, numberDto, false, (question -> {
+                    })).getScene();
                     break;
                 case TEXT:
                     TextDto textDto = new Gson().fromJson(userProgress.getQuestion().getAnswer(), TextDto.class);
-                    scene = new TextSceneCreator(userProgress, textDto, false, (question -> {})).getScene();
+                    scene = new TextSceneCreator(userProgress, textDto, false, (question -> {
+                    })).getScene();
                     break;
                 case FORMULA:
                     FormulaDto formulaDto = new Gson().fromJson(userProgress.getQuestion().getAnswer(), FormulaDto.class);
-                    scene = new FormulaSceneCreator(userProgress, formulaDto, false, (question -> {})).getScene();
+                    scene = new FormulaSceneCreator(userProgress, formulaDto, false, (question -> {
+                    })).getScene();
                     break;
                 case COMPUTER_SYSTEM:
                     ComputerSystemDto computerSystemDto = new Gson().fromJson(userProgress.getQuestion().getAnswer(), ComputerSystemDto.class);
-                    scene = new ComputerSystemDiagramSceneCreator(userProgress, computerSystemDto, false, (question -> {})).getScene();
+                    scene = new ComputerSystemDiagramSceneCreator(userProgress, computerSystemDto, false, (question -> {
+                    })).getScene();
                     break;
             }
             tab.setContent(scene.getRoot());
@@ -102,26 +110,26 @@ public class ExecuteLabController extends Controller {
         root.getChildren().add(tabPane);
     }
 
-    private Tab createResultTab(Long labWorkId, Long userId, boolean isTest, Runnable startLabCallback, Runnable showResultCallback){
+    private Tab createResultTab(Long labWorkId, Long userId, boolean isTest, Runnable startLabCallback, Runnable showResultCallback) {
         Tab tab = new Tab("Результаты");
         tab.setContent(new ShowResultSceneCreator(labWorkId, userId, isTest, startLabCallback, showResultCallback).getScene().getRoot());
         return tab;
     }
 
-    private Runnable createStartLabCallback(){
-        return () ->{
+    private Runnable createStartLabCallback() {
+        return () -> {
 
         };
     }
 
-    private Runnable createShowResultCallback(){
-        return () ->{
+    private Runnable createShowResultCallback() {
+        return () -> {
             tabPane.getTabs().forEach(tab -> tab.setDisable(true));
             tabPane.getTabs().get(tabPane.getTabs().size() - 1).setDisable(false);
         };
     }
 
-    private void createMenu(){
+    private void createMenu() {
         stage.getMainMenu().getShowAnswerItem().setOnAction(event -> {
             try {
                 ShowAnswerStage showAnswerStage = new ShowAnswerStage(

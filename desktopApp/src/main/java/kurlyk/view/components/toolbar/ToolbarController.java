@@ -1,14 +1,17 @@
 package kurlyk.view.components.toolbar;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
+import javafx.stage.Modality;
 import kurlyk.communication.Communicator;
 import kurlyk.view.common.controller.Controller;
 import kurlyk.view.common.stage.StagePool;
+import kurlyk.view.create.createTaskWindow.questionListWindow.QuestionListStage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -16,25 +19,43 @@ import org.springframework.stereotype.Component;
 @Component
 @Scope("prototype")
 public class ToolbarController extends Controller {
-    @FXML private Pane navigateControls;
-    @FXML private Pane lectorActionControls;
-    @FXML private Pane studentActionControls1;
-    @FXML private Pane adminActions;
-    @FXML private Pane commonActions;
+    @FXML
+    private Pane navigateControls;
+    @FXML
+    private Pane lectorActionControls;
+    @FXML
+    private Pane studentActionControls1;
+    @FXML
+    private Pane adminActions;
+    @FXML
+    private Pane commonActions;
 
-    @FXML private ChoiceBox<String> discipline;
-    @FXML private Button questionDictionary;
-    @FXML private Button labWorks;
-    @FXML private Button delete;
-    @FXML private Button edit;
-    @FXML private Button add;
-    @FXML private Button exportReport;
-    @FXML private Button executeLab;
-    @FXML private Button help;
-    @FXML private Button roles;
-    @FXML private Button users;
-    @FXML private Button exit;
-    @FXML private Button settings;
+    @FXML
+    private ChoiceBox<String> discipline;
+    @FXML
+    private Button questionDictionary;
+    @FXML
+    private Button labWorks;
+    @FXML
+    private Button delete;
+    @FXML
+    private Button edit;
+    @FXML
+    private Button add;
+    @FXML
+    private Button exportReport;
+    @FXML
+    private Button executeLab;
+    @FXML
+    private Button help;
+    @FXML
+    private Button roles;
+    @FXML
+    private Button users;
+    @FXML
+    private Button exit;
+    @FXML
+    private Button settings;
 
     @Autowired
     private StagePool stagePool;
@@ -125,7 +146,10 @@ public class ToolbarController extends Controller {
         settings.setGraphic(settingsIcon);
 
         questionDictionary.setOnAction(event -> {
-
+            QuestionListStage questionListStage = new QuestionListStage((question -> {
+            }), true);
+            questionListStage.initModality(Modality.APPLICATION_MODAL);
+            questionListStage.showAndWait();
         });
         labWorks.setOnAction(event -> {
 
@@ -155,7 +179,7 @@ public class ToolbarController extends Controller {
 
         });
         exit.setOnAction(event -> {
-
+            Platform.exit();
         });
         settings.setOnAction(event -> {
 

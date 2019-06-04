@@ -7,6 +7,9 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
+import kurlyk.QuestionType;
+import kurlyk.WhenShowAnswer;
+import kurlyk.common.Codable;
 import kurlyk.common.classesMadeByStas.MyFunction;
 import kurlyk.communication.Communicator;
 import kurlyk.communication.UserInfo;
@@ -30,10 +33,14 @@ import java.util.function.BiConsumer;
 @Scope("prototype")
 public class CreateLtqController extends Controller {
 
-    @FXML private GridPane root;
-    @FXML private Button submit;
-    @FXML TableView<Question> questionTable;
-    @FXML private TableColumn<Question, String> questionName;
+    @FXML
+    private GridPane root;
+    @FXML
+    private Button submit;
+    @FXML
+    TableView<Question> questionTable;
+    @FXML
+    private TableColumn<Question, String> questionName;
     private Runnable closeStage;
     private int rowCounter;
     private Question selectedQuestion;
@@ -62,12 +69,12 @@ public class CreateLtqController extends Controller {
         root.setPadding(new Insets(15, 15, 15, 15));
 
         //table
-        questionTable.getSelectionModel().selectedItemProperty().addListener((observableValue, oldVal, newVal) ->{
+        questionTable.getSelectionModel().selectedItemProperty().addListener((observableValue, oldVal, newVal) -> {
             selectedQuestion = newVal;
             questionNumberProperty.accept(newVal.getNumber());
             questionNameProperty.accept(newVal.getName());
             questionScoreProperty.accept(newVal.getScore());
-            questionAttemptsNumberProperty.accept(newVal.getAtemptsNumber());
+            questionAttemptsNumberProperty.accept(newVal.getAttemptsNumber());
             questionDescriptionProperty.accept(newVal.getDescription());
         });
 
@@ -81,7 +88,7 @@ public class CreateLtqController extends Controller {
         questionName.setCellFactory(p -> new <Question>StringCell(this::commitChanges));
     }
 
-    private void commitChanges(){
+    private void commitChanges() {
     }
 
     public void setCloseStage(Runnable closeStage) {
@@ -89,21 +96,22 @@ public class CreateLtqController extends Controller {
     }
 
     public void editLabWork(LabWork labWork, BiConsumer<LabWork, Integer> saveAction, Integer number) {
-        MyFunction<Integer> numberProperty = createIntegerField("Номер", labWork.getNumber());
+        MyFunction<Integer> numberProperty = createIntegerField("Номер лабораторной работы", labWork.getNumber());
         MyFunction<String> nameProperty = createStringField("Название", labWork.getName());
-        MyFunction<Integer> attemptsNumberProperty = createIntegerField("Количество попыток", labWork.getAtemptsNumber());
+        MyFunction<Integer> attemptsNumberProperty = createIntegerField("Количество попыток на ответа (по умолч.)", labWork.getAttemptsNumber());
         MyFunction<Boolean> interruptProperty = createBooleanField("Прерывать лабораторную", labWork.getInterrupt());
-        MyFunction<Long> defaultQuestionScoreProperty = createLongField("Количество баллов по умолчанию", labWork.getDefaultQuestionScore());
-        MyFunction<Long> whenShowAnswerProperty = createLongField("Когда показывать ответ", labWork.getWhenShowAnswer());
-        MyFunction<Long> negativeScoreProperty = createLongField("Негативные баллы", labWork.getNegativeScore());
-        MyFunction<Long> decScoreProperty = createLongField("Количество баллов для вычитания", labWork.getDecScore());
+        MyFunction<Long> defaultQuestionScoreProperty = createLongField("Максимальный балл за вопрос (по умолч.)", labWork.getDefaultQuestionScore());
+        MyFunction<String> whenShowAnswerProperty = createWhenShowAnswerField("Когда отображать ответ", labWork.getWhenShowAnswer());
+        MyFunction<Boolean> negativeScoreProperty = createBooleanField("Отрицательный балл за задание", labWork.getNegativeScore());
+        MyFunction<Long> decScoreProperty = createLongField("Вычитаемое значение при ошибке", labWork.getDecScore());
         submit.setOnAction(event -> {
             labWork.setNumber(numberProperty.get());
             labWork.setName(nameProperty.get());
-            labWork.setAtemptsNumber(attemptsNumberProperty.get());
+            labWork.setAttemptsNumber(attemptsNumberProperty.get());
             labWork.setInterrupt(interruptProperty.get());
             labWork.setDefaultQuestionScore(defaultQuestionScoreProperty.get());
-            labWork.setWhenShowAnswer(whenShowAnswerProperty.get());
+            labWork.setWhenShowAnswer(whenShowAnswerProperty.get() != null ?
+                    Codable.find(WhenShowAnswer.class, whenShowAnswerProperty.get()) : null);
             labWork.setNegativeScore(negativeScoreProperty.get());
             labWork.setDecScore(decScoreProperty.get());
             saveAction.accept(labWork, null);
@@ -112,18 +120,14 @@ public class CreateLtqController extends Controller {
     }
 
     public void editTask(Task task, BiConsumer<Task, Integer> saveAction, Integer number) {
-        MyFunction<Integer> numberProperty = createIntegerField("Номер", number);
+        MyFunction<Integer> numberProperty = createIntegerField("Номер задания", number);
         MyFunction<String> nameProperty = createStringField("Название", task.getName());
-        MyFunction<Double> scoreProperty = createDoubleField("Количество баллов", task.getScore());
-        MyFunction<Integer> attemptsNumberProperty = createIntegerField("Количество попыток", task.getAtemptsNumber());
-        MyFunction<Boolean> isTestProperty = createBooleanField("Тестовое задание", task.getIsTest());
+        MyFunction<Double> scoreProperty = createDoubleField("Балл заданий", task.getScore());
 
         submit.setOnAction(event -> {
             task.setNumber(numberProperty.get());
             task.setName(nameProperty.get());
             task.setScore(scoreProperty.get());
-            task.setAtemptsNumber(attemptsNumberProperty.get());
-            task.setIsTest(isTestProperty.get());
             saveAction.accept(task, numberProperty.get());
             closeStage.run();
         });
@@ -131,21 +135,32 @@ public class CreateLtqController extends Controller {
 
     public void editQuestion(Question question, BiConsumer<Question, Integer> saveAction, Integer number) {
         selectedQuestion = question;
-        questionNumberProperty = createIntegerField("Номер", number);
-        questionNameProperty = createStringField("Название", question.getName(), false);
-        questionScoreProperty = createDoubleField("Количество баллов", question.getScore(), false);
-        questionAttemptsNumberProperty = createIntegerField("Количество попыток", question.getAtemptsNumber(), false);
-        questionDescriptionProperty = createStringField("Описание", question.getDescription(), false);
+        questionNumberProperty = createIntegerField("Номер вопроса", number);
+        MyFunction<String> questioтTypeProperty = createQuestionTypeField("Тип вопроса", question.getQuestionType());
+        questionDescriptionProperty = createStringField("Информация для преподавателя", question.getDescription(), true);
+        questionScoreProperty = createDoubleField("Максимальный балл", question.getScore(), true);
+        questionAttemptsNumberProperty = createIntegerField("Количество попыток", question.getAttemptsNumber(), true);
         questionTable.setVisible(true);
 
         submit.setOnAction(event -> {
             question.setNumber(questionNumberProperty.get());
+            question.setDescription(questionDescriptionProperty.get());
+            question.setScore(questionScoreProperty.get());
+            question.setQuestionType(questioтTypeProperty.get() != null ?
+                    Codable.find(QuestionType.class, questioтTypeProperty.get()) : null);
+            question.setAttemptsNumber(questionAttemptsNumberProperty.get());
             saveAction.accept(selectedQuestion, questionNumberProperty.get());
             closeStage.run();
         });
     }
 
+    private MyFunction<String> createWhenShowAnswerField(String name, WhenShowAnswer value) {
+        return createWhenShowAnswerField(name, value, true);
+    }
 
+    private MyFunction<String> createQuestionTypeField(String name, QuestionType value) {
+        return createQuestionTypeField(name, value, true);
+    }
 
     private MyFunction<String> createStringField(String name, String value) {
         return createStringField(name, value, true);
@@ -172,6 +187,38 @@ public class CreateLtqController extends Controller {
         field.setEditable(editable);
         setRow(name, field);
         return new MyFunction<>(field::setText, field::getText);
+    }
+
+    private MyFunction<String> createWhenShowAnswerField(String name, WhenShowAnswer value, boolean editable) {
+        ComboBox<String> field = new ComboBox<>();
+        field.getItems().addAll(
+                WhenShowAnswer.NEVER.getCode(),
+                WhenShowAnswer.AFTER_FIRST_MISTAKE.getCode(),
+                WhenShowAnswer.AFTER_THIRD_MISTAKE.getCode(),
+                WhenShowAnswer.ALWAYS.getCode()
+        );
+        field.setEditable(editable);
+        field.setValue(value != null ? value.getCode() : "");
+        setRow(name, field);
+        return new MyFunction<>(field::setValue, field::getValue);
+    }
+
+
+    private MyFunction<String> createQuestionTypeField(String name, QuestionType value, boolean editable) {
+        ComboBox<String> field = new ComboBox<>();
+        field.getItems().addAll(
+                QuestionType.COMPUTER_SYSTEM.getCode(),
+                QuestionType.FORMULA.getCode(),
+                QuestionType.TEXT.getCode(),
+                QuestionType.NUMBER.getCode(),
+                QuestionType.MATCHING.getCode(),
+                QuestionType.СHECK.getCode(),
+                QuestionType.RADIO.getCode()
+        );
+        field.setEditable(editable);
+        field.setValue(value != null ? value.getCode() : "");
+        setRow(name, field);
+        return new MyFunction<>(field::setValue, field::getValue);
     }
 
     private MyFunction<Integer> createIntegerField(String name, Integer value, boolean editable) {

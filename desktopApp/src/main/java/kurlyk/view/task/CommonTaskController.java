@@ -18,9 +18,13 @@ import java.io.IOException;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-public abstract class CommonTaskController <T> extends Controller implements TaskBodyController<T> {
-    @Getter @Setter private Integer atemptsNumber;
-    @Getter @Setter private int errorsNumber = 0;
+public abstract class CommonTaskController<T> extends Controller implements TaskBodyController<T> {
+    @Getter
+    @Setter
+    private Integer attemptsNumber;
+    @Getter
+    @Setter
+    private int errorsNumber = 0;
 
     protected void commonConfiguration(
             UserProgress userProgress,
@@ -35,7 +39,7 @@ public abstract class CommonTaskController <T> extends Controller implements Tas
     ) {
         textArea.setDisable(!editable);
         textArea.setMinHeight(200);
-        if (editable){
+        if (editable) {
             submit.setOnAction(event -> {
                 userProgress.getQuestion().setQuestion(textArea.getHtmlText());
                 userProgress.getQuestion().setAnswer(new Gson().toJson(getResult()));
@@ -51,8 +55,8 @@ public abstract class CommonTaskController <T> extends Controller implements Tas
                     FxDialogs.showError("", "Ошибка отправки данных");
                 }
             });
-        } else{
-            atemptsNumber = userProgress.getLabWork().getAtemptsNumber();
+        } else {
+            attemptsNumber = userProgress.getLabWork().getAttemptsNumber();
             textArea.setHtmlText(userProgress.getQuestion().getQuestion());
             submit.setOnAction(event -> {
                 userProgress.setScore(isRightAnswer.get());
@@ -68,31 +72,31 @@ public abstract class CommonTaskController <T> extends Controller implements Tas
         }
     }
 
-    private void modifyButton(Button submit, Double score){
-        if(score > 0){
+    private void modifyButton(Button submit, Double score) {
+        if (score > 0) {
             submit.setStyle("-fx-background-color: green");
             submit.setDisable(true);
-            atemptsNumber = 0;
+            attemptsNumber = 0;
             return;
         }
         errorsNumber++;
-        if (atemptsNumber == null){
+        if (attemptsNumber == null) {
             return;
         }
-        atemptsNumber--;
-        if(atemptsNumber <= 0){
+        attemptsNumber--;
+        if (attemptsNumber <= 0) {
             submit.setStyle("-fx-background-color: red");
             submit.setDisable(true);
-            atemptsNumber = 0;
+            attemptsNumber = 0;
         }
         submit.setText(getNameButton());
     }
 
-    private String getNameButton(){
-        if (atemptsNumber == null){
+    private String getNameButton() {
+        if (attemptsNumber == null) {
             return "Ответ";
         } else {
-            return "Ответ. Осталось попыток: " + atemptsNumber;
+            return "Ответ. Осталось попыток: " + attemptsNumber;
         }
     }
 }

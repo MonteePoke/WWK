@@ -26,15 +26,23 @@ import java.io.IOException;
 @Scope("prototype")
 public class CreateLabWorkController extends Controller {
 
-    @FXML private TableView<LabWork> labWorkTable;
-    @FXML private TableColumn<LabWork, LabWork> labWorkNumber;
-    @FXML private TableColumn<LabWork, String> labWorkName;
-    @FXML private TableColumn<LabWork, Integer> labWorkAtemptsNumber;
+    @FXML
+    private TableView<LabWork> labWorkTable;
+    @FXML
+    private TableColumn<LabWork, LabWork> labWorkNumber;
+    @FXML
+    private TableColumn<LabWork, String> labWorkName;
+    @FXML
+    private TableColumn<LabWork, Integer> labWorkAttemptsNumber;
 
-    @FXML private Button back;
-    @FXML private Button createLabWork;
-    @FXML private Button deleteLabWork;
-    @FXML private Button addTask;
+    @FXML
+    private Button back;
+    @FXML
+    private Button createLabWork;
+    @FXML
+    private Button deleteLabWork;
+    @FXML
+    private Button addTask;
     private LabWork selectedLabWork;
 
 
@@ -62,20 +70,22 @@ public class CreateLabWorkController extends Controller {
         labWorkName.setOnEditCommit(
                 t -> t.getTableView().getItems().get(t.getTablePosition().getRow()).setName(t.getNewValue())
         );
-        labWorkAtemptsNumber.setCellValueFactory(new PropertyValueFactory<>("atemptsNumber"));
-        labWorkAtemptsNumber.setCellFactory(p -> new <LabWork>IntegerCell(this::commitChanges));
-        labWorkAtemptsNumber.setOnEditCommit(
-                t -> t.getTableView().getItems().get(t.getTablePosition().getRow()).setAtemptsNumber(t.getNewValue())
+        labWorkAttemptsNumber.setCellValueFactory(new PropertyValueFactory<>("attemptsNumber"));
+        labWorkAttemptsNumber.setCellFactory(p -> new <LabWork>IntegerCell(this::commitChanges));
+        labWorkAttemptsNumber.setOnEditCommit(
+                t -> t.getTableView().getItems().get(t.getTablePosition().getRow()).setAttemptsNumber(t.getNewValue())
         );
 
         labWorkNumber.setCellValueFactory(p -> new ReadOnlyObjectWrapper<>(p.getValue()));
         labWorkNumber.setCellFactory(new Callback<TableColumn<LabWork, LabWork>, TableCell<LabWork, LabWork>>() {
-            @Override public TableCell<LabWork, LabWork> call(TableColumn<LabWork, LabWork> param) {
+            @Override
+            public TableCell<LabWork, LabWork> call(TableColumn<LabWork, LabWork> param) {
                 return new TableCell<LabWork, LabWork>() {
-                    @Override protected void updateItem(LabWork item, boolean empty) {
+                    @Override
+                    protected void updateItem(LabWork item, boolean empty) {
                         super.updateItem(item, empty);
                         if (this.getTableRow() != null && item != null) {
-                            setText(this.getTableRow().getIndex()+"");
+                            setText(this.getTableRow().getIndex() + "");
                         } else {
                             setText("");
                         }
@@ -92,7 +102,7 @@ public class CreateLabWorkController extends Controller {
             LabWork labWork = LabWork
                     .builder()
                     .name("Новая лабораторная работа")
-                    .atemptsNumber(1)
+                    .attemptsNumber(1)
                     .build();
             try {
                 communicator.saveLabWork(labWork);
@@ -122,7 +132,7 @@ public class CreateLabWorkController extends Controller {
         });
     }
 
-    private void commitChanges(){
+    private void commitChanges() {
         try {
             communicator.saveLabWork(selectedLabWork);
         } catch (IOException e) {

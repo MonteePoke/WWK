@@ -7,6 +7,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.util.Pair;
 import kurlyk.QuestionType;
+import kurlyk.common.Codable;
 import kurlyk.communication.UserInfo;
 import kurlyk.models.LabWork;
 import kurlyk.models.Question;
@@ -34,9 +35,12 @@ import java.util.function.Consumer;
 @Scope("prototype")
 public class CreateQuestionController extends Controller {
 
-    @FXML private TextField nameField;
-    @FXML private ComboBox<QuestionType> labType;
-    @FXML private Button further;
+    @FXML
+    private TextField nameField;
+    @FXML
+    private ComboBox<String> labType;
+    @FXML
+    private Button further;
     private Consumer<Question> callbackAction;
 
     @Autowired
@@ -46,21 +50,21 @@ public class CreateQuestionController extends Controller {
     private UserInfo userInfo;
 
 
-    public void initialize(){
+    public void initialize() {
         labType.getItems().addAll(
-                QuestionType.COMPUTER_SYSTEM,
-                QuestionType.FORMULA,
-                QuestionType.TEXT,
-                QuestionType.NUMBER,
-                QuestionType.MATCHING,
-                QuestionType.CHEK,
-                QuestionType.RADIO
+                QuestionType.COMPUTER_SYSTEM.getCode(),
+                QuestionType.FORMULA.getCode(),
+                QuestionType.TEXT.getCode(),
+                QuestionType.NUMBER.getCode(),
+                QuestionType.MATCHING.getCode(),
+                QuestionType.СHECK.getCode(),
+                QuestionType.RADIO.getCode()
         );
 
         further.setOnAction(event -> {
             UserProgress userProgress = createUserProgress();
             Scene scene = null;
-            switch (userProgress.getQuestion().getQuestionType()){
+            switch (userProgress.getQuestion().getQuestionType()) {
                 case RADIO:
                     SelectDto radioDto = new SelectDto(Arrays.asList(
                             new Pair<>("", false),
@@ -70,7 +74,7 @@ public class CreateQuestionController extends Controller {
                     ));
                     scene = new RadioSceneCreator(userProgress, radioDto, true, callbackAction).getScene();
                     break;
-                case CHEK:
+                case СHECK:
                     SelectDto chekDto = new SelectDto(Arrays.asList(
                             new Pair<>("", false),
                             new Pair<>("", false),
@@ -107,7 +111,7 @@ public class CreateQuestionController extends Controller {
         });
     }
 
-    private UserProgress createUserProgress(){
+    private UserProgress createUserProgress() {
         LabWork labWork = LabWork.builder()
                 .build();
         Task task = Task.builder()
@@ -115,7 +119,7 @@ public class CreateQuestionController extends Controller {
                 .score(1d)
                 .build();
         Question question = Question.builder()
-                .questionType(labType.getValue())
+                .questionType(Codable.find(QuestionType.class, labType.getValue()))
                 .name(nameField.getText())
                 .score(1d)
                 .build();
@@ -127,7 +131,7 @@ public class CreateQuestionController extends Controller {
                 .build();
     }
 
-    public void setQuestionConsumer(Consumer<Question> callbackAction){
+    public void setQuestionConsumer(Consumer<Question> callbackAction) {
         this.callbackAction = callbackAction;
     }
 }

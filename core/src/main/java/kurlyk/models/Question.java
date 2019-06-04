@@ -24,14 +24,14 @@ public class Question {
     private String name;
     private Integer number;
     private Double score;
-    private Integer atemptsNumber;
+    private Integer attemptsNumber;
     private String description;
 
     @Lob
-    @Column(columnDefinition="CLOB")
+    @Column(columnDefinition = "CLOB")
     private String question;
     @Lob
-    @Column(columnDefinition="CLOB")
+    @Column(columnDefinition = "CLOB")
     private String answer;
 
     public Question(
@@ -39,14 +39,14 @@ public class Question {
             QuestionType questionType,
             Double score,
             String name,
-            Integer atemptsNumber,
+            Integer attemptsNumber,
             Integer number
     ) {
         this.id = id;
         this.questionType = questionType;
         this.score = score;
         this.name = name;
-        this.atemptsNumber = atemptsNumber;
+        this.attemptsNumber = attemptsNumber;
         this.number = number;
     }
 }

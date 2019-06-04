@@ -17,7 +17,7 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
             "q.questionType, " +
             "q.score, " +
             "q.name, " +
-            "q.atemptsNumber, " +
+            "q.attemptsNumber, " +
             "q.number" +
             ") FROM Question as q")
     List<Question> getQuestionHeaders();

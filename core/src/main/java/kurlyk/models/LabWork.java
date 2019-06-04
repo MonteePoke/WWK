@@ -1,6 +1,7 @@
 package kurlyk.models;
 
 
+import kurlyk.WhenShowAnswer;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,13 +25,13 @@ public class LabWork {
 
     private Integer number;
     private String name;
-    private Integer atemptsNumber;
+    private Integer attemptsNumber;
 
     //Придумал Саша
     private Boolean interrupt;
     private Long defaultQuestionScore;
-    private Long whenShowAnswer;
-    private Long negativeScore;
+    private WhenShowAnswer whenShowAnswer;
+    private Boolean negativeScore;
     private Long decScore;
 
     @Override
