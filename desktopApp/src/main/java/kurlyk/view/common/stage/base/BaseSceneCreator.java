@@ -21,7 +21,7 @@ public abstract class BaseSceneCreator<T extends Controller> implements SceneCre
     public BaseSceneCreator(BaseStageDto baseStageDto) {
         LoadDto<T> loadDto = Loader.load(getPathToMainStage());
         controller = loadDto.getController();
-        if (baseStageDto.isNeedMenu() || baseStageDto.isNeedTree()) {
+        if (baseStageDto.isNeedMenu()) {
             scene = createSceneBoxTemplate(loadDto.getScene());
         } else {
             scene = loadDto.getScene();
@@ -29,9 +29,7 @@ public abstract class BaseSceneCreator<T extends Controller> implements SceneCre
         if (baseStageDto.isNeedMenu()) {
             BaseStage.setMenuToScene(root);
         }
-        if (baseStageDto.isNeedTree()) {
-            BaseStage.setTreeViewToScene(root);
-        }
+
     }
 
     private Scene createSceneBoxTemplate(Scene scene){

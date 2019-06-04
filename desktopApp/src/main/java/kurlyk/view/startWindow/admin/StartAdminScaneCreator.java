@@ -7,7 +7,7 @@ public class StartAdminScaneCreator extends BaseSceneCreator<StartAdminControlle
 
 
     public StartAdminScaneCreator() {
-        super(BaseStageDto.builder().needMenu(true).needTree(false).build());
+        super(BaseStageDto.builder().needMenu(true).build());
     }
 
     @Override

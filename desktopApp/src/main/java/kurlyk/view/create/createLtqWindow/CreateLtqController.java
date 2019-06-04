@@ -212,7 +212,7 @@ public class CreateLtqController extends Controller {
                 QuestionType.TEXT.getCode(),
                 QuestionType.NUMBER.getCode(),
                 QuestionType.MATCHING.getCode(),
-                QuestionType.СHECK.getCode(),
+                QuestionType.CHECK.getCode(),
                 QuestionType.RADIO.getCode()
         );
         field.setEditable(editable);

@@ -7,7 +7,7 @@ public class StartStage extends BaseStage<StartController> {
 
 
     public StartStage() {
-        super(BaseStageDto.builder().needMenu(true).needTree(false).build());
+        super(BaseStageDto.allOff());
     }
 
     @Override

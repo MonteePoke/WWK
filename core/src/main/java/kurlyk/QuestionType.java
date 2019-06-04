@@ -10,7 +10,7 @@ public enum QuestionType implements Codable<String> {
     NUMBER("Числовое значение"),
 
     MATCHING("Соответствие"),
-    СHECK("Множественный выбор"),
+    CHECK("Множественный выбор"),
     RADIO("Одиночный выбор");
 
     private String code;

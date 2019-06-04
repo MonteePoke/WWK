@@ -1,7 +1,7 @@
 package kurlyk.view.components.labTreeView.tree;
 
 import javafx.fxml.FXML;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import kurlyk.communication.Communicator;
 import kurlyk.view.common.controller.Controller;
 import kurlyk.view.common.stage.StagePool;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Scope("prototype")
 public class TreeController extends Controller {
-    @FXML private HBox root;
+    @FXML private VBox root;
     private LabTreeView labTreeView;
 
     @Autowired

@@ -11,13 +11,11 @@ import lombok.NoArgsConstructor;
 @Builder
 public class BaseStageDto {
     private boolean needMenu;
-    private boolean needTree;
 
     public static BaseStageDto allInclusive(){
         return BaseStageDto
                 .builder()
                 .needMenu(true)
-                .needTree(true)
                 .build();
     }
 
@@ -25,7 +23,6 @@ public class BaseStageDto {
         return BaseStageDto
                 .builder()
                 .needMenu(false)
-                .needTree(false)
                 .build();
     }
 }

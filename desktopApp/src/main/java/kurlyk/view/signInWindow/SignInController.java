@@ -105,7 +105,7 @@ public class SignInController extends Controller {
             }
             stagePool.pushStage(Stages.START, new StartStage());
             if (userInfo.getTokenDto().getUserRole() == Role.ADMIN) {
-                stagePool.getStage(Stages.START).setScene(new TreeSceneCreator(BaseStageDto.builder().needMenu(true).needTree(false).build()).getScene());
+                stagePool.getStage(Stages.START).setScene(new TreeSceneCreator(BaseStageDto.allInclusive()).getScene());
             } else {
                 stagePool.getStage(Stages.START).setScene(new StartStudentSceneCreator().getScene());
             }

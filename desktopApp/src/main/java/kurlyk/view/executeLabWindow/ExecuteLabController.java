@@ -63,7 +63,7 @@ public class ExecuteLabController extends Controller {
                     scene = new RadioSceneCreator(userProgress, radioDto, false, (question -> {
                     })).getScene();
                     break;
-                case СHECK:
+                case CHECK:
                     SelectDto checkDto = new Gson().fromJson(userProgress.getQuestion().getAnswer(), SelectDto.class);
                     scene = new CheckSceneCreator(userProgress, checkDto, false, (question -> {
                     })).getScene();

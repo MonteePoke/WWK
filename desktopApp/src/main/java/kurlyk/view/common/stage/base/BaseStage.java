@@ -2,7 +2,6 @@ package kurlyk.view.common.stage.base;
 
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import kurlyk.view.common.ViewProperties;
@@ -10,7 +9,6 @@ import kurlyk.view.common.controller.Controller;
 import kurlyk.view.common.dto.BaseStageDto;
 import kurlyk.view.common.dto.LoadDto;
 import kurlyk.view.common.stage.Loader;
-import kurlyk.view.components.labTreeView.tree.TreeSceneCreator;
 import kurlyk.view.components.menu.MainMenu;
 import kurlyk.view.components.toolbar.ToolbarSceneCreator;
 
@@ -28,7 +26,7 @@ public abstract class BaseStage <T extends Controller> extends Stage {
         super();
         LoadDto<T> loadDto = Loader.load(getPathToMainStage());
         controller = loadDto.getController();
-        if (baseStageDto.isNeedMenu() || baseStageDto.isNeedTree()) {
+        if (baseStageDto.isNeedMenu()) {
             setScene(createSceneBoxTemplate(loadDto.getScene()));
         } else {
             setScene(loadDto.getScene());
@@ -39,9 +37,7 @@ public abstract class BaseStage <T extends Controller> extends Stage {
         if (baseStageDto.isNeedMenu()) {
             mainMenu = setMenuToScene(root);
         }
-        if (baseStageDto.isNeedTree()) {
-            setTreeViewToScene(root);
-        }
+
     }
 
     private Scene createSceneBoxTemplate(Scene scene){
@@ -58,12 +54,6 @@ public abstract class BaseStage <T extends Controller> extends Stage {
                 new ToolbarSceneCreator().getScene().getRoot()
         ));
         return mainMenu;
-    }
-
-    public static void setTreeViewToScene(BorderPane root){
-        HBox parent = (HBox) new TreeSceneCreator().getScene().getRoot();
-        parent.prefHeightProperty().bind(root.heightProperty());
-        root.setLeft(parent);
     }
 
     public abstract String getPathToMainStage();

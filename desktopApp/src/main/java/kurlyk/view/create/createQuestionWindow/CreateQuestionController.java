@@ -57,7 +57,7 @@ public class CreateQuestionController extends Controller {
                 QuestionType.TEXT.getCode(),
                 QuestionType.NUMBER.getCode(),
                 QuestionType.MATCHING.getCode(),
-                QuestionType.СHECK.getCode(),
+                QuestionType.CHECK.getCode(),
                 QuestionType.RADIO.getCode()
         );
 
@@ -74,7 +74,7 @@ public class CreateQuestionController extends Controller {
                     ));
                     scene = new RadioSceneCreator(userProgress, radioDto, true, callbackAction).getScene();
                     break;
-                case СHECK:
+                case CHECK:
                     SelectDto chekDto = new SelectDto(Arrays.asList(
                             new Pair<>("", false),
                             new Pair<>("", false),
