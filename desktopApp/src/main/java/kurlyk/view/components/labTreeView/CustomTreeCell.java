@@ -4,6 +4,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeCell;
+import javafx.scene.control.TreeItem;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import kurlyk.QuestionType;
@@ -17,6 +18,7 @@ import kurlyk.view.create.createLtqWindow.CreateLtqStage;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import java.util.OptionalInt;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -161,11 +163,16 @@ public class CustomTreeCell extends TreeCell<TreeDto> {
 
 
     private void createLabWork(){
-        LabWork labWork = LabWork.builder().number(1).name("labWork_1").build();
-        addItem.accept(new CustomTreeItem(getSelectedItem(), new TreeDto(labWork)));
         try {
+            //labWork
+            LabWork labWork = LabWork.builder().number(getNumber()).name("labWork_1").build();
             Long id = communicator.saveLabWork(labWork);
             labWork.setId(id);
+            CustomTreeItem customTreeItem = new CustomTreeItem(getSelectedItem(), new TreeDto(labWork));
+            //task
+            Task task = Task.builder().number(0).name("Текст").build();
+            customTreeItem.getChildren().add(new CustomTreeItem(customTreeItem, new TreeDto(task)));
+            addItem.accept(customTreeItem);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -199,7 +206,7 @@ public class CustomTreeCell extends TreeCell<TreeDto> {
 
 
     private void createTask(){
-        Task task = Task.builder().number(1).name("task_1").build();
+        Task task = Task.builder().number(getNumber()).name("task_1").build();
         addItem.accept(new CustomTreeItem(getSelectedItem(), new TreeDto(task)));
         try {
             Long id = communicator.saveTask(task);
@@ -277,7 +284,7 @@ public class CustomTreeCell extends TreeCell<TreeDto> {
 
 
     private void createQuestion(){
-        Question question = Question.builder().number(1).name("question_1").questionType(QuestionType.TEXT).build();
+        Question question = Question.builder().number(getNumber()).name("question_1").questionType(QuestionType.TEXT).build();
         addItem.accept(new CustomTreeItem(getSelectedItem(), new TreeDto(question)));
         try {
             Long id = communicator.saveQuestion(question);
@@ -348,5 +355,49 @@ public class CustomTreeCell extends TreeCell<TreeDto> {
                     }
                 }
         ));
+    }
+
+    public int getNumber(){
+        TreeDto parent = getSelectedItem().getValue();
+        List<TreeDto> children = getSelectedItem().getChildren().stream().map(TreeItem::getValue).collect(Collectors.toList());
+        switch (parent.getType()){
+            case SUBJECT:
+                OptionalInt optionalNumberLabWork = children
+                        .stream()
+                        .mapToInt(treeDto -> treeDto.getLabWork().getNumber())
+                        .max();
+                if(optionalNumberLabWork.isPresent()){
+                    return optionalNumberLabWork.getAsInt() + 1;
+                } else {
+                    return 0;
+                }
+            case LAB_WORK:
+                OptionalInt optionalNumberTask = children
+                        .stream()
+                        .mapToInt(treeDto -> treeDto.getTask().getNumber())
+                        .max();
+                if(optionalNumberTask.isPresent()){
+                    return optionalNumberTask.getAsInt() + 1;
+                } else {
+                    return 0;
+                }
+            case TASK:
+                OptionalInt optionalNumberQuestion = children
+                        .stream()
+                        .mapToInt(treeDto -> treeDto.getQuestion().getNumber())
+                        .max();
+                if(optionalNumberQuestion.isPresent()){
+                    return optionalNumberQuestion.getAsInt() + 1;
+                } else {
+                    return 0;
+                }
+            case QUESTION:
+                break;
+            case NONE:
+                break;
+            default:
+                throw new RuntimeException("Неизвестный тип элемента дерева");
+        }
+        return 1;
     }
 }

@@ -26,6 +26,13 @@ public class LabWork {
     private String name;
     private Integer atemptsNumber;
 
+    //Придумал Саша
+    private Boolean interrupt;
+    private Long defaultQuestionScore;
+    private Long whenShowAnswer;
+    private Long negativeScore;
+    private Long decScore;
+
     @Override
     public String toString() {
         return name;

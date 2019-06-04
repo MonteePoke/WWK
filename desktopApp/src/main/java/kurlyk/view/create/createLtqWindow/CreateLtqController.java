@@ -18,6 +18,7 @@ import kurlyk.view.common.stage.StagePool;
 import kurlyk.view.components.DoubleField;
 import kurlyk.view.components.IntegerField;
 import kurlyk.view.components.table.StringCell;
+import kurlyk.view.components.toolbar.LongField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -91,11 +92,20 @@ public class CreateLtqController extends Controller {
         MyFunction<Integer> numberProperty = createIntegerField("Номер", labWork.getNumber());
         MyFunction<String> nameProperty = createStringField("Название", labWork.getName());
         MyFunction<Integer> attemptsNumberProperty = createIntegerField("Количество попыток", labWork.getAtemptsNumber());
-
+        MyFunction<Boolean> interruptProperty = createBooleanField("Прерывать лабораторную", labWork.getInterrupt());
+        MyFunction<Long> defaultQuestionScoreProperty = createLongField("Количество баллов по умолчанию", labWork.getDefaultQuestionScore());
+        MyFunction<Long> whenShowAnswerProperty = createLongField("Когда показывать ответ", labWork.getWhenShowAnswer());
+        MyFunction<Long> negativeScoreProperty = createLongField("Негативные баллы", labWork.getNegativeScore());
+        MyFunction<Long> decScoreProperty = createLongField("Количество баллов для вычитания", labWork.getDecScore());
         submit.setOnAction(event -> {
             labWork.setNumber(numberProperty.get());
             labWork.setName(nameProperty.get());
             labWork.setAtemptsNumber(attemptsNumberProperty.get());
+            labWork.setInterrupt(interruptProperty.get());
+            labWork.setDefaultQuestionScore(defaultQuestionScoreProperty.get());
+            labWork.setWhenShowAnswer(whenShowAnswerProperty.get());
+            labWork.setNegativeScore(negativeScoreProperty.get());
+            labWork.setDecScore(decScoreProperty.get());
             saveAction.accept(labWork, null);
             closeStage.run();
         });
@@ -145,6 +155,10 @@ public class CreateLtqController extends Controller {
         return createIntegerField(name, value, true);
     }
 
+    private MyFunction<Long> createLongField(String name, Long value) {
+        return createLongField(name, value, true);
+    }
+
     private MyFunction<Double> createDoubleField(String name, Double value) {
         return createDoubleField(name, value, true);
     }
@@ -162,6 +176,13 @@ public class CreateLtqController extends Controller {
 
     private MyFunction<Integer> createIntegerField(String name, Integer value, boolean editable) {
         IntegerField field = new IntegerField(value);
+        field.setEditable(editable);
+        setRow(name, field);
+        return new MyFunction<>(field::setNumber, field::getNumber);
+    }
+
+    private MyFunction<Long> createLongField(String name, Long value, boolean editable) {
+        LongField field = new LongField(value);
         field.setEditable(editable);
         setRow(name, field);
         return new MyFunction<>(field::setNumber, field::getNumber);
