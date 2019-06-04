@@ -10,11 +10,10 @@ import kurlyk.communication.UserInfo;
 import kurlyk.models.Role;
 import kurlyk.transfer.LoginDto;
 import kurlyk.view.common.controller.Controller;
-import kurlyk.view.common.dto.BaseStageDto;
 import kurlyk.view.common.stage.StagePool;
 import kurlyk.view.common.stage.Stages;
-import kurlyk.view.components.labTreeView.tree.TreeSceneCreator;
 import kurlyk.view.startWindow.StartStage;
+import kurlyk.view.startWindow.admin.StartAdminScaneCreator;
 import kurlyk.view.startWindow.student.StartStudentSceneCreator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -105,7 +104,7 @@ public class SignInController extends Controller {
             }
             stagePool.pushStage(Stages.START, new StartStage());
             if (userInfo.getTokenDto().getUserRole() == Role.ADMIN) {
-                stagePool.getStage(Stages.START).setScene(new TreeSceneCreator(BaseStageDto.allInclusive()).getScene());
+                stagePool.getStage(Stages.START).setScene(new StartAdminScaneCreator().getScene());
             } else {
                 stagePool.getStage(Stages.START).setScene(new StartStudentSceneCreator().getScene());
             }

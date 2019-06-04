@@ -1,12 +1,11 @@
 package kurlyk.view.startWindow.admin;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
+import javafx.scene.layout.VBox;
 import kurlyk.communication.Communicator;
 import kurlyk.view.common.controller.Controller;
 import kurlyk.view.common.stage.StagePool;
-import kurlyk.view.common.stage.Stages;
-import kurlyk.view.create.commonCreateWindow.CommonCreateStage;
+import kurlyk.view.components.labTreeView.LabTreeView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -16,7 +15,7 @@ import org.springframework.stereotype.Component;
 public class StartAdminController extends Controller {
 
 
-    @FXML private Button create;
+    @FXML private VBox root;
 
     @Autowired
     private StagePool stagePool;
@@ -26,9 +25,7 @@ public class StartAdminController extends Controller {
 
 
     public void initialize(){
-        create.setOnAction(event -> {
-            stagePool.pushStageAndShow(Stages.COMMON_CREATE, new CommonCreateStage());
-            stagePool.closeStage(Stages.START);
-        });
+        LabTreeView labTreeView = new LabTreeView(communicator, stagePool);
+        root.getChildren().add(labTreeView);
     }
 }
