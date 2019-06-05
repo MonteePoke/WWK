@@ -1,15 +1,14 @@
 package kurlyk.models;
 
 
+import kurlyk.WhenShowAnswer;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.time.LocalDateTime;
 
 
 @Data
@@ -24,7 +23,17 @@ public class Task {
 
     private Integer number;
     private String name;
-    private Double score;
     private Integer attemptsNumber;
+    private Boolean interrupt;
+    private Long defaultQuestionScore;
+
+    @Enumerated(value = EnumType.STRING)
+    private WhenShowAnswer whenShowAnswer;
+    private Boolean negativeScore;
+    private Long decScore;
+    private Double scoreMultiplier;
+    private Integer variantsNumber;
+    private Boolean skipQuestion;
+    private LocalDateTime timer;
     private Boolean isTest;
 }

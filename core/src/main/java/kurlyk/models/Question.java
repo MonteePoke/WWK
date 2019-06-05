@@ -1,12 +1,14 @@
 package kurlyk.models;
 
 import kurlyk.QuestionType;
+import kurlyk.WhenShowAnswer;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 
 @Data
@@ -21,11 +23,20 @@ public class Question {
 
     @Enumerated(value = EnumType.STRING)
     private QuestionType questionType;
-    private String name;
     private Integer number;
-    private Double score;
+    private String name;
     private Integer attemptsNumber;
-    private String description;
+    private Boolean interrupt;
+    private Long score;
+
+    @Enumerated(value = EnumType.STRING)
+    private WhenShowAnswer whenShowAnswer;
+    private Boolean negativeScore;
+    private Long decScore;
+    private Double scoreMultiplier;
+    private Integer variantsNumber;
+    private Boolean skipQuestion;
+    private LocalDateTime timer;
 
     @Lob
     @Column(columnDefinition = "CLOB")
@@ -34,10 +45,11 @@ public class Question {
     @Column(columnDefinition = "CLOB")
     private String answer;
 
+    // TODO БЛЯТЬ!!!
     public Question(
             Long id,
             QuestionType questionType,
-            Double score,
+            Long score,
             String name,
             Integer attemptsNumber,
             Integer number

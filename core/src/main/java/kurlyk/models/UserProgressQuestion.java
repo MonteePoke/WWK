@@ -1,6 +1,5 @@
 package kurlyk.models;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -8,21 +7,19 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Entity
-public class LabWorkParameter {
+public class UserProgressQuestion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    private LabWork labWork;
+    private User user;
     @ManyToOne
-    private Parameter parameter;
-    private String valueFrom;
-    private String valueTo;
+    private Question question;
+    private Long score;
 }

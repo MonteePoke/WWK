@@ -21,6 +21,4 @@ public class Parameter {
 
     @Column(nullable = false)
     private String name;
-    private String defaultValueFrom;
-    private String defaultValueTo;
 }

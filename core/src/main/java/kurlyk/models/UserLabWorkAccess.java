@@ -14,15 +14,16 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Builder
 @Entity
-public class LabWorkParameter {
+public class UserLabWorkAccess {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
     private LabWork labWork;
+
     @ManyToOne
-    private Parameter parameter;
-    private String valueFrom;
-    private String valueTo;
+    private User user;
+
+    private Boolean access;
 }
