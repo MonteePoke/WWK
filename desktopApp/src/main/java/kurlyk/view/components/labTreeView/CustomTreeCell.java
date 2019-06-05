@@ -1,10 +1,7 @@
 package kurlyk.view.components.labTreeView;
 
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TreeCell;
-import javafx.scene.control.TreeItem;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import kurlyk.QuestionType;
@@ -32,6 +29,8 @@ public class CustomTreeCell extends TreeCell<TreeDto> {
     private Button addButton;
     private Button deleteButton;
     private Button editButton;
+    private Button importButton;
+    private CheckBox createTestTaskCheck;
     private Communicator communicator;
     private StagePool stagePool;
     private Consumer<CustomTreeItem> addItem;
@@ -73,6 +72,9 @@ public class CustomTreeCell extends TreeCell<TreeDto> {
             addButton = new Button("");
             deleteButton = new Button("");
             editButton = new Button("");
+            importButton = new Button("Импорт");
+            createTestTaskCheck = new CheckBox();
+            createTestTaskCheck.setSelected(true);
             settings(item);
             setGraphic(cellBox);
             setText(null);
@@ -114,7 +116,7 @@ public class CustomTreeCell extends TreeCell<TreeDto> {
     }
 
     private void labWorkSettings(LabWork labWork) {
-        cellBox.getChildren().addAll(labelForNumber, labelForName, addButton, deleteButton, editButton);
+        cellBox.getChildren().addAll(labelForNumber, labelForName, addButton, deleteButton, editButton, createTestTaskCheck);
         labelForNumber.setText(labWork.getNumber().toString());
         labelForName.setText(labWork.getName());
         addButton.setOnAction(event -> {
@@ -126,6 +128,13 @@ public class CustomTreeCell extends TreeCell<TreeDto> {
         });
         editButton.setOnAction(event -> {
             editLabWork();
+        });
+        createTestTaskCheck.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            if(newValue){
+
+            } else {
+
+            }
         });
     }
 
@@ -146,7 +155,7 @@ public class CustomTreeCell extends TreeCell<TreeDto> {
     }
 
     private void questionSettings(Question question) {
-        cellBox.getChildren().addAll(labelForNumber, labelForName, deleteButton, editButton);
+        cellBox.getChildren().addAll(labelForNumber, labelForName, deleteButton, editButton, importButton);
         labelForNumber.setText(question.getNumber().toString());
         labelForName.setText(question.getName());
         deleteButton.setOnAction(event -> {
@@ -155,6 +164,9 @@ public class CustomTreeCell extends TreeCell<TreeDto> {
         });
         editButton.setOnAction(event -> {
             editQuestion();
+        });
+        importButton.setOnAction(event -> {
+
         });
     }
 
@@ -166,11 +178,13 @@ public class CustomTreeCell extends TreeCell<TreeDto> {
         try {
             //labWork
             LabWork labWork = LabWork.builder().number(getNumber()).name("Лабораторная работа №" + getNumber()).build();
-            Long id = communicator.saveLabWork(labWork);
-            labWork.setId(id);
+            Long labWorkId = communicator.saveLabWork(labWork);
+            labWork.setId(labWorkId);
             CustomTreeItem customTreeItem = new CustomTreeItem(getSelectedItem(), new TreeDto(labWork));
             //task
             Task task = Task.builder().number(0).name("Тест").build();
+            Long taskId = communicator.saveTask(task);
+            task.setId(taskId);
             customTreeItem.getChildren().add(new CustomTreeItem(customTreeItem, new TreeDto(task)));
             addItem.accept(customTreeItem);
         } catch (IOException e) {

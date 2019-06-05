@@ -3,10 +3,15 @@ package kurlyk.view.components.labTreeView;
 import javafx.scene.control.TreeView;
 import kurlyk.WorkEntityType;
 import kurlyk.communication.Communicator;
+import kurlyk.models.LabWork;
+import kurlyk.models.Question;
 import kurlyk.models.Subject;
+import kurlyk.models.Task;
 import kurlyk.view.common.stage.StagePool;
 
 import java.io.IOException;
+import java.util.Comparator;
+import java.util.stream.Collectors;
 
 public class LabTreeView extends TreeView<TreeDto> {
     private CustomTreeItem root;
@@ -55,17 +60,35 @@ public class LabTreeView extends TreeView<TreeDto> {
                 switch (item.getValue().getType()){
                     case SUBJECT:
                         item.getChildren().addAll(
-                                TreeDto.itemsOfLabWorks(item, communicator.getLabWorks())
+                                TreeDto.itemsOfLabWorks(
+                                        item,
+                                        communicator.getLabWorks()
+                                                .stream()
+                                                .sorted(Comparator.comparing(LabWork::getNumber))
+                                                .collect(Collectors.toList())
+                                )
                         );
                         break;
                     case LAB_WORK:
                         item.getChildren().addAll(
-                                TreeDto.itemsOfTasks(item, communicator.getTasks(item.getValue().getLabWork()))
+                                TreeDto.itemsOfTasks(
+                                        item,
+                                        communicator.getTasks(item.getValue().getLabWork())
+                                                .stream()
+                                                .sorted(Comparator.comparing(Task::getNumber))
+                                                .collect(Collectors.toList())
+                                )
                         );
                         break;
                     case TASK:
                         item.getChildren().addAll(
-                                TreeDto.itemsOfQuestions(item, communicator.getQuestionHeaders(item.getValue().getTask()))
+                                TreeDto.itemsOfQuestions(
+                                        item,
+                                        communicator.getQuestionHeaders(item.getValue().getTask())
+                                                .stream()
+                                                .sorted(Comparator.comparing(Question::getNumber))
+                                                .collect(Collectors.toList())
+                                )
                         );
                         break;
                     case QUESTION:
