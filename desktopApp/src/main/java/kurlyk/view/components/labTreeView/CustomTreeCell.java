@@ -130,10 +130,24 @@ public class CustomTreeCell extends TreeCell<TreeDto> {
             editLabWork();
         });
         createTestTaskCheck.selectedProperty().addListener((observable, oldValue, newValue) -> {
-            if(newValue){
-
-            } else {
-
+            try {
+                LabTreeView.checkItemChildren(getSelectedItem(), communicator);
+                Optional<TreeItem<TreeDto>> testItem = getSelectedItem().getChildren()
+                        .stream()
+                        .filter(treeItem -> treeItem.getValue().getTask().getNumber().equals(0))
+                        .findAny();
+                if(newValue && !testItem.isPresent()){
+                    Task task = Task.builder().number(0).name("Тест").build();
+                    Long taskId = communicator.saveTask(task);
+                    task.setId(taskId);
+                    getSelectedItem().getChildren().add(new CustomTreeItem(getSelectedItem(), new TreeDto(task)));
+                }
+                if(!newValue && testItem.isPresent()){
+                    getSelectedItem().getChildren().remove(testItem.get());
+                    communicator.deleteTask(testItem.get().getValue().getTask());
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         });
     }
