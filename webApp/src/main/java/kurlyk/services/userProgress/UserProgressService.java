@@ -1,15 +1,20 @@
 package kurlyk.services.userProgress;
 
-import kurlyk.models.UserProgress;
-import kurlyk.transfer.UserProgressDto;
+import kurlyk.models.UserLabWorkAccess;
+import kurlyk.models.UserProgressLabWork;
+import kurlyk.transfer.UserLabWorkDto;
 
 import java.util.List;
+import java.util.Optional;
 
 
 public interface UserProgressService {
 
-    UserProgress getOneUserProgress(Long id);
-    List<UserProgressDto> getUserProgress(UserProgressDto userProgressDto);
-    List<UserProgress> getFullUserProgress(UserProgressDto userProgressDto);
-    void saveUserProgress(UserProgress userProgress);
+    List<UserProgressLabWork> getUserProgress(UserLabWorkDto userLabWorkDto);
+    Long saveUserProgress(UserProgressLabWork userProgressLabWork);
+    void deleteUserProgress(Long id);
+
+    Optional<UserLabWorkAccess> getUserLabWorkAccess(UserLabWorkDto userLabWorkDto);
+    Long saveUserLabWorkAccess(UserLabWorkAccess userLabWorkAccess);
+    void deleteUserLabWorkAccess(Long id);
 }

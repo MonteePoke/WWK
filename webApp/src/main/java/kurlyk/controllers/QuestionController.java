@@ -4,6 +4,7 @@ package kurlyk.controllers;
 import kurlyk.models.Question;
 import kurlyk.services.question.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -48,9 +49,13 @@ public class QuestionController {
         return questionService.saveQuestion(question);
     }
 
-    @GetMapping("/question/delete/{id}")
+    @DeleteMapping("/question/{id}")
     public ResponseEntity<Object> deleteQuestion(@PathVariable("id") Long id) {
-        questionService.deleteQuestion(id);
+        try {
+            questionService.deleteQuestion(id);
+        } catch (EmptyResultDataAccessException e) {
+            return ResponseEntity.notFound().build();
+        }
         return ResponseEntity.ok().build();
     }
 }

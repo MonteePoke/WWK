@@ -1,15 +1,18 @@
 package kurlyk.controllers;
 
 import kurlyk.models.User;
-import kurlyk.models.UserProgress;
+import kurlyk.models.UserLabWorkAccess;
+import kurlyk.models.UserProgressLabWork;
 import kurlyk.services.user.UsersService;
 import kurlyk.services.userProgress.UserProgressService;
-import kurlyk.transfer.UserProgressDto;
+import kurlyk.transfer.UserLabWorkDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @RestController
@@ -42,50 +45,65 @@ public class UsersController {
     /*
         UserProgress
      */
-    @GetMapping("/user/progress/{id}")
-    public UserProgress getOneUserProgress(@PathVariable("id") Long id) {
-        return userProgressService.getOneUserProgress(id);
-    }
-
     @GetMapping("/user/progress")
-    public List<UserProgressDto> getUserProgress(
+    public List<UserProgressLabWork> getUserProgress(
             @RequestParam("userId") Long userId,
-            @RequestParam(name = "labWorkId", required = false) Long labWorkId,
-            @RequestParam(name = "taskId", required = false) Long taskId,
-            @RequestParam(name = "questionId", required = false) Long questionId
+            @RequestParam("labWorkId") Long labWorkId
     ) {
         return userProgressService.getUserProgress(
-                UserProgressDto
+                UserLabWorkDto
                         .builder()
                         .userId(userId)
                         .labWorkId(labWorkId)
-                        .taskId(taskId)
-                        .questionId(questionId)
-                        .build()
-        );
-    }
-
-    @GetMapping("/user/full-progress")
-    public List<UserProgress> getFullUserProgress(
-            @RequestParam("userId") Long userId,
-            @RequestParam(name = "labWorkId", required = false) Long labWorkId,
-            @RequestParam(name = "taskId", required = false) Long taskId,
-            @RequestParam(name = "questionId", required = false) Long questionId
-    ) {
-        return userProgressService.getFullUserProgress(
-                UserProgressDto
-                        .builder()
-                        .userId(userId)
-                        .labWorkId(labWorkId)
-                        .taskId(taskId)
-                        .questionId(questionId)
                         .build()
         );
     }
 
     @PostMapping("/user/progress")
-    public ResponseEntity<Object> postUserProgress(@RequestBody UserProgress userProgress) {
-        userProgressService.saveUserProgress(userProgress);
+    public Long saveUserProgress(@RequestBody UserProgressLabWork userProgressLabWork) {
+        return userProgressService.saveUserProgress(userProgressLabWork);
+    }
+
+    @DeleteMapping("/user/progress/{id}")
+    public ResponseEntity<Object> deleteUserProgress(@PathVariable("id") Long id) {
+        try {
+            userProgressService.deleteUserProgress(id);
+        } catch (EmptyResultDataAccessException e) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().build();
+    }
+
+
+    /*
+        UserLabWorkAccess
+    */
+    @GetMapping("/user/access")
+    public Optional<UserLabWorkAccess> getUserLabWorkAccess(
+            @RequestParam("userId") Long userId,
+            @RequestParam("labWorkId") Long labWorkId
+    ) {
+        return userProgressService.getUserLabWorkAccess(
+                UserLabWorkDto
+                        .builder()
+                        .userId(userId)
+                        .labWorkId(labWorkId)
+                        .build()
+        );
+    }
+
+    @PostMapping("/user/access")
+    public Long saveUserLabWorkAccess(@RequestBody UserLabWorkAccess userLabWorkAccess) {
+        return userProgressService.saveUserLabWorkAccess(userLabWorkAccess);
+    }
+
+    @DeleteMapping("/user/access/{id}")
+    public ResponseEntity<Object> deleteUserLabWorkAccess(@PathVariable("id") Long id) {
+        try {
+            userProgressService.deleteUserLabWorkAccess(id);
+        } catch (EmptyResultDataAccessException e) {
+            return ResponseEntity.notFound().build();
+        }
         return ResponseEntity.ok().build();
     }
 }

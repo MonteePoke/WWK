@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -21,8 +23,13 @@ public class UserProgressLabWork {
     private User user;
     @ManyToOne
     private LabWork labWork;
+    private Boolean isDeleted;
     private Long score;
-    @ManyToOne
-    private Parameter parameter;
-    private String parameterValue;
+    private LocalDateTime startTime;
+
+    @OneToMany
+    private Set<UserProgressTask> userProgressTasks;
+
+    @OneToMany
+    private Set<UserProgressLabWorkParameter> parameters;
 }

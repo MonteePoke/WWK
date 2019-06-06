@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
-public class FormulaDto {
+public class FormulaDto{
     private String latexFormula;
 }

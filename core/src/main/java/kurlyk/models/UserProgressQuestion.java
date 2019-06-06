@@ -18,8 +18,7 @@ public class UserProgressQuestion {
     private Long id;
 
     @ManyToOne
-    private User user;
-    @ManyToOne
     private Question question;
+    private Boolean isDeleted;
     private Long score;
 }

@@ -8,7 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.Duration;
 
 
 @Data
@@ -20,6 +20,9 @@ public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ManyToOne
+    private LabWork labWork;
 
     private Integer number;
     private String name;
@@ -34,6 +37,6 @@ public class Task {
     private Double scoreMultiplier;
     private Integer variantsNumber;
     private Boolean skipQuestion;
-    private LocalDateTime timer;
+    private Duration interval;
     private Boolean isTest;
 }

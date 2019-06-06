@@ -8,7 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.Duration;
 
 
 @Data
@@ -34,7 +34,11 @@ public class LabWork {
     private Double scoreMultiplier;
     private Integer variantsNumber;
     private Boolean skipQuestion;
-    private LocalDateTime timer;
+    private Duration interval;
+
+    // Варианты
+    private Integer variantNumber;
+    private Integer difficultyLevelsNumber;
 
     @Override
     public String toString() {

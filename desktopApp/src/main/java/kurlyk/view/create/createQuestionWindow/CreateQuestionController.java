@@ -9,10 +9,7 @@ import javafx.util.Pair;
 import kurlyk.QuestionType;
 import kurlyk.common.Codable;
 import kurlyk.communication.UserInfo;
-import kurlyk.models.LabWork;
 import kurlyk.models.Question;
-import kurlyk.models.Task;
-import kurlyk.models.UserProgress;
 import kurlyk.transfer.tasks.*;
 import kurlyk.view.common.controller.Controller;
 import kurlyk.view.common.stage.StagePool;
@@ -42,6 +39,8 @@ public class CreateQuestionController extends Controller {
     @FXML
     private Button further;
     private Consumer<Question> callbackAction;
+    //null, если создаётся вопрос, не null, если редактируется вопрос
+    private Long questionId;
 
     @Autowired
     private StagePool stagePool;
@@ -62,72 +61,55 @@ public class CreateQuestionController extends Controller {
         );
 
         further.setOnAction(event -> {
-            UserProgress userProgress = createUserProgress();
+            Question question = createQuestion();
             Scene scene = null;
-            switch (userProgress.getQuestion().getQuestionType()) {
+            switch (question.getQuestionType()) {
                 case RADIO:
-                    SelectDto radioDto = new SelectDto(Arrays.asList(
-                            new Pair<>("", false),
-                            new Pair<>("", false),
-                            new Pair<>("", false),
-                            new Pair<>("", false)
-                    ));
-                    scene = new RadioSceneCreator(userProgress, radioDto, true, callbackAction).getScene();
+                    scene = new RadioSceneCreator(question, true, callbackAction).getScene();
                     break;
                 case CHECK:
                     SelectDto chekDto = new SelectDto(Arrays.asList(
                             new Pair<>("", false),
-                            new Pair<>("", false),
-                            new Pair<>("", false),
                             new Pair<>("", false)
                     ));
-                    scene = new CheckSceneCreator(userProgress, chekDto, true, callbackAction).getScene();
+                    scene = new CheckSceneCreator(question, chekDto, true, callbackAction).getScene();
                     break;
                 case MATCHING:
                     MatchingDto matchingDto = new MatchingDto(
                             Arrays.asList("", "", "", ""),
                             Arrays.asList("", "", "", "")
                     );
-                    scene = new MatchingSceneCreator(userProgress, matchingDto, true, callbackAction).getScene();
+                    scene = new MatchingSceneCreator(question, matchingDto, true, callbackAction).getScene();
                     break;
                 case NUMBER:
                     NumberDto numberDto = new NumberDto();
-                    scene = new NumberSceneCreator(userProgress, numberDto, true, callbackAction).getScene();
+                    scene = new NumberSceneCreator(question, numberDto, true, callbackAction).getScene();
                     break;
                 case TEXT:
                     TextDto textDto = new TextDto();
-                    scene = new TextSceneCreator(userProgress, textDto, true, callbackAction).getScene();
+                    scene = new TextSceneCreator(question, textDto, true, callbackAction).getScene();
                     break;
                 case FORMULA:
                     FormulaDto formulaDto = new FormulaDto();
-                    scene = new FormulaSceneCreator(userProgress, formulaDto, true, callbackAction).getScene();
+                    scene = new FormulaSceneCreator(question, formulaDto, true, callbackAction).getScene();
                     break;
                 case COMPUTER_SYSTEM:
                     ComputerSystemDto computerSystemDto = new ComputerSystemDto();
-                    scene = new ComputerSystemDiagramSceneCreator(userProgress, computerSystemDto, true, callbackAction).getScene();
+                    scene = new ComputerSystemDiagramSceneCreator(question, computerSystemDto, true, callbackAction).getScene();
                     break;
             }
             stagePool.getStage(Stages.CREATE_QUESTION).setScene(scene);
         });
     }
 
-    private UserProgress createUserProgress() {
-        LabWork labWork = LabWork.builder()
-                .build();
-        Task task = Task.builder()
-                .isTest(false)
-                .score(1d)
-                .build();
-        Question question = Question.builder()
+    private Question createQuestion() {
+        return Question.builder()
                 .questionType(Codable.find(QuestionType.class, labType.getValue()))
+                .number(1)
                 .name(nameField.getText())
-                .score(1d)
-                .build();
-
-        return UserProgress.builder()
-                .labWork(labWork)
-                .task(task)
-                .question(question)
+                .attemptsNumber(1)
+                .score(1L)
+                .skipQuestion(false)
                 .build();
     }
 

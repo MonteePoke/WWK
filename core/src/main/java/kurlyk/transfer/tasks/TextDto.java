@@ -10,5 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TextDto {
+    public static final String ANSWER_SEPARATOR = ";";
     private String text;
 }

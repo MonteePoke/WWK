@@ -1,6 +1,7 @@
 package kurlyk.view.task.radioWindow;
 
 
+import com.google.gson.Gson;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -9,7 +10,6 @@ import javafx.scene.layout.VBox;
 import javafx.util.Pair;
 import kurlyk.communication.Communicator;
 import kurlyk.models.Question;
-import kurlyk.models.UserProgress;
 import kurlyk.transfer.tasks.SelectDto;
 import kurlyk.view.common.stage.StagePool;
 import kurlyk.view.components.EditableRadioButton;
@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
 import java.util.function.Consumer;
 
 
@@ -39,11 +40,17 @@ public class RadioController extends CommonTaskController<SelectDto> {
     public void initialize(){
     }
 
-    public void setQuestion(UserProgress userProgress, SelectDto selectDto, boolean editable, Consumer<Question> callbackAction) {
-        final SelectDto rightSelectDto = selectDto;
+    public void setQuestion(Question question, boolean editable, Consumer<Question> callbackAction) {
+        SelectDto radioDto = new Gson().fromJson(question.getAnswer(), SelectDto.class)
+        if(radioDto == null){
+            radioDto = new SelectDto(Arrays.asList(
+                    new Pair<>("", false),
+                    new Pair<>("", false)
+            ));
+        }
+
         commonConfiguration(
                 userProgress,
-                () -> isRightAnswer(rightSelectDto, userProgress),
                 editable,
                 textArea,
                 submit,
@@ -52,19 +59,11 @@ public class RadioController extends CommonTaskController<SelectDto> {
                 callbackAction
         );
         ToggleGroup group = new ToggleGroup();
-        for (Pair<String, Boolean> option : selectDto.getOptions()){
+        for (Pair<String, Boolean> option : radioDto.getOptions()){
             EditableRadioButton editableRadioButton = new EditableRadioButton(option.getKey(), editable);
             editableRadioButton.getRadioButton().setToggleGroup(group);
             root.getChildren().add(editableRadioButton);
         }
-    }
-
-    private Double isRightAnswer(SelectDto selectDto, UserProgress userProgress){
-        double score = 0d;
-        if (selectDto.equals(getResult())){
-            score = userProgress.getTask().getScore() * userProgress.getQuestion().getScore();
-        }
-        return score;
     }
 
     @Override

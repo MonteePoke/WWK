@@ -8,7 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.Duration;
 
 
 @Data
@@ -20,6 +20,9 @@ public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ManyToOne
+    private Task task;
 
     @Enumerated(value = EnumType.STRING)
     private QuestionType questionType;
@@ -36,7 +39,7 @@ public class Question {
     private Double scoreMultiplier;
     private Integer variantsNumber;
     private Boolean skipQuestion;
-    private LocalDateTime timer;
+    private Duration interval;
 
     @Lob
     @Column(columnDefinition = "CLOB")
@@ -45,20 +48,38 @@ public class Question {
     @Column(columnDefinition = "CLOB")
     private String answer;
 
-    // TODO БЛЯТЬ!!!
+
     public Question(
             Long id,
+            Task task,
             QuestionType questionType,
-            Long score,
+            Integer number,
             String name,
             Integer attemptsNumber,
-            Integer number
-    ) {
+            Boolean interrupt,
+            Long score,
+            WhenShowAnswer whenShowAnswer,
+            Boolean negativeScore,
+            Long decScore,
+            Double scoreMultiplier,
+            Integer variantsNumber,
+            Boolean skipQuestion,
+            Duration interval
+            ) {
         this.id = id;
+        this.task = task;
         this.questionType = questionType;
-        this.score = score;
+        this.number = number;
         this.name = name;
         this.attemptsNumber = attemptsNumber;
-        this.number = number;
+        this.interrupt = interrupt;
+        this.score = score;
+        this.whenShowAnswer = whenShowAnswer;
+        this.negativeScore = negativeScore;
+        this.decScore = decScore;
+        this.scoreMultiplier = scoreMultiplier;
+        this.variantsNumber = variantsNumber;
+        this.skipQuestion = skipQuestion;
+        this.interval = interval;
     }
 }

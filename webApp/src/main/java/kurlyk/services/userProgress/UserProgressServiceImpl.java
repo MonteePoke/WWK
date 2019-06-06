@@ -1,13 +1,16 @@
 package kurlyk.services.userProgress;
 
-import kurlyk.common.Converter;
-import kurlyk.models.UserProgress;
+import kurlyk.models.UserLabWorkAccess;
+import kurlyk.models.UserProgressLabWork;
+import kurlyk.repositories.UserLabWorkAccessRepository;
 import kurlyk.repositories.UserProgressRepository;
-import kurlyk.transfer.UserProgressDto;
+import kurlyk.transfer.UserLabWorkDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserProgressServiceImpl implements UserProgressService {
@@ -15,55 +18,50 @@ public class UserProgressServiceImpl implements UserProgressService {
     @Autowired
     private UserProgressRepository userProgressRepository;
 
+    @Autowired
+    private UserLabWorkAccessRepository userLabWorkAccessRepository;
+
     @Override
-    public UserProgress getOneUserProgress(Long id) {
-        return userProgressRepository.getOne(id);
+    public List<UserProgressLabWork> getUserProgress(UserLabWorkDto userLabWorkDto) {
+        if (userLabWorkDto.getUserId() == null){
+            return new ArrayList<>();
+        } else if (userLabWorkDto.getLabWorkId() == null){
+            return userProgressRepository.findByUserId(userLabWorkDto.getUserId());
+        } else {
+            return userProgressRepository.findByUserIdAndLabWorkId(
+                    userLabWorkDto.getUserId(),
+                    userLabWorkDto.getLabWorkId()
+            );
+        }
     }
 
     @Override
-    public List<UserProgressDto> getUserProgress(UserProgressDto userProgressDto) {
-        return Converter.listToList(
-                getFullUserProgress(userProgressDto),
-                UserProgressDto::fromUserProgress
+    public Long saveUserProgress(UserProgressLabWork userProgressLabWork) {
+        return userProgressRepository.save(userProgressLabWork).getId();
+    }
+
+    @Override
+    public void deleteUserProgress(Long id) {
+        userProgressRepository.deleteById(id);
+    }
+
+
+
+    @Override
+    public Optional<UserLabWorkAccess> getUserLabWorkAccess(UserLabWorkDto userLabWorkDto) {
+        return userLabWorkAccessRepository.findOneByUserIdAndLabWorkId(
+                userLabWorkDto.getUserId(),
+                userLabWorkDto.getLabWorkId()
         );
     }
 
     @Override
-    public List<UserProgress> getFullUserProgress(UserProgressDto userProgressDto) {
-        if(userProgressDto.getLabWorkId() == null){
-            return userProgressRepository.findByUserId(
-                    userProgressDto.getUserId()
-            );
-        } else if(userProgressDto.getTaskId() == null){
-            return userProgressRepository.findByUserIdAndLabWorkId(
-                    userProgressDto.getUserId(),
-                    userProgressDto.getLabWorkId()
-            );
-        } else if(userProgressDto.getQuestionId() == null){
-            return userProgressRepository.findByUserIdAndLabWorkIdAndTaskId(
-                    userProgressDto.getUserId(),
-                    userProgressDto.getLabWorkId(),
-                    userProgressDto.getTaskId()
-            );
-        } else{
-            return userProgressRepository.findByUserIdAndLabWorkIdAndTaskIdAndQuestionId(
-                    userProgressDto.getUserId(),
-                    userProgressDto.getLabWorkId(),
-                    userProgressDto.getTaskId(),
-                    userProgressDto.getQuestionId()
-            );
-        }
+    public Long saveUserLabWorkAccess(UserLabWorkAccess userLabWorkAccess) {
+        return userLabWorkAccessRepository.save(userLabWorkAccess).getId();
     }
 
     @Override
-    public void saveUserProgress(UserProgress userProgress) {
-        List<UserProgress> savedUserProgresses = getFullUserProgress(UserProgressDto.fromUserProgress(userProgress));
-        if (savedUserProgresses.size() > 1){
-            throw new RuntimeException("Почему-то в базе лежит два одинаковых прогресса пользователя");
-        }
-        if (savedUserProgresses.size() == 1){
-            userProgress.setId(savedUserProgresses.get(0).getId());
-        }
-        userProgressRepository.save(userProgress);
+    public void deleteUserLabWorkAccess(Long id) {
+        userLabWorkAccessRepository.deleteById(id);
     }
 }

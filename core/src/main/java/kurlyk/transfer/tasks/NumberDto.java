@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
-public class NumberDto {
+public class NumberDto{
     private Double number;
+    //Количество значимых знаков после запятой
+    private Integer error;
 }

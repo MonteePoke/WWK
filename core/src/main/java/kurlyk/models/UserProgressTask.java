@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -18,8 +19,10 @@ public class UserProgressTask {
     private Long id;
 
     @ManyToOne
-    private User user;
-    @ManyToOne
     private Task task;
+    private Boolean isDeleted;
     private Long score;
+
+    @OneToMany
+    private Set<UserProgressQuestion> userProgressQuestions;
 }

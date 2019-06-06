@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.*;
 
 @Getter
-public class MatchingDto implements Serializable {
+public class MatchingDto implements Serializable{
 
     private List<String> leftPart;
     private List<String> rightPart;

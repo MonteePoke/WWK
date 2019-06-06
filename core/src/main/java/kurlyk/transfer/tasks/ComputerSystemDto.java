@@ -7,7 +7,7 @@ import lombok.Getter;
 
 @Getter
 @EqualsAndHashCode
-public class ComputerSystemDto {
+public class ComputerSystemDto{
     private SimpleGraphSystem simpleGraphSystem;
 
     public ComputerSystemDto() {

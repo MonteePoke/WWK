@@ -5,7 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import kurlyk.communication.Communicator;
 import kurlyk.communication.UserInfo;
-import kurlyk.transfer.UserProgressDto;
+import kurlyk.transfer.UserLabWorkDto;
 import kurlyk.view.common.controller.Controller;
 import kurlyk.view.common.dto.ResultDto;
 import kurlyk.view.common.stage.StagePool;
@@ -27,7 +27,7 @@ public class ShowResultController extends Controller {
     @FXML TextField errorsNumber;
     @FXML Button further;
 
-    private UserProgressDto userProgressDto;
+    private UserLabWorkDto userLabWorkDto;
     private boolean isTest;
 
 
@@ -73,7 +73,7 @@ public class ShowResultController extends Controller {
     }
 
     public void setResultOwner(Long labWorkId, Long userId, boolean isTest, Runnable startLabCallback, Runnable showResultCallback){
-        userProgressDto = UserProgressDto.builder()
+        userLabWorkDto = UserLabWorkDto.builder()
                 .labWorkId(labWorkId)
                 .userId(userId)
                 .build();
@@ -85,7 +85,7 @@ public class ShowResultController extends Controller {
     private ResultDto getResult(){
         try {
             return new ResultDto(
-                    communicator.getFullUserProgress(userProgressDto)
+                    communicator.getFullUserProgress(userLabWorkDto)
                             .stream()
                             .filter(userProgress -> userProgress.getTask().getIsTest().equals(isTest))
                             .collect(Collectors.toList())
