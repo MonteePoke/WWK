@@ -1,33 +1,37 @@
 package kurlyk.view.task.textWindow;
 
 
+import com.google.gson.Gson;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
-import kurlyk.common.classesMadeByStas.StemmerPorterRU;
 import kurlyk.communication.Communicator;
+import kurlyk.communication.UserInfo;
 import kurlyk.models.Question;
-import kurlyk.models.UserProgress;
+import kurlyk.transfer.ResultAnswer;
+import kurlyk.transfer.answer.TextAnswerDto;
 import kurlyk.transfer.tasks.TextDto;
 import kurlyk.view.common.stage.StagePool;
 import kurlyk.view.components.MyHtmlEditor;
-import kurlyk.view.task.CommonTaskController;
+import kurlyk.view.task.SubmitConfigurationController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.util.function.Consumer;
 
 
 @Component
 @Scope("prototype")
-public class TextController extends CommonTaskController<TextDto> {
+public class TextController extends SubmitConfigurationController<TextDto> {
 
     @FXML private VBox root;
     @FXML private Button submit;
     @FXML private MyHtmlEditor textArea;
     @FXML private TextField inputField;
+    private Question question;
 
     @Autowired
     private Communicator communicator;
@@ -35,40 +39,51 @@ public class TextController extends CommonTaskController<TextDto> {
     @Autowired
     private StagePool stagePool;
 
+    @Autowired
+    private UserInfo userInfo;
+
     public void initialize(){
 
     }
 
-    public void setQuestion(UserProgress userProgress, TextDto textDto, boolean editable, Consumer<Question> callbackAction) {
-        final TextDto rightTextDto = textDto;
-        commonConfiguration(
-                userProgress,
-                () -> isRightAnswer(rightTextDto, userProgress),
+    public void setQuestion(Question question, boolean editable, Consumer<Question> callbackAction) {
+        this.question = question;
+        TextDto textDto = new Gson().fromJson(question.getAnswer(), TextDto.class);
+        submitConfiguration(
                 editable,
-                textArea,
+                question,
                 submit,
                 communicator,
                 stagePool,
                 callbackAction
         );
-        if (editable && textDto.getText() != null) {
-            inputField.setText(textDto.getText());
-        }
-    }
 
-
-    private Double isRightAnswer(TextDto textDto, UserProgress userProgress){
-        double score = 0d;
-        for (String possibleAnswer : textDto.getText().split(";")) {
-            if(StemmerPorterRU.stemSentence(getResult().getText()).equals(StemmerPorterRU.stemSentence(possibleAnswer))){
-                score = userProgress.getTask().getScore() * userProgress.getQuestion().getScore();
-            }
-        }
-        return score;
+        //Настройки работчего поля
+        textArea.setDisable(!editable);
+        textArea.setHtmlText(question.getQuestion());
+        inputField.setText(textDto.getText());
     }
 
     @Override
     public TextDto getResult() {
         return new TextDto(inputField.getText());
+    }
+
+    @Override
+    public String getQuestionText() {
+        return textArea.getHtmlText();
+    }
+
+    @Override
+    public ResultAnswer getAnswerResult(Integer attempt) throws IOException {
+        return communicator.testTextAnswer(
+                TextAnswerDto
+                        .builder()
+                        .entity(getResult())
+                        .userId(userInfo.getTokenDto().getUserId())
+                        .questionId(question.getId())
+                        .attemptsNumber(attempt)
+                        .build()
+        );
     }
 }

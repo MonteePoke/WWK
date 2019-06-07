@@ -20,6 +20,9 @@ public interface Codable<S> {
      * @throws IllegalArgumentException если значение с данным кодом не найдено
      */
     static <T extends Enum<T> & Codable<S>, S> T find(Class<T> codableSet, S code) {
+        if (code == null){
+            return null;
+        }
         for (T codable : codableSet.getEnumConstants()) {
             if (codable.getCode().equals(code)) {
                 return codable;

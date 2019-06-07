@@ -27,7 +27,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 @Component
 @Scope("prototype")
@@ -48,9 +48,10 @@ public class CreateLtqController extends Controller {
     //question handmade property
     private MyFunction<Integer> questionNumberProperty;
     private MyFunction<String> questionNameProperty;
-    private MyFunction<Double> questionScoreProperty;
+    private MyFunction<Long> questionScoreProperty;
     private MyFunction<Integer> questionAttemptsNumberProperty;
     private MyFunction<String> questionDescriptionProperty;
+    private MyFunction<String> questionTypeProperty;
 
     @Autowired
     private StagePool stagePool;
@@ -75,7 +76,6 @@ public class CreateLtqController extends Controller {
             questionNameProperty.accept(newVal.getName());
             questionScoreProperty.accept(newVal.getScore());
             questionAttemptsNumberProperty.accept(newVal.getAttemptsNumber());
-            questionDescriptionProperty.accept(newVal.getDescription());
         });
 
         try {
@@ -95,7 +95,7 @@ public class CreateLtqController extends Controller {
         this.closeStage = closeStage;
     }
 
-    public void editLabWork(LabWork labWork, BiConsumer<LabWork, Integer> saveAction, Integer number) {
+    public void editLabWork(LabWork labWork, Consumer<LabWork> saveAction) {
         MyFunction<Integer> numberProperty = createIntegerField("Номер лабораторной работы", labWork.getNumber());
         MyFunction<String> nameProperty = createStringField("Название", labWork.getName());
         MyFunction<Integer> attemptsNumberProperty = createIntegerField("Количество попыток на ответа (по умолч.)", labWork.getAttemptsNumber());
@@ -110,46 +110,45 @@ public class CreateLtqController extends Controller {
             labWork.setAttemptsNumber(attemptsNumberProperty.get());
             labWork.setInterrupt(interruptProperty.get());
             labWork.setDefaultQuestionScore(defaultQuestionScoreProperty.get());
-            labWork.setWhenShowAnswer(whenShowAnswerProperty.get() != null ?
-                    Codable.find(WhenShowAnswer.class, whenShowAnswerProperty.get()) : null);
+            labWork.setWhenShowAnswer(Codable.find(WhenShowAnswer.class, whenShowAnswerProperty.get()));
             labWork.setNegativeScore(negativeScoreProperty.get());
             labWork.setDecScore(decScoreProperty.get());
-            saveAction.accept(labWork, null);
+            saveAction.accept(labWork);
             closeStage.run();
         });
     }
 
-    public void editTask(Task task, BiConsumer<Task, Integer> saveAction, Integer number) {
-        MyFunction<Integer> numberProperty = createIntegerField("Номер задания", number);
+    public void editTask(Task task, Consumer<Task> saveAction) {
+        MyFunction<Integer> numberProperty = createIntegerField("Номер задания", task.getNumber());
         MyFunction<String> nameProperty = createStringField("Название", task.getName());
-        MyFunction<Double> scoreProperty = createDoubleField("Балл заданий", task.getScore());
+        MyFunction<Double> scoreProperty = createDoubleField("Балл заданий", task.getScoreMultiplier());
 
         submit.setOnAction(event -> {
             task.setNumber(numberProperty.get());
             task.setName(nameProperty.get());
-            task.setScore(scoreProperty.get());
-            saveAction.accept(task, numberProperty.get());
+            task.setScoreMultiplier(scoreProperty.get());
+            saveAction.accept(task);
             closeStage.run();
         });
     }
 
-    public void editQuestion(Question question, BiConsumer<Question, Integer> saveAction, Integer number) {
+    public void editQuestion(Question question, Consumer<Question> saveAction) {
         selectedQuestion = question;
-        questionNumberProperty = createIntegerField("Номер вопроса", number);
-        MyFunction<String> questioтTypeProperty = createQuestionTypeField("Тип вопроса", question.getQuestionType());
-        questionDescriptionProperty = createStringField("Информация для преподавателя", question.getDescription(), true);
-        questionScoreProperty = createDoubleField("Максимальный балл", question.getScore(), true);
+        questionNumberProperty = createIntegerField("Номер вопроса", question.getNumber());
+        questionNameProperty = createStringField("Название вопроса", question.getName());
+        questionTypeProperty = createQuestionTypeField("Тип вопроса", question.getQuestionType());
+        questionScoreProperty = createLongField("Максимальный балл", question.getScore(), true);
         questionAttemptsNumberProperty = createIntegerField("Количество попыток", question.getAttemptsNumber(), true);
         questionTable.setVisible(true);
 
         submit.setOnAction(event -> {
             question.setNumber(questionNumberProperty.get());
-            question.setDescription(questionDescriptionProperty.get());
+            question.setName(questionNameProperty.get());
             question.setScore(questionScoreProperty.get());
-            question.setQuestionType(questioтTypeProperty.get() != null ?
-                    Codable.find(QuestionType.class, questioтTypeProperty.get()) : null);
+            question.setQuestionType(questionTypeProperty.get() != null ?
+                    Codable.find(QuestionType.class, questionTypeProperty.get()) : null);
             question.setAttemptsNumber(questionAttemptsNumberProperty.get());
-            saveAction.accept(selectedQuestion, questionNumberProperty.get());
+            saveAction.accept(selectedQuestion);
             closeStage.run();
         });
     }

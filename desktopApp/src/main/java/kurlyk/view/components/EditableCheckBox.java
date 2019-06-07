@@ -11,9 +11,10 @@ public class EditableCheckBox extends HBox {
     @Getter private CheckBox checkBox;
     @Getter private HTMLEditor htmlEditor;
 
-    public EditableCheckBox(String text, boolean editable) {
+    public EditableCheckBox(String text, Boolean isOn, boolean editable) {
         super();
         checkBox = new CheckBox();
+        checkBox.setSelected(isOn);
         htmlEditor = new HTMLEditor();
         HBox.setHgrow(htmlEditor, Priority.SOMETIMES);
         htmlEditor.setMaxWidth(Double.MAX_VALUE);

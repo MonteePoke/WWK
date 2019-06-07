@@ -72,30 +72,30 @@ public class CreateQuestionController extends Controller {
                             new Pair<>("", false),
                             new Pair<>("", false)
                     ));
-                    scene = new CheckSceneCreator(question, chekDto, true, callbackAction).getScene();
+                    scene = new CheckSceneCreator(question, true, callbackAction).getScene();
                     break;
                 case MATCHING:
                     MatchingDto matchingDto = new MatchingDto(
                             Arrays.asList("", "", "", ""),
                             Arrays.asList("", "", "", "")
                     );
-                    scene = new MatchingSceneCreator(question, matchingDto, true, callbackAction).getScene();
+                    scene = new MatchingSceneCreator(question, true, callbackAction).getScene();
                     break;
                 case NUMBER:
                     NumberDto numberDto = new NumberDto();
-                    scene = new NumberSceneCreator(question, numberDto, true, callbackAction).getScene();
+                    scene = new NumberSceneCreator(question, true, callbackAction).getScene();
                     break;
                 case TEXT:
                     TextDto textDto = new TextDto();
-                    scene = new TextSceneCreator(question, textDto, true, callbackAction).getScene();
+                    scene = new TextSceneCreator(question, true, callbackAction).getScene();
                     break;
                 case FORMULA:
                     FormulaDto formulaDto = new FormulaDto();
-                    scene = new FormulaSceneCreator(question, formulaDto, true, callbackAction).getScene();
+                    scene = new FormulaSceneCreator(question, true, callbackAction).getScene();
                     break;
                 case COMPUTER_SYSTEM:
                     ComputerSystemDto computerSystemDto = new ComputerSystemDto();
-                    scene = new ComputerSystemDiagramSceneCreator(question, computerSystemDto, true, callbackAction).getScene();
+                    scene = new ComputerSystemDiagramSceneCreator(question, true, callbackAction).getScene();
                     break;
             }
             stagePool.getStage(Stages.CREATE_QUESTION).setScene(scene);

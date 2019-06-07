@@ -471,6 +471,9 @@
     function getResult(){
       return mathField.latex()
     }
+    function setResult(formula){
+      mathField.write(formula)
+    }
     var mathFieldSpan = document.getElementById('math-field');
     var MQ = MathQuill.getInterface(2);
     var mathField = MQ.MathField(mathFieldSpan, {

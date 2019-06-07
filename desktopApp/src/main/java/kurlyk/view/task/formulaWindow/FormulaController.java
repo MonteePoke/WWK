@@ -3,18 +3,21 @@ package kurlyk.view.task.formulaWindow;
 
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
+import com.google.gson.Gson;
 import javafx.concurrent.Worker;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebView;
 import kurlyk.communication.Communicator;
+import kurlyk.communication.UserInfo;
 import kurlyk.models.Question;
-import kurlyk.models.UserProgress;
+import kurlyk.transfer.ResultAnswer;
+import kurlyk.transfer.answer.FormulaAnswerDto;
 import kurlyk.transfer.tasks.FormulaDto;
 import kurlyk.view.common.stage.StagePool;
 import kurlyk.view.components.MyHtmlEditor;
-import kurlyk.view.task.CommonTaskController;
+import kurlyk.view.task.SubmitConfigurationController;
 import netscape.javascript.JSObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -26,19 +29,23 @@ import java.util.function.Consumer;
 
 @Component
 @Scope("prototype")
-public class FormulaController extends CommonTaskController<FormulaDto> {
+public class FormulaController extends SubmitConfigurationController<FormulaDto> {
 
     @FXML private VBox root;
     @FXML private Button submit;
     @FXML private MyHtmlEditor textArea;
     @FXML private WebView browser;
     private JSObject window;
+    private Question question;
 
     @Autowired
     private Communicator communicator;
 
     @Autowired
     private StagePool stagePool;
+
+    @Autowired
+    private UserInfo userInfo;
 
 
     public void initialize(){
@@ -61,33 +68,52 @@ public class FormulaController extends CommonTaskController<FormulaDto> {
         }
     }
 
-    public void setQuestion(UserProgress userProgress, FormulaDto formulaDto, boolean editable, Consumer<Question> callbackAction) {
-        final FormulaDto rightFormulaDto = formulaDto;
-        commonConfiguration(
-                userProgress,
-                () -> isRightAnswer(rightFormulaDto, userProgress),
+    public void setQuestion(Question question, boolean editable, Consumer<Question> callbackAction) {
+        this.question = question;
+        FormulaDto formulaDto = new Gson().fromJson(question.getAnswer(), FormulaDto.class);
+        submitConfiguration(
                 editable,
-                textArea,
+                question,
                 submit,
                 communicator,
                 stagePool,
                 callbackAction
         );
-//        if (editable && formulaDto.getLatexFormula() != null) {
-//            inputField.setText(formulaDto.getLatexFormula());
-//        }
-    }
 
-    private Double isRightAnswer(FormulaDto formulaDto, UserProgress userProgress){
-        double score = 0d;
-        if (formulaDto.equals(getResult())){
-            score = userProgress.getTask().getScore() * userProgress.getQuestion().getScore();
-        }
-        return score;
+        //Настройки работчего поля
+        textArea.setDisable(!editable);
+        textArea.setHtmlText(question.getQuestion());
+        setLatexFormula(formulaDto.getLatexFormula());
     }
 
     @Override
     public FormulaDto getResult() {
-        return new FormulaDto((String) window.call("getResult"));
+        return new FormulaDto(getLatexFormula());
+    }
+
+    @Override
+    public String getQuestionText() {
+        return textArea.getHtmlText();
+    }
+
+    @Override
+    public ResultAnswer getAnswerResult(Integer attempt) throws IOException {
+        return communicator.testFormulaAnswer(
+                FormulaAnswerDto
+                        .builder()
+                        .entity(getResult())
+                        .userId(userInfo.getTokenDto().getUserId())
+                        .questionId(question.getId())
+                        .attemptsNumber(attempt)
+                        .build()
+        );
+    }
+
+    private String getLatexFormula(){
+        return (String) window.call("getResult");
+    }
+
+    private void setLatexFormula(String string){
+        window.call("setResult", string);
     }
 }

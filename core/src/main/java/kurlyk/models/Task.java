@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.time.Duration;
@@ -22,12 +24,12 @@ public class Task {
     private Long id;
 
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private LabWork labWork;
 
     private Integer number;
     private String name;
     private Integer attemptsNumber;
-    private Boolean interrupt;
     private Long defaultQuestionScore;
 
     @Enumerated(value = EnumType.STRING)

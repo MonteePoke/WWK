@@ -13,4 +13,5 @@ public interface TestAnswerService {
     ResultAnswer testMatchingAnswer(MatchingAnswerDto dto);
     ResultAnswer testCheckAnswer(SelectAnswerDto dto);
     ResultAnswer testRadioAnswer(SelectAnswerDto dto);
+    ResultAnswer testSortingAnswer(SortingAnswerDto dto);
 }

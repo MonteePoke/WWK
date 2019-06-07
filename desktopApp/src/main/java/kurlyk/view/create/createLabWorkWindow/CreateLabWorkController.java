@@ -15,7 +15,6 @@ import kurlyk.view.common.stage.StagePool;
 import kurlyk.view.common.stage.Stages;
 import kurlyk.view.components.table.IntegerCell;
 import kurlyk.view.components.table.StringCell;
-import kurlyk.view.create.createLabWorkWindow.labWorkTaskMatchingWindow.LabWorkTaskMatchingStage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;

@@ -29,7 +29,6 @@ public class Question {
     private Integer number;
     private String name;
     private Integer attemptsNumber;
-    private Boolean interrupt;
     private Long score;
 
     @Enumerated(value = EnumType.STRING)
@@ -56,7 +55,6 @@ public class Question {
             Integer number,
             String name,
             Integer attemptsNumber,
-            Boolean interrupt,
             Long score,
             WhenShowAnswer whenShowAnswer,
             Boolean negativeScore,
@@ -72,7 +70,6 @@ public class Question {
         this.number = number;
         this.name = name;
         this.attemptsNumber = attemptsNumber;
-        this.interrupt = interrupt;
         this.score = score;
         this.whenShowAnswer = whenShowAnswer;
         this.negativeScore = negativeScore;

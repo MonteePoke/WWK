@@ -129,6 +129,20 @@ public class testAnswerServiceImpl implements TestAnswerService {
         return resultAnswer;
     }
 
+    public ResultAnswer testSortingAnswer(SortingAnswerDto dto){
+        Optional<Question> optionalQuestion = questionService.getQuestion(dto.getQuestionId());
+        ResultAnswer resultAnswer = new ResultAnswer();
+        if(optionalQuestion.isPresent()){
+            SortingDto standart = new Gson().fromJson(optionalQuestion.get().getAnswer(), SortingDto.class);
+            resultAnswer.setScore(
+                    percentToScore(dto, testSortingDto(standart, dto.getEntity()))
+            );
+        } else {
+            resultAnswer.setQuestionNotFound(true);
+        }
+        return resultAnswer;
+    }
+
     // percent - [0.0 .. 1.0]
     private Long percentToScore(BaseAnswerDto dto, double percent){
         return Math.round(percent);
@@ -159,7 +173,7 @@ public class testAnswerServiceImpl implements TestAnswerService {
     private double testNumberDto(NumberDto standart, NumberDto answer){
         double standartNumber = standart.getNumber();
         double answerNumber = answer.getNumber();
-        int n = standart.getError();
+        int n = standart.getAccuracy();
 
         if (n <= 0){
             return (standartNumber == answerNumber) ? 1 : 0;
@@ -190,6 +204,11 @@ public class testAnswerServiceImpl implements TestAnswerService {
     }
 
     private double testRadioDto(SelectDto standart, SelectDto answer){
+        boolean isEquals =  standart.equals(answer);
+        return isEquals ? 1 : 0;
+    }
+
+    private double testSortingDto(SortingDto standart, SortingDto answer){
         boolean isEquals =  standart.equals(answer);
         return isEquals ? 1 : 0;
     }

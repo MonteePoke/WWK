@@ -1,20 +1,18 @@
-package kurlyk.view.task.checkWindow;
+package kurlyk.view.task.sortingWindow;
 
 
 import com.google.gson.Gson;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
-import javafx.util.Pair;
 import kurlyk.communication.Communicator;
 import kurlyk.communication.UserInfo;
 import kurlyk.models.Question;
 import kurlyk.transfer.ResultAnswer;
-import kurlyk.transfer.answer.SelectAnswerDto;
-import kurlyk.transfer.tasks.SelectDto;
+import kurlyk.transfer.answer.SortingAnswerDto;
+import kurlyk.transfer.tasks.SortingDto;
 import kurlyk.view.common.stage.StagePool;
-import kurlyk.view.components.EditableCheckBox;
+import kurlyk.view.components.DraggingListView;
 import kurlyk.view.components.MyHtmlEditor;
 import kurlyk.view.task.SubmitConfigurationController;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,16 +20,18 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.function.Consumer;
 
 
 @Component
 @Scope("prototype")
-public class CheckController extends SubmitConfigurationController<SelectDto> {
+public class SortingController extends SubmitConfigurationController<SortingDto> {
 
     @FXML private VBox root;
     @FXML private Button submit;
     @FXML private MyHtmlEditor textArea;
+    @FXML private DraggingListView itemsField;
     private Question question;
 
     @Autowired
@@ -43,12 +43,13 @@ public class CheckController extends SubmitConfigurationController<SelectDto> {
     @Autowired
     private UserInfo userInfo;
 
+
     public void initialize(){
     }
 
-    public void setQuestion(Question question, boolean editable, Consumer<Question> callbackAction) {
+    public void setItemsToView(Question question, boolean editable, Consumer<Question> callbackAction){
         this.question = question;
-        SelectDto checkDto = new Gson().fromJson(question.getAnswer(), SelectDto.class);
+        SortingDto sortingDto = new Gson().fromJson(question.getAnswer(), SortingDto.class);
         submitConfiguration(
                 editable,
                 question,
@@ -61,21 +62,19 @@ public class CheckController extends SubmitConfigurationController<SelectDto> {
         //Настройки работчего поля
         textArea.setDisable(!editable);
         textArea.setHtmlText(question.getQuestion());
-        for (Pair<String, Boolean> option : checkDto.getOptions()){
-            root.getChildren().add(new EditableCheckBox(option.getKey(), option.getValue(), editable));
-        }
+        itemsField.getItems().addAll(sortingDto.getItems());
+        itemsField.setEditable(editable);
     }
 
     @Override
-    public SelectDto getResult() {
-        SelectDto selectDto = new SelectDto();
-        for (Node node : root.getChildren()) {
-            EditableCheckBox editableCheckBox = (EditableCheckBox) node;
-            selectDto.getOptions().add(new Pair<>(editableCheckBox.getHtmlEditor().getHtmlText(),
-                    editableCheckBox.getCheckBox().isSelected()
-            ));
-        }
-        return selectDto;
+    public SortingDto getResult() {
+        return new SortingDto(itemsField.getItems());
+    }
+
+    private SortingDto getMixSorting(SortingDto sortingDto){
+        SortingDto newSortingDto = new SortingDto(sortingDto);
+        Collections.shuffle(newSortingDto.getItems());
+        return newSortingDto;
     }
 
     @Override
@@ -85,8 +84,8 @@ public class CheckController extends SubmitConfigurationController<SelectDto> {
 
     @Override
     public ResultAnswer getAnswerResult(Integer attempt) throws IOException {
-        return communicator.testCheckAnswer(
-                SelectAnswerDto
+        return communicator.testSortingAnswer(
+                SortingAnswerDto
                         .builder()
                         .entity(getResult())
                         .userId(userInfo.getTokenDto().getUserId())

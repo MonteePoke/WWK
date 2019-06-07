@@ -17,7 +17,7 @@ import kurlyk.transfer.tasks.SelectDto;
 import kurlyk.view.common.stage.StagePool;
 import kurlyk.view.components.EditableRadioButton;
 import kurlyk.view.components.MyHtmlEditor;
-import kurlyk.view.task.CommonTaskController;
+import kurlyk.view.task.SubmitConfigurationController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -28,7 +28,7 @@ import java.util.function.Consumer;
 
 @Component
 @Scope("prototype")
-public class RadioController extends CommonTaskController<SelectDto> {
+public class RadioController extends SubmitConfigurationController<SelectDto> {
 
     @FXML private VBox root;
     @FXML private Button submit;
@@ -50,15 +50,18 @@ public class RadioController extends CommonTaskController<SelectDto> {
     public void setQuestion(Question question, boolean editable, Consumer<Question> callbackAction) {
         this.question = question;
         SelectDto radioDto = new Gson().fromJson(question.getAnswer(), SelectDto.class);
-        commonConfiguration(
-                this::getAnswerResult,
+        submitConfiguration(
                 editable,
-                textArea,
+                question,
                 submit,
                 communicator,
                 stagePool,
                 callbackAction
         );
+
+        //Настройки работчего поля
+        textArea.setDisable(!editable);
+        textArea.setHtmlText(question.getQuestion());
         ToggleGroup group = new ToggleGroup();
         for (Pair<String, Boolean> option : radioDto.getOptions()){
             EditableRadioButton editableRadioButton = new EditableRadioButton(option.getKey(), option.getValue(), editable);
@@ -80,18 +83,20 @@ public class RadioController extends CommonTaskController<SelectDto> {
     }
 
     @Override
-    public ResultAnswer getAnswerResult() {
-        try {
-            return communicator.testRadioAnswer(
-                    SelectAnswerDto
-                            .builder()
-                            .entity(getResult())
-                            .userId(userInfo.getTokenDto().getUserId())
-                            .questionId(question.getId())
-                            .build()
-            );
-        } catch (IOException e) {
-            return ResultAnswer.builder().serverError(true).build();
-        }
+    public String getQuestionText() {
+        return textArea.getHtmlText();
+    }
+
+    @Override
+    public ResultAnswer getAnswerResult(Integer attempt) throws IOException {
+        return communicator.testRadioAnswer(
+                SelectAnswerDto
+                        .builder()
+                        .entity(getResult())
+                        .userId(userInfo.getTokenDto().getUserId())
+                        .questionId(question.getId())
+                        .attemptsNumber(attempt)
+                        .build()
+        );
     }
 }

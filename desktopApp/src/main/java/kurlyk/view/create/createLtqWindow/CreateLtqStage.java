@@ -8,12 +8,12 @@ import kurlyk.view.common.dto.BaseStageDto;
 import kurlyk.view.common.stage.base.BaseStage;
 
 import java.util.Optional;
-import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 public class CreateLtqStage extends BaseStage<CreateLtqController> {
 
 
-    public CreateLtqStage(WorkEntityType type, Optional<?> model, Integer number, BiConsumer<?, Integer> saveAction) {
+    public CreateLtqStage(WorkEntityType type, Optional<?> model, Consumer<?> saveAction) {
         super(BaseStageDto.allOff());
         if(!model.isPresent()){
             throw new RuntimeException();
@@ -21,13 +21,13 @@ public class CreateLtqStage extends BaseStage<CreateLtqController> {
         controller.setCloseStage(this::close);
         switch (type){
             case LAB_WORK:
-                controller.editLabWork((LabWork)model.get(), (BiConsumer<LabWork, Integer>)saveAction, number);
+                controller.editLabWork((LabWork)model.get(), (Consumer<LabWork>)saveAction);
                 break;
             case TASK:
-                controller.editTask((Task)model.get(), (BiConsumer<Task, Integer>)saveAction, number);
+                controller.editTask((Task)model.get(), (Consumer<Task>)saveAction);
                 break;
             case QUESTION:
-                controller.editQuestion((Question)model.get(), (BiConsumer<Question, Integer>)saveAction, number);
+                controller.editQuestion((Question)model.get(), (Consumer<Question>)saveAction);
                 break;
         }
     }

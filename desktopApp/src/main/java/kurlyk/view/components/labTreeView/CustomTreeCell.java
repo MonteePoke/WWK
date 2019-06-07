@@ -7,7 +7,10 @@ import javafx.scene.text.Font;
 import kurlyk.QuestionType;
 import kurlyk.WorkEntityType;
 import kurlyk.communication.Communicator;
-import kurlyk.models.*;
+import kurlyk.models.LabWork;
+import kurlyk.models.Question;
+import kurlyk.models.Subject;
+import kurlyk.models.Task;
 import kurlyk.view.common.stage.StagePool;
 import kurlyk.view.common.stage.Stages;
 import kurlyk.view.create.createLtqWindow.CreateLtqStage;
@@ -191,12 +194,21 @@ public class CustomTreeCell extends TreeCell<TreeDto> {
     private void createLabWork() {
         try {
             //labWork
-            LabWork labWork = LabWork.builder().number(getNumber()).name("Лабораторная работа №" + getNumber()).build();
+            LabWork labWork = LabWork
+                    .builder()
+                    .number(getNumber())
+                    .name("Лабораторная работа №" + getNumber())
+                    .build();
             Long labWorkId = communicator.saveLabWork(labWork);
             labWork.setId(labWorkId);
             CustomTreeItem customTreeItem = new CustomTreeItem(getSelectedItem(), new TreeDto(labWork));
             //task
-            Task task = Task.builder().number(0).name("Тест").build();
+            Task task = Task
+                    .builder()
+                    .labWork(labWork)
+                    .number(0)
+                    .name("Тест")
+                    .build();
             Long taskId = communicator.saveTask(task);
             task.setId(taskId);
             customTreeItem.getChildren().add(new CustomTreeItem(customTreeItem, new TreeDto(task)));
@@ -207,9 +219,8 @@ public class CustomTreeCell extends TreeCell<TreeDto> {
     }
 
     private void deleteLabWork() {
-        LabWork labWork = deleteItem.get().getValue().getLabWork();
         try {
-            communicator.deleteLabWorkTaskMatchingByLabWorkId(labWork.getId());
+            LabWork labWork = deleteItem.get().getValue().getLabWork();
             communicator.deleteLabWork(labWork);
         } catch (IOException e) {
             e.printStackTrace();
@@ -221,8 +232,7 @@ public class CustomTreeCell extends TreeCell<TreeDto> {
         stagePool.pushStageAndShowModal(Stages.LTQ_CREATE, new CreateLtqStage(
                 WorkEntityType.LAB_WORK,
                 labWorkModel,
-                null,
-                (LabWork labWork, Integer number) -> {
+                (LabWork labWork) -> {
                     try {
                         communicator.saveLabWork(labWork);
                         getSelectedItem().setValue(new TreeDto(labWork));
@@ -235,36 +245,24 @@ public class CustomTreeCell extends TreeCell<TreeDto> {
 
 
     private void createTask() {
-        Task task = Task.builder().number(getNumber()).name("Задание №" + getNumber()).build();
+        Task task = Task
+                .builder()
+                .labWork(getParentSelectedItem().getValue().getLabWork())
+                .number(getNumber())
+                .name("Задание №" + getNumber())
+                .build();
         addItem.accept(new CustomTreeItem(getSelectedItem(), new TreeDto(task)));
         try {
             Long id = communicator.saveTask(task);
             task.setId(id);
-            communicator.saveLabWorkTaskMatching(
-                    LabWorkTask
-                            .builder()
-                            .labWork(getSelectedItem().getValue().getLabWork())
-                            .task(task)
-                            .number(getNumber())
-                            .build()
-            );
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     private void deleteTask() {
-        Task task = deleteItem.get().getValue().getTask();
         try {
-            List<LabWorkTask> labWorkTasks = communicator
-                    .getLabWorkTaskMatching(getParentSelectedItem().getValue().getLabWork())
-                    .stream()
-                    .filter(labWorkTask -> labWorkTask.getTask().getId().equals(task.getId()))
-                    .collect(Collectors.toList());
-            for (LabWorkTask labWorkTask : labWorkTasks) {
-                communicator.deleteLabWorkTaskMatching(labWorkTask);
-            }
-            communicator.deleteTaskQuestionMatchingByTaskId(task.getId());
+            Task task = deleteItem.get().getValue().getTask();
             communicator.deleteTask(task);
         } catch (IOException e) {
             e.printStackTrace();
@@ -273,38 +271,12 @@ public class CustomTreeCell extends TreeCell<TreeDto> {
 
     private void editTask() {
         Optional<Task> taskModel = Optional.of(getSelectedItem().getValue().getTask());
-        Integer labWorkTaskNumber = 0;
-        try {
-            labWorkTaskNumber = communicator.getLabWorkTaskMatching(getParentSelectedItem().getValue().getLabWork())
-                    .stream()
-                    .filter(lwt -> lwt.getTask().getId().equals(taskModel.get().getId()))
-                    .map(LabWorkTask::getNumber)
-                    .findAny()
-                    .get();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         stagePool.pushStageAndShowModal(Stages.LTQ_CREATE, new CreateLtqStage(
                 WorkEntityType.TASK,
                 taskModel,
-                labWorkTaskNumber,
-                (Task task, Integer number) -> {
+                (Task task) -> {
                     try {
                         communicator.saveTask(task);
-                        Optional<LabWorkTask> optionalLabWorkTask = communicator
-                                .getLabWorkTaskMatching(getParentSelectedItem().getValue().getLabWork())
-                                .stream()
-                                .filter(lwt -> lwt.getTask().getId().equals(taskModel.get().getId()))
-                                .findFirst();
-                        communicator.saveLabWorkTaskMatching(
-                                LabWorkTask
-                                        .builder()
-                                        .number(number)
-                                        .id(optionalLabWorkTask.get().getId())
-                                        .labWork(getParentSelectedItem().getValue().getLabWork())
-                                        .task(task)
-                                        .build()
-                        );
                         getSelectedItem().setValue(new TreeDto(task));
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -315,35 +287,25 @@ public class CustomTreeCell extends TreeCell<TreeDto> {
 
 
     private void createQuestion() {
-        Question question = Question.builder().number(getNumber()).name("Вопрос №" + getNumber()).questionType(QuestionType.TEXT).build();
+        Question question = Question
+                .builder()
+                .number(getNumber())
+                .name("Вопрос №" + getNumber())
+                .questionType(QuestionType.TEXT)
+                .build();
         addItem.accept(new CustomTreeItem(getSelectedItem(), new TreeDto(question)));
         try {
             Long id = communicator.saveQuestion(question);
             question.setId(id);
-            communicator.saveTaskQuestionMatching(
-                    TaskQuestion
-                            .builder()
-                            .task(getSelectedItem().getValue().getTask())
-                            .question(question)
-                            .number(getNumber())
-                            .build()
-            );
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     private void deleteQuestion() {
-        Question question = deleteItem.get().getValue().getQuestion();
         try {
-            List<TaskQuestion> taskQuestions = communicator
-                    .getTaskQuestionMatching(getParentSelectedItem().getValue().getTask())
-                    .stream()
-                    .filter(taskQuestion -> taskQuestion.getQuestion().getId().equals(question.getId()))
-                    .collect(Collectors.toList());
-            for (TaskQuestion taskQuestion : taskQuestions) {
-                communicator.deleteTaskQuestionMatching(taskQuestion);
-            }
+            Question question = deleteItem.get().getValue().getQuestion();
+            communicator.deleteQuestion(question);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -351,37 +313,12 @@ public class CustomTreeCell extends TreeCell<TreeDto> {
 
     private void editQuestion() {
         Optional<Question> questionModel = Optional.of(getSelectedItem().getValue().getQuestion());
-        Integer taskQuestionNumber = 0;
-        try {
-            taskQuestionNumber = communicator.getTaskQuestionMatching(getParentSelectedItem().getValue().getTask())
-                    .stream()
-                    .filter(tq -> tq.getQuestion().getId().equals(questionModel.get().getId()))
-                    .map(TaskQuestion::getNumber)
-                    .findAny()
-                    .get();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         stagePool.pushStageAndShowModal(Stages.LTQ_CREATE, new CreateLtqStage(
                 WorkEntityType.QUESTION,
                 questionModel,
-                taskQuestionNumber,
-                (Question question, Integer number) -> {
+                (Question question) -> {
                     try {
-                        Optional<TaskQuestion> optionalTaskQuestion = communicator
-                                .getTaskQuestionMatching(getParentSelectedItem().getValue().getTask())
-                                .stream()
-                                .filter(taskQuestion -> taskQuestion.getQuestion().getId().equals(questionModel.get().getId()))
-                                .findFirst();
-                        communicator.saveTaskQuestionMatching(
-                                TaskQuestion
-                                        .builder()
-                                        .number(number)
-                                        .id(optionalTaskQuestion.get().getId())
-                                        .task(getParentSelectedItem().getValue().getTask())
-                                        .question(question)
-                                        .build()
-                        );
+                        communicator.saveQuestion(question);
                         getSelectedItem().setValue(new TreeDto(question));
                     } catch (IOException e) {
                         e.printStackTrace();

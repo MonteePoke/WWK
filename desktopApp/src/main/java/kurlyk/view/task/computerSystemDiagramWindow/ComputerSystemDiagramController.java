@@ -1,5 +1,6 @@
 package kurlyk.view.task.computerSystemDiagramWindow;
 
+import com.google.gson.Gson;
 import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
 import javafx.scene.Cursor;
@@ -11,17 +12,19 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import kurlyk.communication.Communicator;
+import kurlyk.communication.UserInfo;
 import kurlyk.graph.ComputerSystem.ComputerSystemElementType;
 import kurlyk.graph.GraphSystem;
 import kurlyk.models.Question;
-import kurlyk.models.UserProgress;
+import kurlyk.transfer.ResultAnswer;
+import kurlyk.transfer.answer.ComputerSystemAnswerDto;
 import kurlyk.transfer.tasks.ComputerSystemDto;
 import kurlyk.view.common.stage.StagePool;
 import kurlyk.view.common.stage.Stages;
 import kurlyk.view.components.DiagramContextMenu;
 import kurlyk.view.components.DoubleField;
 import kurlyk.view.components.MyHtmlEditor;
-import kurlyk.view.task.CommonTaskController;
+import kurlyk.view.task.SubmitConfigurationController;
 import kurlyk.view.task.computerSystemDiagramWindow.characteristicWindow.CharacteristicStage;
 import kurlyk.view.task.computerSystemDiagramWindow.computerSystemDiagram.ComputerSystemDiagramConnector;
 import kurlyk.view.task.computerSystemDiagramWindow.computerSystemDiagram.ComputerSystemDiagramDetail;
@@ -31,11 +34,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.util.function.Consumer;
 
 @Component
 @Scope("prototype")
-public class ComputerSystemDiagramController extends CommonTaskController<ComputerSystemDto> {
+public class ComputerSystemDiagramController extends SubmitConfigurationController<ComputerSystemDto> {
 
     @FXML private VBox root;
     @FXML private Button submit;
@@ -49,12 +53,16 @@ public class ComputerSystemDiagramController extends CommonTaskController<Comput
     @FXML private AnchorPane drawPanel;
     @FXML private ScrollPane scrollPanel;
     @FXML private DoubleField availabilityFactorField;
+    private Question question;
 
     @Autowired
     private Communicator communicator;
 
     @Autowired
     private StagePool stagePool;
+
+    @Autowired
+    private UserInfo userInfo;
 
 
     private GraphSystem graphSystem = new GraphSystem(); //Граф
@@ -238,33 +246,43 @@ public class ComputerSystemDiagramController extends CommonTaskController<Comput
         );
     }
 
-    public void setQuestion(UserProgress userProgress, ComputerSystemDto computerSystemDto, boolean editable, Consumer<Question> callbackAction) {
-        final ComputerSystemDto rightComputerSystemDto = computerSystemDto;
-        commonConfiguration(
-                userProgress,
-                () -> isRightAnswer(rightComputerSystemDto, userProgress),
+    public void setQuestion(Question question, boolean editable, Consumer<Question> callbackAction) {
+        this.question = question;
+        ComputerSystemDto computerSystemDto = new Gson().fromJson(question.getAnswer(), ComputerSystemDto.class);
+        submitConfiguration(
                 editable,
-                textArea,
+                question,
                 submit,
                 communicator,
                 stagePool,
                 callbackAction
         );
-//        if (editable && formulaDto.getLatexFormula() != null) {
-//            inputField.setText(formulaDto.getLatexFormula());
-//        }
-    }
-
-    private Double isRightAnswer(ComputerSystemDto computerSystemDto, UserProgress userProgress){
-        double score = 0d;
-        if (computerSystemDto.getGraphSystem().isomorfic(getResult().getGraphSystem())){
-            score = userProgress.getTask().getScore() * userProgress.getQuestion().getScore();
-        }
-        return score;
+        //Настройки работчего поля
+        textArea.setDisable(!editable);
+        textArea.setHtmlText(question.getQuestion());
+        //TODO Засетить граф
     }
 
     @Override
     public ComputerSystemDto getResult() {
         return new ComputerSystemDto(graphSystem);
+    }
+
+    @Override
+    public String getQuestionText() {
+        return textArea.getHtmlText();
+    }
+
+    @Override
+    public ResultAnswer getAnswerResult(Integer attempt) throws IOException {
+        return communicator.testComputerSystemAnswer(
+                ComputerSystemAnswerDto
+                        .builder()
+                        .entity(getResult())
+                        .userId(userInfo.getTokenDto().getUserId())
+                        .questionId(question.getId())
+                        .attemptsNumber(attempt)
+                        .build()
+        );
     }
 }

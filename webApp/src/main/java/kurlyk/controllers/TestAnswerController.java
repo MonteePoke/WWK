@@ -51,4 +51,8 @@ public class TestAnswerController {
         return testAnswerService.testRadioAnswer(dto);
     }
 
+    @PostMapping("/test-sorting")
+    public ResultAnswer testSortingAnswer(@RequestBody SortingAnswerDto dto){
+        return testAnswerService.testSortingAnswer(dto);
+    }
 }

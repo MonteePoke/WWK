@@ -12,5 +12,5 @@ import lombok.NoArgsConstructor;
 public class NumberDto{
     private Double number;
     //Количество значимых знаков после запятой
-    private Integer error;
+    private Integer accuracy;
 }

@@ -1,4 +1,4 @@
-package kurlyk.view.task.matchingWindow;
+package kurlyk.view.task.sortingWindow;
 
 
 import kurlyk.models.Question;
@@ -7,15 +7,15 @@ import kurlyk.view.common.stage.base.BaseSceneCreator;
 
 import java.util.function.Consumer;
 
-public class MatchingSceneCreator extends BaseSceneCreator<MatchingController> {
+public class SortingSceneCreator extends BaseSceneCreator<SortingController> {
 
-    public MatchingSceneCreator(Question question, boolean editable, Consumer<Question> callbackAction) {
+    public SortingSceneCreator(Question question, boolean editable, Consumer<Question> callbackAction) {
         super(BaseStageDto.allOff());
         controller.setItemsToView(question, editable, callbackAction);
     }
 
     @Override
     public String getPathToMainStage() {
-        return "task/matchingWindow/main";
+        return "task/sortingWindow/main";
     }
 }

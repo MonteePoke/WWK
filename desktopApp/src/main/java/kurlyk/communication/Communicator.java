@@ -257,5 +257,10 @@ public class Communicator extends AbstractCommunicator{
         Type type = new TypeToken<ResultAnswer>(){}.getType();
         return postData(type, dto, "/test-radio/");
     }
+
+    public ResultAnswer testSortingAnswer(SortingAnswerDto dto) throws ConnectException, IOException {
+        Type type = new TypeToken<ResultAnswer>(){}.getType();
+        return postData(type, dto, "/test-sorting/");
+    }
 }
 
