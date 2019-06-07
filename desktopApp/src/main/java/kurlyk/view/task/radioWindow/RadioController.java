@@ -9,7 +9,10 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
 import javafx.util.Pair;
 import kurlyk.communication.Communicator;
+import kurlyk.communication.UserInfo;
 import kurlyk.models.Question;
+import kurlyk.transfer.ResultAnswer;
+import kurlyk.transfer.answer.SelectAnswerDto;
 import kurlyk.transfer.tasks.SelectDto;
 import kurlyk.view.common.stage.StagePool;
 import kurlyk.view.components.EditableRadioButton;
@@ -19,7 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
+import java.io.IOException;
 import java.util.function.Consumer;
 
 
@@ -30,6 +33,7 @@ public class RadioController extends CommonTaskController<SelectDto> {
     @FXML private VBox root;
     @FXML private Button submit;
     @FXML private MyHtmlEditor textArea;
+    private Question question;
 
     @Autowired
     private Communicator communicator;
@@ -37,20 +41,17 @@ public class RadioController extends CommonTaskController<SelectDto> {
     @Autowired
     private StagePool stagePool;
 
+    @Autowired
+    private UserInfo userInfo;
+
     public void initialize(){
     }
 
     public void setQuestion(Question question, boolean editable, Consumer<Question> callbackAction) {
-        SelectDto radioDto = new Gson().fromJson(question.getAnswer(), SelectDto.class)
-        if(radioDto == null){
-            radioDto = new SelectDto(Arrays.asList(
-                    new Pair<>("", false),
-                    new Pair<>("", false)
-            ));
-        }
-
+        this.question = question;
+        SelectDto radioDto = new Gson().fromJson(question.getAnswer(), SelectDto.class);
         commonConfiguration(
-                userProgress,
+                this::getAnswerResult,
                 editable,
                 textArea,
                 submit,
@@ -60,7 +61,7 @@ public class RadioController extends CommonTaskController<SelectDto> {
         );
         ToggleGroup group = new ToggleGroup();
         for (Pair<String, Boolean> option : radioDto.getOptions()){
-            EditableRadioButton editableRadioButton = new EditableRadioButton(option.getKey(), editable);
+            EditableRadioButton editableRadioButton = new EditableRadioButton(option.getKey(), option.getValue(), editable);
             editableRadioButton.getRadioButton().setToggleGroup(group);
             root.getChildren().add(editableRadioButton);
         }
@@ -68,13 +69,29 @@ public class RadioController extends CommonTaskController<SelectDto> {
 
     @Override
     public SelectDto getResult() {
-        SelectDto selectDto = new SelectDto();
+        SelectDto resultDto = new SelectDto();
         for (Node node : root.getChildren()) {
             EditableRadioButton editableRadioButton = (EditableRadioButton) node;
-            selectDto.getOptions().add(new Pair<>(editableRadioButton.getHtmlEditor().getHtmlText(),
+            resultDto.getOptions().add(new Pair<>(editableRadioButton.getHtmlEditor().getHtmlText(),
                     editableRadioButton.getRadioButton().isSelected()
             ));
         }
-        return selectDto;
+        return resultDto;
+    }
+
+    @Override
+    public ResultAnswer getAnswerResult() {
+        try {
+            return communicator.testRadioAnswer(
+                    SelectAnswerDto
+                            .builder()
+                            .entity(getResult())
+                            .userId(userInfo.getTokenDto().getUserId())
+                            .questionId(question.getId())
+                            .build()
+            );
+        } catch (IOException e) {
+            return ResultAnswer.builder().serverError(true).build();
+        }
     }
 }

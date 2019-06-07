@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import javafx.scene.control.Button;
 import kurlyk.communication.Communicator;
 import kurlyk.models.Question;
-import kurlyk.models.UserProgress;
+import kurlyk.transfer.ResultAnswer;
 import kurlyk.view.common.controller.Controller;
 import kurlyk.view.common.controller.TaskBodyController;
 import kurlyk.view.common.stage.StagePool;
@@ -27,10 +27,8 @@ public abstract class CommonTaskController<T> extends Controller implements Task
     private int errorsNumber = 0;
 
     protected void commonConfiguration(
-            UserProgress userProgress,
-            Supplier<Double> isRightAnswer,
+            Supplier<ResultAnswer> getAnswerResult,
             boolean editable,
-
             MyHtmlEditor textArea,
             Button submit,
             Communicator communicator,

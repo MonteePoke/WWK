@@ -11,9 +11,10 @@ public class EditableRadioButton extends HBox {
     @Getter private RadioButton radioButton;
     @Getter private HTMLEditor htmlEditor;
 
-    public EditableRadioButton(String text, boolean editable) {
+    public EditableRadioButton(String text, Boolean isOn, boolean editable) {
         super();
         radioButton = new RadioButton();
+        radioButton.setSelected(isOn);
         htmlEditor = new HTMLEditor();
         HBox.setHgrow(htmlEditor, Priority.SOMETIMES);
         htmlEditor.setMaxWidth(Double.MAX_VALUE);

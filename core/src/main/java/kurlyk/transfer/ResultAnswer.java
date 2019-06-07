@@ -12,4 +12,5 @@ import lombok.NoArgsConstructor;
 public class ResultAnswer {
     private long score;
     private boolean questionNotFound = false;
+    private boolean serverError = false;
 }

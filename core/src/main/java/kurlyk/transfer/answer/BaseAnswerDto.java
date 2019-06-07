@@ -1,17 +1,16 @@
 package kurlyk.transfer.answer;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
-@NoArgsConstructor
+@Getter
+@Setter
 @AllArgsConstructor
-@Builder
+@EqualsAndHashCode
 abstract public class BaseAnswerDto {
     private Long userId;
-    private Long labWorkId;
-    private Long taskId;
     private Long questionId;
+    private Integer attemptsNumber;
 }
