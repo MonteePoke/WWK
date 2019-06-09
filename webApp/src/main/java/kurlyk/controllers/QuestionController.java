@@ -21,6 +21,11 @@ public class QuestionController {
         return questionService.getQuestion(id).orElseThrow(RuntimeException::new);
     }
 
+    @GetMapping("/question-for-execute/{id}")
+    public Question getQuestionForExecute(@PathVariable("id") Long id) {
+        return questionService.getQuestionForExecute(id).orElseThrow(RuntimeException::new);
+    }
+
     @GetMapping("/questions/{task-id}")
     public List<Question> getQuestions(@PathVariable("task-id") Long taskId) {
         return questionService.getQuestions(taskId);

@@ -6,9 +6,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import kurlyk.communication.Communicator;
-import kurlyk.communication.UserInfo;
+import kurlyk.communication.UsverInfo;
 import kurlyk.models.Question;
-import kurlyk.transfer.ResultAnswer;
+import kurlyk.transfer.ResultAnswerDto;
 import kurlyk.transfer.answer.NumberAnswerDto;
 import kurlyk.transfer.tasks.NumberDto;
 import kurlyk.view.common.stage.StagePool;
@@ -42,7 +42,7 @@ public class NumberController extends SubmitConfigurationController<NumberDto> {
     private StagePool stagePool;
 
     @Autowired
-    private UserInfo userInfo;
+    private UsverInfo usverInfo;
 
     public void initialize(){
 
@@ -78,12 +78,12 @@ public class NumberController extends SubmitConfigurationController<NumberDto> {
     }
 
     @Override
-    public ResultAnswer getAnswerResult(Integer attempt) throws IOException {
+    public ResultAnswerDto getAnswerResult(Integer attempt) throws IOException {
         return communicator.testNumberAnswer(
                 NumberAnswerDto
                         .builder()
                         .entity(getResult())
-                        .userId(userInfo.getTokenDto().getUserId())
+                        .usverId(usverInfo.getTokenDto().getUsverId())
                         .questionId(question.getId())
                         .attemptsNumber(attempt)
                         .build()

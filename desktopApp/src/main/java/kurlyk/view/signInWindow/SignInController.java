@@ -5,9 +5,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import kurlyk.common.RoleTester;
 import kurlyk.communication.Communicator;
-import kurlyk.communication.UserInfo;
-import kurlyk.models.Role;
+import kurlyk.communication.UsverInfo;
+import kurlyk.models.enums.RoleEnum;
 import kurlyk.transfer.LoginDto;
 import kurlyk.view.common.controller.Controller;
 import kurlyk.view.common.stage.StagePool;
@@ -39,7 +40,7 @@ public class SignInController extends Controller {
     private StagePool stagePool;
 
     @Autowired
-    private UserInfo userInfo;
+    private UsverInfo usverInfo;
 
     @Autowired
     private Communicator communicator;
@@ -103,7 +104,7 @@ public class SignInController extends Controller {
                 feedback.setVisible(false);
             }
             stagePool.pushStage(Stages.START, new StartStage());
-            if (userInfo.getTokenDto().getUserRole() == Role.ADMIN) {
+            if (RoleTester.roleIsExist(usverInfo.getTokenDto(), RoleEnum.ADMIN.getName())) {
                 stagePool.getStage(Stages.START).setScene(new StartAdminScaneCreator().getScene());
             } else {
                 stagePool.getStage(Stages.START).setScene(new StartStudentSceneCreator().getScene());

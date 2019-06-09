@@ -1,6 +1,6 @@
 package kurlyk.graph.ComputerSystem;
 
-import kurlyk.common.classesMadeByStas.SelfMadeSimpleDoubleProperty;
+import kurlyk.common.SelfMadeSimpleDoubleProperty;
 import kurlyk.graph.GraphElement;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

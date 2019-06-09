@@ -8,13 +8,12 @@ import javafx.scene.control.TabPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import kurlyk.communication.Communicator;
-import kurlyk.communication.UserInfo;
-import kurlyk.models.UserProgress;
+import kurlyk.communication.UsverInfo;
 import kurlyk.transfer.tasks.*;
 import kurlyk.view.common.controller.Controller;
 import kurlyk.view.common.stage.StagePool;
 import kurlyk.view.common.stage.base.BaseStage;
-import kurlyk.view.components.UserProgressTab;
+import kurlyk.view.components.UsverProgressTab;
 import kurlyk.view.showAnswerWindow.ShowAnswerStage;
 import kurlyk.view.showResultWindow.ShowResultSceneCreator;
 import kurlyk.view.task.checkWindow.CheckSceneCreator;
@@ -23,12 +22,12 @@ import kurlyk.view.task.formulaWindow.FormulaSceneCreator;
 import kurlyk.view.task.matchingWindow.MatchingSceneCreator;
 import kurlyk.view.task.numberWindow.NumberSceneCreator;
 import kurlyk.view.task.radioWindow.RadioSceneCreator;
+import kurlyk.view.task.sortingWindow.SortingSceneCreator;
 import kurlyk.view.task.textWindow.TextSceneCreator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
 
 @Component
 @Scope("prototype")
@@ -43,7 +42,7 @@ public class ExecuteLabController extends Controller {
     private StagePool stagePool;
 
     @Autowired
-    private UserInfo userInfo;
+    private UsverInfo usverInfo;
 
     @Autowired
     private Communicator communicator;
@@ -55,7 +54,7 @@ public class ExecuteLabController extends Controller {
     public void setTasks(List<UserProgress> userProgresses, boolean isTest) {
         tabPane = new TabPane();
         for (UserProgress userProgress : userProgresses) {
-            UserProgressTab tab = new UserProgressTab("Вопрос №" + (tabPane.getTabs().size() + 1), userProgress);
+            UsverProgressTab tab = new UsverProgressTab("Вопрос №" + (tabPane.getTabs().size() + 1), userProgress);
             Scene scene = null;
             switch (userProgress.getQuestion().getQuestionType()) {
                 case RADIO:
@@ -67,6 +66,9 @@ public class ExecuteLabController extends Controller {
                     SelectDto checkDto = new Gson().fromJson(userProgress.getQuestion().getAnswer(), SelectDto.class);
                     scene = new CheckSceneCreator(userProgress, checkDto, false, (question -> {
                     })).getScene();
+                    break;
+                case SORTING:
+                    scene = new SortingSceneCreator(question, true, callbackAction).getScene();
                     break;
                 case MATCHING:
                     MatchingDto matchingDto = new Gson().fromJson(userProgress.getQuestion().getAnswer(), MatchingDto.class);
@@ -110,9 +112,9 @@ public class ExecuteLabController extends Controller {
         root.getChildren().add(tabPane);
     }
 
-    private Tab createResultTab(Long labWorkId, Long userId, boolean isTest, Runnable startLabCallback, Runnable showResultCallback) {
+    private Tab createResultTab(Long labWorkId, Long usverId, boolean isTest, Runnable startLabCallback, Runnable showResultCallback) {
         Tab tab = new Tab("Результаты");
-        tab.setContent(new ShowResultSceneCreator(labWorkId, userId, isTest, startLabCallback, showResultCallback).getScene().getRoot());
+        tab.setContent(new ShowResultSceneCreator(labWorkId, usverId, isTest, startLabCallback, showResultCallback).getScene().getRoot());
         return tab;
     }
 
@@ -133,7 +135,7 @@ public class ExecuteLabController extends Controller {
         stage.getMainMenu().getShowAnswerItem().setOnAction(event -> {
             try {
                 ShowAnswerStage showAnswerStage = new ShowAnswerStage(
-                        ((UserProgressTab) tabPane.getSelectionModel().getSelectedItem()).getUserProgress().getQuestion()
+                        ((UsverProgressTab) tabPane.getSelectionModel().getSelectedItem()).getUserProgress().getQuestion()
                 );
                 showAnswerStage.initOwner(this.stage);
                 showAnswerStage.initModality(Modality.APPLICATION_MODAL);

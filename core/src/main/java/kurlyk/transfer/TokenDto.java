@@ -1,13 +1,14 @@
 package kurlyk.transfer;
 
 import kurlyk.models.Role;
-import kurlyk.models.State;
 import kurlyk.models.Token;
-import kurlyk.models.User;
+import kurlyk.models.Usver;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -16,27 +17,25 @@ import lombok.NoArgsConstructor;
 public class TokenDto {
     private String value;
 
-    private Long userId;
-    private String userLogin;
-    private Role userRole;
-    private State userState;
+    private Long usverId;
+    private String usverLogin;
+    private List<Role> usverRoles;
 
-    private String userFirstName;
-    private String userMiddleName;
-    private String userSecondName;
-    private String userStudyGroup;
+    private String usverFirstName;
+    private String usverMiddleName;
+    private String usverSecondName;
+    private String usverStudyGroup;
 
-    public User toUser(){
-        return User
+    public Usver toUsver(){
+        return Usver
                 .builder()
-                .id(userId)
-                .login(userLogin)
-                .role(userRole)
-                .state(userState)
-                .firstName(userFirstName)
-                .middleName(userMiddleName)
-                .secondName(userSecondName)
-                .studyGroup(userStudyGroup)
+                .id(usverId)
+                .login(usverLogin)
+                .roles(usverRoles)
+                .firstName(usverFirstName)
+                .middleName(usverMiddleName)
+                .secondName(usverSecondName)
+                .studyGroup(usverStudyGroup)
                 .build();
     }
 
@@ -44,14 +43,13 @@ public class TokenDto {
         return TokenDto
                 .builder()
                 .value(token.getValue())
-                .userId(token.getUser().getId())
-                .userLogin(token.getUser().getLogin())
-                .userRole(token.getUser().getRole())
-                .userState(token.getUser().getState())
-                .userFirstName(token.getUser().getFirstName())
-                .userMiddleName(token.getUser().getMiddleName())
-                .userSecondName(token.getUser().getSecondName())
-                .userStudyGroup(token.getUser().getStudyGroup())
+                .usverId(token.getUsver().getId())
+                .usverLogin(token.getUsver().getLogin())
+                .usverRoles(token.getUsver().getRoles())
+                .usverFirstName(token.getUsver().getFirstName())
+                .usverMiddleName(token.getUsver().getMiddleName())
+                .usverSecondName(token.getUsver().getSecondName())
+                .usverStudyGroup(token.getUsver().getStudyGroup())
                 .build();
     }
 }

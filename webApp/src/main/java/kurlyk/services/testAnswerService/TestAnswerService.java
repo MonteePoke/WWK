@@ -1,17 +1,17 @@
 package kurlyk.services.testAnswerService;
 
-import kurlyk.transfer.ResultAnswer;
+import kurlyk.transfer.ResultAnswerDto;
 import kurlyk.transfer.answer.*;
 
 
 public interface TestAnswerService {
 
-    ResultAnswer testComputerSystemAnswer(ComputerSystemAnswerDto dto);
-    ResultAnswer testFormulaAnswer(FormulaAnswerDto dto);
-    ResultAnswer testTextAnswer(TextAnswerDto dto);
-    ResultAnswer testNumberAnswer(NumberAnswerDto dto);
-    ResultAnswer testMatchingAnswer(MatchingAnswerDto dto);
-    ResultAnswer testCheckAnswer(SelectAnswerDto dto);
-    ResultAnswer testRadioAnswer(SelectAnswerDto dto);
-    ResultAnswer testSortingAnswer(SortingAnswerDto dto);
+    ResultAnswerDto testComputerSystemAnswer(ComputerSystemAnswerDto dto);
+    ResultAnswerDto testFormulaAnswer(FormulaAnswerDto dto);
+    ResultAnswerDto testTextAnswer(TextAnswerDto dto);
+    ResultAnswerDto testNumberAnswer(NumberAnswerDto dto);
+    ResultAnswerDto testMatchingAnswer(MatchingAnswerDto dto);
+    ResultAnswerDto testCheckAnswer(SelectAnswerDto dto);
+    ResultAnswerDto testRadioAnswer(SelectAnswerDto dto);
+    ResultAnswerDto testSortingAnswer(SortingAnswerDto dto);
 }

@@ -3,10 +3,7 @@ package kurlyk.communication;
 
 import com.google.gson.reflect.TypeToken;
 import kurlyk.models.*;
-import kurlyk.transfer.LoginDto;
-import kurlyk.transfer.ResultAnswer;
-import kurlyk.transfer.TokenDto;
-import kurlyk.transfer.UserLabWorkDto;
+import kurlyk.transfer.*;
 import kurlyk.transfer.answer.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -20,13 +17,13 @@ import java.util.*;
 public class Communicator extends AbstractCommunicator{
 
     @Autowired
-    private UserInfo userInfo;
+    private UsverInfo usverInfo;
 
     @Override
     public String getToken(){
         String token;
         try {
-            token = userInfo.getTokenDto().getValue();
+            token = usverInfo.getTokenDto().getValue();
             if (token == null){
                 throw new NullPointerException();
             }
@@ -38,7 +35,7 @@ public class Communicator extends AbstractCommunicator{
 
 
     /*
-        User
+        Usver
      */
     public boolean login(LoginDto loginDto) throws ConnectException, IOException {
         Type type = new TypeToken<TokenDto>(){}.getType();
@@ -46,19 +43,19 @@ public class Communicator extends AbstractCommunicator{
         if(tokenDto.getValue().equals("")){
             return false;
         } else {
-            userInfo.setTokenDto(tokenDto);
+            usverInfo.setTokenDto(tokenDto);
             return true;
         }
     }
 
-    public User getUser() throws ConnectException, IOException {
-        Type type = new TypeToken<User>(){}.getType();
-        return getData(type, "/users/");
+    public Usver getUser() throws ConnectException, IOException {
+        Type type = new TypeToken<Usver>(){}.getType();
+        return getData(type, "/usvers/");
     }
 
-    public List<User> getUsers() throws ConnectException, IOException {
-        Type type = new TypeToken<ArrayList<User>>(){}.getType();
-        return getData(type, "/users/");
+    public List<Usver> getUsers() throws ConnectException, IOException {
+        Type type = new TypeToken<ArrayList<Usver>>(){}.getType();
+        return getData(type, "/usvers/");
     }
 
 
@@ -161,38 +158,38 @@ public class Communicator extends AbstractCommunicator{
     /*
         UserProgress
      */
-    public List<UserProgressLabWork> getUserProgress(UserLabWorkDto userLabWorkDto) throws ConnectException, IOException {
-        Type type = new TypeToken<ArrayList<UserProgressLabWork>>(){}.getType();
-        return getData(type, userLabWorkDtoToParameters(userLabWorkDto), "/user/progress/");
+    public List<UsverProgressLabWork> getUsverProgress(UsverLabWorkDto usverLabWorkDto) throws ConnectException, IOException {
+        Type type = new TypeToken<ArrayList<UsverProgressLabWork>>(){}.getType();
+        return getData(type, usverLabWorkDtoToParameters(usverLabWorkDto), "/usver/progress/");
     }
 
-    public Long saveUserProgress(UserProgressLabWork userProgressLabWork) throws ConnectException, IOException {
+    public Long saveUsverProgress(UsverProgressLabWork usverProgressLabWork) throws ConnectException, IOException {
         Type type = new TypeToken<Long>(){}.getType();
-        return postData(type, userProgressLabWork, "/user/progress/");
+        return postData(type, usverProgressLabWork, "/usver/progress/");
     }
 
-    public void deleteUserProgress(UserProgressLabWork userProgressLabWork) throws ConnectException, IOException {
-        deleteData(null, userProgressLabWork.getId(), "/user/progress/");
+    public void deleteUsverProgress(UsverProgressLabWork usverProgressLabWork) throws ConnectException, IOException {
+        deleteData(null, usverProgressLabWork.getId(), "/usver/progress/");
     }
 
-    public Optional<UserLabWorkAccess> getUserLabWorkAccess(UserLabWorkDto userLabWorkDto) throws ConnectException, IOException {
-        Type type = new TypeToken<Optional<UserLabWorkAccess>>(){}.getType();
-        return getData(type, userLabWorkDtoToParameters(userLabWorkDto), "/user/access/");
+    public Optional<UsverLabWorkAccess> getUsverLabWorkAccess(UsverLabWorkDto usverLabWorkDto) throws ConnectException, IOException {
+        Type type = new TypeToken<Optional<UsverLabWorkAccess>>(){}.getType();
+        return getData(type, usverLabWorkDtoToParameters(usverLabWorkDto), "/usver/access/");
     }
 
-    public Long saveUserLabWorkAccess(UserLabWorkAccess userLabWorkAccess) throws ConnectException, IOException {
+    public Long saveUsverLabWorkAccess(UsverLabWorkAccess usverLabWorkAccess) throws ConnectException, IOException {
         Type type = new TypeToken<Long>(){}.getType();
-        return postData(type, userLabWorkAccess, "/user/access/");
+        return postData(type, usverLabWorkAccess, "/usver/access/");
     }
 
-    public void deleteUserLabWorkAccess(UserLabWorkAccess userLabWorkAccess) throws ConnectException, IOException {
-        deleteData(null, userLabWorkAccess.getId(), "/user/access/");
+    public void deleteUsverLabWorkAccess(UsverLabWorkAccess usverLabWorkAccess) throws ConnectException, IOException {
+        deleteData(null, usverLabWorkAccess.getId(), "/usver/access/");
     }
 
-    private Map<String, String> userLabWorkDtoToParameters(UserLabWorkDto userLabWorkDto){
+    private Map<String, String> usverLabWorkDtoToParameters(UsverLabWorkDto usverLabWorkDto){
         Map<String, String> parameters = new HashMap<>();
-        parameters.put("userId", userLabWorkDto.getUserId() != null ? userLabWorkDto.getUserId().toString() : null);
-        parameters.put("labWorkId", userLabWorkDto.getLabWorkId() != null ? userLabWorkDto.getLabWorkId().toString() : null);
+        parameters.put("usverId", usverLabWorkDto.getUsverId() != null ? usverLabWorkDto.getUsverId().toString() : null);
+        parameters.put("labWorkId", usverLabWorkDto.getLabWorkId() != null ? usverLabWorkDto.getLabWorkId().toString() : null);
         return parameters;
     }
 
@@ -223,44 +220,65 @@ public class Communicator extends AbstractCommunicator{
     /*
         testAnswer
     */
-    public ResultAnswer testComputerSystemAnswer(ComputerSystemAnswerDto dto) throws ConnectException, IOException {
-        Type type = new TypeToken<ResultAnswer>(){}.getType();
+    public ResultAnswerDto testComputerSystemAnswer(ComputerSystemAnswerDto dto) throws ConnectException, IOException {
+        Type type = new TypeToken<ResultAnswerDto>(){}.getType();
         return postData(type, dto, "/test-computer-system/");
     }
 
-    public ResultAnswer testFormulaAnswer(FormulaAnswerDto dto) throws ConnectException, IOException {
-        Type type = new TypeToken<ResultAnswer>(){}.getType();
+    public ResultAnswerDto testFormulaAnswer(FormulaAnswerDto dto) throws ConnectException, IOException {
+        Type type = new TypeToken<ResultAnswerDto>(){}.getType();
         return postData(type, dto, "/test-formula/");
     }
 
-    public ResultAnswer testTextAnswer(TextAnswerDto dto) throws ConnectException, IOException {
-        Type type = new TypeToken<ResultAnswer>(){}.getType();
+    public ResultAnswerDto testTextAnswer(TextAnswerDto dto) throws ConnectException, IOException {
+        Type type = new TypeToken<ResultAnswerDto>(){}.getType();
         return postData(type, dto, "/test-text/");
     }
 
-    public ResultAnswer testNumberAnswer(NumberAnswerDto dto) throws ConnectException, IOException {
-        Type type = new TypeToken<ResultAnswer>(){}.getType();
+    public ResultAnswerDto testNumberAnswer(NumberAnswerDto dto) throws ConnectException, IOException {
+        Type type = new TypeToken<ResultAnswerDto>(){}.getType();
         return postData(type, dto, "/test-number/");
     }
 
-    public ResultAnswer testMatchingAnswer(MatchingAnswerDto dto) throws ConnectException, IOException {
-        Type type = new TypeToken<ResultAnswer>(){}.getType();
+    public ResultAnswerDto testMatchingAnswer(MatchingAnswerDto dto) throws ConnectException, IOException {
+        Type type = new TypeToken<ResultAnswerDto>(){}.getType();
         return postData(type, dto, "/test-matching/");
     }
 
-    public ResultAnswer testCheckAnswer(SelectAnswerDto dto) throws ConnectException, IOException {
-        Type type = new TypeToken<ResultAnswer>(){}.getType();
+    public ResultAnswerDto testCheckAnswer(SelectAnswerDto dto) throws ConnectException, IOException {
+        Type type = new TypeToken<ResultAnswerDto>(){}.getType();
         return postData(type, dto, "/test-check/");
     }
 
-    public ResultAnswer testRadioAnswer(SelectAnswerDto dto) throws ConnectException, IOException {
-        Type type = new TypeToken<ResultAnswer>(){}.getType();
+    public ResultAnswerDto testRadioAnswer(SelectAnswerDto dto) throws ConnectException, IOException {
+        Type type = new TypeToken<ResultAnswerDto>(){}.getType();
         return postData(type, dto, "/test-radio/");
     }
 
-    public ResultAnswer testSortingAnswer(SortingAnswerDto dto) throws ConnectException, IOException {
-        Type type = new TypeToken<ResultAnswer>(){}.getType();
+    public ResultAnswerDto testSortingAnswer(SortingAnswerDto dto) throws ConnectException, IOException {
+        Type type = new TypeToken<ResultAnswerDto>(){}.getType();
         return postData(type, dto, "/test-sorting/");
+    }
+
+
+    /*
+        executeLabWork
+    */
+    public QuestionIdsDto getQuestionsForExecute(Long labWorkId, Integer variant) throws ConnectException, IOException {
+        Type type = new TypeToken<QuestionIdsDto>(){}.getType();
+        return getData(type, labWorkIdAndVariantToParameters(labWorkId, variant), "/questions-for-execute/");
+    }
+
+    private Map<String, String> labWorkIdAndVariantToParameters(Long labWorkId, Integer variant){
+        Map<String, String> parameters = new HashMap<>();
+        parameters.put("labWorkId", labWorkId != null ? labWorkId.toString() : null);
+        parameters.put("variant", variant != null ? variant.toString() : null);
+        return parameters;
+    }
+
+    public Question getQuestionForExecute(Long id) throws ConnectException, IOException {
+        Type type = new TypeToken<Question>(){}.getType();
+        return getData(type, "/question-for-execute/" + id.toString());
     }
 }
 

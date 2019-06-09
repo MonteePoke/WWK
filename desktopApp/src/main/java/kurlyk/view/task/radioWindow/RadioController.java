@@ -9,9 +9,9 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
 import javafx.util.Pair;
 import kurlyk.communication.Communicator;
-import kurlyk.communication.UserInfo;
+import kurlyk.communication.UsverInfo;
 import kurlyk.models.Question;
-import kurlyk.transfer.ResultAnswer;
+import kurlyk.transfer.ResultAnswerDto;
 import kurlyk.transfer.answer.SelectAnswerDto;
 import kurlyk.transfer.tasks.SelectDto;
 import kurlyk.view.common.stage.StagePool;
@@ -42,7 +42,7 @@ public class RadioController extends SubmitConfigurationController<SelectDto> {
     private StagePool stagePool;
 
     @Autowired
-    private UserInfo userInfo;
+    private UsverInfo usverInfo;
 
     public void initialize(){
     }
@@ -88,12 +88,12 @@ public class RadioController extends SubmitConfigurationController<SelectDto> {
     }
 
     @Override
-    public ResultAnswer getAnswerResult(Integer attempt) throws IOException {
+    public ResultAnswerDto getAnswerResult(Integer attempt) throws IOException {
         return communicator.testRadioAnswer(
                 SelectAnswerDto
                         .builder()
                         .entity(getResult())
-                        .userId(userInfo.getTokenDto().getUserId())
+                        .usverId(usverInfo.getTokenDto().getUsverId())
                         .questionId(question.getId())
                         .attemptsNumber(attempt)
                         .build()

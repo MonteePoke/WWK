@@ -1,13 +1,13 @@
 package kurlyk.services.testAnswerService;
 
 import com.google.gson.Gson;
-import kurlyk.common.classesMadeByStas.StemmerPorterRU;
+import kurlyk.common.StemmerPorterRU;
 import kurlyk.models.Question;
 import kurlyk.services.labWork.LabWorkService;
 import kurlyk.services.question.QuestionService;
 import kurlyk.services.task.TaskService;
-import kurlyk.services.user.UsersService;
-import kurlyk.transfer.ResultAnswer;
+import kurlyk.services.usver.UsverService;
+import kurlyk.transfer.ResultAnswerDto;
 import kurlyk.transfer.answer.*;
 import kurlyk.transfer.tasks.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,118 +29,118 @@ public class testAnswerServiceImpl implements TestAnswerService {
     private QuestionService questionService;
 
     @Autowired
-    private UsersService usersService;
+    private UsverService usverService;
 
-    public ResultAnswer testComputerSystemAnswer(@RequestBody ComputerSystemAnswerDto dto){
+    public ResultAnswerDto testComputerSystemAnswer(@RequestBody ComputerSystemAnswerDto dto){
         Optional<Question> optionalQuestion = questionService.getQuestion(dto.getQuestionId());
-        ResultAnswer resultAnswer = new ResultAnswer();
+        ResultAnswerDto resultAnswerDto = new ResultAnswerDto();
         if(optionalQuestion.isPresent()){
             ComputerSystemDto standart = new Gson().fromJson(optionalQuestion.get().getAnswer(), ComputerSystemDto.class);
-            resultAnswer.setScore(
+            resultAnswerDto.setScore(
                     percentToScore(dto, testComputerSystemDto(standart, dto.getEntity()))
             );
         } else {
-            resultAnswer.setQuestionNotFound(true);
+            resultAnswerDto.setQuestionNotFound(true);
         }
-        return resultAnswer;
+        return resultAnswerDto;
     }
 
-    public ResultAnswer testFormulaAnswer(FormulaAnswerDto dto){
+    public ResultAnswerDto testFormulaAnswer(FormulaAnswerDto dto){
         Optional<Question> optionalQuestion = questionService.getQuestion(dto.getQuestionId());
-        ResultAnswer resultAnswer = new ResultAnswer();
+        ResultAnswerDto resultAnswerDto = new ResultAnswerDto();
         if(optionalQuestion.isPresent()){
             FormulaDto standart = new Gson().fromJson(optionalQuestion.get().getAnswer(), FormulaDto.class);
-            resultAnswer.setScore(
+            resultAnswerDto.setScore(
                     percentToScore(dto, testFormulaDto(standart, dto.getEntity()))
             );
         } else {
-            resultAnswer.setQuestionNotFound(true);
+            resultAnswerDto.setQuestionNotFound(true);
         }
-        return resultAnswer;
+        return resultAnswerDto;
     }
 
-    public ResultAnswer testTextAnswer(TextAnswerDto dto){
+    public ResultAnswerDto testTextAnswer(TextAnswerDto dto){
         Optional<Question> optionalQuestion = questionService.getQuestion(dto.getQuestionId());
-        ResultAnswer resultAnswer = new ResultAnswer();
+        ResultAnswerDto resultAnswerDto = new ResultAnswerDto();
         if(optionalQuestion.isPresent()){
             TextDto standart = new Gson().fromJson(optionalQuestion.get().getAnswer(), TextDto.class);
-            resultAnswer.setScore(
+            resultAnswerDto.setScore(
                     percentToScore(dto, testTextDto(standart, dto.getEntity()))
             );
         } else {
-            resultAnswer.setQuestionNotFound(true);
+            resultAnswerDto.setQuestionNotFound(true);
         }
-        return resultAnswer;
+        return resultAnswerDto;
     }
 
-    public ResultAnswer testNumberAnswer(NumberAnswerDto dto){
+    public ResultAnswerDto testNumberAnswer(NumberAnswerDto dto){
         Optional<Question> optionalQuestion = questionService.getQuestion(dto.getQuestionId());
-        ResultAnswer resultAnswer = new ResultAnswer();
+        ResultAnswerDto resultAnswerDto = new ResultAnswerDto();
         if(optionalQuestion.isPresent()){
             NumberDto standart = new Gson().fromJson(optionalQuestion.get().getAnswer(), NumberDto.class);
-            resultAnswer.setScore(
+            resultAnswerDto.setScore(
                     percentToScore(dto, testNumberDto(standart, dto.getEntity()))
             );
         } else {
-            resultAnswer.setQuestionNotFound(true);
+            resultAnswerDto.setQuestionNotFound(true);
         }
-        return resultAnswer;
+        return resultAnswerDto;
     }
 
-    public ResultAnswer testMatchingAnswer(MatchingAnswerDto dto){
+    public ResultAnswerDto testMatchingAnswer(MatchingAnswerDto dto){
         Optional<Question> optionalQuestion = questionService.getQuestion(dto.getQuestionId());
-        ResultAnswer resultAnswer = new ResultAnswer();
+        ResultAnswerDto resultAnswerDto = new ResultAnswerDto();
         if(optionalQuestion.isPresent()){
             MatchingDto standart = new Gson().fromJson(optionalQuestion.get().getAnswer(), MatchingDto.class);
-            resultAnswer.setScore(
+            resultAnswerDto.setScore(
                     percentToScore(dto, testMatchingDto(standart, dto.getEntity()))
             );
         } else {
-            resultAnswer.setQuestionNotFound(true);
+            resultAnswerDto.setQuestionNotFound(true);
         }
-        return resultAnswer;
+        return resultAnswerDto;
     }
 
-    public ResultAnswer testCheckAnswer(SelectAnswerDto dto){
+    public ResultAnswerDto testCheckAnswer(SelectAnswerDto dto){
         Optional<Question> optionalQuestion = questionService.getQuestion(dto.getQuestionId());
-        ResultAnswer resultAnswer = new ResultAnswer();
+        ResultAnswerDto resultAnswerDto = new ResultAnswerDto();
         if(optionalQuestion.isPresent()){
             SelectDto standart = new Gson().fromJson(optionalQuestion.get().getAnswer(), SelectDto.class);
-            resultAnswer.setScore(
+            resultAnswerDto.setScore(
                     percentToScore(dto, testCheckDto(standart, dto.getEntity()))
             );
         } else {
-            resultAnswer.setQuestionNotFound(true);
+            resultAnswerDto.setQuestionNotFound(true);
         }
-        return resultAnswer;
+        return resultAnswerDto;
     }
 
-    public ResultAnswer testRadioAnswer(SelectAnswerDto dto){
+    public ResultAnswerDto testRadioAnswer(SelectAnswerDto dto){
         Optional<Question> optionalQuestion = questionService.getQuestion(dto.getQuestionId());
-        ResultAnswer resultAnswer = new ResultAnswer();
+        ResultAnswerDto resultAnswerDto = new ResultAnswerDto();
         if(optionalQuestion.isPresent()){
             SelectDto standart = new Gson().fromJson(optionalQuestion.get().getAnswer(), SelectDto.class);
-            resultAnswer.setScore(
+            resultAnswerDto.setScore(
                     percentToScore(dto, testRadioDto(standart, dto.getEntity()))
             );
         } else {
-            resultAnswer.setQuestionNotFound(true);
+            resultAnswerDto.setQuestionNotFound(true);
         }
-        return resultAnswer;
+        return resultAnswerDto;
     }
 
-    public ResultAnswer testSortingAnswer(SortingAnswerDto dto){
+    public ResultAnswerDto testSortingAnswer(SortingAnswerDto dto){
         Optional<Question> optionalQuestion = questionService.getQuestion(dto.getQuestionId());
-        ResultAnswer resultAnswer = new ResultAnswer();
+        ResultAnswerDto resultAnswerDto = new ResultAnswerDto();
         if(optionalQuestion.isPresent()){
             SortingDto standart = new Gson().fromJson(optionalQuestion.get().getAnswer(), SortingDto.class);
-            resultAnswer.setScore(
+            resultAnswerDto.setScore(
                     percentToScore(dto, testSortingDto(standart, dto.getEntity()))
             );
         } else {
-            resultAnswer.setQuestionNotFound(true);
+            resultAnswerDto.setQuestionNotFound(true);
         }
-        return resultAnswer;
+        return resultAnswerDto;
     }
 
     // percent - [0.0 .. 1.0]
@@ -171,9 +171,12 @@ public class testAnswerServiceImpl implements TestAnswerService {
     }
 
     private double testNumberDto(NumberDto standart, NumberDto answer){
+        if(answer.getNumber() == null){
+            return 0;
+        }
         double standartNumber = standart.getNumber();
         double answerNumber = answer.getNumber();
-        int n = standart.getAccuracy();
+        int n = standart.getAccuracy() == null ? 0 : standart.getAccuracy();
 
         if (n <= 0){
             return (standartNumber == answerNumber) ? 1 : 0;

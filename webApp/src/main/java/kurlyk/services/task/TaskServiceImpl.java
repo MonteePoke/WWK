@@ -25,6 +25,11 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    public List<Long> getTaskIds(Long labWorkId) {
+        return taskRepository.findOnlyIdByLabWorkId(labWorkId);
+    }
+
+    @Override
     public List<Task> getTasks() {
         return taskRepository.findAll();
     }

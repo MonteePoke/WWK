@@ -13,8 +13,8 @@ public class ComputerSystemAnswerDto extends BaseAnswerDto{
     private ComputerSystemDto entity;
 
     @Builder
-    public ComputerSystemAnswerDto(Long userId, Long questionId, ComputerSystemDto entity, Integer attemptsNumber) {
-        super(userId, questionId, attemptsNumber);
+    public ComputerSystemAnswerDto(Long usverId, Long questionId, ComputerSystemDto entity, Integer attemptsNumber) {
+        super(usverId, questionId, attemptsNumber);
         this.entity = entity;
     }
 }

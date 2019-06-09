@@ -13,8 +13,8 @@ public class TextAnswerDto extends BaseAnswerDto{
     private TextDto entity;
 
     @Builder
-    public TextAnswerDto(Long userId, Long questionId, TextDto entity, Integer attemptsNumber) {
-        super(userId, questionId, attemptsNumber);
+    public TextAnswerDto(Long usverId, Long questionId, TextDto entity, Integer attemptsNumber) {
+        super(usverId, questionId, attemptsNumber);
         this.entity = entity;
     }
 }

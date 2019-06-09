@@ -1,6 +1,7 @@
 package kurlyk.models;
 
 
+import kurlyk.models.base.Dictionary;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,11 +15,11 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Builder
 @Entity
-public class Parameter {
+public class Parameter implements Dictionary {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
-    private String name;
+    private Double name;
 }

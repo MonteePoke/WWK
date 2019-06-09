@@ -1,8 +1,8 @@
 package kurlyk.services.login;
 
 import kurlyk.models.Token;
-import kurlyk.models.User;
-import kurlyk.repositories.UsersRepository;
+import kurlyk.models.Usver;
+import kurlyk.repositories.UsverRepository;
 import kurlyk.services.token.TokenService;
 import kurlyk.transfer.LoginDto;
 import kurlyk.transfer.TokenDto;
@@ -24,18 +24,18 @@ public class LoginServiceImpl implements LoginService {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    private UsersRepository usersRepository;
+    private UsverRepository usverRepository;
 
     @Override
     public TokenDto login(LoginDto loginDto) throws IllegalArgumentException {
-        Optional<User> userCandidate = usersRepository.findOneByLogin(loginDto.getLogin());
+        Optional<Usver> usverCandidate = usverRepository.findOneByLogin(loginDto.getLogin());
 
-        if (userCandidate.isPresent()) {
-            User user = userCandidate.get();
+        if (usverCandidate.isPresent()) {
+            Usver usver = usverCandidate.get();
 
-            if (passwordEncoder.matches(loginDto.getPassword(), user.getPassword())) {
+            if (passwordEncoder.matches(loginDto.getPassword(), usver.getPassword())) {
                 Token token = Token.builder()
-                        .user(user)
+                        .usver(usver)
                         .value(RandomStringUtils.random(10, true, true))
                         .createDate(LocalDateTime.now())
                         .build();
@@ -43,6 +43,6 @@ public class LoginServiceImpl implements LoginService {
                 tokenService.saveAndDeleteOld(token);
                 return TokenDto.fromToken(token);
             }
-        } throw new IllegalArgumentException("User not found");
+        } throw new IllegalArgumentException("Usver not found");
     }
 }

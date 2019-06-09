@@ -21,4 +21,8 @@ public class ComputerSystemDto{
     public GraphSystem getGraphSystem(){
         return simpleGraphSystem.toGraphSystem();
     }
+
+    public void setSimpleGraphSystem(SimpleGraphSystem simpleGraphSystem) {
+        this.simpleGraphSystem = simpleGraphSystem;
+    }
 }

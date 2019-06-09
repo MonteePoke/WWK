@@ -7,7 +7,7 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.stage.Modality;
 import kurlyk.view.common.ViewProperties;
-import kurlyk.view.create.createTaskWindow.questionListWindow.QuestionListStage;
+import kurlyk.view.create.questionListWindow.QuestionListStage;
 
 public class MainMenu extends MenuBar {
 

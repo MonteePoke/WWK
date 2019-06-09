@@ -49,4 +49,8 @@ public class SortingDto implements Serializable{
         result = 17 * result + Objects.hashCode(items);
         return result;
     }
+
+    public List<String> getItems() {
+        return items;
+    }
 }

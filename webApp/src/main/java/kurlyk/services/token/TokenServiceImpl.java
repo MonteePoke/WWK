@@ -18,9 +18,9 @@ public class TokenServiceImpl implements TokenService {
     @Override
     public void saveAndDeleteOld(Token token) {
         tokenRepository.deleteAll(
-                tokenRepository.findAllByUser(token.getUser())
+                tokenRepository.findAllByUsver(token.getUsver())
                 .stream()
-                .filter(userToken -> userToken.getCreateDate().compareTo(LocalDateTime.now().minusDays(retirementAgeInDays)) < 1)
+                .filter(usverToken -> usverToken.getCreateDate().compareTo(LocalDateTime.now().minusDays(retirementAgeInDays)) < 1)
                 .collect(Collectors.toList())
         );
         tokenRepository.save(token);

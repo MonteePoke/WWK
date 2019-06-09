@@ -6,9 +6,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import kurlyk.communication.Communicator;
-import kurlyk.communication.UserInfo;
+import kurlyk.communication.UsverInfo;
 import kurlyk.models.Question;
-import kurlyk.transfer.ResultAnswer;
+import kurlyk.transfer.ResultAnswerDto;
 import kurlyk.transfer.answer.MatchingAnswerDto;
 import kurlyk.transfer.tasks.MatchingDto;
 import kurlyk.view.common.stage.StagePool;
@@ -41,7 +41,7 @@ public class MatchingController extends SubmitConfigurationController<MatchingDt
     private StagePool stagePool;
 
     @Autowired
-    private UserInfo userInfo;
+    private UsverInfo usverInfo;
 
 
     public void initialize(){
@@ -73,25 +73,18 @@ public class MatchingController extends SubmitConfigurationController<MatchingDt
         return new MatchingDto(leftField.getItems(), rightField.getItems());
     }
 
-//    private MatchingDto getMixMatching(MatchingDto matchingDto){
-//        MatchingDto newMatchingDto = new MatchingDto(matchingDto);
-//        Collections.shuffle(newMatchingDto.getLeftPart());
-//        Collections.shuffle(newMatchingDto.getRightPart());
-//        return newMatchingDto;
-//    }
-
     @Override
     public String getQuestionText() {
         return textArea.getHtmlText();
     }
 
     @Override
-    public ResultAnswer getAnswerResult(Integer attempt) throws IOException {
+    public ResultAnswerDto getAnswerResult(Integer attempt) throws IOException {
         return communicator.testMatchingAnswer(
                 MatchingAnswerDto
                         .builder()
                         .entity(getResult())
-                        .userId(userInfo.getTokenDto().getUserId())
+                        .usverId(usverInfo.getTokenDto().getUsverId())
                         .questionId(question.getId())
                         .attemptsNumber(attempt)
                         .build()

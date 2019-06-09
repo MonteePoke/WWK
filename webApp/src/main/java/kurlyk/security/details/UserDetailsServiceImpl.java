@@ -1,6 +1,6 @@
 package kurlyk.security.details;
 
-import kurlyk.repositories.UsersRepository;
+import kurlyk.repositories.UsverRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -11,12 +11,12 @@ import org.springframework.stereotype.Service;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
-    private UsersRepository usersRepository;
+    private UsverRepository usverRepository;
 
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
         return new
-                UserDetailsImpl(usersRepository.findOneByLogin(login)
+                UserDetailsImpl(usverRepository.findOneByLogin(login)
                 .orElseThrow(IllegalArgumentException::new));
     }
 }

@@ -13,8 +13,8 @@ public class FormulaAnswerDto extends BaseAnswerDto{
     private FormulaDto entity;
 
     @Builder
-    public FormulaAnswerDto(Long userId, Long questionId, FormulaDto entity, Integer attemptsNumber) {
-        super(userId, questionId, attemptsNumber);
+    public FormulaAnswerDto(Long usverId, Long questionId, FormulaDto entity, Integer attemptsNumber) {
+        super(usverId, questionId, attemptsNumber);
         this.entity = entity;
     }
 }

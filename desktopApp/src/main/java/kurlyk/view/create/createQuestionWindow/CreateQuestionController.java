@@ -5,12 +5,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import javafx.util.Pair;
 import kurlyk.QuestionType;
 import kurlyk.common.Codable;
-import kurlyk.communication.UserInfo;
+import kurlyk.communication.UsverInfo;
 import kurlyk.models.Question;
-import kurlyk.transfer.tasks.*;
 import kurlyk.view.common.controller.Controller;
 import kurlyk.view.common.stage.StagePool;
 import kurlyk.view.common.stage.Stages;
@@ -20,12 +18,12 @@ import kurlyk.view.task.formulaWindow.FormulaSceneCreator;
 import kurlyk.view.task.matchingWindow.MatchingSceneCreator;
 import kurlyk.view.task.numberWindow.NumberSceneCreator;
 import kurlyk.view.task.radioWindow.RadioSceneCreator;
+import kurlyk.view.task.sortingWindow.SortingSceneCreator;
 import kurlyk.view.task.textWindow.TextSceneCreator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
 import java.util.function.Consumer;
 
 @Component
@@ -46,7 +44,7 @@ public class CreateQuestionController extends Controller {
     private StagePool stagePool;
 
     @Autowired
-    private UserInfo userInfo;
+    private UsverInfo usverInfo;
 
 
     public void initialize() {
@@ -68,33 +66,24 @@ public class CreateQuestionController extends Controller {
                     scene = new RadioSceneCreator(question, true, callbackAction).getScene();
                     break;
                 case CHECK:
-                    SelectDto chekDto = new SelectDto(Arrays.asList(
-                            new Pair<>("", false),
-                            new Pair<>("", false)
-                    ));
                     scene = new CheckSceneCreator(question, true, callbackAction).getScene();
                     break;
+                case SORTING:
+                    scene = new SortingSceneCreator(question, true, callbackAction).getScene();
+                    break;
                 case MATCHING:
-                    MatchingDto matchingDto = new MatchingDto(
-                            Arrays.asList("", "", "", ""),
-                            Arrays.asList("", "", "", "")
-                    );
                     scene = new MatchingSceneCreator(question, true, callbackAction).getScene();
                     break;
                 case NUMBER:
-                    NumberDto numberDto = new NumberDto();
                     scene = new NumberSceneCreator(question, true, callbackAction).getScene();
                     break;
                 case TEXT:
-                    TextDto textDto = new TextDto();
                     scene = new TextSceneCreator(question, true, callbackAction).getScene();
                     break;
                 case FORMULA:
-                    FormulaDto formulaDto = new FormulaDto();
                     scene = new FormulaSceneCreator(question, true, callbackAction).getScene();
                     break;
                 case COMPUTER_SYSTEM:
-                    ComputerSystemDto computerSystemDto = new ComputerSystemDto();
                     scene = new ComputerSystemDiagramSceneCreator(question, true, callbackAction).getScene();
                     break;
             }

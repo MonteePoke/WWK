@@ -13,8 +13,8 @@ public class SelectAnswerDto extends BaseAnswerDto{
     private SelectDto entity;
 
     @Builder
-    public SelectAnswerDto(Long userId, Long questionId, SelectDto entity, Integer attemptsNumber) {
-        super(userId, questionId, attemptsNumber);
+    public SelectAnswerDto(Long usverId, Long questionId, SelectDto entity, Integer attemptsNumber) {
+        super(usverId, questionId, attemptsNumber);
         this.entity = entity;
     }
 }

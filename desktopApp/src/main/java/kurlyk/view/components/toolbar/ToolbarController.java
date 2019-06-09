@@ -11,7 +11,7 @@ import javafx.stage.Modality;
 import kurlyk.communication.Communicator;
 import kurlyk.view.common.controller.Controller;
 import kurlyk.view.common.stage.StagePool;
-import kurlyk.view.create.createTaskWindow.questionListWindow.QuestionListStage;
+import kurlyk.view.create.questionListWindow.QuestionListStage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;

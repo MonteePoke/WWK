@@ -12,11 +12,11 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import kurlyk.communication.Communicator;
-import kurlyk.communication.UserInfo;
+import kurlyk.communication.UsverInfo;
 import kurlyk.graph.ComputerSystem.ComputerSystemElementType;
 import kurlyk.graph.GraphSystem;
 import kurlyk.models.Question;
-import kurlyk.transfer.ResultAnswer;
+import kurlyk.transfer.ResultAnswerDto;
 import kurlyk.transfer.answer.ComputerSystemAnswerDto;
 import kurlyk.transfer.tasks.ComputerSystemDto;
 import kurlyk.view.common.stage.StagePool;
@@ -62,7 +62,7 @@ public class ComputerSystemDiagramController extends SubmitConfigurationControll
     private StagePool stagePool;
 
     @Autowired
-    private UserInfo userInfo;
+    private UsverInfo usverInfo;
 
 
     private GraphSystem graphSystem = new GraphSystem(); //Граф
@@ -274,12 +274,12 @@ public class ComputerSystemDiagramController extends SubmitConfigurationControll
     }
 
     @Override
-    public ResultAnswer getAnswerResult(Integer attempt) throws IOException {
+    public ResultAnswerDto getAnswerResult(Integer attempt) throws IOException {
         return communicator.testComputerSystemAnswer(
                 ComputerSystemAnswerDto
                         .builder()
                         .entity(getResult())
-                        .userId(userInfo.getTokenDto().getUserId())
+                        .usverId(usverInfo.getTokenDto().getUsverId())
                         .questionId(question.getId())
                         .attemptsNumber(attempt)
                         .build()

@@ -10,9 +10,9 @@ import javafx.scene.layout.Region;
 import kurlyk.QuestionType;
 import kurlyk.WhenShowAnswer;
 import kurlyk.common.Codable;
-import kurlyk.common.classesMadeByStas.MyFunction;
+import kurlyk.common.MyFunction;
 import kurlyk.communication.Communicator;
-import kurlyk.communication.UserInfo;
+import kurlyk.communication.UsverInfo;
 import kurlyk.models.LabWork;
 import kurlyk.models.Question;
 import kurlyk.models.Task;
@@ -57,7 +57,7 @@ public class CreateLtqController extends Controller {
     private StagePool stagePool;
 
     @Autowired
-    private UserInfo userInfo;
+    private UsverInfo usverInfo;
 
     @Autowired
     private Communicator communicator;

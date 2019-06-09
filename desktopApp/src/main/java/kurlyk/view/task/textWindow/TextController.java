@@ -7,9 +7,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import kurlyk.communication.Communicator;
-import kurlyk.communication.UserInfo;
+import kurlyk.communication.UsverInfo;
 import kurlyk.models.Question;
-import kurlyk.transfer.ResultAnswer;
+import kurlyk.transfer.ResultAnswerDto;
 import kurlyk.transfer.answer.TextAnswerDto;
 import kurlyk.transfer.tasks.TextDto;
 import kurlyk.view.common.stage.StagePool;
@@ -40,7 +40,7 @@ public class TextController extends SubmitConfigurationController<TextDto> {
     private StagePool stagePool;
 
     @Autowired
-    private UserInfo userInfo;
+    private UsverInfo usverInfo;
 
     public void initialize(){
 
@@ -75,12 +75,12 @@ public class TextController extends SubmitConfigurationController<TextDto> {
     }
 
     @Override
-    public ResultAnswer getAnswerResult(Integer attempt) throws IOException {
+    public ResultAnswerDto getAnswerResult(Integer attempt) throws IOException {
         return communicator.testTextAnswer(
                 TextAnswerDto
                         .builder()
                         .entity(getResult())
-                        .userId(userInfo.getTokenDto().getUserId())
+                        .usverId(usverInfo.getTokenDto().getUsverId())
                         .questionId(question.getId())
                         .attemptsNumber(attempt)
                         .build()

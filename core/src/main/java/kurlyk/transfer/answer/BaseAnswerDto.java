@@ -10,7 +10,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @EqualsAndHashCode
 abstract public class BaseAnswerDto {
-    private Long userId;
+    private Long usverId;
     private Long questionId;
     private Integer attemptsNumber;
 }

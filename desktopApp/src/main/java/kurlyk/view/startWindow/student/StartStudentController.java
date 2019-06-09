@@ -4,8 +4,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import kurlyk.communication.Communicator;
-import kurlyk.communication.UserInfo;
-import kurlyk.models.*;
+import kurlyk.communication.UsverInfo;
+import kurlyk.models.LabWork;
+import kurlyk.models.Question;
+import kurlyk.models.Task;
+import kurlyk.models.Usver;
 import kurlyk.view.common.controller.Controller;
 import kurlyk.view.common.stage.StagePool;
 import kurlyk.view.common.stage.Stages;
@@ -27,6 +30,7 @@ import java.util.stream.Collectors;
 public class StartStudentController extends Controller {
 
     @FXML private ComboBox<LabWork> labNumber;
+    @FXML private ComboBox<Integer> variantNumber;
     @FXML private Button further;
 
 
@@ -37,12 +41,19 @@ public class StartStudentController extends Controller {
     private Communicator communicator;
 
     @Autowired
-    private UserInfo userInfo;
+    private UsverInfo usverInfo;
 
 
     public void initialize(){
         try {
             labNumber.getItems().addAll(communicator.getLabWorks());
+            labNumber.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+                variantNumber.getItems().clear();
+                for(int i = 0; i < (newValue.getVariantsNumber() == null ? 1 : newValue.getVariantsNumber()); i++){
+                    variantNumber.getItems().add(i + 1);
+                }
+                variantNumber.getSelectionModel().select(0);
+            });
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -56,30 +67,30 @@ public class StartStudentController extends Controller {
     }
 
     private Map<Boolean, List<UserProgress>> getUserProgresses(LabWork labWork){
-        Map<Boolean, List<UserProgress>> userProgresses = new HashMap<>();
+        Map<Boolean, List<UserProgress>> usverProgresses = new HashMap<>();
         try{
             Map<Boolean, List<Task>> tasks = communicator.getTasks(labWork)
                     .stream()
                     .collect(Collectors.partitioningBy(Task::getIsTest));
-            List<UserProgress> userProgressLabs = createUserProgressFromGarbage(
+            List<UserProgress> usverProgressLabs = createUserProgressFromGarbage(
                     tasks.get(false),
                     labWork,
-                    userInfo.getTokenDto().toUser()
+                    usverInfo.getTokenDto().toUsver()
             );
-            List<UserProgress> userProgressTests = createUserProgressFromGarbage(
+            List<UserProgress> usverProgressTests = createUserProgressFromGarbage(
                     tasks.get(true),
                     labWork,
-                    userInfo.getTokenDto().toUser()
+                    usverInfo.getTokenDto().toUsver()
             );
-            userProgresses.put(false, userProgressLabs);
-            userProgresses.put(true, userProgressTests);
+            usverProgresses.put(false, usverProgressLabs);
+            usverProgresses.put(true, usverProgressTests);
         } catch (IOException e) {
             FxDialogs.showError("", "Ошибка отправки данных");
         }
-        return userProgresses;
+        return usverProgresses;
     }
 
-    private List<UserProgress> createUserProgressFromGarbage(List<Task> tasks, LabWork labWork, User user) throws IOException{
+    private List<UserProgress> createUserProgressFromGarbage(List<Task> tasks, LabWork labWork, Usver usver) throws IOException{
         List<UserProgress> userProgresses = new ArrayList<>();
         for (Task task : tasks) {
             for (Question question : communicator.getQuestions(task)) {
@@ -88,7 +99,7 @@ public class StartStudentController extends Controller {
                                 .question(question)
                                 .task(task)
                                 .labWork(labWork)
-                                .user(user)
+                                .user(usver)
                                 .build()
                 );
             }

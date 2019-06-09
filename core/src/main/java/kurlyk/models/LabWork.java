@@ -32,12 +32,11 @@ public class LabWork {
     private Boolean negativeScore;
     private Long decScore;
     private Double scoreMultiplier;
-    private Integer variantsNumber;
     private Boolean skipQuestion;
     private Duration interval;
 
     // Варианты
-    private Integer variantNumber;
+    private Integer variantsNumber;
     private Integer difficultyLevelsNumber;
 
     @Override

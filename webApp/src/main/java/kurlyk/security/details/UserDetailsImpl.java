@@ -1,37 +1,37 @@
 package kurlyk.security.details;
 
-import kurlyk.models.State;
-import kurlyk.models.User;
+import kurlyk.models.Usver;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.Collections;
+import java.util.stream.Collectors;
 
 public class UserDetailsImpl implements UserDetails {
 
-    private User user;
+    private Usver usver;
 
-    public UserDetailsImpl(User user) {
-        this.user = user;
+    public UserDetailsImpl(Usver usver) {
+        this.usver = usver;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        String userRole = user.getRole().name();
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(userRole);
-        return Collections.singletonList(authority);
+        return usver.getRoles()
+                .stream()
+                .map(role -> new SimpleGrantedAuthority(role.getName()))
+                .collect(Collectors.toList());
     }
 
     @Override
     public String getPassword() {
-        return user.getPassword();
+        return usver.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return user.getLogin();
+        return usver.getLogin();
     }
 
     @Override
@@ -41,7 +41,7 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return !user.getState().equals(State.BANNED);
+        return true;
     }
 
     @Override
@@ -51,10 +51,10 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return user.getState().equals(State.ACTIVE);
+        return true;
     }
 
-    public User getUser() {
-        return user;
+    public Usver getUsver() {
+        return usver;
     }
 }

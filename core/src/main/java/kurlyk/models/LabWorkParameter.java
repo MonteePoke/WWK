@@ -23,6 +23,6 @@ public class LabWorkParameter {
     private LabWork labWork;
     @ManyToOne
     private Parameter parameter;
-    private String valueFrom;
-    private String valueTo;
+    private Double valueFrom;
+    private Double valueTo;
 }

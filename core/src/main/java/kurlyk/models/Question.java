@@ -79,4 +79,15 @@ public class Question {
         this.skipQuestion = skipQuestion;
         this.interval = interval;
     }
+
+    public Question(
+            Long id,
+            Integer number,
+            Long taskId,
+            Integer taskNumber
+    ) {
+        this.id = id;
+        this.number = number;
+        this.task = Task.builder().id(taskId).number(taskNumber).build();
+    }
 }

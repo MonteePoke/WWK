@@ -4,10 +4,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import kurlyk.communication.Communicator;
-import kurlyk.communication.UserInfo;
-import kurlyk.transfer.UserLabWorkDto;
+import kurlyk.communication.UsverInfo;
+import kurlyk.transfer.ResultDto;
+import kurlyk.transfer.UsverLabWorkDto;
 import kurlyk.view.common.controller.Controller;
-import kurlyk.view.common.dto.ResultDto;
 import kurlyk.view.common.stage.StagePool;
 import kurlyk.view.common.stage.Stages;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ public class ShowResultController extends Controller {
     @FXML TextField errorsNumber;
     @FXML Button further;
 
-    private UserLabWorkDto userLabWorkDto;
+    private UsverLabWorkDto usverLabWorkDto;
     private boolean isTest;
 
 
@@ -41,7 +41,7 @@ public class ShowResultController extends Controller {
     private StagePool stagePool;
 
     @Autowired
-    private UserInfo userInfo;
+    private UsverInfo usverInfo;
 
     @Autowired
     private Communicator communicator;
@@ -73,9 +73,9 @@ public class ShowResultController extends Controller {
     }
 
     public void setResultOwner(Long labWorkId, Long userId, boolean isTest, Runnable startLabCallback, Runnable showResultCallback){
-        userLabWorkDto = UserLabWorkDto.builder()
+        usverLabWorkDto = UsverLabWorkDto.builder()
                 .labWorkId(labWorkId)
-                .userId(userId)
+                .usverId(userId)
                 .build();
         this.isTest = isTest;
         this.startLabCallback = startLabCallback;
@@ -85,7 +85,7 @@ public class ShowResultController extends Controller {
     private ResultDto getResult(){
         try {
             return new ResultDto(
-                    communicator.getFullUserProgress(userLabWorkDto)
+                    communicator.getFullUserProgress(usverLabWorkDto)
                             .stream()
                             .filter(userProgress -> userProgress.getTask().getIsTest().equals(isTest))
                             .collect(Collectors.toList())
