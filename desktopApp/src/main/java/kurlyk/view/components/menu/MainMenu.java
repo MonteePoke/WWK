@@ -27,8 +27,7 @@ public class MainMenu extends MenuBar {
         );
 
         dataBaseItem.setOnAction(event -> {
-            QuestionListStage questionListStage = new QuestionListStage((question -> {
-            }), true);
+            QuestionListStage questionListStage = new QuestionListStage((questionForTableDto -> { }));
             questionListStage.initModality(Modality.APPLICATION_MODAL);
             questionListStage.showAndWait();
         });

@@ -2,6 +2,7 @@ package kurlyk.communication;
 
 
 import kurlyk.models.Question;
+import kurlyk.transfer.ExecuteCallbackDto;
 import kurlyk.transfer.QuestionIdsDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -9,7 +10,6 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.function.Consumer;
-import java.util.function.Supplier;
 
 
 @Component
@@ -24,14 +24,14 @@ public class ExecuteMaster {
     private QuestionIdsDto questionIdsDto;
     private Iterator<Long> testQuestionIterator;
     private Iterator<Long> workQuestionIterator;
-    private Consumer<Boolean> testCompleteCallback;
-    private Consumer<Boolean> workCompleteCallback;
+    private Consumer<ExecuteCallbackDto> testCompleteCallback;
+    private Consumer<ExecuteCallbackDto> workCompleteCallback;
 
     public void initWork(
             Long labWorkId,
             Integer variant,
-            Supplier<Boolean> testCompleteCallback,
-            Supplier<Boolean> workCompleteCallback
+            Consumer<ExecuteCallbackDto> testCompleteCallback,
+            Consumer<ExecuteCallbackDto> workCompleteCallback
     ){
         initWork(labWorkId, variant, workCompleteCallback, testCompleteCallback, true);
     }
@@ -39,8 +39,8 @@ public class ExecuteMaster {
     public void initWork(
             Long labWorkId,
             Integer variant,
-            Supplier<Boolean> workCompleteCallback,
-            Supplier<Boolean> testCompleteCallback,
+            Consumer<ExecuteCallbackDto> workCompleteCallback,
+            Consumer<ExecuteCallbackDto> testCompleteCallback,
             boolean needTest
     ){
         this.needTest = needTest;
@@ -61,6 +61,7 @@ public class ExecuteMaster {
         if(testQuestionIterator.hasNext()){
             return communicator.getQuestionForExecute(testQuestionIterator.next());
         } else {
+            //тут спросить базу про результат. Разложить тест и лабу
             testCompleteCallback.accept();
             return null;
         }
@@ -70,22 +71,8 @@ public class ExecuteMaster {
         if(workQuestionIterator.hasNext()){
             return communicator.getQuestionForExecute(workQuestionIterator.next());
         } else {
+            workCompleteCallback.accept();
             return null;
         }
-    }
-
-    public Question getQuestion() {
-        Question question = null;
-        try {
-            if (needTest) {
-                question = incrementTest();
-            }
-            if(question == null){
-                question = incrementWork();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return question;
     }
 }

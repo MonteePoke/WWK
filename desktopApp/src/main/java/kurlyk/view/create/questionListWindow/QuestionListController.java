@@ -1,20 +1,16 @@
 package kurlyk.view.create.questionListWindow;
 
-import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.util.Callback;
 import kurlyk.communication.Communicator;
-import kurlyk.models.Question;
+import kurlyk.transfer.QuestionForTableDto;
 import kurlyk.view.common.controller.Controller;
 import kurlyk.view.common.stage.StagePool;
-import kurlyk.view.common.stage.Stages;
-import kurlyk.view.components.table.StringCell;
-import kurlyk.view.create.createQuestionWindow.CreateQuestionStage;
+import kurlyk.view.components.IntegerField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -26,12 +22,28 @@ import java.util.function.Consumer;
 @Scope("prototype")
 public class QuestionListController extends Controller {
 
-    @FXML private TableView<Question> questionTable;
-    @FXML private TableColumn<Question, Question> questionNumber;
-    @FXML private TableColumn<Question, String> questionName;
+    @FXML private TableView<QuestionForTableDto> questionTable;
+    @FXML private TableColumn<QuestionForTableDto, Integer> questionNumber;
+    @FXML private TableColumn<QuestionForTableDto, String> questionName;
+    @FXML private TableColumn<QuestionForTableDto, Integer> taskNumber;
+    @FXML private TableColumn<QuestionForTableDto, String> taskName;
+    @FXML private TableColumn<QuestionForTableDto, Integer> labWorkNumber;
+    @FXML private TableColumn<QuestionForTableDto, String> labWorkName;
 
+    @FXML private IntegerField questionNumberField;
+    @FXML private TextField questionNameField;
+    @FXML private IntegerField taskNumberField;
+    @FXML private TextField taskNameField;
+    @FXML private IntegerField labWorkNumberField;
+    @FXML private TextField labWorkNameField;
+
+    @FXML private Button back;
+    @FXML private Button search;
     @FXML private Button ok;
-    private Question selectedQuestion;
+
+    private QuestionForTableDto selectedQuestionForTableDto;
+    private Consumer<QuestionForTableDto> applySelection;
+    private Runnable closeAction;
 
 
     @Autowired
@@ -41,11 +53,13 @@ public class QuestionListController extends Controller {
     private Communicator communicator;
 
 
-
+    // TODO Паджинация
     public void initialize() {
-        questionTable.getSelectionModel().selectedItemProperty().addListener((observableValue, oldVal, newVal) ->
-                selectedQuestion = newVal
-        );
+        ok.setDisable(true);
+        questionTable.getSelectionModel().selectedItemProperty().addListener((observableValue, oldVal, newVal) -> {
+            selectedQuestionForTableDto = newVal;
+            ok.setDisable(false);
+        });
 
         try {
             questionTable.getItems().addAll(communicator.getQuestionHeaders());
@@ -53,49 +67,31 @@ public class QuestionListController extends Controller {
             e.printStackTrace();
         }
 
-        questionName.setCellValueFactory(new PropertyValueFactory<>("name"));
-        questionName.setCellFactory(p -> new <Question>StringCell(this::commitChanges));
+        questionNumber.setCellValueFactory(new PropertyValueFactory<>("questionNumber"));
+        questionName.setCellValueFactory(new PropertyValueFactory<>("questionName"));
+        taskNumber.setCellValueFactory(new PropertyValueFactory<>("taskNumber"));
+        taskName.setCellValueFactory(new PropertyValueFactory<>("taskName"));
+        labWorkNumber.setCellValueFactory(new PropertyValueFactory<>("labWorkNumber"));
+        labWorkName.setCellValueFactory(new PropertyValueFactory<>("labWorkName"));
 
-        questionNumber.setCellValueFactory(p -> new ReadOnlyObjectWrapper<>(p.getValue()));
-        questionNumber.setCellFactory(new Callback<TableColumn<Question, Question>, TableCell<Question, Question>>() {
-            @Override public TableCell<Question, Question> call(TableColumn<Question, Question> param) {
-                return new TableCell<Question, Question>() {
-                    @Override protected void updateItem(Question item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (this.getTableRow() != null && item != null) {
-                            setText(this.getTableRow().getIndex()+"");
-                        } else {
-                            setText("");
-                        }
-                    }
-                };
-            }
+        search.setOnAction(event -> {
+
+        });
+
+        back.setOnAction(event -> {
+            closeAction.run();
+        });
+
+        ok.setOnAction(event -> {
+            applySelection.accept(selectedQuestionForTableDto);
         });
     }
 
-    public void setOk(Consumer<Question> applySelection) {
-        setOk(applySelection, false);
+    public void setSelectAction(Consumer<QuestionForTableDto> applySelection) {
+        this.applySelection = applySelection;
     }
 
-    public void setOk(Consumer<Question> applySelection, boolean isBaseStage){
-        if (!isBaseStage) {
-            if (selectedQuestion != null) {
-                ok.setOnAction(event -> {
-                    applySelection.accept(selectedQuestion);
-                    stagePool.deleteStage(Stages.QUESTION_LIST);
-                });
-            }
-        } else {
-            ok.setText("Создать");
-            ok.setOnAction(event -> {
-                stagePool.pushStageAndShow(
-                        Stages.CREATE_QUESTION,
-                        new CreateQuestionStage((question -> questionTable.getItems().add(question)))
-                );
-            });
-        }
-    }
-
-    private void commitChanges(){
+    public void setCloseAction(Runnable closeAction) {
+        this.closeAction = closeAction;
     }
 }

@@ -1,22 +1,92 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.*?>
+<?import kurlyk.view.components.IntegerField?>
 <VBox prefHeight="504.0" prefWidth="687.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kurlyk.view.create.questionListWindow.QuestionListController">
     <VBox alignment="TOP_CENTER">
-        <AnchorPane layoutX="10.0" layoutY="212.0" prefHeight="48.0" prefWidth="800.0">
+        <AnchorPane layoutX="10.0" layoutY="212.0" prefHeight="125.0" prefWidth="687.0">
             <children>
-                <Button fx:id="ok" alignment="CENTER" layoutX="14.0" layoutY="12.0" text="OK" />
-            <Button fx:id="ok" alignment="CENTER" layoutX="85.0" layoutY="13.0" text="Редактировать" />
-            <Button fx:id="ok" alignment="CENTER" layoutX="215.0" layoutY="12.0" text="Удалить" />
+                <Button fx:id="back" alignment="CENTER" layoutX="14.0" layoutY="16.0" text="Назад" />
+                <Button fx:id="search" alignment="CENTER" layoutX="13.0" layoutY="53.0" text="Поиск" />
+                <IntegerField fx:id="labWorkNumberField" layoutX="81.0" layoutY="29.0" prefHeight="25.0" prefWidth="160.0">
+                    <font>
+                        <Font name="SansSerif Regular" size="14.0" />
+                    </font>
+                </IntegerField>
+                <Label alignment="CENTER" layoutX="81.0" layoutY="9.0" prefHeight="16.0" prefWidth="160.0" text="Номер лабораторной">
+                   <font>
+                      <Font name="SansSerif Regular" size="14.0" />
+                   </font>
+                </Label>
+                <TextField fx:id="labWorkNameField" layoutX="82.0" layoutY="90.0" prefHeight="25.0" prefWidth="159.0">
+                    <font>
+                        <Font name="SansSerif Regular" size="14.0" />
+                    </font>
+                </TextField>
+                <Label alignment="CENTER" layoutX="81.0" layoutY="65.0" text="Название лабораторной">
+                   <font>
+                      <Font name="SansSerif Regular" size="14.0" />
+                   </font>
+                </Label>
+                <Label alignment="CENTER" layoutX="292.0" layoutY="10.0" prefHeight="16.0" prefWidth="160.0" text="Номер задания">
+                   <font>
+                      <Font name="SansSerif Regular" size="14.0" />
+                   </font>
+                </Label>
+                <Label alignment="CENTER" layoutX="496.0" layoutY="10.0" prefHeight="16.0" prefWidth="160.0" text="Номер вопроса">
+                   <font>
+                      <Font name="SansSerif Regular" size="14.0" />
+                   </font>
+                </Label>
+                <IntegerField fx:id="taskNumberField" layoutX="292.0" layoutY="29.0" prefHeight="25.0" prefWidth="160.0">
+                    <font>
+                        <Font name="SansSerif Regular" size="14.0" />
+                    </font>
+                </IntegerField>
+                <Label alignment="CENTER" layoutX="312.0" layoutY="65.0" text="Название задания">
+                   <font>
+                      <Font name="SansSerif Regular" size="14.0" />
+                   </font>
+                </Label>
+                <TextField fx:id="taskNameField" layoutX="293.0" layoutY="90.0" prefHeight="25.0" prefWidth="159.0">
+                    <font>
+                        <Font name="SansSerif Regular" size="14.0" />
+                    </font>
+                </TextField>
+                <IntegerField fx:id="questionNumberField" layoutX="496.0" layoutY="29.0" prefHeight="25.0" prefWidth="160.0">
+                    <font>
+                        <Font name="SansSerif Regular" size="14.0" />
+                    </font>
+                </IntegerField>
+                <Label alignment="CENTER" layoutX="516.0" layoutY="65.0" text="Название вопроса">
+                   <font>
+                      <Font name="SansSerif Regular" size="14.0" />
+                   </font>
+                </Label>
+                <TextField fx:id="questionNameField" layoutX="497.0" layoutY="89.0" prefHeight="25.0" prefWidth="159.0">
+                    <font>
+                        <Font name="SansSerif Regular" size="14.0" />
+                    </font>
+                </TextField>
+            <Button fx:id="ok" alignment="CENTER" layoutX="13.0" layoutY="90.0" text="Выбор" />
             </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
         </AnchorPane>
     </VBox>
    <TableView fx:id="questionTable" prefHeight="456.0" prefWidth="687.0">
      <columns>
-       <TableColumn fx:id="questionNumber" prefWidth="75.0" text="№" />
-       <TableColumn fx:id="questionName" prefWidth="609.9999847412109" text="Вопрос" />
+        <TableColumn fx:id="questionNumber" prefWidth="75.0" text="№ вопроса" />
+        <TableColumn fx:id="questionName" prefWidth="609.9999847412109" text="Вопрос" />
+        <TableColumn fx:id="taskNumber" prefWidth="75.0" text="№ задания" />
+        <TableColumn fx:id="taskName" prefWidth="609.9999847412109" text="Задание" />
+        <TableColumn fx:id="labWorkNumber" prefWidth="75.0" text="№ лабораторной" />
+        <TableColumn fx:id="labWorkName" prefWidth="609.9999847412109" text="Лабораторная" />
      </columns>
    </TableView>
 </VBox>
