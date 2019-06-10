@@ -23,9 +23,9 @@ public class UsverProgressLabWork {
     private Usver usver;
     @ManyToOne
     private LabWork labWork;
-    private Boolean isDeleted;
     private Long score;
     private LocalDateTime startTime;
+    private LocalDateTime endTime;
 
     @OneToMany
     private Set<UsverProgressTask> usverProgressTasks;

@@ -1,7 +1,6 @@
 package kurlyk.models;
 
 import kurlyk.QuestionType;
-import kurlyk.WhenShowAnswer;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -32,11 +31,8 @@ public class Question {
     private Long score;
 
     @Enumerated(value = EnumType.STRING)
-    private WhenShowAnswer whenShowAnswer;
     private Boolean negativeScore;
     private Long decScore;
-    private Double scoreMultiplier;
-    private Integer variantsNumber;
     private Boolean skipQuestion;
     private Duration interval;
 
@@ -56,11 +52,8 @@ public class Question {
             String name,
             Integer attemptsNumber,
             Long score,
-            WhenShowAnswer whenShowAnswer,
             Boolean negativeScore,
             Long decScore,
-            Double scoreMultiplier,
-            Integer variantsNumber,
             Boolean skipQuestion,
             Duration interval
             ) {
@@ -71,11 +64,8 @@ public class Question {
         this.name = name;
         this.attemptsNumber = attemptsNumber;
         this.score = score;
-        this.whenShowAnswer = whenShowAnswer;
         this.negativeScore = negativeScore;
         this.decScore = decScore;
-        this.scoreMultiplier = scoreMultiplier;
-        this.variantsNumber = variantsNumber;
         this.skipQuestion = skipQuestion;
         this.interval = interval;
     }

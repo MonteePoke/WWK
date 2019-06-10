@@ -8,6 +8,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import kurlyk.communication.Communicator;
+import kurlyk.communication.ExecuteMaster;
 import kurlyk.communication.UsverInfo;
 import kurlyk.transfer.tasks.*;
 import kurlyk.view.common.controller.Controller;
@@ -47,11 +48,14 @@ public class ExecuteLabController extends Controller {
     @Autowired
     private Communicator communicator;
 
+    @Autowired
+    private ExecuteMaster executeMaster;
+
 
     public void initialize() {
     }
 
-    public void setTasks(List<UserProgress> userProgresses, boolean isTest) {
+    public void setTasks(boolean isTest) {
         tabPane = new TabPane();
         for (UserProgress userProgress : userProgresses) {
             UsverProgressTab tab = new UsverProgressTab("Вопрос №" + (tabPane.getTabs().size() + 1), userProgress);
@@ -59,41 +63,34 @@ public class ExecuteLabController extends Controller {
             switch (userProgress.getQuestion().getQuestionType()) {
                 case RADIO:
                     SelectDto radioDto = new Gson().fromJson(userProgress.getQuestion().getAnswer(), SelectDto.class);
-                    scene = new RadioSceneCreator(userProgress, radioDto, false, (question -> {
-                    })).getScene();
+                    scene = new RadioSceneCreator(userProgress, radioDto, false, (question -> { })).getScene();
                     break;
                 case CHECK:
                     SelectDto checkDto = new Gson().fromJson(userProgress.getQuestion().getAnswer(), SelectDto.class);
-                    scene = new CheckSceneCreator(userProgress, checkDto, false, (question -> {
-                    })).getScene();
+                    scene = new CheckSceneCreator(userProgress, checkDto, false, (question -> { })).getScene();
                     break;
                 case SORTING:
                     scene = new SortingSceneCreator(question, true, callbackAction).getScene();
                     break;
                 case MATCHING:
                     MatchingDto matchingDto = new Gson().fromJson(userProgress.getQuestion().getAnswer(), MatchingDto.class);
-                    scene = new MatchingSceneCreator(userProgress, matchingDto, false, (question -> {
-                    })).getScene();
+                    scene = new MatchingSceneCreator(userProgress, matchingDto, false, (question -> { })).getScene();
                     break;
                 case NUMBER:
                     NumberDto numberDto = new Gson().fromJson(userProgress.getQuestion().getAnswer(), NumberDto.class);
-                    scene = new NumberSceneCreator(userProgress, numberDto, false, (question -> {
-                    })).getScene();
+                    scene = new NumberSceneCreator(userProgress, numberDto, false, (question -> { })).getScene();
                     break;
                 case TEXT:
                     TextDto textDto = new Gson().fromJson(userProgress.getQuestion().getAnswer(), TextDto.class);
-                    scene = new TextSceneCreator(userProgress, textDto, false, (question -> {
-                    })).getScene();
+                    scene = new TextSceneCreator(userProgress, textDto, false, (question -> { })).getScene();
                     break;
                 case FORMULA:
                     FormulaDto formulaDto = new Gson().fromJson(userProgress.getQuestion().getAnswer(), FormulaDto.class);
-                    scene = new FormulaSceneCreator(userProgress, formulaDto, false, (question -> {
-                    })).getScene();
+                    scene = new FormulaSceneCreator(userProgress, formulaDto, false, (question -> { })).getScene();
                     break;
                 case COMPUTER_SYSTEM:
                     ComputerSystemDto computerSystemDto = new Gson().fromJson(userProgress.getQuestion().getAnswer(), ComputerSystemDto.class);
-                    scene = new ComputerSystemDiagramSceneCreator(userProgress, computerSystemDto, false, (question -> {
-                    })).getScene();
+                    scene = new ComputerSystemDiagramSceneCreator(userProgress, computerSystemDto, false, (question -> { })).getScene();
                     break;
             }
             tab.setContent(scene.getRoot());
@@ -119,9 +116,7 @@ public class ExecuteLabController extends Controller {
     }
 
     private Runnable createStartLabCallback() {
-        return () -> {
-
-        };
+        return () -> { };
     }
 
     private Runnable createShowResultCallback() {
@@ -131,7 +126,8 @@ public class ExecuteLabController extends Controller {
         };
     }
 
-    private void createMenu() {
+    public void setStage(BaseStage stage) {
+        this.stage = stage;
         stage.getMainMenu().getShowAnswerItem().setOnAction(event -> {
             try {
                 ShowAnswerStage showAnswerStage = new ShowAnswerStage(
@@ -143,10 +139,5 @@ public class ExecuteLabController extends Controller {
             } catch (Exception ignored) {
             }
         });
-    }
-
-    public void setStage(BaseStage stage) {
-        this.stage = stage;
-        createMenu();
     }
 }

@@ -7,6 +7,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import kurlyk.QuestionType;
 import kurlyk.common.Codable;
+import kurlyk.communication.Communicator;
 import kurlyk.communication.UsverInfo;
 import kurlyk.models.Question;
 import kurlyk.view.common.controller.Controller;
@@ -24,6 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.util.function.Consumer;
 
 @Component
@@ -46,6 +48,9 @@ public class CreateQuestionController extends Controller {
     @Autowired
     private UsverInfo usverInfo;
 
+    @Autowired
+    private Communicator communicator;
+
 
     public void initialize() {
         labType.getItems().addAll(
@@ -59,35 +64,39 @@ public class CreateQuestionController extends Controller {
         );
 
         further.setOnAction(event -> {
-            Question question = createQuestion();
-            Scene scene = null;
-            switch (question.getQuestionType()) {
-                case RADIO:
-                    scene = new RadioSceneCreator(question, true, callbackAction).getScene();
-                    break;
-                case CHECK:
-                    scene = new CheckSceneCreator(question, true, callbackAction).getScene();
-                    break;
-                case SORTING:
-                    scene = new SortingSceneCreator(question, true, callbackAction).getScene();
-                    break;
-                case MATCHING:
-                    scene = new MatchingSceneCreator(question, true, callbackAction).getScene();
-                    break;
-                case NUMBER:
-                    scene = new NumberSceneCreator(question, true, callbackAction).getScene();
-                    break;
-                case TEXT:
-                    scene = new TextSceneCreator(question, true, callbackAction).getScene();
-                    break;
-                case FORMULA:
-                    scene = new FormulaSceneCreator(question, true, callbackAction).getScene();
-                    break;
-                case COMPUTER_SYSTEM:
-                    scene = new ComputerSystemDiagramSceneCreator(question, true, callbackAction).getScene();
-                    break;
+            try {
+                Question question = questionId == null ? createQuestion() : communicator.getQuestion(questionId);
+                Scene scene = null;
+                switch (question.getQuestionType()) {
+                    case RADIO:
+                        scene = new RadioSceneCreator(question, true, callbackAction).getScene();
+                        break;
+                    case CHECK:
+                        scene = new CheckSceneCreator(question, true, callbackAction).getScene();
+                        break;
+                    case SORTING:
+                        scene = new SortingSceneCreator(question, true, callbackAction).getScene();
+                        break;
+                    case MATCHING:
+                        scene = new MatchingSceneCreator(question, true, callbackAction).getScene();
+                        break;
+                    case NUMBER:
+                        scene = new NumberSceneCreator(question, true, callbackAction).getScene();
+                        break;
+                    case TEXT:
+                        scene = new TextSceneCreator(question, true, callbackAction).getScene();
+                        break;
+                    case FORMULA:
+                        scene = new FormulaSceneCreator(question, true, callbackAction).getScene();
+                        break;
+                    case COMPUTER_SYSTEM:
+                        scene = new ComputerSystemDiagramSceneCreator(question, true, callbackAction).getScene();
+                        break;
+                }
+                stagePool.getStage(Stages.CREATE_QUESTION).setScene(scene);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            stagePool.getStage(Stages.CREATE_QUESTION).setScene(scene);
         });
     }
 
@@ -100,6 +109,10 @@ public class CreateQuestionController extends Controller {
                 .score(1L)
                 .skipQuestion(false)
                 .build();
+    }
+
+    public void setQuestionId(Long questionId) {
+        this.questionId = questionId;
     }
 
     public void setQuestionConsumer(Consumer<Question> callbackAction) {

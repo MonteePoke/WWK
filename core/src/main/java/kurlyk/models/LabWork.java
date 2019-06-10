@@ -1,13 +1,15 @@
 package kurlyk.models;
 
 
-import kurlyk.WhenShowAnswer;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.time.Duration;
 
 
@@ -27,12 +29,9 @@ public class LabWork {
     private Boolean interrupt;
     private Long defaultQuestionScore;
 
-    @Enumerated(value = EnumType.STRING)
-    private WhenShowAnswer whenShowAnswer;
     private Boolean negativeScore;
     private Long decScore;
     private Double scoreMultiplier;
-    private Boolean skipQuestion;
     private Duration interval;
 
     // Варианты

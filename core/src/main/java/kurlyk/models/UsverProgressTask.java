@@ -20,8 +20,6 @@ public class UsverProgressTask {
 
     @ManyToOne
     private Task task;
-    private Boolean isDeleted;
-    private Long score;
 
     @OneToMany
     private Set<UsverProgressQuestion> usverProgressQuestions;

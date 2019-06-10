@@ -280,5 +280,31 @@ public class Communicator extends AbstractCommunicator{
         Type type = new TypeToken<Question>(){}.getType();
         return getData(type, "/question-for-execute/" + id.toString());
     }
+
+    /*
+        statistic
+    */
+    public List<UsverProgressLabWork> getStatiscticByUserId(Long usverId) throws ConnectException, IOException {
+        Type type = new TypeToken<ArrayList<UsverProgressLabWork>>(){}.getType();
+        return getData(type, usverIdToParameters(usverId), "/statistic-usver/");
+    }
+
+    public UsverProgressLabWork getStatiscticByUsverIdByLabWorkId(Long usverId, Long labWorkId) throws ConnectException, IOException {
+        Type type = new TypeToken<UsverProgressLabWork>(){}.getType();
+        return getData(type, usverIdAndlabWorkIdToParameters(usverId, labWorkId), "/statistic-usver-lab-work/");
+    }
+
+    private Map<String, String> usverIdToParameters(Long usverId){
+        Map<String, String> parameters = new HashMap<>();
+        parameters.put("usverId", usverId != null ? usverId.toString() : null);
+        return parameters;
+    }
+
+    private Map<String, String> usverIdAndlabWorkIdToParameters(Long usverId, Long labWorkId){
+        Map<String, String> parameters = new HashMap<>();
+        parameters.put("usverId", usverId != null ? usverId.toString() : null);
+        parameters.put("labWorkId", labWorkId != null ? labWorkId.toString() : null);
+        return parameters;
+    }
 }
 

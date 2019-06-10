@@ -52,15 +52,30 @@ public class StartStudentController extends Controller {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        further.setOnAction(event -> {
-            executeMaster.initWork(
-                    labNumber.getValue(),
-                    variantNumber.getValue(),
 
+        stagePool.pushStage(Stages.PERFORM_LAB, new ExecuteLabStage(false));
+        stagePool.pushStage(Stages.PERFORM_TEST, new ExecuteLabStage(true));
+
+        further.setOnAction(event -> {
+            stagePool.deleteStage(Stages.START);
+            stagePool.showStage(Stages.PERFORM_TEST);
+            executeMaster.initWork(
+                    labNumber.getValue().getId(),
+                    variantNumber.getValue(),
+                    (executeCallbackDto -> {
+                        //Показать сцену с результатами, у которой есть кнопка далее, куда засетить лямбду с дальнейшими действиями
+
+//                        if(executeCallbackDto.getIsExecuted()){
+////                            stagePool.deleteStage(Stages.PERFORM_TEST);
+////                            stagePool.showStage(Stages.PERFORM_LAB);
+//                        }else {
+//
+//                        }
+                    }),
+                    (executeCallbackDto -> {
+
+                    })
             );
-            stagePool.pushStage(Stages.PERFORM_LAB, new ExecuteLabStage(userProgresses.get(false), false));
-            stagePool.pushStageAndShow(Stages.PERFORM_TEST, new ExecuteLabStage(userProgresses.get(true), true));
-            stagePool.closeStage(Stages.START);
         });
     }
 }

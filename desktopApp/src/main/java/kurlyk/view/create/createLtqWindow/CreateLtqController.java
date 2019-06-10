@@ -8,7 +8,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import kurlyk.QuestionType;
-import kurlyk.WhenShowAnswer;
 import kurlyk.common.Codable;
 import kurlyk.common.MyFunction;
 import kurlyk.communication.Communicator;
@@ -101,7 +100,6 @@ public class CreateLtqController extends Controller {
         MyFunction<Integer> attemptsNumberProperty = createIntegerField("Количество попыток на ответа (по умолч.)", labWork.getAttemptsNumber());
         MyFunction<Boolean> interruptProperty = createBooleanField("Прерывать лабораторную", labWork.getInterrupt());
         MyFunction<Long> defaultQuestionScoreProperty = createLongField("Максимальный балл за вопрос (по умолч.)", labWork.getDefaultQuestionScore());
-        MyFunction<String> whenShowAnswerProperty = createWhenShowAnswerField("Когда отображать ответ", labWork.getWhenShowAnswer());
         MyFunction<Boolean> negativeScoreProperty = createBooleanField("Отрицательный балл за задание", labWork.getNegativeScore());
         MyFunction<Long> decScoreProperty = createLongField("Вычитаемое значение при ошибке", labWork.getDecScore());
         submit.setOnAction(event -> {
@@ -110,7 +108,6 @@ public class CreateLtqController extends Controller {
             labWork.setAttemptsNumber(attemptsNumberProperty.get());
             labWork.setInterrupt(interruptProperty.get());
             labWork.setDefaultQuestionScore(defaultQuestionScoreProperty.get());
-            labWork.setWhenShowAnswer(Codable.find(WhenShowAnswer.class, whenShowAnswerProperty.get()));
             labWork.setNegativeScore(negativeScoreProperty.get());
             labWork.setDecScore(decScoreProperty.get());
             saveAction.accept(labWork);
@@ -153,10 +150,6 @@ public class CreateLtqController extends Controller {
         });
     }
 
-    private MyFunction<String> createWhenShowAnswerField(String name, WhenShowAnswer value) {
-        return createWhenShowAnswerField(name, value, true);
-    }
-
     private MyFunction<String> createQuestionTypeField(String name, QuestionType value) {
         return createQuestionTypeField(name, value, true);
     }
@@ -187,21 +180,6 @@ public class CreateLtqController extends Controller {
         setRow(name, field);
         return new MyFunction<>(field::setText, field::getText);
     }
-
-    private MyFunction<String> createWhenShowAnswerField(String name, WhenShowAnswer value, boolean editable) {
-        ComboBox<String> field = new ComboBox<>();
-        field.getItems().addAll(
-                WhenShowAnswer.NEVER.getCode(),
-                WhenShowAnswer.AFTER_FIRST_MISTAKE.getCode(),
-                WhenShowAnswer.AFTER_THIRD_MISTAKE.getCode(),
-                WhenShowAnswer.ALWAYS.getCode()
-        );
-        field.setEditable(editable);
-        field.setValue(value != null ? value.getCode() : "");
-        setRow(name, field);
-        return new MyFunction<>(field::setValue, field::getValue);
-    }
-
 
     private MyFunction<String> createQuestionTypeField(String name, QuestionType value, boolean editable) {
         ComboBox<String> field = new ComboBox<>();

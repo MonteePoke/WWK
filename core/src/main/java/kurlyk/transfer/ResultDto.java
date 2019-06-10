@@ -15,4 +15,8 @@ public class ResultDto {
     private Long maxScore;
     private Integer questionsNumber;
     private Integer attemptsNumber;
+
+    public boolean isExexute(){
+        return score * 2 >= maxScore;
+    }
 }

@@ -19,6 +19,6 @@ public class UsverProgressQuestion {
 
     @ManyToOne
     private Question question;
-    private Boolean isDeleted;
     private Long score;
+    private Integer attemptsNumber;
 }

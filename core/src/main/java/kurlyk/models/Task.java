@@ -1,7 +1,6 @@
 package kurlyk.models;
 
 
-import kurlyk.WhenShowAnswer;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -32,13 +31,13 @@ public class Task {
     private Integer attemptsNumber;
     private Long defaultQuestionScore;
 
-    @Enumerated(value = EnumType.STRING)
-    private WhenShowAnswer whenShowAnswer;
     private Boolean negativeScore;
     private Long decScore;
     private Double scoreMultiplier;
     private Integer variantsNumber;
-    private Boolean skipQuestion;
     private Duration interval;
-    private Boolean isTest;
+
+    public boolean isTest(){
+        return number.equals(0);
+    }
 }
