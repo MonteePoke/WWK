@@ -9,7 +9,7 @@ import java.util.function.Consumer;
 public class ComputerSystemDiagramSceneCreator extends BaseStage<ComputerSystemDiagramController> {
 
 
-    public ComputerSystemDiagramSceneCreator(Question question, boolean editable, Consumer<Question> callbackAction) {
+    public ComputerSystemDiagramSceneCreator(Question question, boolean editable, Consumer<Long> callbackAction) {
         super(BaseStageDto.allOff());
         controller.setQuestion(question, editable, callbackAction);
     }

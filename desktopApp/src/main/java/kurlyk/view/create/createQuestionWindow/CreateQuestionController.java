@@ -38,7 +38,7 @@ public class CreateQuestionController extends Controller {
     private ComboBox<String> labType;
     @FXML
     private Button further;
-    private Consumer<Question> callbackAction;
+    private Consumer<Long> callbackAction;
     //null, если создаётся вопрос, не null, если редактируется вопрос
     private Long questionId;
 
@@ -115,7 +115,7 @@ public class CreateQuestionController extends Controller {
         this.questionId = questionId;
     }
 
-    public void setQuestionConsumer(Consumer<Question> callbackAction) {
+    public void setQuestionConsumer(Consumer<Long> callbackAction) {
         this.callbackAction = callbackAction;
     }
 }

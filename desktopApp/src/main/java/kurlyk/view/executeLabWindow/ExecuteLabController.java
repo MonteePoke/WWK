@@ -1,6 +1,5 @@
 package kurlyk.view.executeLabWindow;
 
-import com.google.gson.Gson;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Tab;
@@ -10,11 +9,11 @@ import javafx.stage.Modality;
 import kurlyk.communication.Communicator;
 import kurlyk.communication.ExecuteMaster;
 import kurlyk.communication.UsverInfo;
-import kurlyk.transfer.tasks.*;
+import kurlyk.models.Question;
 import kurlyk.view.common.controller.Controller;
 import kurlyk.view.common.stage.StagePool;
 import kurlyk.view.common.stage.base.BaseStage;
-import kurlyk.view.components.UsverProgressTab;
+import kurlyk.view.components.QuestionTab;
 import kurlyk.view.showAnswerWindow.ShowAnswerStage;
 import kurlyk.view.showResultWindow.ShowResultSceneCreator;
 import kurlyk.view.task.checkWindow.CheckSceneCreator;
@@ -57,73 +56,51 @@ public class ExecuteLabController extends Controller {
 
     public void setTasks(boolean isTest) {
         tabPane = new TabPane();
-        for (UserProgress userProgress : userProgresses) {
-            UsverProgressTab tab = new UsverProgressTab("Вопрос №" + (tabPane.getTabs().size() + 1), userProgress);
-            Scene scene = null;
-            switch (userProgress.getQuestion().getQuestionType()) {
-                case RADIO:
-                    SelectDto radioDto = new Gson().fromJson(userProgress.getQuestion().getAnswer(), SelectDto.class);
-                    scene = new RadioSceneCreator(userProgress, radioDto, false, (question -> { })).getScene();
-                    break;
-                case CHECK:
-                    SelectDto checkDto = new Gson().fromJson(userProgress.getQuestion().getAnswer(), SelectDto.class);
-                    scene = new CheckSceneCreator(userProgress, checkDto, false, (question -> { })).getScene();
-                    break;
-                case SORTING:
-                    scene = new SortingSceneCreator(question, true, callbackAction).getScene();
-                    break;
-                case MATCHING:
-                    MatchingDto matchingDto = new Gson().fromJson(userProgress.getQuestion().getAnswer(), MatchingDto.class);
-                    scene = new MatchingSceneCreator(userProgress, matchingDto, false, (question -> { })).getScene();
-                    break;
-                case NUMBER:
-                    NumberDto numberDto = new Gson().fromJson(userProgress.getQuestion().getAnswer(), NumberDto.class);
-                    scene = new NumberSceneCreator(userProgress, numberDto, false, (question -> { })).getScene();
-                    break;
-                case TEXT:
-                    TextDto textDto = new Gson().fromJson(userProgress.getQuestion().getAnswer(), TextDto.class);
-                    scene = new TextSceneCreator(userProgress, textDto, false, (question -> { })).getScene();
-                    break;
-                case FORMULA:
-                    FormulaDto formulaDto = new Gson().fromJson(userProgress.getQuestion().getAnswer(), FormulaDto.class);
-                    scene = new FormulaSceneCreator(userProgress, formulaDto, false, (question -> { })).getScene();
-                    break;
-                case COMPUTER_SYSTEM:
-                    ComputerSystemDto computerSystemDto = new Gson().fromJson(userProgress.getQuestion().getAnswer(), ComputerSystemDto.class);
-                    scene = new ComputerSystemDiagramSceneCreator(userProgress, computerSystemDto, false, (question -> { })).getScene();
-                    break;
-            }
-            tab.setContent(scene.getRoot());
-            tabPane.getTabs().add(tab);
-        }
-        if (userProgresses.size() > 0) {
-            tabPane.getTabs().add(createResultTab(
-                    userProgresses.get(0).getLabWork().getId(),
-                    userProgresses.get(0).getUser().getId(),
-                    isTest,
-                    createStartLabCallback(),
-                    createShowResultCallback()
-            ));
-        }
-        tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
         root.getChildren().add(tabPane);
     }
 
-    private Tab createResultTab(Long labWorkId, Long usverId, boolean isTest, Runnable startLabCallback, Runnable showResultCallback) {
-        Tab tab = new Tab("Результаты");
-        tab.setContent(new ShowResultSceneCreator(labWorkId, usverId, isTest, startLabCallback, showResultCallback).getScene().getRoot());
-        return tab;
-    }
-
-    private Runnable createStartLabCallback() {
-        return () -> { };
-    }
-
-    private Runnable createShowResultCallback() {
-        return () -> {
+    private void initTab(){
+        //Если при шёл null, что конец тому, что выполняется (лабе или тесту)
+        Question question = executeMaster.getQuestion();
+        if (question == null) {
             tabPane.getTabs().forEach(tab -> tab.setDisable(true));
-            tabPane.getTabs().get(tabPane.getTabs().size() - 1).setDisable(false);
-        };
+            Tab resyltTab = new Tab("Результаты");
+            resyltTab.setContent(
+                    new ShowResultSceneCreator(labWorkId, usverId, isTest, startLabCallback, showResultCallback).getScene().getRoot()
+            );
+            tabPane.getTabs().add(resyltTab);
+        }
+        QuestionTab tab = new QuestionTab("Вопрос №" + (question.getNumber() != null ? question.getNumber() == null : "КИРПИЧ"), question);
+        Scene scene = null;
+        switch (question.getQuestionType()) {
+            case RADIO:
+                scene = new RadioSceneCreator(question, false, questionId -> { }).getScene();
+                break;
+            case CHECK:
+                scene = new CheckSceneCreator(question, false, questionId -> { }).getScene();
+                break;
+            case SORTING:
+                scene = new SortingSceneCreator(question, false, questionId -> { }).getScene();
+                break;
+            case MATCHING:
+                scene = new MatchingSceneCreator(question, false, questionId -> { }).getScene();
+                break;
+            case NUMBER:
+                scene = new NumberSceneCreator(question, false, questionId -> { }).getScene();
+                break;
+            case TEXT:
+                scene = new TextSceneCreator(question, false, questionId -> { }).getScene();
+                break;
+            case FORMULA:
+                scene = new FormulaSceneCreator(question, false, questionId -> { }).getScene();
+                break;
+            case COMPUTER_SYSTEM:
+                scene = new ComputerSystemDiagramSceneCreator(question, false, questionId -> { }).getScene();
+                break;
+        }
+        tab.setContent(scene.getRoot());
+        tabPane.getTabs().add(tab);
+        tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
     }
 
     public void setStage(BaseStage stage) {
@@ -131,7 +108,7 @@ public class ExecuteLabController extends Controller {
         stage.getMainMenu().getShowAnswerItem().setOnAction(event -> {
             try {
                 ShowAnswerStage showAnswerStage = new ShowAnswerStage(
-                        ((UsverProgressTab) tabPane.getSelectionModel().getSelectedItem()).getUserProgress().getQuestion()
+                        ((QuestionTab) tabPane.getSelectionModel().getSelectedItem()).getQuestion()
                 );
                 showAnswerStage.initOwner(this.stage);
                 showAnswerStage.initModality(Modality.APPLICATION_MODAL);

@@ -1,6 +1,5 @@
 package kurlyk.view.create.createQuestionWindow;
 
-import kurlyk.models.Question;
 import kurlyk.view.common.dto.BaseStageDto;
 import kurlyk.view.common.stage.base.BaseStage;
 
@@ -10,11 +9,11 @@ public class CreateQuestionStage extends BaseStage<CreateQuestionController> {
 
 
     public CreateQuestionStage() {
-        super(BaseStageDto.allOff());
+        this(null);
     }
 
-    public CreateQuestionStage(Consumer<Question> setQuestionInTableAction) {
-        super();
+    public CreateQuestionStage(Consumer<Long> setQuestionInTableAction) {
+        super(BaseStageDto.allOff());
         controller.setQuestionConsumer(setQuestionInTableAction);
     }
 

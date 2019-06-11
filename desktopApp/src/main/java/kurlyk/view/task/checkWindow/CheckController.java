@@ -46,7 +46,7 @@ public class CheckController extends SubmitConfigurationController<SelectDto> {
     public void initialize(){
     }
 
-    public void setQuestion(Question question, boolean editable, Consumer<Question> callbackAction) {
+    public void setQuestion(Question question, boolean editable, Consumer<Long> callbackAction) {
         this.question = question;
         SelectDto checkDto = new Gson().fromJson(question.getAnswer(), SelectDto.class);
         submitConfiguration(

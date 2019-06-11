@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class ResultAnswerDto {
     private long score;
+    private long questionId;
     @Builder.Default private boolean questionNotFound = false;
     @Builder.Default private boolean serverError = false;
 }

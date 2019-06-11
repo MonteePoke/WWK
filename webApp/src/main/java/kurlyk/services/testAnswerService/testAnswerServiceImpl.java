@@ -39,6 +39,7 @@ public class testAnswerServiceImpl implements TestAnswerService {
             resultAnswerDto.setScore(
                     percentToScore(dto, testComputerSystemDto(standart, dto.getEntity()))
             );
+            resultAnswerDto.setQuestionId(optionalQuestion.get().getId());
         } else {
             resultAnswerDto.setQuestionNotFound(true);
         }
@@ -53,6 +54,7 @@ public class testAnswerServiceImpl implements TestAnswerService {
             resultAnswerDto.setScore(
                     percentToScore(dto, testFormulaDto(standart, dto.getEntity()))
             );
+            resultAnswerDto.setQuestionId(optionalQuestion.get().getId());
         } else {
             resultAnswerDto.setQuestionNotFound(true);
         }
@@ -67,6 +69,7 @@ public class testAnswerServiceImpl implements TestAnswerService {
             resultAnswerDto.setScore(
                     percentToScore(dto, testTextDto(standart, dto.getEntity()))
             );
+            resultAnswerDto.setQuestionId(optionalQuestion.get().getId());
         } else {
             resultAnswerDto.setQuestionNotFound(true);
         }
@@ -81,6 +84,7 @@ public class testAnswerServiceImpl implements TestAnswerService {
             resultAnswerDto.setScore(
                     percentToScore(dto, testNumberDto(standart, dto.getEntity()))
             );
+            resultAnswerDto.setQuestionId(optionalQuestion.get().getId());
         } else {
             resultAnswerDto.setQuestionNotFound(true);
         }
@@ -95,6 +99,7 @@ public class testAnswerServiceImpl implements TestAnswerService {
             resultAnswerDto.setScore(
                     percentToScore(dto, testMatchingDto(standart, dto.getEntity()))
             );
+            resultAnswerDto.setQuestionId(optionalQuestion.get().getId());
         } else {
             resultAnswerDto.setQuestionNotFound(true);
         }
@@ -109,6 +114,7 @@ public class testAnswerServiceImpl implements TestAnswerService {
             resultAnswerDto.setScore(
                     percentToScore(dto, testCheckDto(standart, dto.getEntity()))
             );
+            resultAnswerDto.setQuestionId(optionalQuestion.get().getId());
         } else {
             resultAnswerDto.setQuestionNotFound(true);
         }
@@ -123,6 +129,7 @@ public class testAnswerServiceImpl implements TestAnswerService {
             resultAnswerDto.setScore(
                     percentToScore(dto, testRadioDto(standart, dto.getEntity()))
             );
+            resultAnswerDto.setQuestionId(optionalQuestion.get().getId());
         } else {
             resultAnswerDto.setQuestionNotFound(true);
         }
@@ -137,6 +144,7 @@ public class testAnswerServiceImpl implements TestAnswerService {
             resultAnswerDto.setScore(
                     percentToScore(dto, testSortingDto(standart, dto.getEntity()))
             );
+            resultAnswerDto.setQuestionId(optionalQuestion.get().getId());
         } else {
             resultAnswerDto.setQuestionNotFound(true);
         }

@@ -46,7 +46,7 @@ public class SortingController extends SubmitConfigurationController<SortingDto>
     public void initialize(){
     }
 
-    public void setItemsToView(Question question, boolean editable, Consumer<Question> callbackAction){
+    public void setItemsToView(Question question, boolean editable, Consumer<Long> callbackAction){
         this.question = question;
         SortingDto sortingDto = new Gson().fromJson(question.getAnswer(), SortingDto.class);
         submitConfiguration(

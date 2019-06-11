@@ -9,7 +9,7 @@ import java.util.function.Consumer;
 
 public class CheckSceneCreator extends BaseSceneCreator<CheckController> {
 
-    public CheckSceneCreator(Question question, boolean editable, Consumer<Question> callbackAction) {
+    public CheckSceneCreator(Question question, boolean editable, Consumer<Long> callbackAction) {
         super(BaseStageDto.allOff());
         controller.setQuestion(question, editable, callbackAction);
     }

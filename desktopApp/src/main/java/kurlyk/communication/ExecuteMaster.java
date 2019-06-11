@@ -35,6 +35,8 @@ public class ExecuteMaster {
     private Consumer<ExecuteCallbackDto> testCompleteCallback;
     private Consumer<ExecuteCallbackDto> workCompleteCallback;
 
+    private boolean isTestTime = true;
+
     public void initWork(
             Long labWorkId,
             Integer variant,
@@ -66,7 +68,24 @@ public class ExecuteMaster {
         }
     }
 
-    public Question getTestQuestion() throws IOException{
+    public Question getQuestion(){
+        Question question = null;
+        try {
+            if(isTestTime){
+                question = getTestQuestion();
+                if(question == null){
+                    isTestTime = false;
+                }
+            } else {
+                question = getWorkQuestion();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return question;
+    }
+
+    private Question getTestQuestion() throws IOException{
         if(testQuestionIterator.hasNext()){
             return communicator.getQuestionForExecute(testQuestionIterator.next());
         } else {
@@ -82,7 +101,7 @@ public class ExecuteMaster {
         }
     }
 
-    public Question getWorkQuestion() throws IOException{
+    private Question getWorkQuestion() throws IOException{
         if(workQuestionIterator.hasNext()){
             return communicator.getQuestionForExecute(workQuestionIterator.next());
         } else {

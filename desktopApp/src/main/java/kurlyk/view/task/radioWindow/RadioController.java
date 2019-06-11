@@ -47,7 +47,7 @@ public class RadioController extends SubmitConfigurationController<SelectDto> {
     public void initialize(){
     }
 
-    public void setQuestion(Question question, boolean editable, Consumer<Question> callbackAction) {
+    public void setQuestion(Question question, boolean editable, Consumer<Long> callbackAction) {
         this.question = question;
         SelectDto radioDto = new Gson().fromJson(question.getAnswer(), SelectDto.class);
         submitConfiguration(

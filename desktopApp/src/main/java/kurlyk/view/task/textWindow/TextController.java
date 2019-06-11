@@ -46,7 +46,7 @@ public class TextController extends SubmitConfigurationController<TextDto> {
 
     }
 
-    public void setQuestion(Question question, boolean editable, Consumer<Question> callbackAction) {
+    public void setQuestion(Question question, boolean editable, Consumer<Long> callbackAction) {
         this.question = question;
         TextDto textDto = new Gson().fromJson(question.getAnswer(), TextDto.class);
         submitConfiguration(

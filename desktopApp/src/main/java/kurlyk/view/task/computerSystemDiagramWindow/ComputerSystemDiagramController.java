@@ -246,7 +246,7 @@ public class ComputerSystemDiagramController extends SubmitConfigurationControll
         );
     }
 
-    public void setQuestion(Question question, boolean editable, Consumer<Question> callbackAction) {
+    public void setQuestion(Question question, boolean editable, Consumer<Long> callbackAction) {
         this.question = question;
         ComputerSystemDto computerSystemDto = new Gson().fromJson(question.getAnswer(), ComputerSystemDto.class);
         submitConfiguration(

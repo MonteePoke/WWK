@@ -27,14 +27,14 @@ public abstract class SubmitConfigurationController<T> extends Controller implem
             Button submit,
             Communicator communicator,
             StagePool stagePool,
-            Consumer<Question> callback
+            Consumer<Long> callback
     ) {
         this.question = question;
         this.communicator = communicator;
         if (editable) {
             submit.setOnAction(event -> {
                 try {
-                    callback.accept(saveQuestion(this.question));
+                    callback.accept(saveQuestion(this.question).getId());
                     try {
                         stagePool.showStage(Stages.COMMON_CREATE);
                     } catch (Exception e) {
@@ -50,6 +50,7 @@ public abstract class SubmitConfigurationController<T> extends Controller implem
                 modifyButton(submit);
                 try {
                     getAnswerResult(this.question.getAttemptsNumber() - attemptsNumber);
+                    callback.accept(this.question.getId());
                 } catch (IOException e) {
                     FxDialogs.showError("", "Ошибка отправки данных");
                 }

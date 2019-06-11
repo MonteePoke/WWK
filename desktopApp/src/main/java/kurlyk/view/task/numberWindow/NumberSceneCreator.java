@@ -9,7 +9,7 @@ import java.util.function.Consumer;
 
 public class NumberSceneCreator extends BaseStage<NumberController> {
 
-    public NumberSceneCreator(Question question, boolean editable, Consumer<Question> callbackAction) {
+    public NumberSceneCreator(Question question, boolean editable, Consumer<Long> callbackAction) {
         super(BaseStageDto.allOff());
         controller.setQuestion(question, editable, callbackAction);
     }

@@ -9,7 +9,7 @@ import java.util.function.Consumer;
 public class RadioSceneCreator extends BaseSceneCreator<RadioController> {
 
 
-    public RadioSceneCreator(Question question, boolean editable, Consumer<Question> callbackAction) {
+    public RadioSceneCreator(Question question, boolean editable, Consumer<Long> callbackAction) {
         super(BaseStageDto.allOff());
         controller.setQuestion(question, editable, callbackAction);
     }

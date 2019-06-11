@@ -9,7 +9,7 @@ import java.util.function.Consumer;
 
 public class MatchingSceneCreator extends BaseSceneCreator<MatchingController> {
 
-    public MatchingSceneCreator(Question question, boolean editable, Consumer<Question> callbackAction) {
+    public MatchingSceneCreator(Question question, boolean editable, Consumer<Long> callbackAction) {
         super(BaseStageDto.allOff());
         controller.setItemsToView(question, editable, callbackAction);
     }

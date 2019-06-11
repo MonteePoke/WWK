@@ -48,7 +48,7 @@ public class NumberController extends SubmitConfigurationController<NumberDto> {
 
     }
 
-    public void setQuestion(Question question, boolean editable, Consumer<Question> callbackAction) {
+    public void setQuestion(Question question, boolean editable, Consumer<Long> callbackAction) {
         this.question = question;
         NumberDto numberDto = new Gson().fromJson(question.getAnswer(), NumberDto.class);
         submitConfiguration(

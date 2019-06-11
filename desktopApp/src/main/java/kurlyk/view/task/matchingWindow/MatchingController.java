@@ -47,7 +47,7 @@ public class MatchingController extends SubmitConfigurationController<MatchingDt
     public void initialize(){
     }
 
-    public void setItemsToView(Question question, boolean editable, Consumer<Question> callbackAction){
+    public void setItemsToView(Question question, boolean editable, Consumer<Long> callbackAction){
         this.question = question;
         MatchingDto matchingDto = new Gson().fromJson(question.getAnswer(), MatchingDto.class);
         submitConfiguration(

@@ -68,7 +68,7 @@ public class FormulaController extends SubmitConfigurationController<FormulaDto>
         }
     }
 
-    public void setQuestion(Question question, boolean editable, Consumer<Question> callbackAction) {
+    public void setQuestion(Question question, boolean editable, Consumer<Long> callbackAction) {
         this.question = question;
         FormulaDto formulaDto = new Gson().fromJson(question.getAnswer(), FormulaDto.class);
         submitConfiguration(
