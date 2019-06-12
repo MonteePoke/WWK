@@ -71,7 +71,7 @@ public class ExecuteMaster {
     public Question getQuestion(){
         Question question = null;
         try {
-            if(isTestTime){
+            if(isTestTime && needTest){
                 question = getTestQuestion();
                 if(question == null){
                     isTestTime = false;
@@ -130,6 +130,7 @@ public class ExecuteMaster {
                 .maxScore(usverProgressQuestions.stream().mapToLong(usverProgressQuestion -> usverProgressQuestion.getQuestion().getScore()).sum())
                 .questionsNumber(usverProgressQuestions.size())
                 .attemptsNumber(usverProgressQuestions.stream().mapToInt(UsverProgressQuestion::getAttemptsNumber).sum())
+                .type(forWork ? ResultDto.Type.LAB_WORK : ResultDto.Type.TEST)
                 .build();
     }
 }

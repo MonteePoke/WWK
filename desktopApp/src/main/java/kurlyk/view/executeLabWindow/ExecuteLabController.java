@@ -2,7 +2,6 @@ package kurlyk.view.executeLabWindow;
 
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -15,7 +14,6 @@ import kurlyk.view.common.stage.StagePool;
 import kurlyk.view.common.stage.base.BaseStage;
 import kurlyk.view.components.QuestionTab;
 import kurlyk.view.showAnswerWindow.ShowAnswerStage;
-import kurlyk.view.showResultWindow.ShowResultSceneCreator;
 import kurlyk.view.task.checkWindow.CheckSceneCreator;
 import kurlyk.view.task.computerSystemDiagramWindow.ComputerSystemDiagramSceneCreator;
 import kurlyk.view.task.formulaWindow.FormulaSceneCreator;
@@ -54,45 +52,41 @@ public class ExecuteLabController extends Controller {
     public void initialize() {
     }
 
-    public void setTasks(boolean isTest) {
+    public void setTasks() {
         tabPane = new TabPane();
         root.getChildren().add(tabPane);
+        initTab();
     }
 
     private void initTab(){
-        //Если при шёл null, что конец тому, что выполняется (лабе или тесту)
+        //Если пришёл null, что конец тому, что выполняется (лабе или тесту)
         Question question = executeMaster.getQuestion();
         if (question == null) {
-            tabPane.getTabs().forEach(tab -> tab.setDisable(true));
-            Tab resyltTab = new Tab("Результаты");
-            resyltTab.setContent(
-                    new ShowResultSceneCreator(labWorkId, usverId, isTest, startLabCallback, showResultCallback).getScene().getRoot()
-            );
-            tabPane.getTabs().add(resyltTab);
+            return;
         }
         QuestionTab tab = new QuestionTab("Вопрос №" + (question.getNumber() != null ? question.getNumber() == null : "КИРПИЧ"), question);
         Scene scene = null;
         switch (question.getQuestionType()) {
             case RADIO:
-                scene = new RadioSceneCreator(question, false, questionId -> { }).getScene();
+                scene = new RadioSceneCreator(question, false, questionId -> initTab()).getScene();
                 break;
             case CHECK:
-                scene = new CheckSceneCreator(question, false, questionId -> { }).getScene();
+                scene = new CheckSceneCreator(question, false, questionId -> initTab()).getScene();
                 break;
             case SORTING:
-                scene = new SortingSceneCreator(question, false, questionId -> { }).getScene();
+                scene = new SortingSceneCreator(question, false, questionId -> initTab()).getScene();
                 break;
             case MATCHING:
-                scene = new MatchingSceneCreator(question, false, questionId -> { }).getScene();
+                scene = new MatchingSceneCreator(question, false, questionId -> initTab()).getScene();
                 break;
             case NUMBER:
-                scene = new NumberSceneCreator(question, false, questionId -> { }).getScene();
+                scene = new NumberSceneCreator(question, false, questionId -> initTab()).getScene();
                 break;
             case TEXT:
-                scene = new TextSceneCreator(question, false, questionId -> { }).getScene();
+                scene = new TextSceneCreator(question, false, questionId -> initTab()).getScene();
                 break;
             case FORMULA:
-                scene = new FormulaSceneCreator(question, false, questionId -> { }).getScene();
+                scene = new FormulaSceneCreator(question, false, questionId -> initTab()).getScene();
                 break;
             case COMPUTER_SYSTEM:
                 scene = new ComputerSystemDiagramSceneCreator(question, false, questionId -> { }).getScene();
@@ -108,7 +102,7 @@ public class ExecuteLabController extends Controller {
         stage.getMainMenu().getShowAnswerItem().setOnAction(event -> {
             try {
                 ShowAnswerStage showAnswerStage = new ShowAnswerStage(
-                        ((QuestionTab) tabPane.getSelectionModel().getSelectedItem()).getQuestion()
+                        ((QuestionTab) tabPane.getSelectionModel().getSelectedItem()).getQuestion().getId()
                 );
                 showAnswerStage.initOwner(this.stage);
                 showAnswerStage.initModality(Modality.APPLICATION_MODAL);

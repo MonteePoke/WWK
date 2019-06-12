@@ -1,6 +1,6 @@
 package kurlyk.transfer.tasks;
 
-import javafx.util.Pair;
+import kurlyk.common.Trio;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,13 +14,13 @@ import java.util.List;
 @EqualsAndHashCode
 public class SelectDto implements Serializable {
 
-    private List<Pair<String, Boolean>> options;
+    private List<Trio<Boolean, String, Integer>> options;
 
     public SelectDto() {
         options = new ArrayList<>();
     }
 
-    public SelectDto(List<Pair<String, Boolean>> options) {
+    public SelectDto(List<Trio<Boolean, String, Integer>> options) {
         this.options = options;
     }
 

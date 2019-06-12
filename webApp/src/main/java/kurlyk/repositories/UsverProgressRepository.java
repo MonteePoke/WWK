@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface UsverProgressRepository extends JpaRepository<UsverProgressLabWork, Long> {
 
-    List<UsverProgressLabWork> findByUsverId(Long userId);
+    List<UsverProgressLabWork> findByUsverId(Long usverId);
 
-    Optional<UsverProgressLabWork> findOneByUsverIdAndLabWorkId(Long userId, Long labWorkId);
+    Optional<UsverProgressLabWork> findOneByUsverIdAndLabWorkId(Long usverId, Long labWorkId);
 }

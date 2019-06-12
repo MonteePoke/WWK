@@ -1,7 +1,7 @@
-package kurlyk.graph.ComputerSystem;
+package kurlyk.common.algorithm.graph.ComputerSystem;
 
 import kurlyk.common.SelfMadeSimpleDoubleProperty;
-import kurlyk.graph.GraphElement;
+import kurlyk.common.algorithm.graph.GraphElement;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 

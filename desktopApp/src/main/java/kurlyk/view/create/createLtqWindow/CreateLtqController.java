@@ -17,10 +17,10 @@ import kurlyk.models.Question;
 import kurlyk.models.Task;
 import kurlyk.view.common.controller.Controller;
 import kurlyk.view.common.stage.StagePool;
-import kurlyk.view.components.DoubleField;
-import kurlyk.view.components.IntegerField;
+import kurlyk.view.components.fields.DoubleField;
+import kurlyk.view.components.fields.IntegerField;
+import kurlyk.view.components.fields.LongField;
 import kurlyk.view.components.table.StringCell;
-import kurlyk.view.components.toolbar.LongField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -202,21 +202,21 @@ public class CreateLtqController extends Controller {
         IntegerField field = new IntegerField(value);
         field.setEditable(editable);
         setRow(name, field);
-        return new MyFunction<>(field::setNumber, field::getNumber);
+        return new MyFunction<>(field::setValue, field::getValue);
     }
 
     private MyFunction<Long> createLongField(String name, Long value, boolean editable) {
         LongField field = new LongField(value);
         field.setEditable(editable);
         setRow(name, field);
-        return new MyFunction<>(field::setNumber, field::getNumber);
+        return new MyFunction<>(field::setValue, field::getValue);
     }
 
     private MyFunction<Double> createDoubleField(String name, Double value, boolean editable) {
         DoubleField field = new DoubleField(value);
         field.setEditable(editable);
         setRow(name, field);
-        return new MyFunction<>(field::setNumber, field::getNumber);
+        return new MyFunction<>(field::setValue, field::getValue);
     }
 
     private MyFunction<Boolean> createBooleanField(String name, Boolean value, boolean editable) {

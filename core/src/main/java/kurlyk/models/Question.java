@@ -30,7 +30,6 @@ public class Question {
     private Integer attemptsNumber;
     private Long score;
 
-    @Enumerated(value = EnumType.STRING)
     private Boolean negativeScore;
     private Long decScore;
     private Boolean skipQuestion;

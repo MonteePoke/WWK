@@ -23,8 +23,9 @@ public enum Stages {
     QUESTION_LIST,
 
     CREATE_QUESTION,
-    PERFORM_TEST,
-    PERFORM_LAB,
+//    PERFORM_TEST,
+//    PERFORM_LAB,
+    PERFORM_WORK,
 
     LTQ_CREATE
 }

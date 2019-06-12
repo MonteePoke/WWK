@@ -12,9 +12,9 @@ import kurlyk.transfer.ResultAnswerDto;
 import kurlyk.transfer.answer.NumberAnswerDto;
 import kurlyk.transfer.tasks.NumberDto;
 import kurlyk.view.common.stage.StagePool;
-import kurlyk.view.components.DoubleField;
-import kurlyk.view.components.IntegerField;
 import kurlyk.view.components.MyHtmlEditor;
+import kurlyk.view.components.fields.DoubleField;
+import kurlyk.view.components.fields.IntegerField;
 import kurlyk.view.task.SubmitConfigurationController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -64,12 +64,12 @@ public class NumberController extends SubmitConfigurationController<NumberDto> {
         textArea.setDisable(!editable);
         textArea.setHtmlText(question.getQuestion());
         accuracyField.setVisible(editable);
-        inputField.setNumber(numberDto.getNumber());
+        inputField.setValue(numberDto.getNumber());
     }
 
     @Override
     public NumberDto getResult() {
-        return new NumberDto(inputField.getNumber(), accuracyField.getNumber());
+        return new NumberDto(inputField.getValue(), accuracyField.getValue());
     }
 
     @Override

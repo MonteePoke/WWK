@@ -51,7 +51,7 @@ public class ToolbarController extends Controller {
     @FXML
     private Button roles;
     @FXML
-    private Button users;
+    private Button usvers;
     @FXML
     private Button exit;
     @FXML
@@ -124,12 +124,12 @@ public class ToolbarController extends Controller {
         rolesIcon.getStyleClass().add("rolesIcon");
         roles.setGraphic(rolesIcon);
 
-        users.getStyleClass().add("icon-button");
-        users.setPickOnBounds(true);
+        usvers.getStyleClass().add("icon-button");
+        usvers.setPickOnBounds(true);
 
-        Region usersIcon = new Region();
-        usersIcon.getStyleClass().add("usersIcon");
-        users.setGraphic(usersIcon);
+        Region usversIcon = new Region();
+        usversIcon.getStyleClass().add("usversIcon");
+        usvers.setGraphic(usversIcon);
 
         exit.getStyleClass().add("icon-button");
         exit.setPickOnBounds(true);
@@ -174,7 +174,7 @@ public class ToolbarController extends Controller {
         roles.setOnAction(event -> {
 
         });
-        users.setOnAction(event -> {
+        usvers.setOnAction(event -> {
 
         });
         exit.setOnAction(event -> {

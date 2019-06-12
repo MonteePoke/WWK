@@ -20,6 +20,7 @@ public abstract class SubmitConfigurationController<T> extends Controller implem
 
     @Getter @Setter private Question question;
     @Getter @Setter private Communicator communicator;
+    private boolean callbackIsExecuted = false;
 
     protected void submitConfiguration(
             boolean editable,
@@ -50,7 +51,10 @@ public abstract class SubmitConfigurationController<T> extends Controller implem
                 modifyButton(submit);
                 try {
                     getAnswerResult(this.question.getAttemptsNumber() - attemptsNumber);
-                    callback.accept(this.question.getId());
+                    if (!callbackIsExecuted) {
+                        callback.accept(this.question.getId());
+                        callbackIsExecuted = true;
+                    }
                 } catch (IOException e) {
                     FxDialogs.showError("", "Ошибка отправки данных");
                 }

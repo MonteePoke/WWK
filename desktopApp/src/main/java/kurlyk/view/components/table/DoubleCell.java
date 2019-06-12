@@ -2,7 +2,7 @@ package kurlyk.view.components.table;
 
 import javafx.scene.control.TableCell;
 import javafx.scene.input.KeyCode;
-import kurlyk.view.components.DoubleField;
+import kurlyk.view.components.fields.DoubleField;
 
 public class DoubleCell<T> extends TableCell<T, Double> {
     private DoubleField doubleField;
@@ -57,7 +57,7 @@ public class DoubleCell<T> extends TableCell<T, Double> {
         doubleField.setMinWidth(this.getWidth() - this.getGraphicTextGap()* 2);
         doubleField.addEventHandler(javafx.scene.input.KeyEvent.KEY_RELEASED, event -> {
             if (KeyCode.ENTER == event.getCode()) {
-                commitEdit(doubleField.getNumber());
+                commitEdit(doubleField.getValue());
                 commitChanges.run();
             }
         });

@@ -1,8 +1,8 @@
 package kurlyk.services.question;
 
 import com.google.gson.Gson;
-import javafx.util.Pair;
-import kurlyk.graph.SimpleGraphSystem;
+import kurlyk.common.Trio;
+import kurlyk.common.algorithm.graph.SimpleGraphSystem;
 import kurlyk.models.Question;
 import kurlyk.repositories.QuestionRepository;
 import kurlyk.transfer.tasks.*;
@@ -150,7 +150,7 @@ public class QuestionServiceImpl implements QuestionService {
         dto.setOptions(
                 dto.getOptions()
                         .stream()
-                        .map(pair -> new Pair<>(pair.getKey(), false))
+                        .map(trio -> new Trio<>(false, trio.getValueB(), trio.getValueC()))
                         .collect(Collectors.toList())
         );
         return dto;

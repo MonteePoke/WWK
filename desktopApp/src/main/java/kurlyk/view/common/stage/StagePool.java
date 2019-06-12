@@ -1,5 +1,6 @@
 package kurlyk.view.common.stage;
 
+import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.springframework.stereotype.Component;
@@ -49,6 +50,10 @@ public class StagePool {
 
     public Stage getStage(Stages key){
         return pool.get(key);
+    }
+
+    public void setSceneStage(Stages key, Scene scene){
+        pool.get(key).setScene(scene);
     }
 
     public void deleteStage(Stages key){

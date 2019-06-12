@@ -1,7 +1,9 @@
 package kurlyk.services.testAnswerService;
 
 import com.google.gson.Gson;
-import kurlyk.common.StemmerPorterRU;
+import kurlyk.common.Trio;
+import kurlyk.common.algorithm.StemmerPorterRU;
+import kurlyk.common.algorithm.formulaTester.FormulaTester;
 import kurlyk.models.Question;
 import kurlyk.services.labWork.LabWorkService;
 import kurlyk.services.question.QuestionService;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.Optional;
+import java.util.OptionalInt;
 
 @Service
 public class testAnswerServiceImpl implements TestAnswerService {
@@ -164,6 +167,9 @@ public class testAnswerServiceImpl implements TestAnswerService {
 
     private double testFormulaDto(FormulaDto standart, FormulaDto answer){
         boolean isEquals =  standart.equals(answer);
+        if (!isEquals) {
+            isEquals = FormulaTester.test(standart.getLatexFormula(), answer.getLatexFormula());
+        }
         return isEquals ? 1 : 0;
     }
 
@@ -209,14 +215,31 @@ public class testAnswerServiceImpl implements TestAnswerService {
         return isEquals ? 1 : 0;
     }
 
+    // TODO Не хватает формулы
     private double testCheckDto(SelectDto standart, SelectDto answer){
         boolean isEquals =  standart.equals(answer);
         return isEquals ? 1 : 0;
     }
 
     private double testRadioDto(SelectDto standart, SelectDto answer){
-        boolean isEquals =  standart.equals(answer);
-        return isEquals ? 1 : 0;
+        OptionalInt prepodScore = standart.getOptions()
+                .stream()
+                .mapToInt(Trio::getValueC)
+                .max();
+        OptionalInt studentScore = answer.getOptions()
+                .stream()
+                .filter(Trio::getValueA)
+                .mapToInt(Trio::getValueC)
+                .findAny();
+        if (prepodScore.isPresent() && studentScore.isPresent()){
+            return (double) studentScore.getAsInt() / prepodScore.getAsInt();
+        } else if (prepodScore.isPresent()){
+            return 0;
+        } else if (studentScore.isPresent()){
+            return 1;
+        } else {
+            return 0;
+        }
     }
 
     private double testSortingDto(SortingDto standart, SortingDto answer){

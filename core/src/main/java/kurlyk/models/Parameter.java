@@ -15,7 +15,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Builder
 @Entity
-public class Parameter implements Dictionary {
+public class Parameter implements Dictionary <Double> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

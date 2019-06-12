@@ -1,8 +1,8 @@
-package kurlyk.graph;
+package kurlyk.common.algorithm.graph;
 
 import javafx.util.Pair;
-import kurlyk.graph.ComputerSystem.ComputerSystemElement;
-import kurlyk.graph.ComputerSystem.SimpleComputerSystemElement;
+import kurlyk.common.algorithm.graph.ComputerSystem.ComputerSystemElement;
+import kurlyk.common.algorithm.graph.ComputerSystem.SimpleComputerSystemElement;
 import lombok.Getter;
 import lombok.Setter;
 

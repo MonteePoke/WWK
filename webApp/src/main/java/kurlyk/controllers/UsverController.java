@@ -16,7 +16,7 @@ import java.util.Optional;
 
 
 @RestController
-public class UserController {
+public class UsverController {
 
     @Autowired
     private UsverService usverService;
@@ -45,20 +45,6 @@ public class UserController {
     /*
         UsverProgress
      */
-    @GetMapping("/usver/progress")
-    public List<UsverProgressLabWork> getUsverProgress(
-            @RequestParam("usverId") Long usverId,
-            @RequestParam("labWorkId") Long labWorkId
-    ) {
-        return usverProgressService.getUsverProgress(
-                UsverLabWorkDto
-                        .builder()
-                        .usverId(usverId)
-                        .labWorkId(labWorkId)
-                        .build()
-        );
-    }
-
     @PostMapping("/usver/progress")
     public Long saveUsverProgress(@RequestBody UsverProgressLabWork usverProgressLabWork) {
         return usverProgressService.saveUsverProgress(usverProgressLabWork);

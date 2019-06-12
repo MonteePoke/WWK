@@ -1,4 +1,4 @@
-package kurlyk.common;
+package kurlyk.common.algorithm;
 
 import java.util.Arrays;
 import java.util.regex.Matcher;

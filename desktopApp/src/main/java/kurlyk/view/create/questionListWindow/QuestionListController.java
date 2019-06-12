@@ -10,7 +10,7 @@ import kurlyk.communication.Communicator;
 import kurlyk.transfer.QuestionForTableDto;
 import kurlyk.view.common.controller.Controller;
 import kurlyk.view.common.stage.StagePool;
-import kurlyk.view.components.IntegerField;
+import kurlyk.view.components.fields.IntegerField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;

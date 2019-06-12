@@ -1,4 +1,4 @@
-package kurlyk.graph.ComputerSystem;
+package kurlyk.common.algorithm.graph.ComputerSystem;
 
 public enum ComputerSystemElementType {
     RAM,

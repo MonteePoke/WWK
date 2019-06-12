@@ -11,10 +11,10 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import kurlyk.common.algorithm.graph.ComputerSystem.ComputerSystemElementType;
+import kurlyk.common.algorithm.graph.GraphSystem;
 import kurlyk.communication.Communicator;
 import kurlyk.communication.UsverInfo;
-import kurlyk.graph.ComputerSystem.ComputerSystemElementType;
-import kurlyk.graph.GraphSystem;
 import kurlyk.models.Question;
 import kurlyk.transfer.ResultAnswerDto;
 import kurlyk.transfer.answer.ComputerSystemAnswerDto;
@@ -22,8 +22,8 @@ import kurlyk.transfer.tasks.ComputerSystemDto;
 import kurlyk.view.common.stage.StagePool;
 import kurlyk.view.common.stage.Stages;
 import kurlyk.view.components.DiagramContextMenu;
-import kurlyk.view.components.DoubleField;
 import kurlyk.view.components.MyHtmlEditor;
+import kurlyk.view.components.fields.DoubleField;
 import kurlyk.view.task.SubmitConfigurationController;
 import kurlyk.view.task.computerSystemDiagramWindow.characteristicWindow.CharacteristicStage;
 import kurlyk.view.task.computerSystemDiagramWindow.computerSystemDiagram.ComputerSystemDiagramConnector;
@@ -109,21 +109,21 @@ public class ComputerSystemDiagramController extends SubmitConfigurationControll
                 case CPU:
                     if(event.getPickResult().getIntersectedNode().equals(drawPanel)){
                         drawDetail(ComputerSystemDiagramDetail.createCpuImage(event.getX(), event.getY(),
-                                availabilityFactorField.getNumber())
+                                availabilityFactorField.getValue())
                         );
                     }
                     break;
                 case RAM:
                     if(event.getPickResult().getIntersectedNode().equals(drawPanel)) {
                         drawDetail(ComputerSystemDiagramDetail.createRamImage(event.getX(), event.getY(),
-                                availabilityFactorField.getNumber())
+                                availabilityFactorField.getValue())
                         );
                     }
                     break;
                 case IO:
                     if(event.getPickResult().getIntersectedNode().equals(drawPanel)) {
                         drawDetail(ComputerSystemDiagramDetail.createIoImage(event.getX(), event.getY(),
-                                availabilityFactorField.getNumber())
+                                availabilityFactorField.getValue())
                         );
                     }
                     break;

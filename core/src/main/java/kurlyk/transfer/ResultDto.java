@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class ResultDto {
+    private Type type;
     private Long score;
     private Long maxScore;
     private Integer questionsNumber;
@@ -18,5 +19,10 @@ public class ResultDto {
 
     public boolean isExexute(){
         return score * 2 >= maxScore;
+    }
+
+    public enum Type{
+        TEST,
+        LAB_WORK;
     }
 }

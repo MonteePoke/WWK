@@ -1,4 +1,4 @@
-package kurlyk.graph;
+package kurlyk.common.algorithm.graph;
 
 
 public interface GraphElement <T extends GraphElement>{

@@ -4,9 +4,9 @@ import kurlyk.view.common.stage.base.BaseStage;
 
 
 public class ExecuteLabStage extends BaseStage<ExecuteLabController> {
-    public ExecuteLabStage(boolean isTest) {
+    public ExecuteLabStage() {
         super();
-        controller.setTasks(isTest);
+        controller.setTasks();
         controller.setStage(this);
     }
 

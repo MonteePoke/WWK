@@ -14,7 +14,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Builder
 @Entity
-public class AccessRight implements Dictionary {
+public class AccessRight implements Dictionary <String> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

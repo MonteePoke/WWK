@@ -14,7 +14,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Builder
 @Entity
-public class Competence implements Dictionary {
+public class Competence implements Dictionary <String> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

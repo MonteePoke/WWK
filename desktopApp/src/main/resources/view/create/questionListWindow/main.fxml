@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.*?>
-<?import kurlyk.view.components.IntegerField?>
+<?import kurlyk.view.components.fields.IntegerField?>
 <VBox prefHeight="504.0" prefWidth="687.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kurlyk.view.create.questionListWindow.QuestionListController">
     <VBox alignment="TOP_CENTER">
         <AnchorPane layoutX="10.0" layoutY="212.0" prefHeight="125.0" prefWidth="687.0">

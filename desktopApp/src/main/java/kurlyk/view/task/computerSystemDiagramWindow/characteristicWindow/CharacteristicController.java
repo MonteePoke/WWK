@@ -11,7 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import kurlyk.view.common.controller.Controller;
-import kurlyk.view.components.DoubleField;
+import kurlyk.view.components.fields.DoubleField;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 

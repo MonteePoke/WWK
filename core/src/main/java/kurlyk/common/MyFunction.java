@@ -24,7 +24,9 @@ public class MyFunction <T> {
     }
 
     public void accept(T object){
-        consumer.accept(object);
+        if(consumer != null) {
+            consumer.accept(object);
+        }
     }
 
     public T get(){

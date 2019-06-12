@@ -7,7 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
-import javafx.util.Pair;
+import kurlyk.common.Trio;
 import kurlyk.communication.Communicator;
 import kurlyk.communication.UsverInfo;
 import kurlyk.models.Question;
@@ -63,8 +63,13 @@ public class RadioController extends SubmitConfigurationController<SelectDto> {
         textArea.setDisable(!editable);
         textArea.setHtmlText(question.getQuestion());
         ToggleGroup group = new ToggleGroup();
-        for (Pair<String, Boolean> option : radioDto.getOptions()){
-            EditableRadioButton editableRadioButton = new EditableRadioButton(option.getKey(), option.getValue(), editable);
+        for (Trio<Boolean, String, Integer> option : radioDto.getOptions()){
+            EditableRadioButton editableRadioButton = new EditableRadioButton(
+                    option.getValueA(),
+                    option.getValueB(),
+                    option.getValueC(),
+                    editable
+            );
             editableRadioButton.getRadioButton().setToggleGroup(group);
             root.getChildren().add(editableRadioButton);
         }
@@ -75,8 +80,10 @@ public class RadioController extends SubmitConfigurationController<SelectDto> {
         SelectDto resultDto = new SelectDto();
         for (Node node : root.getChildren()) {
             EditableRadioButton editableRadioButton = (EditableRadioButton) node;
-            resultDto.getOptions().add(new Pair<>(editableRadioButton.getHtmlEditor().getHtmlText(),
-                    editableRadioButton.getRadioButton().isSelected()
+            resultDto.getOptions().add(new Trio<>(
+                    editableRadioButton.getRadioButton().isSelected(),
+                    editableRadioButton.getHtmlEditor().getHtmlText(),
+                    editableRadioButton.getCoefficientField().getValue()
             ));
         }
         return resultDto;

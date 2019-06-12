@@ -11,6 +11,7 @@ import kurlyk.view.common.controller.Controller;
 import kurlyk.view.common.stage.StagePool;
 import kurlyk.view.common.stage.Stages;
 import kurlyk.view.executeLabWindow.ExecuteLabStage;
+import kurlyk.view.showResultWindow.ShowResultSceneCreator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -53,28 +54,30 @@ public class StartStudentController extends Controller {
             e.printStackTrace();
         }
 
-        stagePool.pushStage(Stages.PERFORM_LAB, new ExecuteLabStage(false));
-        stagePool.pushStage(Stages.PERFORM_TEST, new ExecuteLabStage(true));
-
         further.setOnAction(event -> {
-            stagePool.deleteStage(Stages.START);
-            stagePool.showStage(Stages.PERFORM_TEST);
+            stagePool.closeStage(Stages.START);
+            stagePool.pushStageAndShow(Stages.PERFORM_WORK, new ExecuteLabStage());
             executeMaster.initWork(
                     labNumber.getValue().getId(),
                     variantNumber.getValue(),
-                    (executeCallbackDto -> {
-                        //Показать сцену с результатами, у которой есть кнопка далее, куда засетить лямбду с дальнейшими действиями
-
-//                        if(executeCallbackDto.getIsExecuted()){
-////                            stagePool.deleteStage(Stages.PERFORM_TEST);
-////                            stagePool.showStage(Stages.PERFORM_LAB);
-//                        }else {
-//
-//                        }
-                    }),
-                    (executeCallbackDto -> {
-
-                    })
+                    (executeCallbackDto -> stagePool.setSceneStage(
+                            Stages.PERFORM_WORK,
+                            new ShowResultSceneCreator(executeCallbackDto, () -> {
+                                if (executeCallbackDto.getIsExecuted()){
+                                    stagePool.setSceneStage(Stages.PERFORM_WORK, new ExecuteLabStage().getScene());
+                                } else {
+                                    stagePool.showStage(Stages.START);
+                                    stagePool.deleteStage(Stages.PERFORM_WORK);
+                                }
+                            }).getScene()
+                    )),
+                    (executeCallbackDto -> stagePool.setSceneStage(
+                            Stages.PERFORM_WORK,
+                            new ShowResultSceneCreator(executeCallbackDto, ()-> {
+                                stagePool.showStage(Stages.START);
+                                stagePool.deleteStage(Stages.PERFORM_WORK);
+                            }).getScene()
+                    ))
             );
         });
     }

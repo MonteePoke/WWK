@@ -2,7 +2,7 @@ package kurlyk.view.components.table;
 
 import javafx.scene.control.TableCell;
 import javafx.scene.input.KeyCode;
-import kurlyk.view.components.IntegerField;
+import kurlyk.view.components.fields.IntegerField;
 
 public class IntegerCell<T> extends TableCell<T, Integer> {
     private IntegerField integerField;
@@ -57,7 +57,7 @@ public class IntegerCell<T> extends TableCell<T, Integer> {
         integerField.setMinWidth(this.getWidth() - this.getGraphicTextGap()* 2);
         integerField.addEventHandler(javafx.scene.input.KeyEvent.KEY_RELEASED, event -> {
             if (KeyCode.ENTER == event.getCode()) {
-                commitEdit(integerField.getNumber());
+                commitEdit(integerField.getValue());
                 commitChanges.run();
             }
         });

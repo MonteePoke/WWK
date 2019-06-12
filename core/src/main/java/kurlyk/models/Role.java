@@ -15,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Entity
-public class Role implements Dictionary {
+public class Role implements Dictionary <String> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

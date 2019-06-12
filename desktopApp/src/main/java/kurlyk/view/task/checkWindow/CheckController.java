@@ -6,7 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
-import javafx.util.Pair;
+import kurlyk.common.Trio;
 import kurlyk.communication.Communicator;
 import kurlyk.communication.UsverInfo;
 import kurlyk.models.Question;
@@ -61,8 +61,8 @@ public class CheckController extends SubmitConfigurationController<SelectDto> {
         //Настройки работчего поля
         textArea.setDisable(!editable);
         textArea.setHtmlText(question.getQuestion());
-        for (Pair<String, Boolean> option : checkDto.getOptions()){
-            root.getChildren().add(new EditableCheckBox(option.getKey(), option.getValue(), editable));
+        for (Trio<Boolean, String, Integer> option : checkDto.getOptions()){
+            root.getChildren().add(new EditableCheckBox(option.getValueA(), option.getValueB(), option.getValueC(), editable));
         }
     }
 
@@ -71,8 +71,10 @@ public class CheckController extends SubmitConfigurationController<SelectDto> {
         SelectDto selectDto = new SelectDto();
         for (Node node : root.getChildren()) {
             EditableCheckBox editableCheckBox = (EditableCheckBox) node;
-            selectDto.getOptions().add(new Pair<>(editableCheckBox.getHtmlEditor().getHtmlText(),
-                    editableCheckBox.getCheckBox().isSelected()
+            selectDto.getOptions().add(new Trio<>(
+                    editableCheckBox.getCheckBox().isSelected(),
+                    editableCheckBox.getHtmlEditor().getHtmlText(),
+                    editableCheckBox.getCoefficientField().getValue()
             ));
         }
         return selectDto;

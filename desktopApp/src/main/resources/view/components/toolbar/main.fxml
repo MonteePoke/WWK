@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <VBox xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kurlyk.view.components.toolbar.ToolbarController">
     <ToolBar prefHeight="60.0" prefWidth="600.0">
@@ -45,7 +46,7 @@
             <Button fx:id="roles" layoutX="35.0" layoutY="10.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0">
 
             </Button>
-            <Button fx:id="users" layoutX="1.0" layoutY="10.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0">
+            <Button fx:id="usvers" layoutX="1.0" layoutY="10.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0">
 
             </Button>
         </Pane>

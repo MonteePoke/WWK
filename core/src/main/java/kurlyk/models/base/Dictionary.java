@@ -1,6 +1,6 @@
 package kurlyk.models.base;
 
-public interface Dictionary {
+public interface Dictionary<T> {
 
-    String getName();
+    T getName();
 }

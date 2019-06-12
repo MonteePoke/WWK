@@ -17,7 +17,7 @@ public class StatisticController {
     StatisticService statisticService;
 
     @GetMapping("/statistic-usver")
-    public List<UsverProgressLabWork> getStatiscticByUserId(
+    public List<UsverProgressLabWork> getStatiscticByUsverId(
             @RequestParam("usverId") Long usverId
     ) {
         return statisticService.getStatisticByUsverId(usverId);

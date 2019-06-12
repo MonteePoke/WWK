@@ -4,9 +4,9 @@ import com.google.gson.Gson;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
-import kurlyk.graph.ComputerSystem.ComputerSystemElement;
-import kurlyk.graph.ComputerSystem.ComputerSystemElementType;
-import kurlyk.graph.GraphSystem;
+import kurlyk.common.algorithm.graph.ComputerSystem.ComputerSystemElement;
+import kurlyk.common.algorithm.graph.ComputerSystem.ComputerSystemElementType;
+import kurlyk.common.algorithm.graph.GraphSystem;
 import kurlyk.transfer.tasks.ComputerSystemDto;
 
 public class TestMain {

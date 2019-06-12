@@ -52,7 +52,7 @@ public class Utils {
         return ouputList;
     }
 
-    public static boolean nameIsExist(List<Dictionary> dictionaries, String testName){
+    public static <T> boolean nameIsExist(List<Dictionary<T>> dictionaries, T testName){
         return dictionaries
                 .stream()
                 .map(Dictionary::getName)

@@ -4,13 +4,11 @@ import kurlyk.models.UsverLabWorkAccess;
 import kurlyk.models.UsverProgressLabWork;
 import kurlyk.transfer.UsverLabWorkDto;
 
-import java.util.List;
 import java.util.Optional;
 
 
 public interface UsverProgressService {
 
-    List<UsverProgressLabWork> getUsverProgress(UsverLabWorkDto usverLabWorkDto);
     Long saveUsverProgress(UsverProgressLabWork usverProgressLabWork);
     void deleteUsverProgress(Long id);
 

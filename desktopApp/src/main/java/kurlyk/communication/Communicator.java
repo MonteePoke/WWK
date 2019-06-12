@@ -48,12 +48,12 @@ public class Communicator extends AbstractCommunicator{
         }
     }
 
-    public Usver getUser() throws ConnectException, IOException {
+    public Usver getUsver() throws ConnectException, IOException {
         Type type = new TypeToken<Usver>(){}.getType();
         return getData(type, "/usvers/");
     }
 
-    public List<Usver> getUsers() throws ConnectException, IOException {
+    public List<Usver> getUsvers() throws ConnectException, IOException {
         Type type = new TypeToken<ArrayList<Usver>>(){}.getType();
         return getData(type, "/usvers/");
     }
@@ -156,13 +156,8 @@ public class Communicator extends AbstractCommunicator{
 
 
     /*
-        UserProgress
+        UsverProgress
      */
-    public List<UsverProgressLabWork> getUsverProgress(UsverLabWorkDto usverLabWorkDto) throws ConnectException, IOException {
-        Type type = new TypeToken<ArrayList<UsverProgressLabWork>>(){}.getType();
-        return getData(type, usverLabWorkDtoToParameters(usverLabWorkDto), "/usver/progress/");
-    }
-
     public Long saveUsverProgress(UsverProgressLabWork usverProgressLabWork) throws ConnectException, IOException {
         Type type = new TypeToken<Long>(){}.getType();
         return postData(type, usverProgressLabWork, "/usver/progress/");
@@ -284,7 +279,7 @@ public class Communicator extends AbstractCommunicator{
     /*
         statistic
     */
-    public List<UsverProgressLabWork> getStatiscticByUserId(Long usverId) throws ConnectException, IOException {
+    public List<UsverProgressLabWork> getStatiscticByUsverId(Long usverId) throws ConnectException, IOException {
         Type type = new TypeToken<ArrayList<UsverProgressLabWork>>(){}.getType();
         return getData(type, usverIdToParameters(usverId), "/statistic-usver/");
     }

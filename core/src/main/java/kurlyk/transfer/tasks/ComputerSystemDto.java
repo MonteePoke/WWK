@@ -1,7 +1,7 @@
 package kurlyk.transfer.tasks;
 
-import kurlyk.graph.GraphSystem;
-import kurlyk.graph.SimpleGraphSystem;
+import kurlyk.common.algorithm.graph.GraphSystem;
+import kurlyk.common.algorithm.graph.SimpleGraphSystem;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
