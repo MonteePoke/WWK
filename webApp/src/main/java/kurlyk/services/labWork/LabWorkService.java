@@ -1,6 +1,6 @@
 package kurlyk.services.labWork;
 
-import kurlyk.models.LabWork;
+import kurlyk.model.LabWork;
 
 import java.util.List;
 import java.util.Optional;

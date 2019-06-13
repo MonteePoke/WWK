@@ -1,7 +1,7 @@
 package kurlyk.controllers;
 
 
-import kurlyk.models.Subject;
+import kurlyk.model.Subject;
 import kurlyk.services.subject.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;

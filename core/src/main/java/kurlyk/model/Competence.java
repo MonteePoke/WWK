@@ -1,7 +1,7 @@
-package kurlyk.models;
+package kurlyk.model;
 
 
-import kurlyk.models.base.Dictionary;
+import kurlyk.model.base.Dictionary;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

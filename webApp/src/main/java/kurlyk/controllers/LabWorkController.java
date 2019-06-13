@@ -1,8 +1,8 @@
 package kurlyk.controllers;
 
 
-import kurlyk.models.LabWork;
-import kurlyk.models.Question;
+import kurlyk.model.LabWork;
+import kurlyk.model.Question;
 import kurlyk.services.labWork.LabWorkService;
 import kurlyk.services.question.QuestionService;
 import kurlyk.services.task.TaskService;

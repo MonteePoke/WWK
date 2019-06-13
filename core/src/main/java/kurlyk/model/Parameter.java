@@ -1,5 +1,7 @@
-package kurlyk.models;
+package kurlyk.model;
 
+
+import kurlyk.model.base.Dictionary;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -7,18 +9,17 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Entity
-public class UsverProgressQuestion {
+public class Parameter implements Dictionary <Double> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    private Question question;
-    private Long score;
-    private Integer attemptsNumber;
+    @Column(nullable = false)
+    private Double name;
 }

@@ -1,6 +1,6 @@
 package kurlyk.view.task.formulaWindow;
 
-import kurlyk.models.Question;
+import kurlyk.model.Question;
 import kurlyk.view.common.dto.BaseStageDto;
 import kurlyk.view.common.stage.base.BaseStage;
 

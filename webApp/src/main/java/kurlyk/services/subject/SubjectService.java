@@ -1,6 +1,6 @@
 package kurlyk.services.subject;
 
-import kurlyk.models.Subject;
+import kurlyk.model.Subject;
 
 import java.util.List;
 import java.util.Optional;

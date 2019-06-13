@@ -1,8 +1,8 @@
 package kurlyk.controllers;
 
-import kurlyk.models.Usver;
-import kurlyk.models.UsverLabWorkAccess;
-import kurlyk.models.UsverProgressLabWork;
+import kurlyk.model.Usver;
+import kurlyk.model.UsverLabWorkAccess;
+import kurlyk.model.UsverProgressLabWork;
 import kurlyk.services.usver.UsverService;
 import kurlyk.services.usverProgress.UsverProgressService;
 import kurlyk.transfer.UsverLabWorkDto;

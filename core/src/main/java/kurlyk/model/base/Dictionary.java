@@ -1,4 +1,4 @@
-package kurlyk.models.base;
+package kurlyk.model.base;
 
 public interface Dictionary<T> {
 

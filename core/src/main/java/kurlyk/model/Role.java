@@ -1,12 +1,13 @@
-package kurlyk.models;
+package kurlyk.model;
 
-
+import kurlyk.model.base.Dictionary;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 
 @Data
@@ -14,15 +15,14 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Builder
 @Entity
-public class LabWorkParameter {
+public class Role implements Dictionary <String> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    private LabWork labWork;
-    @ManyToOne
-    private Parameter parameter;
-    private Double valueFrom;
-    private Double valueTo;
+    @Column(nullable = false, unique = true)
+    private String name;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    private List<AccessRight> accessRights;
 }

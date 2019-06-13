@@ -1,6 +1,6 @@
 package kurlyk.transfer;
 
-import kurlyk.models.Question;
+import kurlyk.model.Question;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

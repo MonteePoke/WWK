@@ -1,6 +1,6 @@
 package kurlyk.services.usver;
 
-import kurlyk.models.Usver;
+import kurlyk.model.Usver;
 
 import java.util.List;
 

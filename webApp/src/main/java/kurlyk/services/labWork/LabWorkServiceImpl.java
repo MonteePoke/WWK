@@ -1,6 +1,6 @@
 package kurlyk.services.labWork;
 
-import kurlyk.models.LabWork;
+import kurlyk.model.LabWork;
 import kurlyk.repositories.LabWorkRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

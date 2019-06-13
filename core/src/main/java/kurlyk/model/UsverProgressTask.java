@@ -1,24 +1,26 @@
-package kurlyk.models;
+package kurlyk.model;
 
-
-import kurlyk.models.base.Dictionary;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Entity
-public class AccessRight implements Dictionary <String> {
+public class UsverProgressTask {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
-    private String name;
+    @ManyToOne
+    private Task task;
+
+    @OneToMany
+    private Set<UsverProgressQuestion> usverProgressQuestions;
 }

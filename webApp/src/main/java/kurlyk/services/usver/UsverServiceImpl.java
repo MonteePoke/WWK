@@ -1,6 +1,6 @@
 package kurlyk.services.usver;
 
-import kurlyk.models.Usver;
+import kurlyk.model.Usver;
 import kurlyk.repositories.UsverRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;

@@ -1,8 +1,8 @@
-package kurlyk.models.enums;
+package kurlyk.model.enums;
 
 public enum  RoleEnum {
-    ADMIN("admin"),
-    STUDENT("student");
+    ADMIN("ADMIN"),
+    STUDENT("STUDENT");
 
     private String name;
 

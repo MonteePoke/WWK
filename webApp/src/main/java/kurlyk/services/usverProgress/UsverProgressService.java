@@ -1,7 +1,7 @@
 package kurlyk.services.usverProgress;
 
-import kurlyk.models.UsverLabWorkAccess;
-import kurlyk.models.UsverProgressLabWork;
+import kurlyk.model.UsverLabWorkAccess;
+import kurlyk.model.UsverProgressLabWork;
 import kurlyk.transfer.UsverLabWorkDto;
 
 import java.util.Optional;

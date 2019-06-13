@@ -1,7 +1,7 @@
 package kurlyk.repositories;
 
 
-import kurlyk.models.Question;
+import kurlyk.model.Question;
 import kurlyk.transfer.QuestionForTableDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

@@ -1,6 +1,7 @@
 package kurlyk.common;
 
-import kurlyk.models.base.Dictionary;
+import kurlyk.exeption.LenghtsNotEqualsExeption;
+import kurlyk.model.base.Dictionary;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -8,6 +9,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 public class Utils {
@@ -44,6 +46,17 @@ public class Utils {
             throw new RuntimeException(e);
         }
         return obj;
+    }
+
+    public static <IN_ONE, IN_TWO, OUT> List<OUT> collectTwoLists(List<IN_ONE> list1, List<IN_TWO> list2, BiFunction<IN_ONE, IN_TWO, OUT> converter) {
+        if(list1.size() != list2.size()){
+            throw new LenghtsNotEqualsExeption();
+        }
+        List<OUT> outList = new ArrayList<>();
+        for(int i = 0; i < list1.size(); i++){
+            outList.add(converter.apply(list1.get(i), list2.get(i)));
+        }
+        return outList;
     }
 
     public static <IN, OUT> List<OUT> listToListConverter(List<IN> inputList, Function<IN, OUT> converter) {

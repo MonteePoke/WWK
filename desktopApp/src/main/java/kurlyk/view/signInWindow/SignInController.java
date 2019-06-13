@@ -8,7 +8,7 @@ import javafx.scene.control.TextField;
 import kurlyk.common.RoleTester;
 import kurlyk.communication.Communicator;
 import kurlyk.communication.UsverInfo;
-import kurlyk.models.enums.RoleEnum;
+import kurlyk.model.enums.RoleEnum;
 import kurlyk.transfer.LoginDto;
 import kurlyk.view.common.controller.Controller;
 import kurlyk.view.common.stage.StagePool;
@@ -33,9 +33,6 @@ public class SignInController extends Controller {
     @FXML private Button logInAsGuestButton;
     @FXML private Label feedback;
 
-    private boolean loginFieldEmpty = false;
-    private boolean passwordFieldEmpty = false;
-
     @Autowired
     private StagePool stagePool;
 
@@ -47,36 +44,17 @@ public class SignInController extends Controller {
 
 
     public void initialize(){
-        logInAsGuestButton.setOnAction(event -> {
-//            stagePool.pushStageAndShow(Stages.COMPUTER_SYSTEM, new ComputerSystemDiagramStage());
-//            stagePool.pushStageAndShow(Stages.FORMULA, new FormulaStage());
-//            stagePool.pushStageAndShow(Stages.TEXT, new TextStage());
-//            stagePool.pushStageAndShow(Stages.NUMBER, new NumberStage());
-//            MatchingDto matchingDto = new MatchingDto(Arrays.asList("111", "222", "333"), Arrays.asList("111", "222", "333"));
-//            stagePool.pushStageAndShow(Stages.MATCHING, new MatchingStage(matchingDto));
-//            SelectDto checkDto = new SelectDto(Arrays.asList(new Pair<>("a1", true), new Pair<>("b2", false), new Pair<>("c3", false), new Pair<>("d4", true)));
-//            stagePool.pushStageAndShow(Stages.CHECK, new CheckStage(checkDto));
-//            SelectDto radioDto = new SelectDto(Arrays.asList(new Pair<>("a1", false), new Pair<>("b2", true), new Pair<>("c3", false), new Pair<>("d4", false)));
-//            stagePool.pushStageAndShow(Stages.RADIO, new RadioStage(radioDto));
+        logInAsGuestButton.setVisible(false);
+        logInAsGuestButton.setOnAction(event -> {});
 
-//            stagePool.deleteStage(Stages.SIGN_IN);
-        });
-
+        loginField.textProperty().addListener((observable, oldValue, newValue) -> validateButtons());
+        passwordField.textProperty().addListener((observable, oldValue, newValue) -> validateButtons());
         logInButton.setOnAction(event -> signIn());
-
-        loginField.textProperty().addListener((observable, oldValue, newValue) -> {
-            validateButtons();
-
-        });
-
-        passwordField.textProperty().addListener((observable, oldValue, newValue) -> {
-            validateButtons();
-        });
     }
 
     private void validateButtons(){
-        loginFieldEmpty = loginField.getText().equals("");
-        passwordFieldEmpty = passwordField.getText().equals("");
+        boolean loginFieldEmpty = loginField.getText().equals("");
+        boolean passwordFieldEmpty = passwordField.getText().equals("");
 
         if(loginFieldEmpty){
             logInButton.setDisable(true);
@@ -105,9 +83,9 @@ public class SignInController extends Controller {
             }
             stagePool.pushStage(Stages.START, new StartStage());
             if (RoleTester.roleIsExist(usverInfo.getTokenDto(), RoleEnum.ADMIN.getName())) {
-                stagePool.getStage(Stages.START).setScene(new StartAdminScaneCreator().getScene());
+                stagePool.setSceneStage(Stages.START, new StartAdminScaneCreator().getScene());
             } else {
-                stagePool.getStage(Stages.START).setScene(new StartStudentSceneCreator().getScene());
+                stagePool.setSceneStage(Stages.START, new StartStudentSceneCreator().getScene());
             }
             stagePool.showStage(Stages.START);
             stagePool.deleteStage(Stages.SIGN_IN);

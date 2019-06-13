@@ -1,7 +1,7 @@
 package kurlyk.controllers;
 
 
-import kurlyk.models.UsverProgressLabWork;
+import kurlyk.model.UsverProgressLabWork;
 import kurlyk.services.statistic.StatisticService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -1,10 +1,10 @@
 package kurlyk.view.components.labTreeView;
 
 import kurlyk.WorkEntityType;
-import kurlyk.models.LabWork;
-import kurlyk.models.Question;
-import kurlyk.models.Subject;
-import kurlyk.models.Task;
+import kurlyk.model.LabWork;
+import kurlyk.model.Question;
+import kurlyk.model.Subject;
+import kurlyk.model.Task;
 import lombok.Data;
 
 import java.util.List;

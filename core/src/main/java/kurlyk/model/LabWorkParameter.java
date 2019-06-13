@@ -1,4 +1,4 @@
-package kurlyk.models;
+package kurlyk.model;
 
 
 import lombok.AllArgsConstructor;
@@ -6,10 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 
 @Data
@@ -17,9 +14,15 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @Builder
 @Entity
-public class Subject {
+public class LabWorkParameter {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
+
+    @ManyToOne
+    private LabWork labWork;
+    @ManyToOne
+    private Parameter parameter;
+    private Double valueFrom;
+    private Double valueTo;
 }

@@ -7,7 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import kurlyk.communication.Communicator;
 import kurlyk.communication.UsverInfo;
-import kurlyk.models.Question;
+import kurlyk.model.Question;
 import kurlyk.transfer.ResultAnswerDto;
 import kurlyk.transfer.answer.NumberAnswerDto;
 import kurlyk.transfer.tasks.NumberDto;

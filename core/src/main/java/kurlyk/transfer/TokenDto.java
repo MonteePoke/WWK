@@ -1,8 +1,8 @@
 package kurlyk.transfer;
 
-import kurlyk.models.Role;
-import kurlyk.models.Token;
-import kurlyk.models.Usver;
+import kurlyk.model.Role;
+import kurlyk.model.Token;
+import kurlyk.model.Usver;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

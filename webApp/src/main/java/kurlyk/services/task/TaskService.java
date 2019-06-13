@@ -1,6 +1,6 @@
 package kurlyk.services.task;
 
-import kurlyk.models.Task;
+import kurlyk.model.Task;
 
 import java.util.List;
 import java.util.Optional;

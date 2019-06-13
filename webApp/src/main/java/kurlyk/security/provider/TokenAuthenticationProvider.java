@@ -1,6 +1,6 @@
 package kurlyk.security.provider;
 
-import kurlyk.models.Token;
+import kurlyk.model.Token;
 import kurlyk.repositories.TokenRepository;
 import kurlyk.security.token.TokenAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;

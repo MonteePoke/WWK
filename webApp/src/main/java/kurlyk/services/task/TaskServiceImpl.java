@@ -1,6 +1,6 @@
 package kurlyk.services.task;
 
-import kurlyk.models.Task;
+import kurlyk.model.Task;
 import kurlyk.repositories.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

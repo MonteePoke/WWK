@@ -6,7 +6,7 @@ import javafx.scene.control.ComboBox;
 import kurlyk.communication.Communicator;
 import kurlyk.communication.ExecuteMaster;
 import kurlyk.communication.UsverInfo;
-import kurlyk.models.LabWork;
+import kurlyk.model.LabWork;
 import kurlyk.view.common.controller.Controller;
 import kurlyk.view.common.stage.StagePool;
 import kurlyk.view.common.stage.Stages;

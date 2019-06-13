@@ -1,7 +1,7 @@
 package kurlyk.repositories;
 
 
-import kurlyk.models.UsverProgressLabWork;
+import kurlyk.model.UsverProgressLabWork;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

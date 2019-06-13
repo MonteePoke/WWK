@@ -2,7 +2,7 @@ package kurlyk.communication;
 
 
 import com.google.gson.reflect.TypeToken;
-import kurlyk.models.*;
+import kurlyk.model.*;
 import kurlyk.transfer.*;
 import kurlyk.transfer.answer.*;
 import org.springframework.beans.factory.annotation.Autowired;

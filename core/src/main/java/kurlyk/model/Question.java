@@ -1,4 +1,4 @@
-package kurlyk.models;
+package kurlyk.model;
 
 import kurlyk.QuestionType;
 import lombok.AllArgsConstructor;

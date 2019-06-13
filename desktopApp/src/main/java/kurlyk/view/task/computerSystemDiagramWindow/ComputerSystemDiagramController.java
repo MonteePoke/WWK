@@ -15,7 +15,7 @@ import kurlyk.common.algorithm.graph.ComputerSystem.ComputerSystemElementType;
 import kurlyk.common.algorithm.graph.GraphSystem;
 import kurlyk.communication.Communicator;
 import kurlyk.communication.UsverInfo;
-import kurlyk.models.Question;
+import kurlyk.model.Question;
 import kurlyk.transfer.ResultAnswerDto;
 import kurlyk.transfer.answer.ComputerSystemAnswerDto;
 import kurlyk.transfer.tasks.ComputerSystemDto;

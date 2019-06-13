@@ -1,7 +1,7 @@
 package kurlyk.services.login;
 
-import kurlyk.models.Token;
-import kurlyk.models.Usver;
+import kurlyk.model.Token;
+import kurlyk.model.Usver;
 import kurlyk.repositories.UsverRepository;
 import kurlyk.services.token.TokenService;
 import kurlyk.transfer.LoginDto;

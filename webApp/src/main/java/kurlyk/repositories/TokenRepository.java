@@ -1,8 +1,8 @@
 package kurlyk.repositories;
 
 
-import kurlyk.models.Token;
-import kurlyk.models.Usver;
+import kurlyk.model.Token;
+import kurlyk.model.Usver;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

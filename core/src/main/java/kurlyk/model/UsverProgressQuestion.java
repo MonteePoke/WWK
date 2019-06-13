@@ -1,4 +1,4 @@
-package kurlyk.models;
+package kurlyk.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,12 +12,13 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Builder
 @Entity
-public class UsverProgressLabWorkParameter {
+public class UsverProgressQuestion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    private Parameter parameter;
-    private String parameterValue;
+    private Question question;
+    private Long score;
+    private Integer attemptsNumber;
 }

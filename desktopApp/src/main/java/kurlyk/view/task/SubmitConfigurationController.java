@@ -3,7 +3,7 @@ package kurlyk.view.task;
 import com.google.gson.Gson;
 import javafx.scene.control.Button;
 import kurlyk.communication.Communicator;
-import kurlyk.models.Question;
+import kurlyk.model.Question;
 import kurlyk.view.common.controller.Controller;
 import kurlyk.view.common.controller.TaskBodyController;
 import kurlyk.view.common.stage.StagePool;

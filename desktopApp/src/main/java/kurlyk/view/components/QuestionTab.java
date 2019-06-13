@@ -1,7 +1,7 @@
 package kurlyk.view.components;
 
 import javafx.scene.control.Tab;
-import kurlyk.models.Question;
+import kurlyk.model.Question;
 import lombok.Getter;
 import lombok.Setter;
 

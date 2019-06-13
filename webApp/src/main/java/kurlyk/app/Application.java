@@ -12,7 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @SpringBootApplication
 @ComponentScan(basePackages = "kurlyk")
 @EnableJpaRepositories(basePackages = "kurlyk.repositories")
-@EntityScan(basePackages = "kurlyk.models")
+@EntityScan(basePackages = "kurlyk.model")
 public class Application {
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);

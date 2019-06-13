@@ -11,7 +11,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.web.WebView;
 import kurlyk.communication.Communicator;
 import kurlyk.communication.UsverInfo;
-import kurlyk.models.Question;
+import kurlyk.model.Question;
 import kurlyk.transfer.ResultAnswerDto;
 import kurlyk.transfer.answer.FormulaAnswerDto;
 import kurlyk.transfer.tasks.FormulaDto;

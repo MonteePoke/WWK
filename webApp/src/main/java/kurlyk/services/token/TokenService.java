@@ -1,6 +1,6 @@
 package kurlyk.services.token;
 
-import kurlyk.models.Token;
+import kurlyk.model.Token;
 
 
 public interface TokenService {

@@ -1,6 +1,6 @@
 package kurlyk.view.common.controller;
 
-import kurlyk.models.Question;
+import kurlyk.model.Question;
 import kurlyk.transfer.ResultAnswerDto;
 
 import java.io.IOException;

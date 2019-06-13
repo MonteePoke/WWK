@@ -1,6 +1,6 @@
 package kurlyk.services.subject;
 
-import kurlyk.models.Subject;
+import kurlyk.model.Subject;
 import kurlyk.repositories.SubjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

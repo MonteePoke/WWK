@@ -1,6 +1,6 @@
 package kurlyk.services.token;
 
-import kurlyk.models.Token;
+import kurlyk.model.Token;
 import kurlyk.repositories.TokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

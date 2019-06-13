@@ -8,7 +8,7 @@ import javafx.stage.Modality;
 import kurlyk.communication.Communicator;
 import kurlyk.communication.ExecuteMaster;
 import kurlyk.communication.UsverInfo;
-import kurlyk.models.Question;
+import kurlyk.model.Question;
 import kurlyk.view.common.controller.Controller;
 import kurlyk.view.common.stage.StagePool;
 import kurlyk.view.common.stage.base.BaseStage;

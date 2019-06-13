@@ -1,10 +1,12 @@
 package kurlyk.services.testAnswerService;
 
 import com.google.gson.Gson;
+import kurlyk.common.Duet;
 import kurlyk.common.Trio;
+import kurlyk.common.Utils;
 import kurlyk.common.algorithm.StemmerPorterRU;
 import kurlyk.common.algorithm.formulaTester.FormulaTester;
-import kurlyk.models.Question;
+import kurlyk.model.Question;
 import kurlyk.services.labWork.LabWorkService;
 import kurlyk.services.question.QuestionService;
 import kurlyk.services.task.TaskService;
@@ -215,10 +217,27 @@ public class testAnswerServiceImpl implements TestAnswerService {
         return isEquals ? 1 : 0;
     }
 
-    // TODO Не хватает формулы
     private double testCheckDto(SelectDto standart, SelectDto answer){
-        boolean isEquals =  standart.equals(answer);
-        return isEquals ? 1 : 0;
+        //Если все чекбоксы отмечены, то возвращаем ноль
+        if(answer.getOptions().stream().allMatch(Trio::getValueA)){
+            return 0;
+        }
+
+        //Собираем все очки для подсчёта коэффициентов
+        int allScore = standart.getOptions().stream().mapToInt(Trio::getValueC).sum();
+
+        //Считаем коэффициент ответа
+        return Utils.collectTwoLists(
+                standart.getOptions(),
+                answer.getOptions(),
+                (elem1, elem2) -> new Duet<>(
+                        elem1.getValueA().equals(elem2.getValueA()), //отмечаем true правильные ответы
+                        (double) elem1.getValueC() / allScore
+                )
+        ).stream()
+                .filter(Duet::getValueA)
+                .mapToDouble(Duet::getValueB)
+                .sum();
     }
 
     private double testRadioDto(SelectDto standart, SelectDto answer){

@@ -1,7 +1,7 @@
 package kurlyk.controllers;
 
 
-import kurlyk.models.Task;
+import kurlyk.model.Task;
 import kurlyk.services.task.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;

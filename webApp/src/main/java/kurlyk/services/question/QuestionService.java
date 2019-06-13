@@ -1,6 +1,6 @@
 package kurlyk.services.question;
 
-import kurlyk.models.Question;
+import kurlyk.model.Question;
 import kurlyk.transfer.QuestionForTableDto;
 
 import java.util.List;

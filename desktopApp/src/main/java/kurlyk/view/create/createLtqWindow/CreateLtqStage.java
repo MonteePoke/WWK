@@ -1,9 +1,9 @@
 package kurlyk.view.create.createLtqWindow;
 
 import kurlyk.WorkEntityType;
-import kurlyk.models.LabWork;
-import kurlyk.models.Question;
-import kurlyk.models.Task;
+import kurlyk.model.LabWork;
+import kurlyk.model.Question;
+import kurlyk.model.Task;
 import kurlyk.view.common.dto.BaseStageDto;
 import kurlyk.view.common.stage.base.BaseStage;
 

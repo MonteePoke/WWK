@@ -3,7 +3,7 @@ package kurlyk.services.question;
 import com.google.gson.Gson;
 import kurlyk.common.Trio;
 import kurlyk.common.algorithm.graph.SimpleGraphSystem;
-import kurlyk.models.Question;
+import kurlyk.model.Question;
 import kurlyk.repositories.QuestionRepository;
 import kurlyk.transfer.QuestionForTableDto;
 import kurlyk.transfer.tasks.*;

@@ -3,10 +3,10 @@ package kurlyk.view.components.labTreeView;
 import javafx.scene.control.TreeView;
 import kurlyk.WorkEntityType;
 import kurlyk.communication.Communicator;
-import kurlyk.models.LabWork;
-import kurlyk.models.Question;
-import kurlyk.models.Subject;
-import kurlyk.models.Task;
+import kurlyk.model.LabWork;
+import kurlyk.model.Question;
+import kurlyk.model.Subject;
+import kurlyk.model.Task;
 import kurlyk.view.common.stage.StagePool;
 
 import java.io.IOException;

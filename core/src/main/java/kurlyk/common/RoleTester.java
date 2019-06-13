@@ -1,6 +1,6 @@
 package kurlyk.common;
 
-import kurlyk.models.Usver;
+import kurlyk.model.Usver;
 import kurlyk.transfer.TokenDto;
 
 public class RoleTester {

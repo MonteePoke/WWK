@@ -1,8 +1,8 @@
 package kurlyk.communication;
 
 
-import kurlyk.models.Question;
-import kurlyk.models.UsverProgressQuestion;
+import kurlyk.model.Question;
+import kurlyk.model.UsverProgressQuestion;
 import kurlyk.transfer.ExecuteCallbackDto;
 import kurlyk.transfer.QuestionIdsDto;
 import kurlyk.transfer.ResultDto;

@@ -1,6 +1,6 @@
 package kurlyk.services.statistic;
 
-import kurlyk.models.UsverProgressLabWork;
+import kurlyk.model.UsverProgressLabWork;
 
 import java.util.List;
 import java.util.Optional;

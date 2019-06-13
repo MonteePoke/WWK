@@ -1,7 +1,7 @@
 package kurlyk.controllers;
 
 
-import kurlyk.models.Question;
+import kurlyk.model.Question;
 import kurlyk.services.question.QuestionService;
 import kurlyk.transfer.QuestionForTableDto;
 import org.springframework.beans.factory.annotation.Autowired;

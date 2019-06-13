@@ -1,6 +1,6 @@
 package kurlyk.repositories;
 
-import kurlyk.models.Usver;
+import kurlyk.model.Usver;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

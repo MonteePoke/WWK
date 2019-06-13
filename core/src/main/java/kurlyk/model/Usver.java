@@ -1,4 +1,4 @@
-package kurlyk.models;
+package kurlyk.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
