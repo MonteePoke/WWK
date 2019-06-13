@@ -62,7 +62,7 @@ public class QuestionListController extends Controller {
         });
 
         try {
-            questionTable.getItems().addAll(communicator.getQuestionHeaders());
+            questionTable.getItems().addAll(communicator.getQuestionsForTable(null, null));
         } catch (IOException e) {
             e.printStackTrace();
         }

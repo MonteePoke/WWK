@@ -5,6 +5,7 @@ import kurlyk.common.Trio;
 import kurlyk.common.algorithm.graph.SimpleGraphSystem;
 import kurlyk.models.Question;
 import kurlyk.repositories.QuestionRepository;
+import kurlyk.transfer.QuestionForTableDto;
 import kurlyk.transfer.tasks.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -109,6 +110,15 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public void deleteQuestion(Long id) {
         questionRepository.deleteById(id);
+    }
+
+    @Override
+    public List<QuestionForTableDto> getQuestionsForTable(Integer pageNumber, Integer contentSize){
+        if(pageNumber == null || contentSize == null){
+            return questionRepository.findAllForTable();
+        } else {
+            return questionRepository.findAllForTable(PageRequest.of(pageNumber, contentSize)).getContent();
+        }
     }
 
 

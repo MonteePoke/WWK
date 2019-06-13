@@ -1,6 +1,7 @@
 package kurlyk.services.question;
 
 import kurlyk.models.Question;
+import kurlyk.transfer.QuestionForTableDto;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,4 +18,5 @@ public interface QuestionService {
     List<Question> getQuestionHeaders();
     Long saveQuestion(Question question);
     void deleteQuestion(Long id);
+    List<QuestionForTableDto> getQuestionsForTable(Integer pageNumber, Integer contentSize);
 }

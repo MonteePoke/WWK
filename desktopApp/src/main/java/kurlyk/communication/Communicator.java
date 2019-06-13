@@ -147,6 +147,11 @@ public class Communicator extends AbstractCommunicator{
         return getData(type, pageInfoToParameters(pageNumber, contentSize), "/questions/");
     }
 
+    public List<QuestionForTableDto> getQuestionsForTable(Integer pageNumber, Integer contentSize) throws ConnectException, IOException {
+        Type type = new TypeToken<ArrayList<QuestionForTableDto>>(){}.getType();
+        return getData(type, pageInfoToParameters(pageNumber, contentSize), "/questions-for-table/");
+    }
+
     private Map<String, String> pageInfoToParameters(Integer pageNumber, Integer contentSize){
         Map<String, String> parameters = new HashMap<>();
         parameters.put("pageNumber", pageNumber != null ? pageNumber.toString() : null);

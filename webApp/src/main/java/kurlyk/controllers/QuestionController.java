@@ -3,6 +3,7 @@ package kurlyk.controllers;
 
 import kurlyk.models.Question;
 import kurlyk.services.question.QuestionService;
+import kurlyk.transfer.QuestionForTableDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
@@ -62,5 +63,13 @@ public class QuestionController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/questions-for-table")
+    public List<QuestionForTableDto> getQuestionsForTable(
+            @RequestParam("pageNumber") Integer pageNumber,
+            @RequestParam("contentSize") Integer contentSize
+    ) {
+        return questionService.getQuestionsForTable(pageNumber, contentSize);
     }
 }
