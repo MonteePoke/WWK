@@ -4,6 +4,7 @@ package kurlyk.view.task.sortingWindow;
 import com.google.gson.Gson;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import kurlyk.communication.Communicator;
 import kurlyk.communication.UsverInfo;
@@ -12,6 +13,7 @@ import kurlyk.transfer.ResultAnswerDto;
 import kurlyk.transfer.answer.SortingAnswerDto;
 import kurlyk.transfer.tasks.SortingDto;
 import kurlyk.view.common.stage.StagePool;
+import kurlyk.view.common.stage.Stages;
 import kurlyk.view.components.DraggingListView;
 import kurlyk.view.components.MyHtmlEditor;
 import kurlyk.view.task.SubmitConfigurationController;
@@ -31,6 +33,9 @@ public class SortingController extends SubmitConfigurationController<SortingDto>
     @FXML private Button submit;
     @FXML private MyHtmlEditor textArea;
     @FXML private DraggingListView itemsField;
+    @FXML private Button createItemButton;
+    @FXML private Button deleteItemButton;
+    @FXML private HBox controlPanel;
     private Question question;
 
     @Autowired
@@ -44,9 +49,18 @@ public class SortingController extends SubmitConfigurationController<SortingDto>
 
 
     public void initialize(){
+        createItemButton.setOnAction(event -> {
+            itemsField.getItems().add("Новая");
+        });
+        deleteItemButton.setOnAction(event -> {
+            try {
+                itemsField.getItems().remove(itemsField.getItems().size()-1);
+            } catch (Exception ignored) {
+            }
+        });
     }
 
-    public void setItemsToView(Question question, boolean editable, Consumer<Question> callbackAction){
+    public void setItemsToView(Question question, boolean editable, Consumer<Question> callbackActionBefore, Consumer<Question> callbackActionAfter, Stages stageForClose){
         this.question = question;
         SortingDto sortingDto = new Gson().fromJson(question.getAnswer(), SortingDto.class);
         submitConfiguration(
@@ -55,12 +69,15 @@ public class SortingController extends SubmitConfigurationController<SortingDto>
                 submit,
                 communicator,
                 stagePool,
-                callbackAction
+                callbackActionBefore,
+                callbackActionAfter
         );
+        setStageForClose(stageForClose);
 
         //Настройки работчего поля
         textArea.setDisable(!editable);
         textArea.setHtmlText(question.getQuestion());
+        controlPanel.setVisible(editable);
         itemsField.setEditable(editable);
         if (sortingDto != null) {
             itemsField.getItems().addAll(sortingDto.getItems());

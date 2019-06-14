@@ -50,6 +50,11 @@ public class QuestionController {
         return questionService.getQuestionHeaders();
     }
 
+    @PostMapping("/update-question-header")
+    public Long updateQuestionHeader(@RequestBody Question question) {
+        return questionService.updateQuestionHeader(question);
+    }
+
     @PostMapping("/question")
     public Long saveQuestion(@RequestBody Question question) {
         return questionService.saveQuestion(question);

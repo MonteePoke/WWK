@@ -10,12 +10,13 @@ public class CreateQuestionSceneCreator extends BaseSceneCreator<CreateQuestionC
 
 
     public CreateQuestionSceneCreator() {
-        this(null);
+        this(question -> {}, question -> {});
     }
 
-    public CreateQuestionSceneCreator(Consumer<Question> setQuestionInTableAction) {
+    public CreateQuestionSceneCreator(Consumer<Question> callbackActionBefore, Consumer<Question> callbackActionAfter) {
         super(BaseStageDto.allOff());
-        controller.setQuestionConsumer(setQuestionInTableAction);
+        controller.setCallbackActionBefore(callbackActionBefore);
+        controller.setCallbackActionAfter(callbackActionAfter);
     }
 
     @Override

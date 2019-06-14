@@ -16,6 +16,7 @@ public interface QuestionService {
     List<Question> getQuestionHeaders(Long taskId);
     List<Question> getQuestionIdAndNumbers(Long taskId);
     List<Question> getQuestionHeaders();
+    Long updateQuestionHeader(Question question);
     Long saveQuestion(Question question);
     void deleteQuestion(Long id);
     List<QuestionForTableDto> getQuestionsForTable(Integer pageNumber, Integer contentSize);

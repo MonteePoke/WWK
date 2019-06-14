@@ -1,7 +1,6 @@
 package kurlyk.view.create.createQuestionWindow;
 
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
@@ -13,19 +12,13 @@ import kurlyk.model.Question;
 import kurlyk.view.common.controller.Controller;
 import kurlyk.view.common.stage.StagePool;
 import kurlyk.view.common.stage.Stages;
-import kurlyk.view.task.checkWindow.CheckSceneCreator;
-import kurlyk.view.task.computerSystemDiagramWindow.ComputerSystemDiagramSceneCreator;
-import kurlyk.view.task.formulaWindow.FormulaSceneCreator;
-import kurlyk.view.task.matchingWindow.MatchingSceneCreator;
-import kurlyk.view.task.numberWindow.NumberSceneCreator;
-import kurlyk.view.task.radioWindow.RadioSceneCreator;
-import kurlyk.view.task.sortingWindow.SortingSceneCreator;
-import kurlyk.view.task.textWindow.TextSceneCreator;
+import kurlyk.view.components.CommonSceneCreator;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
@@ -39,10 +32,9 @@ public class CreateQuestionController extends Controller {
     private ComboBox<String> labType;
     @FXML
     private Button further;
-    private Consumer<Question> callbackAction;
-    private Supplier<Question> questionCreator;
-    //null, если создаётся вопрос, не null, если редактируется вопрос
-    private Long questionId;
+    @Getter @Setter private Consumer<Question> callbackActionBefore;
+    @Getter @Setter private Consumer<Question> callbackActionAfter;
+    @Getter @Setter private Supplier<Question> questionCreator;
 
     @Autowired
     private StagePool stagePool;
@@ -67,39 +59,16 @@ public class CreateQuestionController extends Controller {
         );
 
         further.setOnAction(event -> {
-            try {
-                Question question = questionId == null ? createQuestion() : communicator.getQuestion(questionId);
-                Scene scene = null;
-                switch (question.getQuestionType()) {
-                    case RADIO:
-                        scene = new RadioSceneCreator(question, true, callbackAction).getScene();
-                        break;
-                    case CHECK:
-                        scene = new CheckSceneCreator(question, true, callbackAction).getScene();
-                        break;
-                    case SORTING:
-                        scene = new SortingSceneCreator(question, true, callbackAction).getScene();
-                        break;
-                    case MATCHING:
-                        scene = new MatchingSceneCreator(question, true, callbackAction).getScene();
-                        break;
-                    case NUMBER:
-                        scene = new NumberSceneCreator(question, true, callbackAction).getScene();
-                        break;
-                    case TEXT:
-                        scene = new TextSceneCreator(question, true, callbackAction).getScene();
-                        break;
-                    case FORMULA:
-                        scene = new FormulaSceneCreator(question, true, callbackAction).getScene();
-                        break;
-                    case COMPUTER_SYSTEM:
-                        scene = new ComputerSystemDiagramSceneCreator(question, true, callbackAction).getScene();
-                        break;
-                }
-                stagePool.getStage(Stages.CREATE_QUESTION).setScene(scene);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            Question question = createQuestion();
+            stagePool.getStage(Stages.CREATE_QUESTION).setScene(
+                    CommonSceneCreator.questionSceneCreator(
+                            question,
+                            true,
+                            callbackActionBefore,
+                            callbackActionAfter,
+                            Stages.CREATE_QUESTION
+                    )
+            );
         });
     }
 
@@ -107,25 +76,14 @@ public class CreateQuestionController extends Controller {
         Question question;
         if(questionCreator != null){
             question = questionCreator.get();
+            question.setName(nameField.getText());
         } else{
-            question = Question.builder().number(1).name("Вопрос № X").build();
+            question = Question.builder().number(1).name(nameField.getText()).build();
         }
         question.setQuestionType(Codable.find(QuestionType.class, labType.getValue()));
         question.setAttemptsNumber(1);
         question.setScore(1L);
         question.setSkipQuestion(false);
         return question;
-    }
-
-    public void setQuestionId(Long questionId) {
-        this.questionId = questionId;
-    }
-
-    public void setQuestionConsumer(Consumer<Question> callbackAction) {
-        this.callbackAction = callbackAction;
-    }
-
-    public void setQuestionCreator(Supplier<Question> questionCreator) {
-        this.questionCreator = questionCreator;
     }
 }

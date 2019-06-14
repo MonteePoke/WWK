@@ -141,7 +141,7 @@ public class ComputerSystemDiagramController extends SubmitConfigurationControll
                 case STOP_CONNECTION:
                     if(event.getPickResult().getIntersectedNode().getParent() instanceof ComputerSystemDiagramDetail) {
                         stopElementForConnection = (ComputerSystemDiagramDetail) event.getPickResult().getIntersectedNode().getParent();
-                        currentElement = ComputerSystemElementType.DEFAULT;
+                        currentElement = ComputerSystemElementType.START_CONNECTION;
                         drawConnector(startElementForConnection, stopElementForConnection);
                     }
                     break;
@@ -188,7 +188,7 @@ public class ComputerSystemDiagramController extends SubmitConfigurationControll
         //На работу
         graphSystem.add(element.getComputerSystemElement());
         drawPanel.getChildren().add(element);
-        rebootDrawState();
+//        rebootDrawState();
     }
 
     private void drawConnector(ComputerSystemDiagramDetail elementFrom, ComputerSystemDiagramDetail elementTo){
@@ -212,7 +212,7 @@ public class ComputerSystemDiagramController extends SubmitConfigurationControll
             elementFrom.toFront();
             elementTo.toFront();
         }
-        rebootDrawState();
+//        rebootDrawState();
     }
 
     private <T extends Node & DiagramElement> void drawDiagramContextMenu(T diagramElement, DiagramContextMenu diagramContextMenu){
@@ -246,7 +246,7 @@ public class ComputerSystemDiagramController extends SubmitConfigurationControll
         );
     }
 
-    public void setQuestion(Question question, boolean editable, Consumer<Question> callbackAction) {
+    public void setQuestion(Question question, boolean editable, Consumer<Question> callbackActionBefore, Consumer<Question> callbackActionAfter, Stages stageForClose) {
         this.question = question;
         ComputerSystemDto computerSystemDto = new Gson().fromJson(question.getAnswer(), ComputerSystemDto.class);
         submitConfiguration(
@@ -255,8 +255,11 @@ public class ComputerSystemDiagramController extends SubmitConfigurationControll
                 submit,
                 communicator,
                 stagePool,
-                callbackAction
+                callbackActionBefore,
+                callbackActionAfter
         );
+        setStageForClose(stageForClose);
+
         //Настройки работчего поля
         textArea.setDisable(!editable);
         textArea.setHtmlText(question.getQuestion());

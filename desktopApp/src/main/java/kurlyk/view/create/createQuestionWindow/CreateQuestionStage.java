@@ -9,14 +9,14 @@ import java.util.function.Supplier;
 
 public class CreateQuestionStage extends BaseStage<CreateQuestionController> {
 
-    public CreateQuestionStage(Consumer<Question> setQuestionInTableAction) {
+    public CreateQuestionStage(
+            Consumer<Question> callbackActionBefore,
+            Consumer<Question> callbackActionAfter,
+            Supplier<Question> createQuestionAction
+    ) {
         super(BaseStageDto.allOff());
-        controller.setQuestionConsumer(setQuestionInTableAction);
-    }
-
-    public CreateQuestionStage(Consumer<Question> callbackQuestionAction, Supplier<Question> createQuestionAction) {
-        super(BaseStageDto.allOff());
-        controller.setQuestionConsumer(callbackQuestionAction);
+        controller.setCallbackActionBefore(callbackActionBefore);
+        controller.setCallbackActionAfter(callbackActionAfter);
         controller.setQuestionCreator(createQuestionAction);
     }
 

@@ -24,4 +24,9 @@ public enum QuestionType implements Codable<String> {
     public String getCode() {
         return code;
     }
+
+    @Override
+    public String toString() {
+        return code;
+    }
 }

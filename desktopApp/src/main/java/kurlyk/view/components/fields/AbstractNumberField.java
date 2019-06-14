@@ -23,4 +23,8 @@ public abstract class AbstractNumberField<T extends Number> extends AbstractCust
     public SignDeterminant getSignDeterminant() {
         return signDeterminant;
     }
+
+    public void setSignDeterminant(SignDeterminant signDeterminant) {
+        this.signDeterminant = signDeterminant;
+    }
 }

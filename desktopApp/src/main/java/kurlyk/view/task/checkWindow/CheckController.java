@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import kurlyk.common.Trio;
 import kurlyk.communication.Communicator;
@@ -14,6 +15,7 @@ import kurlyk.transfer.ResultAnswerDto;
 import kurlyk.transfer.answer.SelectAnswerDto;
 import kurlyk.transfer.tasks.SelectDto;
 import kurlyk.view.common.stage.StagePool;
+import kurlyk.view.common.stage.Stages;
 import kurlyk.view.components.EditableCheckBox;
 import kurlyk.view.components.MyHtmlEditor;
 import kurlyk.view.task.SubmitConfigurationController;
@@ -32,6 +34,9 @@ public class CheckController extends SubmitConfigurationController<SelectDto> {
     @FXML private VBox root;
     @FXML private Button submit;
     @FXML private MyHtmlEditor textArea;
+    @FXML private Button createItemButton;
+    @FXML private Button deleteItemButton;
+    @FXML private HBox controlPanel;
     private Question question;
 
     @Autowired
@@ -44,9 +49,18 @@ public class CheckController extends SubmitConfigurationController<SelectDto> {
     private UsverInfo usverInfo;
 
     public void initialize(){
+        createItemButton.setOnAction(event -> {
+            root.getChildren().add(new EditableCheckBox(false, "", 1, true));
+        });
+        deleteItemButton.setOnAction(event -> {
+            try {
+                root.getChildren().remove(root.getChildren().size() - 1);
+            } catch (Exception ignored) {
+            }
+        });
     }
 
-    public void setQuestion(Question question, boolean editable, Consumer<Question> callbackAction) {
+    public void setQuestion(Question question, boolean editable, Consumer<Question> callbackActionBefore, Consumer<Question> callbackActionAfter, Stages stageForClose) {
         this.question = question;
         SelectDto checkDto = new Gson().fromJson(question.getAnswer(), SelectDto.class);
         submitConfiguration(
@@ -55,12 +69,15 @@ public class CheckController extends SubmitConfigurationController<SelectDto> {
                 submit,
                 communicator,
                 stagePool,
-                callbackAction
+                callbackActionBefore,
+                callbackActionAfter
         );
+        setStageForClose(stageForClose);
 
         //Настройки работчего поля
         textArea.setDisable(!editable);
         textArea.setHtmlText(question.getQuestion());
+        controlPanel.setVisible(editable);
         if (checkDto != null) {
             for (Trio<Boolean, String, Integer> option : checkDto.getOptions()){
                 root.getChildren().add(new EditableCheckBox(option.getValueA(), option.getValueB(), option.getValueC(), editable));

@@ -16,6 +16,7 @@ import kurlyk.transfer.ResultAnswerDto;
 import kurlyk.transfer.answer.FormulaAnswerDto;
 import kurlyk.transfer.tasks.FormulaDto;
 import kurlyk.view.common.stage.StagePool;
+import kurlyk.view.common.stage.Stages;
 import kurlyk.view.components.MyHtmlEditor;
 import kurlyk.view.task.SubmitConfigurationController;
 import netscape.javascript.JSObject;
@@ -85,7 +86,7 @@ public class FormulaController extends SubmitConfigurationController<FormulaDto>
         }
     }
 
-    public void setQuestion(Question question, boolean editable, Consumer<Question> callbackAction) {
+    public void setQuestion(Question question, boolean editable, Consumer<Question> callbackActionBefore, Consumer<Question> callbackActionAfter, Stages stageForClose) {
         this.question = question;
         FormulaDto formulaDto = new Gson().fromJson(question.getAnswer(), FormulaDto.class);
         submitConfiguration(
@@ -94,8 +95,10 @@ public class FormulaController extends SubmitConfigurationController<FormulaDto>
                 submit,
                 communicator,
                 stagePool,
-                callbackAction
+                callbackActionBefore,
+                callbackActionAfter
         );
+        setStageForClose(stageForClose);
 
         //Настройки работчего поля
         textArea.setDisable(!editable);

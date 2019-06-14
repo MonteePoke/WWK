@@ -254,7 +254,7 @@ public class CustomTreeCell extends TreeCell<TreeDto> {
     private void createTask() {
         Task task = Task
                 .builder()
-                .labWork(getParentSelectedItem().getValue().getLabWork())
+                .labWork(getSelectedItem().getValue().getLabWork())
                 .number(getNumber())
                 .name("Задание №" + getNumber())
                 .build();
@@ -295,16 +295,9 @@ public class CustomTreeCell extends TreeCell<TreeDto> {
 
     private void createQuestion() {
         stagePool.pushStageAndShowModal(Stages.CREATE_QUESTION, new CreateQuestionStage(
-                question -> {
-                    try {
-                        Long id = communicator.saveQuestion(question);
-                        question.setId(id);
-                        addItem.accept(new CustomTreeItem(getSelectedItem(), new TreeDto(question)));
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                },
-                () -> Question.builder().number(getNumber()).name("Вопрос №" + getNumber()).build()
+                question -> question.setTask(getSelectedItem().getValue().getTask()),
+                question -> addItem.accept(new CustomTreeItem(getSelectedItem(), new TreeDto(question))),
+                () -> Question.builder().number(getNumber()).build()
         ));
     }
 
@@ -327,7 +320,7 @@ public class CustomTreeCell extends TreeCell<TreeDto> {
                 questionModel,
                 (Question question) -> {
                     try {
-                        communicator.saveQuestion(question);
+                        communicator.updateQuestionHeader(question);
                         getSelectedItem().setValue(new TreeDto(question));
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -358,7 +351,7 @@ public class CustomTreeCell extends TreeCell<TreeDto> {
                 if (optionalNumberTask.isPresent()) {
                     return optionalNumberTask.getAsInt() + 1;
                 } else {
-                    return 0;
+                    return 1;
                 }
             case TASK:
                 OptionalInt optionalNumberQuestion = children

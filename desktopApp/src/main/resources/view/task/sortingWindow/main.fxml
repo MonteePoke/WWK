@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 <?import kurlyk.view.components.DraggingListView?>
 <?import kurlyk.view.components.MyHtmlEditor?>
-<VBox xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kurlyk.view.task.sortingWindow.SortingController">
+<VBox xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kurlyk.view.task.sortingWindow.SortingController">
     <HBox>
         <MyHtmlEditor fx:id="textArea" HBox.hgrow="ALWAYS">
 
@@ -14,9 +14,29 @@
     </HBox>
     <VBox fx:id="root" alignment="TOP_CENTER">
         <HBox>
-            <DraggingListView fx:id="itemsField" HBox.hgrow="ALWAYS"/>
+            <DraggingListView fx:id="itemsField" HBox.hgrow="ALWAYS" />
         </HBox>
     </VBox>
+   <HBox fx:id="controlPanel" alignment="CENTER" prefHeight="0.0" prefWidth="800.0">
+      <children>
+         <Button fx:id="createItemButton" mnemonicParsing="false" text="Создать">
+            <font>
+               <Font size="14.0" />
+            </font>
+            <HBox.margin>
+               <Insets left="5.0" right="5.0" />
+            </HBox.margin>
+         </Button>
+         <Button fx:id="deleteItemButton" mnemonicParsing="false" text="Удалить">
+            <font>
+               <Font size="14.0" />
+            </font>
+            <HBox.margin>
+               <Insets left="5.0" right="5.0" />
+            </HBox.margin>
+         </Button>
+      </children>
+   </HBox>
     <HBox alignment="CENTER" HBox.hgrow="ALWAYS">
         <Button fx:id="submit" text="Ответ">
             <font>

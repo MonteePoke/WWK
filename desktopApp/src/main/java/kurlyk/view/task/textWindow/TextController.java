@@ -4,7 +4,7 @@ package kurlyk.view.task.textWindow;
 import com.google.gson.Gson;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
 import kurlyk.communication.Communicator;
 import kurlyk.communication.UsverInfo;
@@ -13,6 +13,7 @@ import kurlyk.transfer.ResultAnswerDto;
 import kurlyk.transfer.answer.TextAnswerDto;
 import kurlyk.transfer.tasks.TextDto;
 import kurlyk.view.common.stage.StagePool;
+import kurlyk.view.common.stage.Stages;
 import kurlyk.view.components.MyHtmlEditor;
 import kurlyk.view.task.SubmitConfigurationController;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,7 @@ public class TextController extends SubmitConfigurationController<TextDto> {
     @FXML private VBox root;
     @FXML private Button submit;
     @FXML private MyHtmlEditor textArea;
-    @FXML private TextField inputField;
+    @FXML private TextArea inputArea;
     private Question question;
 
     @Autowired
@@ -46,7 +47,7 @@ public class TextController extends SubmitConfigurationController<TextDto> {
 
     }
 
-    public void setQuestion(Question question, boolean editable, Consumer<Question> callbackAction) {
+    public void setQuestion(Question question, boolean editable, Consumer<Question> callbackActionBefore, Consumer<Question> callbackActionAfter, Stages stageForClose) {
         this.question = question;
         TextDto textDto = new Gson().fromJson(question.getAnswer(), TextDto.class);
         submitConfiguration(
@@ -55,20 +56,22 @@ public class TextController extends SubmitConfigurationController<TextDto> {
                 submit,
                 communicator,
                 stagePool,
-                callbackAction
+                callbackActionBefore,
+                callbackActionAfter
         );
+        setStageForClose(stageForClose);
 
         //Настройки работчего поля
         textArea.setDisable(!editable);
         textArea.setHtmlText(question.getQuestion());
         if (textDto != null) {
-            inputField.setText(textDto.getText());
+            inputArea.setText(textDto.getText());
         }
     }
 
     @Override
     public TextDto getResult() {
-        return new TextDto(inputField.getText());
+        return TextDto.formStrings(inputArea.getText());
     }
 
     @Override

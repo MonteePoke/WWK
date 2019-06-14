@@ -2,23 +2,32 @@ package kurlyk.view.components;
 
 
 import javafx.event.Event;
+import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.ListView;
+import javafx.scene.control.ScrollBar;
 import javafx.scene.control.cell.TextFieldListCell;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.util.converter.DefaultStringConverter;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 
 
 public class DraggingListView extends ListView<String> {
 
+    @Getter @Setter
+    private DraggingListView boundDraggingListView;
+    @Getter @Setter private boolean scrollBarDisabled;
+
+
     public DraggingListView() {
         super();
         setCellFactory(param -> new BirdCell());
-        setEditable(true);
         setOnEditCommit(t -> getItems().set(t.getIndex(), t.getNewValue()));
         setOnEditCancel(t -> System.out.println("setOnEditCancel"));
     }
@@ -29,6 +38,15 @@ public class DraggingListView extends ListView<String> {
         public BirdCell() {
             super(new DefaultStringConverter());
             setAlignment(Pos.CENTER);
+            if (boundDraggingListView != null) {
+                bindScrollBars();
+            }
+            if (scrollBarDisabled) {
+                try {
+                    getListViewScrollBar().setDisable(true);
+                } catch (Exception ignored) {
+                }
+            }
 
             //Начало
             setOnDragDetected(event -> {
@@ -82,5 +100,25 @@ public class DraggingListView extends ListView<String> {
             super.updateItem(item, empty);
             setText((empty || item == null) ? null : item);
         }
+    }
+
+    private void bindScrollBars(){
+        try {
+            getListViewScrollBar().valueProperty().bind(boundDraggingListView.getListViewScrollBar().valueProperty());
+        } catch (Exception ignored) {
+        }
+    }
+
+    private ScrollBar getListViewScrollBar() {
+        ScrollBar scrollbar = null;
+        for (Node node : this.lookupAll(".scroll-bar")) {
+            if (node instanceof ScrollBar) {
+                ScrollBar bar = (ScrollBar) node;
+                if (bar.getOrientation().equals(Orientation.VERTICAL)) {
+                    scrollbar = bar;
+                }
+            }
+        }
+        return scrollbar;
     }
 }

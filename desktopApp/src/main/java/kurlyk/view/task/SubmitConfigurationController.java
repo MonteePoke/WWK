@@ -20,6 +20,7 @@ public abstract class SubmitConfigurationController<T> extends Controller implem
 
     @Getter @Setter private Question question;
     @Getter @Setter private Communicator communicator;
+    @Getter @Setter private Stages stageForClose;
     private boolean callbackIsExecuted = false;
 
     protected void submitConfiguration(
@@ -28,19 +29,20 @@ public abstract class SubmitConfigurationController<T> extends Controller implem
             Button submit,
             Communicator communicator,
             StagePool stagePool,
-            Consumer<Question> callback
+            Consumer<Question> callbackBefore,
+            Consumer<Question> callbackAfter
     ) {
         this.question = question;
         this.communicator = communicator;
         if (editable) {
             submit.setOnAction(event -> {
                 try {
-                    callback.accept(saveQuestion(this.question));
-                    try {
-                        stagePool.showStage(Stages.COMMON_CREATE);
-                    } catch (Exception e) {
+                    callbackBefore.accept(this.question);
+                    Question savedQuestion = saveQuestion(this.question);
+                    callbackAfter.accept(savedQuestion);
+                    if (stageForClose != null) {
+                        stagePool.closeStage(stageForClose);
                     }
-                    stagePool.closeStage(Stages.CREATE_QUESTION);
                 } catch (IOException e) {
                     FxDialogs.showError("", "Ошибка отправки данных");
                 }
@@ -50,10 +52,14 @@ public abstract class SubmitConfigurationController<T> extends Controller implem
             submit.setOnAction(event -> {
                 modifyButton(submit);
                 try {
+                    callbackBefore.accept(this.question);
                     getAnswerResult(this.question.getAttemptsNumber() - attemptsNumber);
                     if (!callbackIsExecuted) {
-                        callback.accept(this.question);
+                        callbackAfter.accept(this.question);
                         callbackIsExecuted = true;
+                    }
+                    if (stageForClose != null) {
+                        stagePool.closeStage(stageForClose);
                     }
                 } catch (IOException e) {
                     FxDialogs.showError("", "Ошибка отправки данных");

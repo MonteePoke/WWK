@@ -12,9 +12,11 @@ import kurlyk.transfer.ResultAnswerDto;
 import kurlyk.transfer.answer.NumberAnswerDto;
 import kurlyk.transfer.tasks.NumberDto;
 import kurlyk.view.common.stage.StagePool;
+import kurlyk.view.common.stage.Stages;
 import kurlyk.view.components.MyHtmlEditor;
 import kurlyk.view.components.fields.DoubleField;
 import kurlyk.view.components.fields.IntegerField;
+import kurlyk.view.components.fields.SignDeterminant;
 import kurlyk.view.task.SubmitConfigurationController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -45,10 +47,10 @@ public class NumberController extends SubmitConfigurationController<NumberDto> {
     private UsverInfo usverInfo;
 
     public void initialize(){
-
+        accuracyField.setSignDeterminant(SignDeterminant.POSITIVE_ONLY);
     }
 
-    public void setQuestion(Question question, boolean editable, Consumer<Question> callbackAction) {
+    public void setQuestion(Question question, boolean editable, Consumer<Question> callbackActionBefore, Consumer<Question> callbackActionAfter, Stages stageForClose) {
         this.question = question;
         NumberDto numberDto = new Gson().fromJson(question.getAnswer(), NumberDto.class);
         submitConfiguration(
@@ -57,8 +59,10 @@ public class NumberController extends SubmitConfigurationController<NumberDto> {
                 submit,
                 communicator,
                 stagePool,
-                callbackAction
+                callbackActionBefore,
+                callbackActionAfter
         );
+        setStageForClose(stageForClose);
 
         //Настройки работчего поля
         textArea.setDisable(!editable);

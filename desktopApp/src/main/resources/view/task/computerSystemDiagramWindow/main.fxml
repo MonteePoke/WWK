@@ -1,37 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 <?import kurlyk.view.components.fields.DoubleField?>
 <?import kurlyk.view.components.MyHtmlEditor?>
-<VBox xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kurlyk.view.task.computerSystemDiagramWindow.ComputerSystemDiagramController">
+<VBox xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kurlyk.view.task.computerSystemDiagramWindow.ComputerSystemDiagramController">
     <HBox>
-        <MyHtmlEditor fx:id="textArea" HBox.hgrow="ALWAYS">
+        <MyHtmlEditor fx:id="textArea" prefWidth="800.0" HBox.hgrow="ALWAYS">
 
         </MyHtmlEditor>
     </HBox>
     <VBox fx:id="root" alignment="TOP_CENTER">
         <BorderPane fx:id="drawPlace" VBox.vgrow="ALWAYS">
-            <right>
-                <VBox fx:id="toolPanel">
-                    <Button fx:id="cpuButton" text="CPU" maxWidth="Infinity"> </Button>
-                    <Button fx:id="ramButton" text="RAM" maxWidth="Infinity"> </Button>
-                    <Button fx:id="ioButton" text="IO" maxWidth="Infinity"> </Button>
-                    <Button fx:id="pointButton" text="POINT" maxWidth="Infinity"> </Button>
-                    <DoubleField fx:id="availabilityFactorField" > </DoubleField>
-                    <Button fx:id="connect" text="CONNECT" maxWidth="Infinity"> </Button>
-                </VBox>
-            </right>
+            <top>
+                <HBox fx:id="toolPanel">
+                    <Label alignment="CENTER" contentDisplay="CENTER" text="Готовность: ">
+                  <font>
+                     <Font size="14.0" />
+                  </font>
+                  <HBox.margin>
+                     <Insets left="5.0" right="5.0" />
+                  </HBox.margin></Label>
+                    <DoubleField fx:id="availabilityFactorField">
+                  <HBox.margin>
+                     <Insets left="5.0" right="5.0" />
+                  </HBox.margin></DoubleField>
+                    <Button fx:id="cpuButton" maxWidth="Infinity" text="CPU">
+                  <HBox.margin>
+                     <Insets left="5.0" right="5.0" />
+                  </HBox.margin></Button>
+                    <Button fx:id="ramButton" maxWidth="Infinity" text="RAM">
+                  <HBox.margin>
+                     <Insets left="5.0" right="5.0" />
+                  </HBox.margin></Button>
+                    <Button fx:id="ioButton" maxWidth="Infinity" text="IO">
+                  <HBox.margin>
+                     <Insets left="5.0" right="5.0" />
+                  </HBox.margin></Button>
+                    <Button fx:id="pointButton" maxWidth="Infinity" text="POINT">
+                  <HBox.margin>
+                     <Insets left="5.0" right="5.0" />
+                  </HBox.margin></Button>
+                    <Button fx:id="connect" maxWidth="Infinity" text="CONNECT">
+                  <HBox.margin>
+                     <Insets left="5.0" right="5.0" />
+                  </HBox.margin></Button>
+                </HBox>
+            </top>
             <center>
-                <ScrollPane fx:id="scrollPanel">
-                    <AnchorPane fx:id="drawPanel"/>
+                <ScrollPane fx:id="scrollPanel" prefHeight="354.0" prefWidth="651.0">
+                    <AnchorPane fx:id="drawPanel" />
                 </ScrollPane>
             </center>
         </BorderPane>
     </VBox>
-    <HBox alignment="CENTER" HBox.hgrow="ALWAYS">
+    <HBox alignment="CENTER" prefHeight="38.0" prefWidth="800.0" HBox.hgrow="ALWAYS">
         <Button fx:id="submit" text="Ответ">
             <font>
                 <Font size="15.0" />

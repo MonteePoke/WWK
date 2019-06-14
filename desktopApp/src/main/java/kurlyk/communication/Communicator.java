@@ -138,6 +138,11 @@ public class Communicator extends AbstractCommunicator{
         return postData(type, question, "/question/");
     }
 
+    public Long updateQuestionHeader(Question question) throws ConnectException, IOException {
+        Type type = new TypeToken<Long>(){}.getType();
+        return postData(type, question, "/update-question-header/");
+    }
+
     public void deleteQuestion(Question question) throws ConnectException, IOException {
         deleteData(null, question.getId(), "/question/");
     }

@@ -4,11 +4,9 @@ import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import kurlyk.QuestionType;
-import kurlyk.common.Codable;
 import kurlyk.common.MyFunction;
 import kurlyk.communication.Communicator;
 import kurlyk.communication.UsverInfo;
@@ -17,39 +15,29 @@ import kurlyk.model.Question;
 import kurlyk.model.Task;
 import kurlyk.view.common.controller.Controller;
 import kurlyk.view.common.stage.StagePool;
+import kurlyk.view.common.stage.Stages;
+import kurlyk.view.components.CommonSceneCreator;
 import kurlyk.view.components.fields.DoubleField;
 import kurlyk.view.components.fields.IntegerField;
 import kurlyk.view.components.fields.LongField;
-import kurlyk.view.components.table.StringCell;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.Objects;
 import java.util.function.Consumer;
 
 @Component
 @Scope("prototype")
 public class CreateLtqController extends Controller {
 
-    @FXML
-    private GridPane root;
-    @FXML
-    private Button submit;
-    @FXML
-    TableView<Question> questionTable;
-    @FXML
-    private TableColumn<Question, String> questionName;
+    @FXML private GridPane root;
+    @FXML private Button submit;
+    @FXML private Button editBodyQuestion;
     private Runnable closeStage;
     private int rowCounter;
-    private Question selectedQuestion;
 
-    //question handmade property
-    private MyFunction<Integer> questionNumberProperty;
-    private MyFunction<String> questionNameProperty;
-    private MyFunction<Long> questionScoreProperty;
-    private MyFunction<Integer> questionAttemptsNumberProperty;
-    private MyFunction<String> questionTypeProperty;
 
     @Autowired
     private StagePool stagePool;
@@ -66,24 +54,7 @@ public class CreateLtqController extends Controller {
         root.setHgap(50);
         root.setVgap(20);
         root.setPadding(new Insets(15, 15, 15, 15));
-
-        //table
-        questionTable.getSelectionModel().selectedItemProperty().addListener((observableValue, oldVal, newVal) -> {
-            selectedQuestion = newVal;
-            questionNumberProperty.accept(newVal.getNumber());
-            questionNameProperty.accept(newVal.getName());
-            questionScoreProperty.accept(newVal.getScore());
-            questionAttemptsNumberProperty.accept(newVal.getAttemptsNumber());
-        });
-
-        try {
-            questionTable.getItems().addAll(communicator.getQuestionHeaders());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        questionName.setCellValueFactory(new PropertyValueFactory<>("name"));
-        questionName.setCellFactory(p -> new <Question>StringCell(this::commitChanges));
+        editBodyQuestion.setVisible(false);
     }
 
     private void commitChanges() {
@@ -129,27 +100,42 @@ public class CreateLtqController extends Controller {
     }
 
     public void editQuestion(Question question, Consumer<Question> saveAction) {
-        selectedQuestion = question;
-        questionNumberProperty = createIntegerField("Номер вопроса", question.getNumber());
-        questionNameProperty = createStringField("Название вопроса", question.getName());
-        questionTypeProperty = createQuestionTypeField("Тип вопроса", question.getQuestionType(), false);
-        questionScoreProperty = createLongField("Максимальный балл", question.getScore());
-        questionAttemptsNumberProperty = createIntegerField("Количество попыток", question.getAttemptsNumber());
-        questionTable.setVisible(true);
+        MyFunction<Integer> questionNumberProperty = createIntegerField("Номер вопроса", question.getNumber());
+        MyFunction<String> questionNameProperty = createStringField("Название вопроса", question.getName());
+        MyFunction<QuestionType> questionTypeProperty = createQuestionTypeField("Тип вопроса", question.getQuestionType(), false);
+        MyFunction<Long> questionScoreProperty = createLongField("Максимальный балл", question.getScore());
+        MyFunction<Integer> questionAttemptsNumberProperty = createIntegerField("Количество попыток", question.getAttemptsNumber());
+        editBodyQuestion.setVisible(true);
+        editBodyQuestion.setOnAction(event -> {
+            stagePool.setSceneStage(Stages.LTQ_CREATE, CommonSceneCreator.questionSceneCreator(
+                    Objects.requireNonNull(getEditableQuestion(question.getId())),
+                    true,
+                    questionBeforeAction -> {},
+                    questionAfterAction -> {},
+                    Stages.LTQ_CREATE
+            ));
+        });
 
         submit.setOnAction(event -> {
             question.setNumber(questionNumberProperty.get());
             question.setName(questionNameProperty.get());
             question.setScore(questionScoreProperty.get());
-            question.setQuestionType(questionTypeProperty.get() != null ?
-                    Codable.find(QuestionType.class, questionTypeProperty.get()) : null);
+            question.setQuestionType(questionTypeProperty.get());
             question.setAttemptsNumber(questionAttemptsNumberProperty.get());
-            saveAction.accept(selectedQuestion);
+            saveAction.accept(question);
             closeStage.run();
         });
     }
 
-    private MyFunction<String> createQuestionTypeField(String name, QuestionType value) {
+    private Question getEditableQuestion(Long questionId){
+        try {
+            return communicator.getQuestion(questionId);
+        } catch (IOException e) {
+            return null;
+        }
+    }
+
+    private MyFunction<QuestionType> createQuestionTypeField(String name, QuestionType value) {
         return createQuestionTypeField(name, value, true);
     }
 
@@ -180,19 +166,19 @@ public class CreateLtqController extends Controller {
         return new MyFunction<>(field::setText, field::getText);
     }
 
-    private MyFunction<String> createQuestionTypeField(String name, QuestionType value, boolean editable) {
-        ComboBox<String> field = new ComboBox<>();
+    private MyFunction<QuestionType> createQuestionTypeField(String name, QuestionType value, boolean editable) {
+        ComboBox<QuestionType> field = new ComboBox<>();
         field.getItems().addAll(
-                QuestionType.COMPUTER_SYSTEM.getCode(),
-                QuestionType.FORMULA.getCode(),
-                QuestionType.TEXT.getCode(),
-                QuestionType.NUMBER.getCode(),
-                QuestionType.MATCHING.getCode(),
-                QuestionType.CHECK.getCode(),
-                QuestionType.RADIO.getCode()
+                QuestionType.COMPUTER_SYSTEM,
+                QuestionType.FORMULA,
+                QuestionType.TEXT,
+                QuestionType.NUMBER,
+                QuestionType.MATCHING,
+                QuestionType.CHECK,
+                QuestionType.RADIO
         );
-        field.setEditable(editable);
-        field.setValue(value != null ? value.getCode() : "");
+        field.setDisable(!editable);
+        field.setValue(value);
         setRow(name, field);
         return new MyFunction<>(field::setValue, field::getValue);
     }

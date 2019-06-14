@@ -103,6 +103,20 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
+    public Long updateQuestionHeader(Question question){
+        Question fullQuestion = getQuestion(question.getId()).orElseThrow(RuntimeException::new);
+        fullQuestion.setNumber(question.getNumber());
+        fullQuestion.setName(question.getName());
+        fullQuestion.setAttemptsNumber(question.getAttemptsNumber());
+        fullQuestion.setScore(question.getScore());
+        fullQuestion.setNegativeScore(question.getNegativeScore());
+        fullQuestion.setDecScore(question.getDecScore());
+        fullQuestion.setSkipQuestion(question.getSkipQuestion());
+        fullQuestion.setInterval(question.getInterval());
+        return saveQuestion(fullQuestion);
+    }
+
+    @Override
     public Long saveQuestion(Question question){
         return questionRepository.save(question).getId();
     }

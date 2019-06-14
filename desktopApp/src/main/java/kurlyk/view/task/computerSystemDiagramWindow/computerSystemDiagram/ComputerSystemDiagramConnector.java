@@ -41,7 +41,7 @@ public class ComputerSystemDiagramConnector extends Line implements DiagramEleme
             setEndY(newValue.doubleValue() + elementTo.getHeight() / 2);
             elementTo.toFront();
         });
-        setStrokeWidth(5);
+        setStrokeWidth(2);
         setStrokeLineCap(StrokeLineCap.ROUND);
         setSmooth(true);
         //Добаввление элементов

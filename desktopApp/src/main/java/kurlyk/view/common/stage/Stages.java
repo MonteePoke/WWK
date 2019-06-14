@@ -12,7 +12,7 @@ public enum Stages {
 
     SIGN_IN,
     START,
-    COMMON_CREATE,
+//    COMMON_CREATE,
 
     CREATE_LAB_WORK,
     LAB_WORK_TASK_MATCHING,
@@ -27,5 +27,6 @@ public enum Stages {
 //    PERFORM_LAB,
     PERFORM_WORK,
 
-    LTQ_CREATE
+    LTQ_CREATE,
+    EDIT_QUESTION
 }
