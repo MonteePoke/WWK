@@ -9,7 +9,7 @@ import java.util.function.Consumer;
 
 public class TextSceneCreator extends BaseStage<TextController> {
 
-    public TextSceneCreator(Question question, boolean editable, Consumer<Long> callbackAction) {
+    public TextSceneCreator(Question question, boolean editable, Consumer<Question> callbackAction) {
         super(BaseStageDto.allOff());
         controller.setQuestion(question, editable, callbackAction);
     }

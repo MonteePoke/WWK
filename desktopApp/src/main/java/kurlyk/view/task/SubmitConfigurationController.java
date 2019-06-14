@@ -28,14 +28,14 @@ public abstract class SubmitConfigurationController<T> extends Controller implem
             Button submit,
             Communicator communicator,
             StagePool stagePool,
-            Consumer<Long> callback
+            Consumer<Question> callback
     ) {
         this.question = question;
         this.communicator = communicator;
         if (editable) {
             submit.setOnAction(event -> {
                 try {
-                    callback.accept(saveQuestion(this.question).getId());
+                    callback.accept(saveQuestion(this.question));
                     try {
                         stagePool.showStage(Stages.COMMON_CREATE);
                     } catch (Exception e) {
@@ -52,7 +52,7 @@ public abstract class SubmitConfigurationController<T> extends Controller implem
                 try {
                     getAnswerResult(this.question.getAttemptsNumber() - attemptsNumber);
                     if (!callbackIsExecuted) {
-                        callback.accept(this.question.getId());
+                        callback.accept(this.question);
                         callbackIsExecuted = true;
                     }
                 } catch (IOException e) {

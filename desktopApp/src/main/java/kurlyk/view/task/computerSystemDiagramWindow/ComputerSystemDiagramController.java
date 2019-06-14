@@ -246,7 +246,7 @@ public class ComputerSystemDiagramController extends SubmitConfigurationControll
         );
     }
 
-    public void setQuestion(Question question, boolean editable, Consumer<Long> callbackAction) {
+    public void setQuestion(Question question, boolean editable, Consumer<Question> callbackAction) {
         this.question = question;
         ComputerSystemDto computerSystemDto = new Gson().fromJson(question.getAnswer(), ComputerSystemDto.class);
         submitConfiguration(
@@ -261,6 +261,9 @@ public class ComputerSystemDiagramController extends SubmitConfigurationControll
         textArea.setDisable(!editable);
         textArea.setHtmlText(question.getQuestion());
         //TODO Засетить граф
+        if(computerSystemDto != null){
+
+        }
     }
 
     @Override

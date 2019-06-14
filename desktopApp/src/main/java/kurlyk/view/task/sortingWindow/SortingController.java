@@ -46,7 +46,7 @@ public class SortingController extends SubmitConfigurationController<SortingDto>
     public void initialize(){
     }
 
-    public void setItemsToView(Question question, boolean editable, Consumer<Long> callbackAction){
+    public void setItemsToView(Question question, boolean editable, Consumer<Question> callbackAction){
         this.question = question;
         SortingDto sortingDto = new Gson().fromJson(question.getAnswer(), SortingDto.class);
         submitConfiguration(
@@ -61,8 +61,10 @@ public class SortingController extends SubmitConfigurationController<SortingDto>
         //Настройки работчего поля
         textArea.setDisable(!editable);
         textArea.setHtmlText(question.getQuestion());
-        itemsField.getItems().addAll(sortingDto.getItems());
         itemsField.setEditable(editable);
+        if (sortingDto != null) {
+            itemsField.getItems().addAll(sortingDto.getItems());
+        }
     }
 
     @Override

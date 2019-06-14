@@ -2,6 +2,7 @@ package kurlyk.view.components;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.web.HTMLEditor;
@@ -15,9 +16,16 @@ public class EditableRadioButton extends HBox {
     @Getter private IntegerField coefficientField;
 
     public EditableRadioButton(Boolean isSelected, String text, Integer coefficient, boolean editable) {
+        this(isSelected, text, coefficient, editable, null);
+    }
+
+    public EditableRadioButton(Boolean isSelected, String text, Integer coefficient, boolean editable, ToggleGroup toggleGroup) {
         super();
         radioButton = new RadioButton();
         radioButton.setSelected(isSelected);
+        if (toggleGroup != null) {
+            radioButton.setToggleGroup(toggleGroup);
+        }
 
         htmlEditor = new HTMLEditor();
         HBox.setHgrow(htmlEditor, Priority.SOMETIMES);

@@ -48,7 +48,7 @@ public class NumberController extends SubmitConfigurationController<NumberDto> {
 
     }
 
-    public void setQuestion(Question question, boolean editable, Consumer<Long> callbackAction) {
+    public void setQuestion(Question question, boolean editable, Consumer<Question> callbackAction) {
         this.question = question;
         NumberDto numberDto = new Gson().fromJson(question.getAnswer(), NumberDto.class);
         submitConfiguration(
@@ -64,7 +64,9 @@ public class NumberController extends SubmitConfigurationController<NumberDto> {
         textArea.setDisable(!editable);
         textArea.setHtmlText(question.getQuestion());
         accuracyField.setVisible(editable);
-        inputField.setValue(numberDto.getNumber());
+        if (numberDto != null) {
+            inputField.setValue(numberDto.getNumber());
+        }
     }
 
     @Override

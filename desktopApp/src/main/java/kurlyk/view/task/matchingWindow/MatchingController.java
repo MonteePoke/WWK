@@ -47,7 +47,7 @@ public class MatchingController extends SubmitConfigurationController<MatchingDt
     public void initialize(){
     }
 
-    public void setItemsToView(Question question, boolean editable, Consumer<Long> callbackAction){
+    public void setItemsToView(Question question, boolean editable, Consumer<Question> callbackAction){
         this.question = question;
         MatchingDto matchingDto = new Gson().fromJson(question.getAnswer(), MatchingDto.class);
         submitConfiguration(
@@ -62,10 +62,12 @@ public class MatchingController extends SubmitConfigurationController<MatchingDt
         //Настройки работчего поля
         textArea.setDisable(!editable);
         textArea.setHtmlText(question.getQuestion());
-        leftField.getItems().addAll(matchingDto.getLeftPart());
         leftField.setEditable(editable);
-        rightField.getItems().addAll(matchingDto.getRightPart());
         rightField.setEditable(editable);
+        if (matchingDto != null) {
+            leftField.getItems().addAll(matchingDto.getLeftPart());
+            rightField.getItems().addAll(matchingDto.getRightPart());
+        }
     }
 
     @Override

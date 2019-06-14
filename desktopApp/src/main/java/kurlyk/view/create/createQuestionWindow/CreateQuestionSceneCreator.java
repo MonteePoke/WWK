@@ -1,5 +1,6 @@
 package kurlyk.view.create.createQuestionWindow;
 
+import kurlyk.model.Question;
 import kurlyk.view.common.dto.BaseStageDto;
 import kurlyk.view.common.stage.base.BaseSceneCreator;
 
@@ -12,7 +13,7 @@ public class CreateQuestionSceneCreator extends BaseSceneCreator<CreateQuestionC
         this(null);
     }
 
-    public CreateQuestionSceneCreator(Consumer<Long> setQuestionInTableAction) {
+    public CreateQuestionSceneCreator(Consumer<Question> setQuestionInTableAction) {
         super(BaseStageDto.allOff());
         controller.setQuestionConsumer(setQuestionInTableAction);
     }

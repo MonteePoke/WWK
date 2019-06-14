@@ -49,7 +49,6 @@ public class CreateLtqController extends Controller {
     private MyFunction<String> questionNameProperty;
     private MyFunction<Long> questionScoreProperty;
     private MyFunction<Integer> questionAttemptsNumberProperty;
-    private MyFunction<String> questionDescriptionProperty;
     private MyFunction<String> questionTypeProperty;
 
     @Autowired
@@ -133,9 +132,9 @@ public class CreateLtqController extends Controller {
         selectedQuestion = question;
         questionNumberProperty = createIntegerField("Номер вопроса", question.getNumber());
         questionNameProperty = createStringField("Название вопроса", question.getName());
-        questionTypeProperty = createQuestionTypeField("Тип вопроса", question.getQuestionType());
-        questionScoreProperty = createLongField("Максимальный балл", question.getScore(), true);
-        questionAttemptsNumberProperty = createIntegerField("Количество попыток", question.getAttemptsNumber(), true);
+        questionTypeProperty = createQuestionTypeField("Тип вопроса", question.getQuestionType(), false);
+        questionScoreProperty = createLongField("Максимальный балл", question.getScore());
+        questionAttemptsNumberProperty = createIntegerField("Количество попыток", question.getAttemptsNumber());
         questionTable.setVisible(true);
 
         submit.setOnAction(event -> {

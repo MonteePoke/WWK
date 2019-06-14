@@ -8,7 +8,12 @@ public class FormulaUtils {
         askiiMathFormula = askiiMathFormula.replaceAll("\\\\right\\)", ")");
         askiiMathFormula = askiiMathFormula.replaceAll("\\{", "(");
         askiiMathFormula = askiiMathFormula.replaceAll("}", ")");
+        askiiMathFormula = askiiMathFormula.replaceAll("\\[", "(");
+        askiiMathFormula = askiiMathFormula.replaceAll("]", ")");
         askiiMathFormula = askiiMathFormula.replaceAll("\\\\sum", "sum");
+        askiiMathFormula = askiiMathFormula.replaceAll("\\\\prod", "prod");
+        askiiMathFormula = askiiMathFormula.replaceAll("\\\\int", "int");
+        askiiMathFormula = askiiMathFormula.replaceAll("\\\\sqrt", "sqrt");
 
 //        System.out.println("Было: " + latexFormula);
 //        System.out.println("Стало: " + askiiMathFormula);

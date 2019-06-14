@@ -154,8 +154,8 @@ public class Communicator extends AbstractCommunicator{
 
     private Map<String, String> pageInfoToParameters(Integer pageNumber, Integer contentSize){
         Map<String, String> parameters = new HashMap<>();
-        parameters.put("pageNumber", pageNumber != null ? pageNumber.toString() : null);
-        parameters.put("contentSize", contentSize != null ? contentSize.toString() : null);
+        parameters.put("pageNumber", pageNumber != null ? pageNumber.toString() : "0");
+        parameters.put("contentSize", contentSize != null ? contentSize.toString() : "0");
         return parameters;
     }
 
@@ -188,8 +188,8 @@ public class Communicator extends AbstractCommunicator{
 
     private Map<String, String> usverLabWorkDtoToParameters(UsverLabWorkDto usverLabWorkDto){
         Map<String, String> parameters = new HashMap<>();
-        parameters.put("usverId", usverLabWorkDto.getUsverId() != null ? usverLabWorkDto.getUsverId().toString() : null);
-        parameters.put("labWorkId", usverLabWorkDto.getLabWorkId() != null ? usverLabWorkDto.getLabWorkId().toString() : null);
+        parameters.put("usverId", usverLabWorkDto.getUsverId() != null ? usverLabWorkDto.getUsverId().toString() : "0");
+        parameters.put("labWorkId", usverLabWorkDto.getLabWorkId() != null ? usverLabWorkDto.getLabWorkId().toString() : "0");
         return parameters;
     }
 
@@ -271,8 +271,8 @@ public class Communicator extends AbstractCommunicator{
 
     private Map<String, String> labWorkIdAndVariantToParameters(Long labWorkId, Integer variant){
         Map<String, String> parameters = new HashMap<>();
-        parameters.put("labWorkId", labWorkId != null ? labWorkId.toString() : null);
-        parameters.put("variant", variant != null ? variant.toString() : null);
+        parameters.put("labWorkId", labWorkId != null ? labWorkId.toString() : "0");
+        parameters.put("variant", variant != null ? variant.toString() : "0");
         return parameters;
     }
 
@@ -296,14 +296,14 @@ public class Communicator extends AbstractCommunicator{
 
     private Map<String, String> usverIdToParameters(Long usverId){
         Map<String, String> parameters = new HashMap<>();
-        parameters.put("usverId", usverId != null ? usverId.toString() : null);
+        parameters.put("usverId", usverId != null ? usverId.toString() : "0");
         return parameters;
     }
 
     private Map<String, String> usverIdAndlabWorkIdToParameters(Long usverId, Long labWorkId){
         Map<String, String> parameters = new HashMap<>();
-        parameters.put("usverId", usverId != null ? usverId.toString() : null);
-        parameters.put("labWorkId", labWorkId != null ? labWorkId.toString() : null);
+        parameters.put("usverId", usverId != null ? usverId.toString() : "0");
+        parameters.put("labWorkId", labWorkId != null ? labWorkId.toString() : "0");
         return parameters;
     }
 }

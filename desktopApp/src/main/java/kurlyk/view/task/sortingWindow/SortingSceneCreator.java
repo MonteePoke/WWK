@@ -9,7 +9,7 @@ import java.util.function.Consumer;
 
 public class SortingSceneCreator extends BaseSceneCreator<SortingController> {
 
-    public SortingSceneCreator(Question question, boolean editable, Consumer<Long> callbackAction) {
+    public SortingSceneCreator(Question question, boolean editable, Consumer<Question> callbackAction) {
         super(BaseStageDto.allOff());
         controller.setItemsToView(question, editable, callbackAction);
     }

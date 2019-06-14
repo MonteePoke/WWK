@@ -47,7 +47,7 @@ public class RadioController extends SubmitConfigurationController<SelectDto> {
     public void initialize(){
     }
 
-    public void setQuestion(Question question, boolean editable, Consumer<Long> callbackAction) {
+    public void setQuestion(Question question, boolean editable, Consumer<Question> callbackAction) {
         this.question = question;
         SelectDto radioDto = new Gson().fromJson(question.getAnswer(), SelectDto.class);
         submitConfiguration(
@@ -63,15 +63,25 @@ public class RadioController extends SubmitConfigurationController<SelectDto> {
         textArea.setDisable(!editable);
         textArea.setHtmlText(question.getQuestion());
         ToggleGroup group = new ToggleGroup();
-        for (Trio<Boolean, String, Integer> option : radioDto.getOptions()){
-            EditableRadioButton editableRadioButton = new EditableRadioButton(
-                    option.getValueA(),
-                    option.getValueB(),
-                    option.getValueC(),
-                    editable
-            );
-            editableRadioButton.getRadioButton().setToggleGroup(group);
-            root.getChildren().add(editableRadioButton);
+
+
+        if (radioDto != null) {
+            for (Trio<Boolean, String, Integer> option : radioDto.getOptions()){
+                root.getChildren().add(
+                        new EditableRadioButton(
+                                option.getValueA(),
+                                option.getValueB(),
+                                option.getValueC(),
+                                editable,
+                                group
+                        )
+                );
+            }
+        } else {
+            root.getChildren().add(new EditableRadioButton(false, "", 1, editable, group));
+            root.getChildren().add(new EditableRadioButton(false, "", 1, editable, group));
+            root.getChildren().add(new EditableRadioButton(false, "", 1, editable, group));
+            root.getChildren().add(new EditableRadioButton(false, "", 1, editable, group));
         }
     }
 

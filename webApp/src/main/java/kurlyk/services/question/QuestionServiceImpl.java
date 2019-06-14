@@ -114,7 +114,7 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public List<QuestionForTableDto> getQuestionsForTable(Integer pageNumber, Integer contentSize){
-        if(pageNumber == null || contentSize == null){
+        if(pageNumber == 0 || contentSize == 0){
             return questionRepository.findAllForTable();
         } else {
             return questionRepository.findAllForTable(PageRequest.of(pageNumber, contentSize)).getContent();

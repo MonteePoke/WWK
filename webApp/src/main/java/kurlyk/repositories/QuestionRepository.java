@@ -31,7 +31,7 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
     List<QuestionForTableDto> findAllForTable();
 
     @Query(value = "SELECT new kurlyk.transfer.QuestionForTableDto(q.id, q.number, q.name, q.task.id, q.task.number, q.task.name, q.task.labWork.id, q.task.labWork.number, q.task.labWork.name) FROM Question as q",
-            countQuery = "SELECT count(new kurlyk.transfer.QuestionForTableDto(q.id, q.number, q.name, q.task.id, q.task.number, q.task.name, q.task.labWork.id, q.task.labWork.number, q.task.labWork.name)) FROM Question as q",
+            countQuery = "SELECT count(q.id, q.number, q.name, q.task.id, q.task.number, q.task.name, q.task.labWork.id, q.task.labWork.number, q.task.labWork.name) FROM Question as q",
             nativeQuery = true)
     Page<QuestionForTableDto> findAllForTable(Pageable pageable);
 }

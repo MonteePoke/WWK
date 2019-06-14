@@ -9,7 +9,7 @@ import java.util.function.Consumer;
 public class FormulaSceneCreator extends BaseStage<FormulaController> {
 
 
-    public FormulaSceneCreator(Question question, boolean editable, Consumer<Long> callbackAction) {
+    public FormulaSceneCreator(Question question, boolean editable, Consumer<Question> callbackAction) {
         super(BaseStageDto.allOff());
         controller.setQuestion(question, editable, callbackAction);
     }

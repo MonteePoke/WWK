@@ -27,6 +27,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 @Component
 @Scope("prototype")
@@ -38,7 +39,8 @@ public class CreateQuestionController extends Controller {
     private ComboBox<String> labType;
     @FXML
     private Button further;
-    private Consumer<Long> callbackAction;
+    private Consumer<Question> callbackAction;
+    private Supplier<Question> questionCreator;
     //null, если создаётся вопрос, не null, если редактируется вопрос
     private Long questionId;
 
@@ -60,7 +62,8 @@ public class CreateQuestionController extends Controller {
                 QuestionType.NUMBER.getCode(),
                 QuestionType.MATCHING.getCode(),
                 QuestionType.CHECK.getCode(),
-                QuestionType.RADIO.getCode()
+                QuestionType.RADIO.getCode(),
+                QuestionType.SORTING.getCode()
         );
 
         further.setOnAction(event -> {
@@ -101,21 +104,28 @@ public class CreateQuestionController extends Controller {
     }
 
     private Question createQuestion() {
-        return Question.builder()
-                .questionType(Codable.find(QuestionType.class, labType.getValue()))
-                .number(1)
-                .name(nameField.getText())
-                .attemptsNumber(1)
-                .score(1L)
-                .skipQuestion(false)
-                .build();
+        Question question;
+        if(questionCreator != null){
+            question = questionCreator.get();
+        } else{
+            question = Question.builder().number(1).name("Вопрос № X").build();
+        }
+        question.setQuestionType(Codable.find(QuestionType.class, labType.getValue()));
+        question.setAttemptsNumber(1);
+        question.setScore(1L);
+        question.setSkipQuestion(false);
+        return question;
     }
 
     public void setQuestionId(Long questionId) {
         this.questionId = questionId;
     }
 
-    public void setQuestionConsumer(Consumer<Long> callbackAction) {
+    public void setQuestionConsumer(Consumer<Question> callbackAction) {
         this.callbackAction = callbackAction;
+    }
+
+    public void setQuestionCreator(Supplier<Question> questionCreator) {
+        this.questionCreator = questionCreator;
     }
 }

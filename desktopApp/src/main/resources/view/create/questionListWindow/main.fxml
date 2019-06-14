@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.*?>
 <?import kurlyk.view.components.fields.IntegerField?>
-<VBox prefHeight="504.0" prefWidth="687.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kurlyk.view.create.questionListWindow.QuestionListController">
+<VBox prefHeight="504.0" prefWidth="723.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kurlyk.view.create.questionListWindow.QuestionListController">
     <VBox alignment="TOP_CENTER">
         <AnchorPane layoutX="10.0" layoutY="212.0" prefHeight="125.0" prefWidth="687.0">
             <children>
@@ -81,12 +81,12 @@
     </VBox>
    <TableView fx:id="questionTable" prefHeight="456.0" prefWidth="687.0">
      <columns>
-        <TableColumn fx:id="questionNumber" prefWidth="75.0" text="№ вопроса" />
-        <TableColumn fx:id="questionName" prefWidth="609.9999847412109" text="Вопрос" />
-        <TableColumn fx:id="taskNumber" prefWidth="75.0" text="№ задания" />
-        <TableColumn fx:id="taskName" prefWidth="609.9999847412109" text="Задание" />
-        <TableColumn fx:id="labWorkNumber" prefWidth="75.0" text="№ лабораторной" />
-        <TableColumn fx:id="labWorkName" prefWidth="609.9999847412109" text="Лабораторная" />
+        <TableColumn fx:id="questionNumber" prefWidth="87.0" text="№ вопроса" />
+        <TableColumn fx:id="questionName" prefWidth="214.0" text="Вопрос" />
+        <TableColumn fx:id="taskNumber" prefWidth="81.0" text="№ задания" />
+        <TableColumn fx:id="taskName" prefWidth="95.0" text="Задание" />
+        <TableColumn fx:id="labWorkNumber" prefWidth="111.0" text="№ лабораторной" />
+        <TableColumn fx:id="labWorkName" prefWidth="134.0" text="Лабораторная" />
      </columns>
    </TableView>
 </VBox>

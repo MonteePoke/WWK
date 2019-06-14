@@ -1,19 +1,21 @@
 package kurlyk.view.components.labTreeView;
 
+import javafx.collections.FXCollections;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
-import kurlyk.QuestionType;
 import kurlyk.WorkEntityType;
 import kurlyk.communication.Communicator;
 import kurlyk.model.LabWork;
 import kurlyk.model.Question;
 import kurlyk.model.Subject;
 import kurlyk.model.Task;
+import kurlyk.transfer.ActionType;
 import kurlyk.view.common.stage.StagePool;
 import kurlyk.view.common.stage.Stages;
 import kurlyk.view.create.createLtqWindow.CreateLtqStage;
+import kurlyk.view.create.createQuestionWindow.CreateQuestionStage;
 
 import java.io.IOException;
 import java.util.List;
@@ -32,7 +34,7 @@ public class CustomTreeCell extends TreeCell<TreeDto> {
     private Button addButton;
     private Button deleteButton;
     private Button editButton;
-    private Button importButton;
+    private ComboBox<ActionType> actionBox;
     private CheckBox createTestTaskCheck;
     private Communicator communicator;
     private StagePool stagePool;
@@ -75,7 +77,8 @@ public class CustomTreeCell extends TreeCell<TreeDto> {
             addButton = new Button("");
             deleteButton = new Button("");
             editButton = new Button("");
-            importButton = new Button("Импорт");
+            actionBox = new ComboBox<>(FXCollections.observableArrayList(ActionType.values()));
+            actionBox.getSelectionModel().select(0);
             createTestTaskCheck = new CheckBox();
             createTestTaskCheck.setSelected(true);
             settings(item);
@@ -156,12 +159,19 @@ public class CustomTreeCell extends TreeCell<TreeDto> {
     }
 
     private void taskSettings(Task task) {
-        cellBox.getChildren().addAll(labelForNumber, labelForName, addButton, deleteButton, editButton);
+        cellBox.getChildren().addAll(labelForNumber, labelForName, actionBox, addButton, deleteButton, editButton);
         labelForNumber.setText(task.getNumber().toString());
         labelForName.setText(task.getName());
         addButton.setOnAction(event -> {
             LabTreeView.checkItemChildren(getSelectedItem(), communicator);
-            createQuestion();
+            switch (actionBox.getSelectionModel().getSelectedItem()){
+                case CREATE:
+                    createQuestion();
+                    break;
+                case IMPORT:
+                    importQuestion();
+                    break;
+            }
         });
         deleteButton.setOnAction(event -> {
             deleteTask();
@@ -172,7 +182,7 @@ public class CustomTreeCell extends TreeCell<TreeDto> {
     }
 
     private void questionSettings(Question question) {
-        cellBox.getChildren().addAll(labelForNumber, labelForName, deleteButton, editButton, importButton);
+        cellBox.getChildren().addAll(labelForNumber, labelForName, deleteButton, editButton);
         labelForNumber.setText(question.getNumber().toString());
         labelForName.setText(question.getName());
         deleteButton.setOnAction(event -> {
@@ -181,9 +191,6 @@ public class CustomTreeCell extends TreeCell<TreeDto> {
         });
         editButton.setOnAction(event -> {
             editQuestion();
-        });
-        importButton.setOnAction(event -> {
-
         });
     }
 
@@ -251,10 +258,10 @@ public class CustomTreeCell extends TreeCell<TreeDto> {
                 .number(getNumber())
                 .name("Задание №" + getNumber())
                 .build();
-        addItem.accept(new CustomTreeItem(getSelectedItem(), new TreeDto(task)));
         try {
             Long id = communicator.saveTask(task);
             task.setId(id);
+            addItem.accept(new CustomTreeItem(getSelectedItem(), new TreeDto(task)));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -287,19 +294,21 @@ public class CustomTreeCell extends TreeCell<TreeDto> {
 
 
     private void createQuestion() {
-        Question question = Question
-                .builder()
-                .number(getNumber())
-                .name("Вопрос №" + getNumber())
-                .questionType(QuestionType.TEXT)
-                .build();
-        addItem.accept(new CustomTreeItem(getSelectedItem(), new TreeDto(question)));
-        try {
-            Long id = communicator.saveQuestion(question);
-            question.setId(id);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        stagePool.pushStageAndShowModal(Stages.CREATE_QUESTION, new CreateQuestionStage(
+                question -> {
+                    try {
+                        Long id = communicator.saveQuestion(question);
+                        question.setId(id);
+                        addItem.accept(new CustomTreeItem(getSelectedItem(), new TreeDto(question)));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                },
+                () -> Question.builder().number(getNumber()).name("Вопрос №" + getNumber()).build()
+        ));
+    }
+
+    private void importQuestion() {
     }
 
     private void deleteQuestion() {

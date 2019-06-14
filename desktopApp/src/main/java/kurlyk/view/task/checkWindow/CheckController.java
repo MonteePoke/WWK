@@ -46,7 +46,7 @@ public class CheckController extends SubmitConfigurationController<SelectDto> {
     public void initialize(){
     }
 
-    public void setQuestion(Question question, boolean editable, Consumer<Long> callbackAction) {
+    public void setQuestion(Question question, boolean editable, Consumer<Question> callbackAction) {
         this.question = question;
         SelectDto checkDto = new Gson().fromJson(question.getAnswer(), SelectDto.class);
         submitConfiguration(
@@ -61,8 +61,15 @@ public class CheckController extends SubmitConfigurationController<SelectDto> {
         //Настройки работчего поля
         textArea.setDisable(!editable);
         textArea.setHtmlText(question.getQuestion());
-        for (Trio<Boolean, String, Integer> option : checkDto.getOptions()){
-            root.getChildren().add(new EditableCheckBox(option.getValueA(), option.getValueB(), option.getValueC(), editable));
+        if (checkDto != null) {
+            for (Trio<Boolean, String, Integer> option : checkDto.getOptions()){
+                root.getChildren().add(new EditableCheckBox(option.getValueA(), option.getValueB(), option.getValueC(), editable));
+            }
+        } else {
+            root.getChildren().add(new EditableCheckBox(false, "", 1, editable));
+            root.getChildren().add(new EditableCheckBox(false, "", 1, editable));
+            root.getChildren().add(new EditableCheckBox(false, "", 1, editable));
+            root.getChildren().add(new EditableCheckBox(false, "", 1, editable));
         }
     }
 

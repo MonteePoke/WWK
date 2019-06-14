@@ -35,6 +35,14 @@ public class FormulaController extends SubmitConfigurationController<FormulaDto>
     @FXML private Button submit;
     @FXML private MyHtmlEditor textArea;
     @FXML private WebView browser;
+    @FXML private Button sumButton;
+    @FXML private Button prodButton;
+    @FXML private Button integralButton;
+    @FXML private Button powerButton;
+    @FXML private Button squareButton;
+    @FXML private Button rootButton;
+    @FXML private Button squareRootButton;
+    @FXML private Button indexButton;
     private JSObject window;
     private Question question;
 
@@ -56,6 +64,15 @@ public class FormulaController extends SubmitConfigurationController<FormulaDto>
             }
         });
         loadContent(browser);
+
+        sumButton.setOnAction(event -> setLatexFormula("\\sum"));
+        prodButton.setOnAction(event -> setLatexFormula("\\prod"));
+        integralButton.setOnAction(event -> setLatexFormula("\\int"));
+        powerButton.setOnAction(event -> setLatexFormula("^"));
+        squareButton.setOnAction(event -> setLatexFormula("^2"));
+        rootButton.setOnAction(event -> setLatexFormula("\\nthroot"));
+        squareRootButton.setOnAction(event -> setLatexFormula("\\sqrt"));
+        indexButton.setOnAction(event -> setLatexFormula("_"));
     }
 
     private void loadContent(WebView browser){
@@ -68,7 +85,7 @@ public class FormulaController extends SubmitConfigurationController<FormulaDto>
         }
     }
 
-    public void setQuestion(Question question, boolean editable, Consumer<Long> callbackAction) {
+    public void setQuestion(Question question, boolean editable, Consumer<Question> callbackAction) {
         this.question = question;
         FormulaDto formulaDto = new Gson().fromJson(question.getAnswer(), FormulaDto.class);
         submitConfiguration(
@@ -83,7 +100,9 @@ public class FormulaController extends SubmitConfigurationController<FormulaDto>
         //Настройки работчего поля
         textArea.setDisable(!editable);
         textArea.setHtmlText(question.getQuestion());
-        setLatexFormula(formulaDto.getLatexFormula());
+        if (formulaDto != null) {
+            setLatexFormula(formulaDto.getLatexFormula());
+        }
     }
 
     @Override

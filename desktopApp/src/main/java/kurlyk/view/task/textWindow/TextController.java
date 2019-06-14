@@ -46,7 +46,7 @@ public class TextController extends SubmitConfigurationController<TextDto> {
 
     }
 
-    public void setQuestion(Question question, boolean editable, Consumer<Long> callbackAction) {
+    public void setQuestion(Question question, boolean editable, Consumer<Question> callbackAction) {
         this.question = question;
         TextDto textDto = new Gson().fromJson(question.getAnswer(), TextDto.class);
         submitConfiguration(
@@ -61,7 +61,9 @@ public class TextController extends SubmitConfigurationController<TextDto> {
         //Настройки работчего поля
         textArea.setDisable(!editable);
         textArea.setHtmlText(question.getQuestion());
-        inputField.setText(textDto.getText());
+        if (textDto != null) {
+            inputField.setText(textDto.getText());
+        }
     }
 
     @Override
