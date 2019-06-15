@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import javafx.scene.control.Button;
 import kurlyk.communication.Communicator;
 import kurlyk.model.Question;
+import kurlyk.transfer.ResultAnswerDto;
 import kurlyk.view.common.controller.Controller;
 import kurlyk.view.common.controller.TaskBodyController;
 import kurlyk.view.common.stage.StagePool;
@@ -53,7 +54,7 @@ public abstract class SubmitConfigurationController<T> extends Controller implem
                 modifyButton(submit);
                 try {
                     callbackBefore.accept(this.question);
-                    getAnswerResult(this.question.getAttemptsNumber() - attemptsNumber);
+                    ResultAnswerDto resultAnswerDto = getAnswerResult(this.question.getAttemptsNumber() - attemptsNumber);
                     if (!callbackIsExecuted) {
                         callbackAfter.accept(this.question);
                         callbackIsExecuted = true;

@@ -26,7 +26,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatcher("/**")
                 .authenticationProvider(authenticationProvider)
                 .authorizeRequests()
-                .antMatchers("/usvers/**").permitAll()
+                .antMatchers("/usver/**").permitAll()
                 .antMatchers("/login").permitAll()
                 .antMatchers("/lab-work/**").permitAll()
                 .antMatchers("/lab-works/**").permitAll()
@@ -34,6 +34,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/tasks/**").permitAll()
                 .antMatchers("/question/**").permitAll()
                 .antMatchers("/questions/**").permitAll()
+                .antMatchers("/questions-headers/**").permitAll()
+                .antMatchers("/statistic-usver/**").permitAll()
+                .antMatchers("/statistic-usver-lab-work/**").permitAll()
+                .antMatchers("/test/**").permitAll()
+                .antMatchers("/competence/**").permitAll()
+                .antMatchers("/lab-work-competence/**").permitAll()
+                .antMatchers("/usver-lab-work-access/**").permitAll()
                 .antMatchers("/h2-console/**").permitAll();
         http.headers().frameOptions().disable();
         http.csrf().disable();

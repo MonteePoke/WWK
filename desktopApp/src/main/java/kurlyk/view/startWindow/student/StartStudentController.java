@@ -55,8 +55,6 @@ public class StartStudentController extends Controller {
         }
 
         further.setOnAction(event -> {
-            stagePool.closeStage(Stages.START);
-            stagePool.pushStageAndShow(Stages.PERFORM_WORK, new ExecuteLabStage());
             executeMaster.initWork(
                     labNumber.getValue().getId(),
                     variantNumber.getValue(),
@@ -79,6 +77,8 @@ public class StartStudentController extends Controller {
                             }).getScene()
                     ))
             );
+            stagePool.closeStage(Stages.START);
+            stagePool.pushStageAndShow(Stages.PERFORM_WORK, new ExecuteLabStage());
         });
     }
 }

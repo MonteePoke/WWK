@@ -10,10 +10,6 @@ import lombok.Getter;
 public class ComputerSystemDto{
     private SimpleGraphSystem simpleGraphSystem;
 
-    public ComputerSystemDto() {
-        this.simpleGraphSystem = new SimpleGraphSystem();
-    }
-
     public ComputerSystemDto(GraphSystem graphSystem) {
         this.simpleGraphSystem = new SimpleGraphSystem(graphSystem);
     }

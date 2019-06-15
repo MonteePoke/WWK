@@ -6,11 +6,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.Duration;
+import java.util.Set;
 
 
 @Data
@@ -33,6 +31,9 @@ public class LabWork {
     private Long decScore;
     private Double scoreMultiplier;
     private Duration interval;
+
+    @OneToMany
+    private Set<ParameterValue> parameterValues;
 
     // Варианты
     private Integer variantsNumber;

@@ -75,7 +75,7 @@ public class NumberController extends SubmitConfigurationController<NumberDto> {
 
     @Override
     public NumberDto getResult() {
-        return new NumberDto(inputField.getValue(), accuracyField.getValue());
+        return new NumberDto(inputField.getValue(), accuracyField.getValue() != null ? accuracyField.getValue() : 1);
     }
 
     @Override

@@ -48,9 +48,9 @@ public class Communicator extends AbstractCommunicator{
         }
     }
 
-    public Usver getUsver() throws ConnectException, IOException {
+    public Usver getUsver(Long id) throws ConnectException, IOException {
         Type type = new TypeToken<Usver>(){}.getType();
-        return getData(type, "/usvers/");
+        return getData(type, "/usvers/" + id.toString());
     }
 
     public List<Usver> getUsvers() throws ConnectException, IOException {
@@ -79,6 +79,47 @@ public class Communicator extends AbstractCommunicator{
 
     public void deleteLabWork(LabWork labWork) throws ConnectException, IOException {
         deleteData(null, labWork.getId(), "/lab-work/");
+    }
+
+
+    /*
+        Competence
+    */
+    public Competence getCompetence(Long id) throws ConnectException, IOException {
+        Type type = new TypeToken<Competence>(){}.getType();
+        return getData(type, "/competence/" + id.toString());
+    }
+
+    public List<Competence> getCompetences() throws ConnectException, IOException {
+        Type type = new TypeToken<ArrayList<Competence>>(){}.getType();
+        return getData(type, "/competences/");
+    }
+
+    public Long saveCompetence(Competence competence) throws ConnectException, IOException {
+        Type type = new TypeToken<Long>(){}.getType();
+        return postData(type, competence, "/competence/");
+    }
+
+    public void deleteCompetence(Long competenceId) throws ConnectException, IOException {
+        deleteData(null, competenceId, "/competence/");
+    }
+
+
+    /*
+        LabWorkCompetence
+    */
+    public List<LabWorkCompetence> getLabWorkCompetence(Long labWorkId) throws ConnectException, IOException {
+        Type type = new TypeToken<ArrayList<LabWorkCompetence>>(){}.getType();
+        return getData(type, "/lab-work-competences/" + labWorkId.toString());
+    }
+
+    public Long saveLabWorkCompetence(LabWorkCompetence labWorkCompetence) throws ConnectException, IOException {
+        Type type = new TypeToken<Long>(){}.getType();
+        return postData(type, labWorkCompetence, "/lab-work-competence/");
+    }
+
+    public void deleteLabWorkCompetence(Long labWorkCompetenceId) throws ConnectException, IOException {
+        deleteData(null, labWorkCompetenceId, "/lab-work-competence/");
     }
 
 
@@ -227,42 +268,42 @@ public class Communicator extends AbstractCommunicator{
     */
     public ResultAnswerDto testComputerSystemAnswer(ComputerSystemAnswerDto dto) throws ConnectException, IOException {
         Type type = new TypeToken<ResultAnswerDto>(){}.getType();
-        return postData(type, dto, "/test-computer-system/");
+        return postData(type, dto, "/test/computer-system/");
     }
 
     public ResultAnswerDto testFormulaAnswer(FormulaAnswerDto dto) throws ConnectException, IOException {
         Type type = new TypeToken<ResultAnswerDto>(){}.getType();
-        return postData(type, dto, "/test-formula/");
+        return postData(type, dto, "/test/formula/");
     }
 
     public ResultAnswerDto testTextAnswer(TextAnswerDto dto) throws ConnectException, IOException {
         Type type = new TypeToken<ResultAnswerDto>(){}.getType();
-        return postData(type, dto, "/test-text/");
+        return postData(type, dto, "/test/text/");
     }
 
     public ResultAnswerDto testNumberAnswer(NumberAnswerDto dto) throws ConnectException, IOException {
         Type type = new TypeToken<ResultAnswerDto>(){}.getType();
-        return postData(type, dto, "/test-number/");
+        return postData(type, dto, "/test/number/");
     }
 
     public ResultAnswerDto testMatchingAnswer(MatchingAnswerDto dto) throws ConnectException, IOException {
         Type type = new TypeToken<ResultAnswerDto>(){}.getType();
-        return postData(type, dto, "/test-matching/");
+        return postData(type, dto, "/test/matching/");
     }
 
     public ResultAnswerDto testCheckAnswer(SelectAnswerDto dto) throws ConnectException, IOException {
         Type type = new TypeToken<ResultAnswerDto>(){}.getType();
-        return postData(type, dto, "/test-check/");
+        return postData(type, dto, "/test/check/");
     }
 
     public ResultAnswerDto testRadioAnswer(SelectAnswerDto dto) throws ConnectException, IOException {
         Type type = new TypeToken<ResultAnswerDto>(){}.getType();
-        return postData(type, dto, "/test-radio/");
+        return postData(type, dto, "/test/radio/");
     }
 
     public ResultAnswerDto testSortingAnswer(SortingAnswerDto dto) throws ConnectException, IOException {
         Type type = new TypeToken<ResultAnswerDto>(){}.getType();
-        return postData(type, dto, "/test-sorting/");
+        return postData(type, dto, "/test/sorting/");
     }
 
 

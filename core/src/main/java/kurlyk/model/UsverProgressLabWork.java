@@ -23,7 +23,6 @@ public class UsverProgressLabWork {
     private Usver usver;
     @ManyToOne
     private LabWork labWork;
-    private Long score;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
 

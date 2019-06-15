@@ -14,4 +14,8 @@ public class TextDto {
     public static TextDto formStrings(String text){
         return new TextDto(String.join(ANSWER_SEPARATOR, text.split("\n")));
     }
+
+    public String toStrings(){
+        return String.join("\n", text.split(ANSWER_SEPARATOR));
+    }
 }

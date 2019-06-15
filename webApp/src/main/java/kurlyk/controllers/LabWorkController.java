@@ -3,6 +3,7 @@ package kurlyk.controllers;
 
 import kurlyk.model.LabWork;
 import kurlyk.model.Question;
+import kurlyk.model.UsverLabWorkAccess;
 import kurlyk.services.labWork.LabWorkService;
 import kurlyk.services.question.QuestionService;
 import kurlyk.services.task.TaskService;
@@ -58,6 +59,29 @@ public class LabWorkController {
     public ResponseEntity<Object> deleteLabWork(@PathVariable("id") Long id) {
         try {
             labWorkService.deleteLabWork(id);
+        } catch (EmptyResultDataAccessException e) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/usver-lab-work-access")
+    public UsverLabWorkAccess getUsverLabWorkAccess(
+            @RequestParam("labWorkId") Long labWorkId,
+            @RequestParam("usverId") Long usverId
+    ) {
+        return labWorkService.getUsverLabWorkAccess(labWorkId, usverId).orElseThrow(RuntimeException::new);
+    }
+
+    @PostMapping("/usver-lab-work-access")
+    public Long saveUsverLabWorkAccess(@RequestBody UsverLabWorkAccess usverLabWorkAccess) {
+        return labWorkService.saveUsverLabWorkAccess(usverLabWorkAccess);
+    }
+
+    @DeleteMapping("/usver-lab-work-access/{id}")
+    public ResponseEntity<Object> deleteUsverLabWorkAccess(@PathVariable("id") Long id) {
+        try {
+            labWorkService.deleteUsverLabWorkAccess(id);
         } catch (EmptyResultDataAccessException e) {
             return ResponseEntity.notFound().build();
         }

@@ -1,8 +1,7 @@
 package kurlyk.communication;
 
 
-import kurlyk.model.Question;
-import kurlyk.model.UsverProgressQuestion;
+import kurlyk.model.*;
 import kurlyk.transfer.ExecuteCallbackDto;
 import kurlyk.transfer.QuestionIdsDto;
 import kurlyk.transfer.ResultDto;
@@ -10,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.Iterator;
 import java.util.List;
 import java.util.function.Consumer;
@@ -63,9 +63,34 @@ public class ExecuteMaster {
             this.questionIdsDto = communicator.getQuestionsForExecute(labWorkId, variant);
             this.testQuestionIterator = questionIdsDto.getTestQuestionIds().iterator();
             this.workQuestionIterator = questionIdsDto.getWorkQuestionIds().iterator();
+            initUsverProgress();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void initUsverProgress() throws IOException{
+        LabWork labWork = communicator.getLabWork(labWorkId);
+        Usver usver = communicator.getUsver(usverInfo.getTokenDto().getUsverId());
+
+        Integer difficultyLevelsNumber = labWork.getDifficultyLevelsNumber() != null ? labWork.getDifficultyLevelsNumber() : 1;
+        Integer variantsNumber = labWork.getVariantsNumber() != null ? labWork.getVariantsNumber() : 1;
+        labWork.getParameterValues()
+                .stream()
+                .map(parameterValue -> {
+                    parameterValue.getValueTo() - parameterValue.getValueFrom()
+                })
+        communicator.saveUsverProgress(
+                UsverProgressLabWork
+                        .builder()
+                        .usver(usver)
+                        .labWork(labWork)
+                        .startTime(LocalDateTime.now())
+                        .endTime(LocalDateTime.now().plus(labWork.getInterval()))
+                        .parameters()
+                        .usverProgressTasks()
+                        .build()
+        )
     }
 
     public Question getQuestion(){

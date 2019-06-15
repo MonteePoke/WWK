@@ -56,7 +56,7 @@ public class ExecuteLabController extends Controller {
         if (question == null) {
             return;
         }
-        QuestionTab tab = new QuestionTab("Вопрос №" + (question.getNumber() != null ? question.getNumber() == null : "КИРПИЧ"), question);
+        QuestionTab tab = new QuestionTab("Вопрос №" + (question.getNumber() != null ? question.getNumber() : "КИРПИЧ"), question);
         tab.setContent(
                 CommonSceneCreator.questionSceneCreator(
                         question,

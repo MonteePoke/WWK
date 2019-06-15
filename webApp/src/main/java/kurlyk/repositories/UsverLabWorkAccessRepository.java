@@ -8,5 +8,6 @@ import java.util.Optional;
 
 public interface UsverLabWorkAccessRepository extends JpaRepository<UsverLabWorkAccess, Long> {
 
-    Optional<UsverLabWorkAccess> findOneByUsverIdAndLabWorkId(Long usverId, Long labWorkId);
+    Optional<UsverLabWorkAccess> findOneByLabWorkIdAndUsverId(Long labWorkId, Long usverId);
+
 }

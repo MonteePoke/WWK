@@ -5,6 +5,7 @@ import kurlyk.services.testAnswerService.TestAnswerService;
 import kurlyk.transfer.ResultAnswerDto;
 import kurlyk.transfer.answer.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,42 +17,47 @@ public class TestAnswerController {
     @Autowired
     private TestAnswerService testAnswerService;
 
-    @PostMapping("/test-computer-system")
+    @PostMapping("/test/computer-system")
     public ResultAnswerDto testComputerSystemAnswer(@RequestBody ComputerSystemAnswerDto dto){
         return testAnswerService.testComputerSystemAnswer(dto);
     }
 
-    @PostMapping("/test-formula")
+    @PostMapping("/test/formula")
     public ResultAnswerDto testFormulaAnswer(@RequestBody FormulaAnswerDto dto){
         return testAnswerService.testFormulaAnswer(dto);
     }
 
-    @PostMapping("/test-text")
+    @PostMapping("/test/text")
     public ResultAnswerDto testTextAnswer(@RequestBody TextAnswerDto dto){
         return testAnswerService.testTextAnswer(dto);
     }
 
-    @PostMapping("/test-number")
+    @PostMapping("/test/number")
     public ResultAnswerDto testNumberAnswer(@RequestBody NumberAnswerDto dto){
         return testAnswerService.testNumberAnswer(dto);
     }
 
-    @PostMapping("/test-matching")
+    @PostMapping("/test/matching")
     public ResultAnswerDto testMatchingAnswer(@RequestBody MatchingAnswerDto dto){
         return testAnswerService.testMatchingAnswer(dto);
     }
 
-    @PostMapping("/test-check")
+    @PostMapping("/test/check")
     public ResultAnswerDto testCheckAnswer(@RequestBody SelectAnswerDto dto){
         return testAnswerService.testCheckAnswer(dto);
     }
 
-    @PostMapping("/test-radio")
+    @PostMapping("/test/radio")
     public ResultAnswerDto testRadioAnswer(@RequestBody SelectAnswerDto dto){
         return testAnswerService.testRadioAnswer(dto);
     }
 
-    @PostMapping("/test-sorting")
+    @GetMapping("/test/radio")
+    public String testRadioAnswer(){
+        return "Hello";
+    }
+
+    @PostMapping("/test/sorting")
     public ResultAnswerDto testSortingAnswer(@RequestBody SortingAnswerDto dto){
         return testAnswerService.testSortingAnswer(dto);
     }

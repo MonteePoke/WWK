@@ -65,7 +65,7 @@ public class TextController extends SubmitConfigurationController<TextDto> {
         textArea.setDisable(!editable);
         textArea.setHtmlText(question.getQuestion());
         if (textDto != null) {
-            inputArea.setText(textDto.getText());
+            inputArea.setText(textDto.toStrings());
         }
     }
 

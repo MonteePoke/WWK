@@ -41,9 +41,7 @@ public class testAnswerServiceImpl implements TestAnswerService {
         ResultAnswerDto resultAnswerDto = new ResultAnswerDto();
         if(optionalQuestion.isPresent()){
             ComputerSystemDto standart = new Gson().fromJson(optionalQuestion.get().getAnswer(), ComputerSystemDto.class);
-            resultAnswerDto.setScore(
-                    percentToScore(dto, testComputerSystemDto(standart, dto.getEntity()))
-            );
+            resultAnswerDto.setScore(percentToScore(dto, testComputerSystemDto(standart, dto.getEntity())));
             resultAnswerDto.setQuestionId(optionalQuestion.get().getId());
         } else {
             resultAnswerDto.setQuestionNotFound(true);
@@ -56,9 +54,7 @@ public class testAnswerServiceImpl implements TestAnswerService {
         ResultAnswerDto resultAnswerDto = new ResultAnswerDto();
         if(optionalQuestion.isPresent()){
             FormulaDto standart = new Gson().fromJson(optionalQuestion.get().getAnswer(), FormulaDto.class);
-            resultAnswerDto.setScore(
-                    percentToScore(dto, testFormulaDto(standart, dto.getEntity()))
-            );
+            resultAnswerDto.setScore(percentToScore(dto, testFormulaDto(standart, dto.getEntity())));
             resultAnswerDto.setQuestionId(optionalQuestion.get().getId());
         } else {
             resultAnswerDto.setQuestionNotFound(true);
@@ -71,9 +67,7 @@ public class testAnswerServiceImpl implements TestAnswerService {
         ResultAnswerDto resultAnswerDto = new ResultAnswerDto();
         if(optionalQuestion.isPresent()){
             TextDto standart = new Gson().fromJson(optionalQuestion.get().getAnswer(), TextDto.class);
-            resultAnswerDto.setScore(
-                    percentToScore(dto, testTextDto(standart, dto.getEntity()))
-            );
+            resultAnswerDto.setScore(percentToScore(dto, testTextDto(standart, dto.getEntity())));
             resultAnswerDto.setQuestionId(optionalQuestion.get().getId());
         } else {
             resultAnswerDto.setQuestionNotFound(true);
@@ -86,9 +80,7 @@ public class testAnswerServiceImpl implements TestAnswerService {
         ResultAnswerDto resultAnswerDto = new ResultAnswerDto();
         if(optionalQuestion.isPresent()){
             NumberDto standart = new Gson().fromJson(optionalQuestion.get().getAnswer(), NumberDto.class);
-            resultAnswerDto.setScore(
-                    percentToScore(dto, testNumberDto(standart, dto.getEntity()))
-            );
+            resultAnswerDto.setScore(percentToScore(dto, testNumberDto(standart, dto.getEntity())));
             resultAnswerDto.setQuestionId(optionalQuestion.get().getId());
         } else {
             resultAnswerDto.setQuestionNotFound(true);
@@ -101,9 +93,7 @@ public class testAnswerServiceImpl implements TestAnswerService {
         ResultAnswerDto resultAnswerDto = new ResultAnswerDto();
         if(optionalQuestion.isPresent()){
             MatchingDto standart = new Gson().fromJson(optionalQuestion.get().getAnswer(), MatchingDto.class);
-            resultAnswerDto.setScore(
-                    percentToScore(dto, testMatchingDto(standart, dto.getEntity()))
-            );
+            resultAnswerDto.setScore(percentToScore(dto, testMatchingDto(standart, dto.getEntity())));
             resultAnswerDto.setQuestionId(optionalQuestion.get().getId());
         } else {
             resultAnswerDto.setQuestionNotFound(true);
@@ -116,9 +106,7 @@ public class testAnswerServiceImpl implements TestAnswerService {
         ResultAnswerDto resultAnswerDto = new ResultAnswerDto();
         if(optionalQuestion.isPresent()){
             SelectDto standart = new Gson().fromJson(optionalQuestion.get().getAnswer(), SelectDto.class);
-            resultAnswerDto.setScore(
-                    percentToScore(dto, testCheckDto(standart, dto.getEntity()))
-            );
+            resultAnswerDto.setScore(percentToScore(dto, testCheckDto(standart, dto.getEntity())));
             resultAnswerDto.setQuestionId(optionalQuestion.get().getId());
         } else {
             resultAnswerDto.setQuestionNotFound(true);
@@ -131,9 +119,7 @@ public class testAnswerServiceImpl implements TestAnswerService {
         ResultAnswerDto resultAnswerDto = new ResultAnswerDto();
         if(optionalQuestion.isPresent()){
             SelectDto standart = new Gson().fromJson(optionalQuestion.get().getAnswer(), SelectDto.class);
-            resultAnswerDto.setScore(
-                    percentToScore(dto, testRadioDto(standart, dto.getEntity()))
-            );
+            resultAnswerDto.setScore(percentToScore(dto, testRadioDto(standart, dto.getEntity())));
             resultAnswerDto.setQuestionId(optionalQuestion.get().getId());
         } else {
             resultAnswerDto.setQuestionNotFound(true);
@@ -146,9 +132,7 @@ public class testAnswerServiceImpl implements TestAnswerService {
         ResultAnswerDto resultAnswerDto = new ResultAnswerDto();
         if(optionalQuestion.isPresent()){
             SortingDto standart = new Gson().fromJson(optionalQuestion.get().getAnswer(), SortingDto.class);
-            resultAnswerDto.setScore(
-                    percentToScore(dto, testSortingDto(standart, dto.getEntity()))
-            );
+            resultAnswerDto.setScore(percentToScore(dto, testSortingDto(standart, dto.getEntity())));
             resultAnswerDto.setQuestionId(optionalQuestion.get().getId());
         } else {
             resultAnswerDto.setQuestionNotFound(true);

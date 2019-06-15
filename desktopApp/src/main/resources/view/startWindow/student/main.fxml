@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<VBox prefHeight="220.0" prefWidth="400" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kurlyk.view.startWindow.student.StartStudentController">
-    <VBox alignment="TOP_CENTER" prefHeight="147.0" prefWidth="400.0">
-      <AnchorPane prefHeight="49.0" prefWidth="400.0">
+<VBox prefHeight="162.0" prefWidth="503.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kurlyk.view.startWindow.student.StartStudentController">
+    <VBox alignment="TOP_CENTER" prefHeight="155.0" prefWidth="503.0">
+      <HBox alignment="CENTER" prefHeight="49.0" prefWidth="400.0">
          <children>
                 <Label contentDisplay="TOP" layoutX="121.0" layoutY="14.0" prefHeight="21.0" prefWidth="158.0" text="Лабораторная работа">
                     <font>
@@ -13,13 +14,13 @@
                     </font>
                 </Label>
          </children>
-      </AnchorPane>
-        <AnchorPane layoutX="10.0" layoutY="116.0" prefHeight="36.0" prefWidth="400.0">
+      </HBox>
+        <HBox alignment="CENTER" layoutX="10.0" layoutY="116.0" prefHeight="36.0" prefWidth="400.0">
             <children>
                 <ComboBox fx:id="labNumber" layoutX="175.0" layoutY="6.0" />
             </children>
-        </AnchorPane>
-      <AnchorPane prefHeight="49.0" prefWidth="400.0">
+        </HBox>
+      <HBox alignment="CENTER" prefHeight="49.0" prefWidth="400.0">
          <children>
             <Label alignment="CENTER" contentDisplay="CENTER" layoutX="121.0" layoutY="14.0" prefHeight="21.0" prefWidth="158.0" text="Вариант" textAlignment="CENTER">
                <font>
@@ -27,16 +28,19 @@
                </font>
             </Label>
          </children>
-      </AnchorPane>
-      <AnchorPane prefHeight="36.0" prefWidth="400.0">
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="36.0" prefWidth="400.0">
          <children>
             <ComboBox fx:id="variantNumber" layoutX="175.0" layoutY="6.0" />
          </children>
-      </AnchorPane>
+      </HBox>
+        <HBox alignment="CENTER" prefHeight="44.0" prefWidth="400.0">
+            <children>
+                <Button fx:id="further" alignment="CENTER" layoutX="175.0" layoutY="11.0" text="Далее">
+               <HBox.margin>
+                  <Insets top="10.0" />
+               </HBox.margin></Button>
+            </children>
+        </HBox>
     </VBox>
-     <AnchorPane prefHeight="44.0" prefWidth="400.0">
-      <children>
-             <Button fx:id="further" alignment="CENTER" layoutX="175.0" layoutY="11.0" text="Далее" />
-      </children>
-     </AnchorPane>
 </VBox>

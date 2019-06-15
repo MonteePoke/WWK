@@ -11,6 +11,9 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.util.Pair;
+import kurlyk.common.PointGenerator;
+import kurlyk.common.algorithm.graph.ComputerSystem.ComputerSystemElement;
 import kurlyk.common.algorithm.graph.ComputerSystem.ComputerSystemElementType;
 import kurlyk.common.algorithm.graph.GraphSystem;
 import kurlyk.communication.Communicator;
@@ -35,6 +38,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Optional;
 import java.util.function.Consumer;
 
 @Component
@@ -263,9 +268,77 @@ public class ComputerSystemDiagramController extends SubmitConfigurationControll
         //Настройки работчего поля
         textArea.setDisable(!editable);
         textArea.setHtmlText(question.getQuestion());
-        //TODO Засетить граф
         if(computerSystemDto != null){
+            graphPainter(computerSystemDto.getGraphSystem());
 
+        }
+    }
+
+    private void graphPainter(GraphSystem graphSystem){
+        PointGenerator pointGenerator = new PointGenerator(300, 200);
+
+        //Создаём набор элементов для рисования
+        HashSet<ComputerSystemDiagramDetail> diagramDetails = new HashSet<>();
+        for (ComputerSystemElement element : graphSystem.getElementSet()){
+            Point2D point = pointGenerator.getRandomPoint();
+            switch (element.getType()){
+                case CPU:
+                    diagramDetails.add(new ComputerSystemDiagramDetail(
+                            element,
+                            ComputerSystemDiagramPictures.CPU.getImage(),
+                            point.getX(),
+                            point.getY()
+                    ));
+                    break;
+                case RAM:
+                    diagramDetails.add(new ComputerSystemDiagramDetail(
+                            element,
+                            ComputerSystemDiagramPictures.RAM.getImage(),
+                            point.getX(),
+                            point.getY()
+                    ));
+                    break;
+                case IO:
+                    diagramDetails.add(new ComputerSystemDiagramDetail(
+                            element,
+                            ComputerSystemDiagramPictures.IO.getImage(),
+                            point.getX(),
+                            point.getY()
+                    ));
+                    break;
+                case POINT:
+                    diagramDetails.add(new ComputerSystemDiagramDetail(
+                            element,
+                            ComputerSystemDiagramPictures.POINT.getImage(),
+                            point.getX(),
+                            point.getY()
+                    ));
+                    break;
+                case START_CONNECTION:
+                case STOP_CONNECTION:
+                case DEFAULT:
+                    break;
+            }
+        }
+
+        //Рисуем созданный набор
+        for (ComputerSystemDiagramDetail diagramDetail : diagramDetails){
+            drawDetail(diagramDetail);
+        }
+
+        //Ищем линии и рисуем их
+        for (Pair<ComputerSystemElement, ComputerSystemElement> pair : graphSystem.getConnectionSet()){
+            Optional<ComputerSystemDiagramDetail> diagramDetailFrom = diagramDetails
+                    .stream()
+                    .filter(diagramDetail -> diagramDetail.getComputerSystemElement().getUuid().equals(pair.getKey().getUuid()))
+                    .findAny();
+            Optional<ComputerSystemDiagramDetail> diagramDetailTo = diagramDetails
+                    .stream()
+                    .filter(diagramDetail -> diagramDetail.getComputerSystemElement().getUuid().equals(pair.getValue().getUuid()))
+                    .findAny();
+            if(diagramDetailFrom.isPresent() && diagramDetailTo.isPresent()){
+                drawConnector(diagramDetailFrom.get(), diagramDetailTo.get());
+            }
         }
     }
 

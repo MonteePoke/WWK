@@ -46,6 +46,7 @@ public class FormulaController extends SubmitConfigurationController<FormulaDto>
     @FXML private Button indexButton;
     private JSObject window;
     private Question question;
+    private Runnable latexFormulaSetter;
 
     @Autowired
     private Communicator communicator;
@@ -62,6 +63,9 @@ public class FormulaController extends SubmitConfigurationController<FormulaDto>
         browser.getEngine().getLoadWorker().stateProperty().addListener((observable, oldValue, newValue) -> {
             if (Worker.State.SUCCEEDED == newValue) {
                 window = (JSObject) browser.getEngine().executeScript("window");
+                if(latexFormulaSetter != null){
+                    latexFormulaSetter.run();
+                }
             }
         });
         loadContent(browser);
@@ -69,11 +73,11 @@ public class FormulaController extends SubmitConfigurationController<FormulaDto>
         sumButton.setOnAction(event -> setLatexFormula("\\sum"));
         prodButton.setOnAction(event -> setLatexFormula("\\prod"));
         integralButton.setOnAction(event -> setLatexFormula("\\int"));
-        powerButton.setOnAction(event -> setLatexFormula("^"));
+        powerButton.setOnAction(event -> setLatexFormula("^x"));
         squareButton.setOnAction(event -> setLatexFormula("^2"));
-        rootButton.setOnAction(event -> setLatexFormula("\\nthroot"));
-        squareRootButton.setOnAction(event -> setLatexFormula("\\sqrt"));
-        indexButton.setOnAction(event -> setLatexFormula("_"));
+        rootButton.setOnAction(event -> setLatexFormula("\\nthroot[y]{x}"));
+        squareRootButton.setOnAction(event -> setLatexFormula("\\sqrt{x}"));
+        indexButton.setOnAction(event -> setLatexFormula("_x"));
     }
 
     private void loadContent(WebView browser){
@@ -104,7 +108,11 @@ public class FormulaController extends SubmitConfigurationController<FormulaDto>
         textArea.setDisable(!editable);
         textArea.setHtmlText(question.getQuestion());
         if (formulaDto != null) {
-            setLatexFormula(formulaDto.getLatexFormula());
+            latexFormulaSetter = () -> setLatexFormula(formulaDto.getLatexFormula());
+            try {
+                latexFormulaSetter.run();
+            } catch (NullPointerException ignored) {
+            }
         }
     }
 
