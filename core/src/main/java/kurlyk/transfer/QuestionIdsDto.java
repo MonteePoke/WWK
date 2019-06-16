@@ -1,5 +1,6 @@
 package kurlyk.transfer;
 
+import kurlyk.common.Duet;
 import kurlyk.model.Question;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,9 +18,9 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @Builder
 public class QuestionIdsDto {
-
-    private List<Long> testQuestionIds;
-    private List<Long> workQuestionIds;
+    // ID заданий, ID вопроса
+    private List<Duet<Long, Long>> testQuestionIds;
+    private List<Duet<Long, Long>> workQuestionIds;
 
     public static QuestionIdsDto from(List<Question> questions){
         Map<Boolean, List<Question>> separatedQuestions = questions
@@ -27,17 +28,17 @@ public class QuestionIdsDto {
                 .collect(Collectors.partitioningBy(question -> question.getTask().getNumber() == 0));
 
         //Тестовые вопросы
-        List<Long> testQuestionIds = separatedQuestions.get(true)
+        List<Duet<Long, Long>> testQuestionIds = separatedQuestions.get(true)
                 .stream()
-                .map(Question::getId)
+                .map(question -> new Duet<>(question.getTask().getId(), question.getId()))
                 .collect(Collectors.toList());
         Collections.shuffle(testQuestionIds);
 
         //Лабораторные вопросы
-        List<Long> workQuestionIds = separatedQuestions.get(false)
+        List<Duet<Long, Long>> workQuestionIds = separatedQuestions.get(false)
                 .stream()
                 .sorted(Comparator.comparing(Question::getNumber))
-                .map(Question::getId)
+                .map(question -> new Duet<>(question.getTask().getId(), question.getId()))
                 .collect(Collectors.toList());
 
         return QuestionIdsDto

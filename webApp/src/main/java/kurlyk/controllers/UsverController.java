@@ -33,7 +33,7 @@ public class UsverController {
 
     @GetMapping("/usvers/{usver-id}")
     public Usver getUsver(@PathVariable("usver-id") Long usverId) {
-        return usverService.findOne(usverId);
+        return usverService.findById(usverId).orElseThrow(RuntimeException::new);
     }
 
     @PostMapping("/usvers")

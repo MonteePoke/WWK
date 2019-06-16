@@ -5,10 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Data
 @NoArgsConstructor
@@ -20,6 +17,10 @@ public class UsverProgressLabWorkParameter {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne
+    private UsverProgressLabWork usverProgressLabWork;
+
     private String parameterName;
-    private String parameterValue;
+    private String parameterSysName;
+    private Double parameterValue;
 }

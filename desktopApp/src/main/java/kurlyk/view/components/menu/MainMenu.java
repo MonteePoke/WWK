@@ -14,6 +14,7 @@ public class MainMenu extends MenuBar {
     private MenuItem dataBaseItem;
     private MenuItem labWorksItem;
     private MenuItem showAnswerItem;
+    private MenuItem competences;
 
     public MainMenu() {
         Menu openMenu = new Menu(ViewProperties.getInstance().getProperty("open"));
@@ -23,13 +24,20 @@ public class MainMenu extends MenuBar {
         openMenu.getItems().addAll(
                 labWorksItem = new MenuItem(ViewProperties.getInstance().getProperty("labWorks")),
                 dataBaseItem = new MenuItem(ViewProperties.getInstance().getProperty("dataBase")),
+                competences = new MenuItem("Компетенции"),
                 showAnswerItem = new MenuItem("Показать ответ")
         );
 
         dataBaseItem.setOnAction(event -> {
-            QuestionListStage questionListStage = new QuestionListStage((questionForTableDto -> { }));
+            QuestionListStage questionListStage = new QuestionListStage(question -> {}, question -> {});
             questionListStage.initModality(Modality.APPLICATION_MODAL);
             questionListStage.showAndWait();
+        });
+
+        competences.setOnAction(event -> {
+//            CompetenceListStage competenceListStage = new CompetenceListStage();
+//            competenceListStage.initModality(Modality.APPLICATION_MODAL);
+//            competenceListStage.showAndWait();
         });
 
         Label exitMenuLabel = new Label(ViewProperties.getInstance().getProperty("exit"));

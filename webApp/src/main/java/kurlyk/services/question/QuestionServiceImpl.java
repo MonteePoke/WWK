@@ -5,6 +5,7 @@ import kurlyk.common.Trio;
 import kurlyk.common.algorithm.graph.SimpleGraphSystem;
 import kurlyk.model.Question;
 import kurlyk.repositories.QuestionRepository;
+import kurlyk.repositories.UsverProgressQuestionRepository;
 import kurlyk.transfer.QuestionForTableDto;
 import kurlyk.transfer.tasks.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,9 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Autowired
     private QuestionRepository questionRepository;
+
+    @Autowired
+    private UsverProgressQuestionRepository usverProgressQuestionRepository;
 
 
     @Override
@@ -123,6 +127,8 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public void deleteQuestion(Long id) {
+//        usverProgressQuestionRepository.findByQuestionId(id)
+//                .forEach(usverProgressQuestion -> usverProgressQuestionRepository.delete(usverProgressQuestion));
         questionRepository.deleteById(id);
     }
 
@@ -174,7 +180,7 @@ public class QuestionServiceImpl implements QuestionService {
         dto.setOptions(
                 dto.getOptions()
                         .stream()
-                        .map(trio -> new Trio<>(false, trio.getValueB(), trio.getValueC()))
+                        .map(trio -> new Trio<>(false, trio.getB(), trio.getC()))
                         .collect(Collectors.toList())
         );
         return dto;

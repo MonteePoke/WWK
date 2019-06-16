@@ -1,6 +1,7 @@
 package kurlyk.transfer.tasks;
 
 import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -8,6 +9,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Getter
+@Setter
 public class SortingDto implements Serializable{
 
     private List<String> items;

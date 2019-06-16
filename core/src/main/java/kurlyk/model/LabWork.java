@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.Duration;
 import java.util.Set;
 
 
@@ -30,7 +29,9 @@ public class LabWork {
     private Boolean negativeScore;
     private Long decScore;
     private Double scoreMultiplier;
-    private Duration interval;
+
+    //в минутах
+    private Long interval;
 
     @OneToMany
     private Set<ParameterValue> parameterValues;

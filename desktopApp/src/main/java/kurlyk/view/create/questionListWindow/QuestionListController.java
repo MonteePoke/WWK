@@ -7,10 +7,12 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import kurlyk.communication.Communicator;
+import kurlyk.model.Question;
 import kurlyk.transfer.QuestionForTableDto;
 import kurlyk.view.common.controller.Controller;
 import kurlyk.view.common.stage.StagePool;
 import kurlyk.view.components.fields.IntegerField;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -42,8 +44,9 @@ public class QuestionListController extends Controller {
     @FXML private Button ok;
 
     private QuestionForTableDto selectedQuestionForTableDto;
-    private Consumer<QuestionForTableDto> applySelection;
-    private Runnable closeAction;
+    @Setter private Consumer<Question> selectActionBeforeSave;
+    @Setter private Consumer<Question> selectActionAfterSave;
+    @Setter private Runnable closeAction;
 
 
     @Autowired
@@ -53,7 +56,6 @@ public class QuestionListController extends Controller {
     private Communicator communicator;
 
 
-    // TODO Паджинация
     public void initialize() {
         ok.setDisable(true);
         questionTable.getSelectionModel().selectedItemProperty().addListener((observableValue, oldVal, newVal) -> {
@@ -83,15 +85,16 @@ public class QuestionListController extends Controller {
         });
 
         ok.setOnAction(event -> {
-            applySelection.accept(selectedQuestionForTableDto);
+            try {
+                Question question = communicator.getQuestion(selectedQuestionForTableDto.getQuestionId());
+                question.setId(null);
+                selectActionBeforeSave.accept(question);
+                question.setId(communicator.saveQuestion(question));
+                selectActionAfterSave.accept(question);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            closeAction.run();
         });
-    }
-
-    public void setSelectAction(Consumer<QuestionForTableDto> applySelection) {
-        this.applySelection = applySelection;
-    }
-
-    public void setCloseAction(Runnable closeAction) {
-        this.closeAction = closeAction;
     }
 }

@@ -80,7 +80,7 @@ public class CheckController extends SubmitConfigurationController<SelectDto> {
         controlPanel.setVisible(editable);
         if (checkDto != null) {
             for (Trio<Boolean, String, Integer> option : checkDto.getOptions()){
-                root.getChildren().add(new EditableCheckBox(option.getValueA(), option.getValueB(), option.getValueC(), editable));
+                root.getChildren().add(new EditableCheckBox(option.getA(), option.getB(), option.getC(), editable));
             }
         } else {
             root.getChildren().add(new EditableCheckBox(false, "", 1, editable));

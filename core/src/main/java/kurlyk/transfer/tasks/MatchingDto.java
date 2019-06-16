@@ -2,11 +2,13 @@ package kurlyk.transfer.tasks;
 
 import kurlyk.exeption.LenghtsNotEqualsExeption;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.*;
 
 @Getter
+@Setter
 public class MatchingDto implements Serializable{
 
     private List<String> leftPart;

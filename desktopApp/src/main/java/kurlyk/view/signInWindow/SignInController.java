@@ -14,7 +14,7 @@ import kurlyk.view.common.controller.Controller;
 import kurlyk.view.common.stage.StagePool;
 import kurlyk.view.common.stage.Stages;
 import kurlyk.view.startWindow.StartStage;
-import kurlyk.view.startWindow.admin.StartAdminScaneCreator;
+import kurlyk.view.startWindow.admin.StartAdminSceneCreator;
 import kurlyk.view.startWindow.student.StartStudentSceneCreator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -83,7 +83,7 @@ public class SignInController extends Controller {
             }
             stagePool.pushStage(Stages.START, new StartStage());
             if (RoleTester.roleIsExist(usverInfo.getTokenDto(), RoleEnum.ADMIN.getName())) {
-                stagePool.setSceneStage(Stages.START, new StartAdminScaneCreator().getScene());
+                stagePool.setSceneStage(Stages.START, new StartAdminSceneCreator().getScene());
             } else {
                 stagePool.setSceneStage(Stages.START, new StartStudentSceneCreator().getScene());
             }

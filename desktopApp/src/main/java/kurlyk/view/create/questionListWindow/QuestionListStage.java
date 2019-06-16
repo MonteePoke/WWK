@@ -1,6 +1,6 @@
 package kurlyk.view.create.questionListWindow;
 
-import kurlyk.transfer.QuestionForTableDto;
+import kurlyk.model.Question;
 import kurlyk.view.common.dto.BaseStageDto;
 import kurlyk.view.common.stage.base.BaseStage;
 
@@ -8,9 +8,10 @@ import java.util.function.Consumer;
 
 public class QuestionListStage extends BaseStage<QuestionListController> {
 
-    public QuestionListStage(Consumer<QuestionForTableDto> applySelection) {
+    public QuestionListStage(Consumer<Question> applySelectionBefore, Consumer<Question> applySelectionAfter) {
         super(BaseStageDto.allOff());
-        controller.setSelectAction(applySelection);
+        controller.setSelectActionBeforeSave(applySelectionBefore);
+        controller.setSelectActionAfterSave(applySelectionAfter);
         controller.setCloseAction(this::close);
     }
 

@@ -146,7 +146,7 @@ public class ToolbarController extends Controller {
         settings.setGraphic(settingsIcon);
 
         questionDictionary.setOnAction(event -> {
-            QuestionListStage questionListStage = new QuestionListStage((questionForTableDto -> { }));
+            QuestionListStage questionListStage = new QuestionListStage(question -> {}, question -> {});
             questionListStage.initModality(Modality.APPLICATION_MODAL);
             questionListStage.showAndWait();
         });

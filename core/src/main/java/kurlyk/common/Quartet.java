@@ -12,8 +12,8 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Builder
 public class Quartet<A, B, C, D> implements Serializable {
-    private A valueA;
-    private B valueB;
-    private C valueC;
-    private D valueD;
+    private A a;
+    private B b;
+    private C c;
+    private D d;
 }

@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.Duration;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Data
@@ -42,6 +44,8 @@ public class Question {
     @Column(columnDefinition = "CLOB")
     private String answer;
 
+    @OneToMany(mappedBy  = "question", cascade = CascadeType.REMOVE)
+    private Set<UsverProgressQuestion> usverProgressQuestions = new HashSet<>();
 
     public Question(
             Long id,

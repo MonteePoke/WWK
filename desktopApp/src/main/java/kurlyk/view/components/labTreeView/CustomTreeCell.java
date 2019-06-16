@@ -16,6 +16,7 @@ import kurlyk.view.common.stage.StagePool;
 import kurlyk.view.common.stage.Stages;
 import kurlyk.view.create.createLtqWindow.CreateLtqStage;
 import kurlyk.view.create.createQuestionWindow.CreateQuestionStage;
+import kurlyk.view.create.questionListWindow.QuestionListStage;
 
 import java.io.IOException;
 import java.util.List;
@@ -302,6 +303,13 @@ public class CustomTreeCell extends TreeCell<TreeDto> {
     }
 
     private void importQuestion() {
+        stagePool.pushStageAndShowModal(Stages.IMPORT_QUESTION, new QuestionListStage(
+                question -> {
+                    question.setTask(getSelectedItem().getValue().getTask());
+                    question.setNumber(getNumber());
+                },
+                question -> addItem.accept(new CustomTreeItem(getSelectedItem(), new TreeDto(question)))
+        ));
     }
 
     private void deleteQuestion() {

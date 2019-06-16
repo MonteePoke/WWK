@@ -9,6 +9,7 @@ import java.util.Optional;
 
 public interface UsverProgressService {
 
+    Optional<UsverProgressLabWork> getUsverProgress(Long usverId,Long labWorkId);
     Long saveUsverProgress(UsverProgressLabWork usverProgressLabWork);
     void deleteUsverProgress(Long id);
 

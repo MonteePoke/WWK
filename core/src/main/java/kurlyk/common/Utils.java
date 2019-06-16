@@ -7,20 +7,16 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class Utils {
-
-    public static double partOfTheNumber(double percent, double number){
-        return number / 100d * percent;
-    }
-
-    public static int partOfTheNumber(double percent, int number){
-        return (int) partOfTheNumber(percent, new Double(number));
-    }
 
     public static <T> boolean objectIsNotNull(T object){
         return object != null;
@@ -48,7 +44,14 @@ public class Utils {
         return obj;
     }
 
-    public static <IN_ONE, IN_TWO, OUT> List<OUT> collectTwoLists(List<IN_ONE> list1, List<IN_TWO> list2, BiFunction<IN_ONE, IN_TWO, OUT> converter) {
+    public static <T> List<T> joinTwoList(List<T> list1, List<T> list2) {
+        List<T> result = new ArrayList<>();
+        result.addAll(list1);
+        result.addAll(list2);
+        return result;
+    }
+
+    public static <IN_ONE, IN_TWO, OUT> List<OUT> collectTwoList(List<IN_ONE> list1, List<IN_TWO> list2, BiFunction<IN_ONE, IN_TWO, OUT> converter) {
         if(list1.size() != list2.size()){
             throw new LenghtsNotEqualsExeption();
         }
@@ -74,5 +77,34 @@ public class Utils {
 
     public static <OUT> List<OUT> listToListCaster(List<? extends OUT> inputList){
         return (List<OUT>) inputList;
+    }
+
+    public static List<Duet<Double, Double>> splitRange(double from, double to, int numberOfParts){
+        List<Duet<Double, Double>> result = new ArrayList<>(numberOfParts);
+        double unit = (from - to) / numberOfParts;
+        for(int i = 0; i < numberOfParts - 1; i++){
+            result.add(new Duet<>(from + i * unit, from + (i + 1) * unit));
+        }
+        result.add(new Duet<>(to + (numberOfParts - 1) * unit, to));
+        return result;
+    }
+
+    public static List<Double> getRandomNumbersFromRanges(List<Duet<Double, Double>> ranges){
+        return ranges
+                .stream()
+                .map(duet -> duet.getA() + Math.random() * (duet.getB() - duet.getA()))
+                .collect(Collectors.toList());
+    }
+
+    public static List<Double> getRandomNumbersFromRanges(double from, double to, int numberOfParts){
+        return getRandomNumbersFromRanges(splitRange(from, to, numberOfParts));
+    }
+
+    public static Date toDate(LocalDateTime localDateTime){
+        return Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
+    }
+
+    public static LocalDateTime toLocalDateTime(Date date){
+        return LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
     }
 }

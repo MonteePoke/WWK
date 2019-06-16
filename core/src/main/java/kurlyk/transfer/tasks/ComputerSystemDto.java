@@ -2,11 +2,13 @@ package kurlyk.transfer.tasks;
 
 import kurlyk.common.algorithm.graph.GraphSystem;
 import kurlyk.common.algorithm.graph.SimpleGraphSystem;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
+import lombok.*;
 
 @Getter
+@Setter
 @EqualsAndHashCode
+@AllArgsConstructor
+@NoArgsConstructor
 public class ComputerSystemDto{
     private SimpleGraphSystem simpleGraphSystem;
 

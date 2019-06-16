@@ -3,10 +3,10 @@ package kurlyk.view.startWindow.admin;
 import kurlyk.view.common.dto.BaseStageDto;
 import kurlyk.view.common.stage.base.BaseSceneCreator;
 
-public class StartAdminScaneCreator extends BaseSceneCreator<StartAdminController> {
+public class StartAdminSceneCreator extends BaseSceneCreator<StartAdminController> {
 
 
-    public StartAdminScaneCreator() {
+    public StartAdminSceneCreator() {
         super(BaseStageDto.builder().needMenu(true).build());
     }
 

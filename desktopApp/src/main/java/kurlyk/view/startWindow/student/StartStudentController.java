@@ -64,6 +64,7 @@ public class StartStudentController extends Controller {
                                 if (executeCallbackDto.getIsExecuted()){
                                     stagePool.setSceneStage(Stages.PERFORM_WORK, new ExecuteLabStage().getScene());
                                 } else {
+                                    stagePool.setSceneStage(Stages.START, new StartStudentSceneCreator().getScene());
                                     stagePool.showStage(Stages.START);
                                     stagePool.deleteStage(Stages.PERFORM_WORK);
                                 }
@@ -72,6 +73,7 @@ public class StartStudentController extends Controller {
                     (executeCallbackDto -> stagePool.setSceneStage(
                             Stages.PERFORM_WORK,
                             new ShowResultSceneCreator(executeCallbackDto, ()-> {
+                                stagePool.setSceneStage(Stages.START, new StartStudentSceneCreator().getScene());
                                 stagePool.showStage(Stages.START);
                                 stagePool.deleteStage(Stages.PERFORM_WORK);
                             }).getScene()

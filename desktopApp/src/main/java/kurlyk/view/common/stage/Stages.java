@@ -13,6 +13,7 @@ public enum Stages {
     SIGN_IN,
     START,
 //    COMMON_CREATE,
+    IMPORT_QUESTION,
 
     CREATE_LAB_WORK,
     LAB_WORK_TASK_MATCHING,

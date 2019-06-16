@@ -1,6 +1,8 @@
 package kurlyk.communication;
 
 
+import kurlyk.common.Duet;
+import kurlyk.common.Utils;
 import kurlyk.model.*;
 import kurlyk.transfer.ExecuteCallbackDto;
 import kurlyk.transfer.QuestionIdsDto;
@@ -10,8 +12,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
@@ -35,7 +36,7 @@ public class ExecuteMaster {
     private Consumer<ExecuteCallbackDto> testCompleteCallback;
     private Consumer<ExecuteCallbackDto> workCompleteCallback;
 
-    private boolean isTestTime = true;
+    private boolean isTestTime;
 
     public void initWork(
             Long labWorkId,
@@ -43,26 +44,27 @@ public class ExecuteMaster {
             Consumer<ExecuteCallbackDto> testCompleteCallback,
             Consumer<ExecuteCallbackDto> workCompleteCallback
     ){
-        initWork(labWorkId, variant, workCompleteCallback, testCompleteCallback, true);
+        initWork(labWorkId, variant, testCompleteCallback, workCompleteCallback, true);
     }
 
     public void initWork(
             Long labWorkId,
             Integer variant,
-            Consumer<ExecuteCallbackDto> workCompleteCallback,
             Consumer<ExecuteCallbackDto> testCompleteCallback,
+            Consumer<ExecuteCallbackDto> workCompleteCallback,
             boolean needTest
     ){
         this.needTest = needTest;
         this.labWorkId = labWorkId;
         this.usverId = usverInfo.getTokenDto().getUsverId();
         this.variant = variant;
-        this.workCompleteCallback = workCompleteCallback;
         this.testCompleteCallback = testCompleteCallback;
+        this.workCompleteCallback = workCompleteCallback;
+        this.isTestTime = true;
         try {
             this.questionIdsDto = communicator.getQuestionsForExecute(labWorkId, variant);
-            this.testQuestionIterator = questionIdsDto.getTestQuestionIds().iterator();
-            this.workQuestionIterator = questionIdsDto.getWorkQuestionIds().iterator();
+            this.testQuestionIterator = questionIdsDto.getTestQuestionIds().stream().map(Duet::getB).iterator();
+            this.workQuestionIterator = questionIdsDto.getWorkQuestionIds().stream().map(Duet::getB).iterator();
             initUsverProgress();
         } catch (IOException e) {
             e.printStackTrace();
@@ -71,26 +73,72 @@ public class ExecuteMaster {
 
     private void initUsverProgress() throws IOException{
         LabWork labWork = communicator.getLabWork(labWorkId);
+        if(labWork.getInterval() == null){
+            labWork.setInterval(60L);
+        }
         Usver usver = communicator.getUsver(usverInfo.getTokenDto().getUsverId());
 
-        Integer difficultyLevelsNumber = labWork.getDifficultyLevelsNumber() != null ? labWork.getDifficultyLevelsNumber() : 1;
-        Integer variantsNumber = labWork.getVariantsNumber() != null ? labWork.getVariantsNumber() : 1;
-        labWork.getParameterValues()
-                .stream()
-                .map(parameterValue -> {
-                    parameterValue.getValueTo() - parameterValue.getValueFrom()
-                })
         communicator.saveUsverProgress(
                 UsverProgressLabWork
                         .builder()
                         .usver(usver)
                         .labWork(labWork)
-                        .startTime(LocalDateTime.now())
-                        .endTime(LocalDateTime.now().plus(labWork.getInterval()))
-                        .parameters()
-                        .usverProgressTasks()
+                        .startTime(new Date().getTime())
+                        .endTime(Utils.toDate(LocalDateTime.now().plusMinutes(labWork.getInterval())).getTime())
+                        .parameters(getUsverProgressLabWorkParameter(labWork))
+                        .usverProgressTasks(getUsverProgressTasks())
                         .build()
-        )
+        );
+    }
+
+    private Set<UsverProgressLabWorkParameter> getUsverProgressLabWorkParameter(LabWork labWork){
+        int difficultyLevelsNumber = labWork.getDifficultyLevelsNumber() != null ? labWork.getDifficultyLevelsNumber() : 1;
+        int variantsNumber = labWork.getVariantsNumber() != null ? labWork.getVariantsNumber() : 1;
+        final int numberOfParts = ((variantsNumber / difficultyLevelsNumber) > 0) ? (variantsNumber / difficultyLevelsNumber) : 1;
+
+        return labWork.getParameterValues()
+                .stream()
+                .map(parameterValue -> {
+                    List<Double> values = Utils.getRandomNumbersFromRanges(
+                            parameterValue.getValueTo(),
+                            parameterValue.getValueFrom(),
+                            numberOfParts
+                    );
+                    return UsverProgressLabWorkParameter
+                            .builder()
+                            .parameterName(parameterValue.getParameterName())
+                            .parameterSysName(parameterValue.getParameterSysName())
+                            .parameterValue(values.get(numberOfParts - 1))
+                            .build();
+
+                })
+                .collect(Collectors.toSet());
+    }
+
+    private Set<UsverProgressTask> getUsverProgressTasks(){
+        Set<UsverProgressTask> usverProgressTasks = new HashSet<>();
+
+        Map<Long, List<UsverProgressQuestion>> taskMap = Utils.joinTwoList(questionIdsDto.getTestQuestionIds(), questionIdsDto.getWorkQuestionIds())
+                .stream()
+                .map(duet ->
+                    UsverProgressQuestion
+                            .builder()
+                            .question(Question.builder().id(duet.getB()).task(Task.builder().id(duet.getA()).build()).build())
+                            .score(0L)
+                            .attemptsNumber(0)
+                            .build()
+                )
+                .collect(Collectors.groupingBy(usverProgressQuestion -> usverProgressQuestion.getQuestion().getTask().getId()));
+        for (Long taskId : taskMap.keySet()){
+            usverProgressTasks.add(
+                    UsverProgressTask
+                            .builder()
+                            .task(Task.builder().id(taskId).build())
+                            .usverProgressQuestions(new HashSet<>(taskMap.get(taskId)))
+                            .build()
+            );
+        }
+        return usverProgressTasks;
     }
 
     public Question getQuestion(){
@@ -135,7 +183,7 @@ public class ExecuteMaster {
                     ExecuteCallbackDto
                             .builder()
                             .resultDto(resultDto)
-                            .isExecuted(true)
+                            .isExecuted(resultDto.isExexute())
                             .build()
             );
             return null;

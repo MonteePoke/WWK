@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.Set;
 
 @Data
@@ -23,12 +22,12 @@ public class UsverProgressLabWork {
     private Usver usver;
     @ManyToOne
     private LabWork labWork;
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
+    private Long startTime;
+    private Long endTime;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private Set<UsverProgressTask> usverProgressTasks;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private Set<UsverProgressLabWorkParameter> parameters;
 }

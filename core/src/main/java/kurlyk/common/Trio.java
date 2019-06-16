@@ -12,7 +12,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Builder
 public class Trio <A, B, C> implements Serializable {
-    private A valueA;
-    private B valueB;
-    private C valueC;
+    private A a;
+    private B b;
+    private C c;
 }

@@ -7,10 +7,12 @@ import kurlyk.common.Utils;
 import kurlyk.common.algorithm.StemmerPorterRU;
 import kurlyk.common.algorithm.formulaTester.FormulaTester;
 import kurlyk.model.Question;
+import kurlyk.model.UsverProgressLabWork;
 import kurlyk.services.labWork.LabWorkService;
 import kurlyk.services.question.QuestionService;
 import kurlyk.services.task.TaskService;
 import kurlyk.services.usver.UsverService;
+import kurlyk.services.usverProgress.UsverProgressService;
 import kurlyk.transfer.ResultAnswerDto;
 import kurlyk.transfer.answer.*;
 import kurlyk.transfer.tasks.*;
@@ -18,8 +20,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.OptionalInt;
+import java.util.stream.Collectors;
 
 @Service
 public class testAnswerServiceImpl implements TestAnswerService {
@@ -36,13 +40,22 @@ public class testAnswerServiceImpl implements TestAnswerService {
     @Autowired
     private UsverService usverService;
 
+    @Autowired
+    private UsverProgressService usverProgressService;
+
     public ResultAnswerDto testComputerSystemAnswer(@RequestBody ComputerSystemAnswerDto dto){
         Optional<Question> optionalQuestion = questionService.getQuestion(dto.getQuestionId());
         ResultAnswerDto resultAnswerDto = new ResultAnswerDto();
         if(optionalQuestion.isPresent()){
             ComputerSystemDto standart = new Gson().fromJson(optionalQuestion.get().getAnswer(), ComputerSystemDto.class);
-            resultAnswerDto.setScore(percentToScore(dto, testComputerSystemDto(standart, dto.getEntity())));
+
             resultAnswerDto.setQuestionId(optionalQuestion.get().getId());
+            resultAnswerDto.setTaskId(optionalQuestion.get().getTask().getId());
+            resultAnswerDto.setLabWorkId(optionalQuestion.get().getTask().getLabWork().getId());
+            resultAnswerDto.setUsverId(dto.getUsverId());
+            setScoreToResult(resultAnswerDto, testComputerSystemDto(standart, dto.getEntity()), dto.getAttemptsNumber());
+
+            saveResult(resultAnswerDto);
         } else {
             resultAnswerDto.setQuestionNotFound(true);
         }
@@ -54,8 +67,14 @@ public class testAnswerServiceImpl implements TestAnswerService {
         ResultAnswerDto resultAnswerDto = new ResultAnswerDto();
         if(optionalQuestion.isPresent()){
             FormulaDto standart = new Gson().fromJson(optionalQuestion.get().getAnswer(), FormulaDto.class);
-            resultAnswerDto.setScore(percentToScore(dto, testFormulaDto(standart, dto.getEntity())));
+
             resultAnswerDto.setQuestionId(optionalQuestion.get().getId());
+            resultAnswerDto.setTaskId(optionalQuestion.get().getTask().getId());
+            resultAnswerDto.setLabWorkId(optionalQuestion.get().getTask().getLabWork().getId());
+            resultAnswerDto.setUsverId(dto.getUsverId());
+            setScoreToResult(resultAnswerDto, testFormulaDto(standart, dto.getEntity()), dto.getAttemptsNumber());
+
+            saveResult(resultAnswerDto);
         } else {
             resultAnswerDto.setQuestionNotFound(true);
         }
@@ -67,8 +86,14 @@ public class testAnswerServiceImpl implements TestAnswerService {
         ResultAnswerDto resultAnswerDto = new ResultAnswerDto();
         if(optionalQuestion.isPresent()){
             TextDto standart = new Gson().fromJson(optionalQuestion.get().getAnswer(), TextDto.class);
-            resultAnswerDto.setScore(percentToScore(dto, testTextDto(standart, dto.getEntity())));
+
             resultAnswerDto.setQuestionId(optionalQuestion.get().getId());
+            resultAnswerDto.setTaskId(optionalQuestion.get().getTask().getId());
+            resultAnswerDto.setLabWorkId(optionalQuestion.get().getTask().getLabWork().getId());
+            resultAnswerDto.setUsverId(dto.getUsverId());
+            setScoreToResult(resultAnswerDto, testTextDto(standart, dto.getEntity()), dto.getAttemptsNumber());
+
+            saveResult(resultAnswerDto);
         } else {
             resultAnswerDto.setQuestionNotFound(true);
         }
@@ -80,8 +105,14 @@ public class testAnswerServiceImpl implements TestAnswerService {
         ResultAnswerDto resultAnswerDto = new ResultAnswerDto();
         if(optionalQuestion.isPresent()){
             NumberDto standart = new Gson().fromJson(optionalQuestion.get().getAnswer(), NumberDto.class);
-            resultAnswerDto.setScore(percentToScore(dto, testNumberDto(standart, dto.getEntity())));
+
             resultAnswerDto.setQuestionId(optionalQuestion.get().getId());
+            resultAnswerDto.setTaskId(optionalQuestion.get().getTask().getId());
+            resultAnswerDto.setLabWorkId(optionalQuestion.get().getTask().getLabWork().getId());
+            resultAnswerDto.setUsverId(dto.getUsverId());
+            setScoreToResult(resultAnswerDto, testNumberDto(standart, dto.getEntity()), dto.getAttemptsNumber());
+
+            saveResult(resultAnswerDto);
         } else {
             resultAnswerDto.setQuestionNotFound(true);
         }
@@ -93,8 +124,14 @@ public class testAnswerServiceImpl implements TestAnswerService {
         ResultAnswerDto resultAnswerDto = new ResultAnswerDto();
         if(optionalQuestion.isPresent()){
             MatchingDto standart = new Gson().fromJson(optionalQuestion.get().getAnswer(), MatchingDto.class);
-            resultAnswerDto.setScore(percentToScore(dto, testMatchingDto(standart, dto.getEntity())));
+
             resultAnswerDto.setQuestionId(optionalQuestion.get().getId());
+            resultAnswerDto.setTaskId(optionalQuestion.get().getTask().getId());
+            resultAnswerDto.setLabWorkId(optionalQuestion.get().getTask().getLabWork().getId());
+            resultAnswerDto.setUsverId(dto.getUsverId());
+            setScoreToResult(resultAnswerDto, testMatchingDto(standart, dto.getEntity()), dto.getAttemptsNumber());
+
+            saveResult(resultAnswerDto);
         } else {
             resultAnswerDto.setQuestionNotFound(true);
         }
@@ -106,8 +143,14 @@ public class testAnswerServiceImpl implements TestAnswerService {
         ResultAnswerDto resultAnswerDto = new ResultAnswerDto();
         if(optionalQuestion.isPresent()){
             SelectDto standart = new Gson().fromJson(optionalQuestion.get().getAnswer(), SelectDto.class);
-            resultAnswerDto.setScore(percentToScore(dto, testCheckDto(standart, dto.getEntity())));
+
             resultAnswerDto.setQuestionId(optionalQuestion.get().getId());
+            resultAnswerDto.setTaskId(optionalQuestion.get().getTask().getId());
+            resultAnswerDto.setLabWorkId(optionalQuestion.get().getTask().getLabWork().getId());
+            resultAnswerDto.setUsverId(dto.getUsverId());
+            setScoreToResult(resultAnswerDto, testCheckDto(standart, dto.getEntity()), dto.getAttemptsNumber());
+
+            saveResult(resultAnswerDto);
         } else {
             resultAnswerDto.setQuestionNotFound(true);
         }
@@ -119,8 +162,14 @@ public class testAnswerServiceImpl implements TestAnswerService {
         ResultAnswerDto resultAnswerDto = new ResultAnswerDto();
         if(optionalQuestion.isPresent()){
             SelectDto standart = new Gson().fromJson(optionalQuestion.get().getAnswer(), SelectDto.class);
-            resultAnswerDto.setScore(percentToScore(dto, testRadioDto(standart, dto.getEntity())));
+
             resultAnswerDto.setQuestionId(optionalQuestion.get().getId());
+            resultAnswerDto.setTaskId(optionalQuestion.get().getTask().getId());
+            resultAnswerDto.setLabWorkId(optionalQuestion.get().getTask().getLabWork().getId());
+            resultAnswerDto.setUsverId(dto.getUsverId());
+            setScoreToResult(resultAnswerDto, testRadioDto(standart, dto.getEntity()), dto.getAttemptsNumber());
+
+            saveResult(resultAnswerDto);
         } else {
             resultAnswerDto.setQuestionNotFound(true);
         }
@@ -132,8 +181,14 @@ public class testAnswerServiceImpl implements TestAnswerService {
         ResultAnswerDto resultAnswerDto = new ResultAnswerDto();
         if(optionalQuestion.isPresent()){
             SortingDto standart = new Gson().fromJson(optionalQuestion.get().getAnswer(), SortingDto.class);
-            resultAnswerDto.setScore(percentToScore(dto, testSortingDto(standart, dto.getEntity())));
+
             resultAnswerDto.setQuestionId(optionalQuestion.get().getId());
+            resultAnswerDto.setTaskId(optionalQuestion.get().getTask().getId());
+            resultAnswerDto.setLabWorkId(optionalQuestion.get().getTask().getLabWork().getId());
+            resultAnswerDto.setUsverId(dto.getUsverId());
+            setScoreToResult(resultAnswerDto, testSortingDto(standart, dto.getEntity()), dto.getAttemptsNumber());
+
+            saveResult(resultAnswerDto);
         } else {
             resultAnswerDto.setQuestionNotFound(true);
         }
@@ -141,9 +196,28 @@ public class testAnswerServiceImpl implements TestAnswerService {
     }
 
     // percent - [0.0 .. 1.0]
-    private Long percentToScore(BaseAnswerDto dto, double percent){
-        return Math.round(percent);
+    private void setScoreToResult(ResultAnswerDto resultAnswerDto, double percent, int attemptsNumber){
+        long score = Math.round(percent);
+        resultAnswerDto.setScore(score);
+        resultAnswerDto.setAttemptsNumber(attemptsNumber);
     }
+
+    private void saveResult(ResultAnswerDto resultAnswerDto){
+        UsverProgressLabWork usverProgressLabWork =
+                usverProgressService.getUsverProgress(resultAnswerDto.getUsverId(), resultAnswerDto.getLabWorkId())
+                        .orElseThrow(RuntimeException::new);
+        usverProgressLabWork.getUsverProgressTasks()
+                .stream()
+                .filter(usverProgressTask -> usverProgressTask.getTask().getId().equals(resultAnswerDto.getTaskId()))
+                .flatMap(usverProgressTask -> usverProgressTask.getUsverProgressQuestions().stream())
+                .filter(usverProgressQuestion -> usverProgressQuestion.getQuestion().getId().equals(resultAnswerDto.getQuestionId()))
+                .forEach(usverProgressQuestion -> {
+                    usverProgressQuestion.setScore(resultAnswerDto.getScore());
+                    usverProgressQuestion.setAttemptsNumber(resultAnswerDto.getAttemptsNumber());
+                });
+        usverProgressService.saveUsverProgress(usverProgressLabWork);
+    }
+
 
     // return - [0.0 .. 1.0]
     private double testComputerSystemDto(ComputerSystemDto standart, ComputerSystemDto answer){
@@ -203,37 +277,57 @@ public class testAnswerServiceImpl implements TestAnswerService {
 
     private double testCheckDto(SelectDto standart, SelectDto answer){
         //Если все чекбоксы отмечены, то возвращаем ноль
-        if(answer.getOptions().stream().allMatch(Trio::getValueA)){
+        if(answer.getOptions().stream().allMatch(Trio::getA)){
             return 0;
         }
 
         //Собираем все очки для подсчёта коэффициентов
-        int allScore = standart.getOptions().stream().mapToInt(Trio::getValueC).sum();
+        int allScore = standart.getOptions().stream().mapToInt(Trio::getC).sum();
 
         //Считаем коэффициент ответа
-        return Utils.collectTwoLists(
+        return Utils.collectTwoList(
                 standart.getOptions(),
                 answer.getOptions(),
                 (elem1, elem2) -> new Duet<>(
-                        elem1.getValueA().equals(elem2.getValueA()), //отмечаем true правильные ответы
-                        (double) elem1.getValueC() / allScore
+                        elem1.getA().equals(elem2.getA()), //отмечаем true правильные ответы
+                        (double) elem1.getC() / allScore
                 )
         ).stream()
-                .filter(Duet::getValueA)
-                .mapToDouble(Duet::getValueB)
+                .filter(Duet::getA)
+                .mapToDouble(Duet::getB)
                 .sum();
     }
 
     private double testRadioDto(SelectDto standart, SelectDto answer){
         OptionalInt prepodScore = standart.getOptions()
                 .stream()
-                .mapToInt(Trio::getValueC)
+                .mapToInt(Trio::getC)
                 .max();
         OptionalInt studentScore = answer.getOptions()
                 .stream()
-                .filter(Trio::getValueA)
-                .mapToInt(Trio::getValueC)
+                .filter(Trio::getA)
+                .mapToInt(Trio::getC)
                 .findAny();
+
+        //Если все коеффициенты равны, то просто проверяем по equals
+        if (prepodScore.isPresent()) {
+            boolean allCoefficientsEquals = standart.getOptions()
+                    .stream()
+                    .mapToInt(Trio::getC)
+                    .allMatch(coefficient -> prepodScore.getAsInt() == coefficient);
+            if(allCoefficientsEquals){
+                List<Boolean> prepodAnswer = standart.getOptions()
+                        .stream()
+                        .map(Trio::getA)
+                        .collect(Collectors.toList());
+                List<Boolean> usverAnswer = answer.getOptions()
+                        .stream()
+                        .map(Trio::getA)
+                        .collect(Collectors.toList());
+                return (prepodAnswer.equals(usverAnswer)) ? 1 : 0;
+            }
+        }
+
         if (prepodScore.isPresent() && studentScore.isPresent()){
             return (double) studentScore.getAsInt() / prepodScore.getAsInt();
         } else if (prepodScore.isPresent()){

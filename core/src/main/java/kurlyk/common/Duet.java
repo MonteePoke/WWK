@@ -12,6 +12,6 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Builder
 public class Duet<A, B> implements Serializable {
-    private A valueA;
-    private B valueB;
+    private A a;
+    private B b;
 }

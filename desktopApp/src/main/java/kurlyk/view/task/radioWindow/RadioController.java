@@ -88,9 +88,9 @@ public class RadioController extends SubmitConfigurationController<SelectDto> {
             for (Trio<Boolean, String, Integer> option : radioDto.getOptions()){
                 root.getChildren().add(
                         new EditableRadioButton(
-                                option.getValueA(),
-                                option.getValueB(),
-                                option.getValueC(),
+                                option.getA(),
+                                option.getB(),
+                                option.getC(),
                                 editable,
                                 group
                         )

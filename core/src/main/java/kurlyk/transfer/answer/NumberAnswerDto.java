@@ -1,13 +1,12 @@
 package kurlyk.transfer.answer;
 
 import kurlyk.transfer.tasks.NumberDto;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class NumberAnswerDto extends BaseAnswerDto{
     private NumberDto entity;

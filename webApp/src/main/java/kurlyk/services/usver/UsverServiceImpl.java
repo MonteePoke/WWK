@@ -7,6 +7,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UsverServiceImpl implements UsverService {
@@ -31,7 +32,7 @@ public class UsverServiceImpl implements UsverService {
     }
 
     @Override
-    public Usver findOne(Long usverId) {
-        return usverRepository.getOne(usverId);
+    public Optional<Usver> findById(Long usverId) {
+        return usverRepository.findById(usverId);
     }
 }

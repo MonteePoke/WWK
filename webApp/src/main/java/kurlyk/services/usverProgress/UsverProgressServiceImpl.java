@@ -21,7 +21,14 @@ public class UsverProgressServiceImpl implements UsverProgressService {
 
     @Override
     public Long saveUsverProgress(UsverProgressLabWork usverProgressLabWork) {
+        getUsverProgress(usverProgressLabWork.getUsver().getId(), usverProgressLabWork.getLabWork().getId())
+                .ifPresent(progressLabWork -> usverProgressLabWork.setId(progressLabWork.getId()));
         return usverProgressRepository.save(usverProgressLabWork).getId();
+    }
+
+    @Override
+    public Optional<UsverProgressLabWork> getUsverProgress(Long usverId, Long labWorkId) {
+        return usverProgressRepository.findOneByUsverIdAndLabWorkId(usverId, labWorkId);
     }
 
     @Override
@@ -29,11 +36,9 @@ public class UsverProgressServiceImpl implements UsverProgressService {
         usverProgressRepository.deleteById(id);
     }
 
-
-
     @Override
     public Optional<UsverLabWorkAccess> getUsverLabWorkAccess(UsverLabWorkDto usverLabWorkDto) {
-        return usverLabWorkAccessRepository.findOneByUsverIdAndLabWorkId(
+        return usverLabWorkAccessRepository.findOneByLabWorkIdAndUsverId(
                 usverLabWorkDto.getUsverId(),
                 usverLabWorkDto.getLabWorkId()
         );

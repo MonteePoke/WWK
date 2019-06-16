@@ -42,7 +42,7 @@ public class CompetenceServiceImpl implements CompetenceService{
 
     @Override
     public List<LabWorkCompetence> getLabWorkCompetencesByLabWorkId(Long labWorkId) {
-        return labWorkCompetenceRepository.findByByLabWorkId(labWorkId);
+        return labWorkCompetenceRepository.findByLabWorkId(labWorkId);
     }
 
     @Override
