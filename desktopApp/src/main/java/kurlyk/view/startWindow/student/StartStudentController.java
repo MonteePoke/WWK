@@ -3,6 +3,7 @@ package kurlyk.view.startWindow.student;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.stage.Stage;
 import kurlyk.communication.Communicator;
 import kurlyk.communication.ExecuteMaster;
 import kurlyk.communication.UsverInfo;
@@ -53,7 +54,7 @@ public class StartStudentController extends Controller {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        stagePool.pushStage(Stages.PERFORM_WORK, new Stage());
         further.setOnAction(event -> {
             executeMaster.initWork(
                     labNumber.getValue().getId(),

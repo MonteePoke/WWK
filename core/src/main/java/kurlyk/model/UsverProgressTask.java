@@ -21,9 +21,6 @@ public class UsverProgressTask {
     @ManyToOne
     private Task task;
 
-    @ManyToOne
-    private UsverProgressLabWork usverProgressLabWork;
-
     @OneToMany(cascade = CascadeType.ALL)
     private Set<UsverProgressQuestion> usverProgressQuestions;
 }

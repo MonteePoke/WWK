@@ -12,7 +12,9 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import java.util.function.BiFunction;
+import java.util.function.BiPredicate;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -106,5 +108,24 @@ public class Utils {
 
     public static LocalDateTime toLocalDateTime(Date date){
         return LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
+    }
+
+    public static <T> boolean setsEquals(Set<T> set1, Set<T> set2, BiPredicate<T, T> comparator){
+        if(set1.size() != set2.size()){
+            return false;
+        }
+        boolean result = false;
+        for (T element1 : set1){
+            for (T element2 : set2){
+                result = comparator.test(element1, element2);
+                if(result){
+                    break;
+                }
+            }
+            if(!result){
+                break;
+            }
+        }
+        return result;
     }
 }

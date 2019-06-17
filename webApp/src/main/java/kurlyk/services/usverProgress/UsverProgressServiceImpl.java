@@ -3,7 +3,7 @@ package kurlyk.services.usverProgress;
 import kurlyk.model.UsverLabWorkAccess;
 import kurlyk.model.UsverProgressLabWork;
 import kurlyk.repositories.UsverLabWorkAccessRepository;
-import kurlyk.repositories.UsverProgressRepository;
+import kurlyk.repositories.UsverProgressLabWorkRepository;
 import kurlyk.transfer.UsverLabWorkDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +14,7 @@ import java.util.Optional;
 public class UsverProgressServiceImpl implements UsverProgressService {
 
     @Autowired
-    private UsverProgressRepository usverProgressRepository;
+    private UsverProgressLabWorkRepository usverProgressLabWorkRepository;
 
     @Autowired
     private UsverLabWorkAccessRepository usverLabWorkAccessRepository;
@@ -23,17 +23,17 @@ public class UsverProgressServiceImpl implements UsverProgressService {
     public Long saveUsverProgress(UsverProgressLabWork usverProgressLabWork) {
         getUsverProgress(usverProgressLabWork.getUsver().getId(), usverProgressLabWork.getLabWork().getId())
                 .ifPresent(progressLabWork -> usverProgressLabWork.setId(progressLabWork.getId()));
-        return usverProgressRepository.save(usverProgressLabWork).getId();
+        return usverProgressLabWorkRepository.save(usverProgressLabWork).getId();
     }
 
     @Override
     public Optional<UsverProgressLabWork> getUsverProgress(Long usverId, Long labWorkId) {
-        return usverProgressRepository.findOneByUsverIdAndLabWorkId(usverId, labWorkId);
+        return usverProgressLabWorkRepository.findOneByUsverIdAndLabWorkId(usverId, labWorkId);
     }
 
     @Override
     public void deleteUsverProgress(Long id) {
-        usverProgressRepository.deleteById(id);
+        usverProgressLabWorkRepository.deleteById(id);
     }
 
     @Override

@@ -1,13 +1,15 @@
 package kurlyk.common.algorithm.graph.ComputerSystem;
 
 import kurlyk.common.algorithm.graph.GraphElement;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
+import lombok.*;
 
 import java.util.Objects;
 import java.util.UUID;
 
+@Setter
 @Getter
+@AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode
 public class SimpleComputerSystemElement implements GraphElement<SimpleComputerSystemElement> {
     private UUID uuid;

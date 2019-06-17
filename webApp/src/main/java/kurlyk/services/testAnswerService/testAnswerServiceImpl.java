@@ -6,6 +6,9 @@ import kurlyk.common.Trio;
 import kurlyk.common.Utils;
 import kurlyk.common.algorithm.StemmerPorterRU;
 import kurlyk.common.algorithm.formulaTester.FormulaTester;
+import kurlyk.common.algorithm.graph.ComputerSystem.ComputerSystemElementType;
+import kurlyk.common.algorithm.graph.ComputerSystem.SimpleComputerSystemElement;
+import kurlyk.common.algorithm.graph.SimpleGraphSystem;
 import kurlyk.model.Question;
 import kurlyk.model.UsverProgressLabWork;
 import kurlyk.services.labWork.LabWorkService;
@@ -20,9 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.OptionalInt;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -221,8 +222,91 @@ public class testAnswerServiceImpl implements TestAnswerService {
 
     // return - [0.0 .. 1.0]
     private double testComputerSystemDto(ComputerSystemDto standart, ComputerSystemDto answer){
-        boolean isIsomorfic =  standart.getGraphSystem().isomorfic(answer.getGraphSystem());
+        boolean isIsomorfic = standart.getGraphSystem().isomorfic(answer.getGraphSystem());
+
+        if (!isIsomorfic) {
+            Set<ComputerSystemDto> standartSet = getManySubgraphsComputerSystem(standart);
+            Set<ComputerSystemDto> answerSet = getManySubgraphsComputerSystem(answer);
+
+            isIsomorfic = Utils.setsEquals(
+                    standartSet,
+                    answerSet,
+                    (computerSystemDto1, computerSystemDto2) ->  computerSystemDto1.getGraphSystem().isomorfic(computerSystemDto2.getGraphSystem())
+            );
+        }
+
         return isIsomorfic ? 1 : 0;
+    }
+
+    private Set<ComputerSystemDto> getManySubgraphsComputerSystem(ComputerSystemDto computerSystemDto){
+        Map<ComputerSystemElementType, List<SimpleComputerSystemElement>> elementTypeListMap = computerSystemDto.getSimpleGraphSystem().getElementSet()
+                .stream()
+                .filter(simpleComputerSystemElement -> simpleComputerSystemElement.getType() != ComputerSystemElementType.POINT)
+                .collect(Collectors.groupingBy(SimpleComputerSystemElement::getType));
+        Set<SimpleComputerSystemElement> pointSet = computerSystemDto.getSimpleGraphSystem().getElementSet()
+                .stream()
+                .filter(simpleComputerSystemElement -> simpleComputerSystemElement.getType() == ComputerSystemElementType.POINT)
+                .collect(Collectors.toSet());
+
+        Set<Duet<SimpleComputerSystemElement, SimpleComputerSystemElement>> cpuConnectors = computerSystemDto.getSimpleGraphSystem().getConnectionSet()
+                .stream()
+                .filter(duet -> duet.getA().getType() == ComputerSystemElementType.CPU || duet.getB().getType() == ComputerSystemElementType.CPU)
+                .collect(Collectors.toSet());
+        Set<Duet<SimpleComputerSystemElement, SimpleComputerSystemElement>> ramConnectors = computerSystemDto.getSimpleGraphSystem().getConnectionSet()
+                .stream()
+                .filter(duet -> duet.getA().getType() == ComputerSystemElementType.RAM || duet.getB().getType() == ComputerSystemElementType.RAM)
+                .collect(Collectors.toSet());
+        Set<Duet<SimpleComputerSystemElement, SimpleComputerSystemElement>> ioConnectors = computerSystemDto.getSimpleGraphSystem().getConnectionSet()
+                .stream()
+                .filter(duet -> duet.getA().getType() == ComputerSystemElementType.IO || duet.getB().getType() == ComputerSystemElementType.IO)
+                .collect(Collectors.toSet());
+
+        Set<SimpleComputerSystemElement> cpuPoints = pointSet
+                .stream()
+                .filter(simpleComputerSystemElement ->
+                        cpuConnectors
+                                .stream()
+                                .anyMatch(duet -> duet.getA().getUuid().equals(simpleComputerSystemElement.getUuid()) || duet.getB().getUuid().equals(simpleComputerSystemElement.getUuid()))
+                )
+                .collect(Collectors.toSet());
+        Set<SimpleComputerSystemElement> ramPoints = pointSet
+                .stream()
+                .filter(simpleComputerSystemElement ->
+                        ramConnectors
+                                .stream()
+                                .anyMatch(duet -> duet.getA().getUuid().equals(simpleComputerSystemElement.getUuid()) || duet.getB().getUuid().equals(simpleComputerSystemElement.getUuid()))
+                )
+                .collect(Collectors.toSet());
+        Set<SimpleComputerSystemElement> ioPoints = pointSet
+                .stream()
+                .filter(simpleComputerSystemElement ->
+                        ioConnectors
+                                .stream()
+                                .anyMatch(duet -> duet.getA().getUuid().equals(simpleComputerSystemElement.getUuid()) || duet.getB().getUuid().equals(simpleComputerSystemElement.getUuid()))
+                )
+                .collect(Collectors.toSet());
+
+        ComputerSystemDto computerSystemDtoForCpu = new ComputerSystemDto(new SimpleGraphSystem());
+        computerSystemDtoForCpu.getSimpleGraphSystem().getElementSet().addAll(elementTypeListMap.get(ComputerSystemElementType.CPU));
+        computerSystemDtoForCpu.getSimpleGraphSystem().getElementSet().addAll(cpuPoints);
+        computerSystemDtoForCpu.getSimpleGraphSystem().getConnectionSet().addAll(cpuConnectors);
+
+        ComputerSystemDto computerSystemDtoForRam = new ComputerSystemDto(new SimpleGraphSystem());
+        computerSystemDtoForRam.getSimpleGraphSystem().getElementSet().addAll(elementTypeListMap.get(ComputerSystemElementType.RAM));
+        computerSystemDtoForRam.getSimpleGraphSystem().getElementSet().addAll(ramPoints);
+        computerSystemDtoForRam.getSimpleGraphSystem().getConnectionSet().addAll(ramConnectors);
+
+        ComputerSystemDto computerSystemDtoForIo = new ComputerSystemDto(new SimpleGraphSystem());
+        computerSystemDtoForIo.getSimpleGraphSystem().getElementSet().addAll(elementTypeListMap.get(ComputerSystemElementType.IO));
+        computerSystemDtoForIo.getSimpleGraphSystem().getElementSet().addAll(ioPoints);
+        computerSystemDtoForIo.getSimpleGraphSystem().getConnectionSet().addAll(ioConnectors);
+
+        Set<ComputerSystemDto> result = new HashSet<>();
+        result.add(computerSystemDtoForCpu);
+        result.add(computerSystemDtoForRam);
+        result.add(computerSystemDtoForIo);
+
+        return result;
     }
 
     private double testFormulaDto(FormulaDto standart, FormulaDto answer){

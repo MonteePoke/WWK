@@ -9,4 +9,5 @@ import java.util.List;
 public interface UsverProgressQuestionRepository extends JpaRepository<UsverProgressQuestion, Long> {
 
     List<UsverProgressQuestion> findByQuestionId(Long questionId);
+    void deleteByQuestionId(Long questionId);
 }

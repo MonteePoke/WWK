@@ -2,10 +2,12 @@ package kurlyk.controllers;
 
 import kurlyk.model.Competence;
 import kurlyk.model.LabWorkCompetence;
+import kurlyk.repositories.*;
 import kurlyk.services.competenceService.CompetenceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -60,5 +62,44 @@ public class CompetenceController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok().build();
+    }
+
+    @Autowired
+    private LabWorkRepository labWorkRepository;
+    @Autowired
+    private TaskRepository taskRepository;
+    @Autowired
+    private QuestionRepository questionRepository;
+
+    @Autowired
+    private UsverProgressLabWorkRepository usverProgressLabWorkRepository;
+    @Autowired
+    private UsverProgressTaskRepository usverProgressTaskRepository;
+    @Autowired
+    private UsverProgressQuestionRepository usverProgressQuestionRepository;
+
+
+    //удаление лабораторной
+    @GetMapping("/x")
+    @Transactional
+    public void getX() {
+        usverProgressLabWorkRepository.deleteByLabWorkId(1L);
+        labWorkRepository.deleteById(1L);
+    }
+
+    //удаление задания
+    @GetMapping("/y")
+    @Transactional
+    public void getY() {
+        usverProgressLabWorkRepository.deleteByLabWorkId(1L);
+        labWorkRepository.deleteById(1L);
+    }
+
+    //удаление вопроса
+    @GetMapping("/z")
+    @Transactional
+    public void getZ() {
+        usverProgressQuestionRepository.deleteByQuestionId(1L);
+        questionRepository.deleteById(1L);
     }
 }

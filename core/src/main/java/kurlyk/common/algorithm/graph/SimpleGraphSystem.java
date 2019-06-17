@@ -1,8 +1,10 @@
 package kurlyk.common.algorithm.graph;
 
 import javafx.util.Pair;
+import kurlyk.common.Duet;
 import kurlyk.common.algorithm.graph.ComputerSystem.ComputerSystemElement;
 import kurlyk.common.algorithm.graph.ComputerSystem.SimpleComputerSystemElement;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,10 +12,13 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Getter
+@Setter
+@AllArgsConstructor
 public class SimpleGraphSystem {
 
     @Getter @Setter private Set<SimpleComputerSystemElement> elementSet;
-    @Getter @Setter private Set<Pair<SimpleComputerSystemElement, SimpleComputerSystemElement>> connectionSet;
+    @Getter @Setter private Set<Duet<SimpleComputerSystemElement, SimpleComputerSystemElement>> connectionSet;
 
     public SimpleGraphSystem() {
         this.elementSet = new HashSet<>();
@@ -27,7 +32,7 @@ public class SimpleGraphSystem {
                 .collect(Collectors.toSet());
         connectionSet = graphSystem.getConnectionSet()
                 .stream()
-                .map(pair -> new Pair<>(new SimpleComputerSystemElement(pair.getKey()), new SimpleComputerSystemElement(pair.getValue())))
+                .map(pair -> new Duet<>(new SimpleComputerSystemElement(pair.getKey()), new SimpleComputerSystemElement(pair.getValue())))
                 .collect(Collectors.toSet());
     }
 
@@ -47,8 +52,8 @@ public class SimpleGraphSystem {
                 connectionSet.stream()
                 .map(pair ->
                     new Pair<>(
-                            new ComputerSystemElement(pair.getKey().getUuid(), pair.getKey().getType(), pair.getKey().getAvailabilityFactor()),
-                            new ComputerSystemElement(pair.getValue().getUuid(), pair.getValue().getType(), pair.getValue().getAvailabilityFactor())
+                            new ComputerSystemElement(pair.getA().getUuid(), pair.getA().getType(), pair.getA().getAvailabilityFactor()),
+                            new ComputerSystemElement(pair.getB().getUuid(), pair.getB().getType(), pair.getB().getAvailabilityFactor())
                     )
                 ).collect(Collectors.toSet())
         );

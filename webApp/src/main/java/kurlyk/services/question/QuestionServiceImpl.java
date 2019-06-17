@@ -127,8 +127,6 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public void deleteQuestion(Long id) {
-//        usverProgressQuestionRepository.findByQuestionId(id)
-//                .forEach(usverProgressQuestion -> usverProgressQuestionRepository.delete(usverProgressQuestion));
         questionRepository.deleteById(id);
     }
 
