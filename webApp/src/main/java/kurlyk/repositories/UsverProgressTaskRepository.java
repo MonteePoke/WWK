@@ -10,4 +10,7 @@ public interface UsverProgressTaskRepository extends JpaRepository<UsverProgress
 
     List<UsverProgressTask> findByTaskId(Long taskId);
     void deleteByTaskId(Long taskId);
+
+    List<UsverProgressTask> findByUsverProgressLabWorkId(Long usverProgressLabWorkId);
+    void deleteByUsverProgressLabWorkId(Long usverProgressLabWorkId);
 }

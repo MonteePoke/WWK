@@ -5,6 +5,8 @@ import kurlyk.model.UsverProgressLabWork;
 import kurlyk.model.UsverProgressTask;
 import kurlyk.repositories.UsverLabWorkAccessRepository;
 import kurlyk.repositories.UsverProgressLabWorkRepository;
+import kurlyk.repositories.UsverProgressQuestionRepository;
+import kurlyk.repositories.UsverProgressTaskRepository;
 import kurlyk.transfer.UsverLabWorkDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,12 @@ public class UsverProgressServiceImpl implements UsverProgressService {
 
     @Autowired
     private UsverProgressLabWorkRepository usverProgressLabWorkRepository;
+
+    @Autowired
+    private UsverProgressTaskRepository usverProgressTaskRepository;
+
+    Autowired
+    private UsverProgressQuestionRepository usverProgressQuestionRepository;
 
     @Autowired
     private UsverLabWorkAccessRepository usverLabWorkAccessRepository;
