@@ -24,7 +24,7 @@ public class UsverProgressServiceImpl implements UsverProgressService {
     @Autowired
     private UsverProgressTaskRepository usverProgressTaskRepository;
 
-    Autowired
+    @Autowired
     private UsverProgressQuestionRepository usverProgressQuestionRepository;
 
     @Autowired
@@ -61,15 +61,15 @@ public class UsverProgressServiceImpl implements UsverProgressService {
 
         usverProgressLabWorks.forEach(
                 usverProgressLabWork -> {
-                    usverProgressTasks.addAll(usverProgressTaskRepository.findByUsverProgressLabWorkId(usverProgressLabWork.getId()));
+                    usverProgressTasks.addAll(usverProgressLabWork.getUsverProgressTasks());
                 }
         );
         usverProgressTasks.forEach(
-                usverProgressTask -> usverProgressQuestionRepository.deleteAll(usverProgressQuestionRepository.findByUsverProgressTaskId(usverProgressTask.getId()))
+                usverProgressTask -> usverProgressQuestionRepository.deleteAll(usverProgressTask.getUsverProgressQuestions())
         );
 
-        usverProgressLabWorkRepository.deleteAll(usverProgressLabWorks);
         usverProgressTaskRepository.deleteAll(usverProgressTasks);
+        usverProgressLabWorkRepository.deleteAll(usverProgressLabWorks);
     }
 
 
