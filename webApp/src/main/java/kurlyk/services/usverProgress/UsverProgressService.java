@@ -13,6 +13,9 @@ public interface UsverProgressService {
     Long saveUsverProgress(UsverProgressLabWork usverProgressLabWork);
     void deleteUsverProgress(Long id);
 
+    void deleteUsverProgressLabWorkByLabWorkId(Long labWorkId);
+
+
     Optional<UsverLabWorkAccess> getUsverLabWorkAccess(UsverLabWorkDto usverLabWorkDto);
     Long saveUsverLabWorkAccess(UsverLabWorkAccess usverLabWorkAccess);
     void deleteUsverLabWorkAccess(Long id);
