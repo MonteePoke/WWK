@@ -1,13 +1,17 @@
 package kurlyk.services.task;
 
 import kurlyk.model.Task;
+import kurlyk.model.UsverProgressTask;
 import kurlyk.repositories.QuestionRepository;
 import kurlyk.repositories.TaskRepository;
+import kurlyk.repositories.UsverProgressQuestionRepository;
+import kurlyk.repositories.UsverProgressTaskRepository;
 import kurlyk.services.question.QuestionService;
 import kurlyk.services.usverProgress.UsverProgressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,7 +22,10 @@ public class TaskServiceImpl implements TaskService {
     private TaskRepository taskRepository;
 
     @Autowired
-    private UsverProgressService usverProgressService;
+    private UsverProgressTaskRepository usverProgressTaskRepository;
+
+    @Autowired
+    private UsverProgressQuestionRepository usverProgressQuestionRepository;
 
     @Autowired
     private QuestionService questionService;
@@ -49,12 +56,14 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    @Transactional
     public void deleteTask(Long id){
-        usverProgressService.deleteUsverProgressLabWorkByLabWorkId(id);
         questionService.getQuestions(id).forEach(
                 question -> {
+                    usverProgressQuestionRepository.deleteByQuestionId(question.getId());
                     questionService.deleteQuestion(question.getId());
                 });
+        usverProgressTaskRepository.deleteByTaskId(id);
         taskRepository.deleteById(id);
     }
 }

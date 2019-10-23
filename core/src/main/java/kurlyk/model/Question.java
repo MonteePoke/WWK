@@ -42,9 +42,6 @@ public class Question {
     @Column(columnDefinition = "CLOB")
     private String answer;
 
-//    @OneToMany(mappedBy  = "question", cascade = CascadeType.REMOVE)
-//    private Set<UsverProgressQuestion> usverProgressQuestions = new HashSet<>();
-
     public Question(
             Long id,
             Task task,

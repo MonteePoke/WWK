@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -126,7 +127,9 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
+    @Transactional
     public void deleteQuestion(Long id) {
+        usverProgressQuestionRepository.deleteByQuestionId(id);
         questionRepository.deleteById(id);
     }
 
