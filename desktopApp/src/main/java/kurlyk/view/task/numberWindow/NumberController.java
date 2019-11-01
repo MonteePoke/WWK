@@ -70,6 +70,7 @@ public class NumberController extends SubmitConfigurationController<NumberDto> {
         accuracyField.setVisible(editable);
         if (numberDto != null) {
             inputField.setValue(numberDto.getNumber());
+            accuracyField.setValue(numberDto.getAccuracy());
         }
     }
 

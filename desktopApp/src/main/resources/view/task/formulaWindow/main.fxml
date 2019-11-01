@@ -7,11 +7,13 @@
 <?import javafx.scene.web.WebView?>
 <?import kurlyk.view.components.MyHtmlEditor?>
 <VBox xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kurlyk.view.task.formulaWindow.FormulaController">
-    <HBox>
-        <MyHtmlEditor fx:id="textArea" HBox.hgrow="ALWAYS">
+   <ScrollPane>
+      <HBox>
+         <MyHtmlEditor fx:id="textArea" HBox.hgrow="ALWAYS">
 
-        </MyHtmlEditor>
-    </HBox>
+         </MyHtmlEditor>
+      </HBox>
+   </ScrollPane>
    <BorderPane prefHeight="199.0" prefWidth="815.0">
       <center>
           <VBox fx:id="root" alignment="TOP_CENTER" prefHeight="128.0" prefWidth="800.0" BorderPane.alignment="CENTER">

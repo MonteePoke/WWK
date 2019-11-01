@@ -6,12 +6,15 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 <?import kurlyk.view.components.MyHtmlEditor?>
+<?import javafx.scene.control.ScrollPane?>
 <VBox xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kurlyk.view.task.textWindow.TextController">
-    <HBox>
-        <MyHtmlEditor fx:id="textArea" HBox.hgrow="ALWAYS">
+    <ScrollPane>
+        <HBox>
+            <MyHtmlEditor fx:id="textArea" HBox.hgrow="ALWAYS">
 
-        </MyHtmlEditor>
-    </HBox>
+            </MyHtmlEditor>
+        </HBox>
+    </ScrollPane>
     <VBox fx:id="root" alignment="TOP_CENTER">
         <TextArea fx:id="inputArea" VBox.vgrow="ALWAYS"/>
     </VBox>

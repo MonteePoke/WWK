@@ -6,13 +6,15 @@
 <?import kurlyk.view.components.fields.DoubleField?>
 <?import kurlyk.view.components.fields.IntegerField?>
 <?import kurlyk.view.components.MyHtmlEditor?>
+<?import javafx.scene.control.ScrollPane?>
 <VBox xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kurlyk.view.task.numberWindow.NumberController">
-    <HBox>
-        <MyHtmlEditor fx:id="textArea" HBox.hgrow="ALWAYS">
+    <ScrollPane>
+        <HBox>
+            <MyHtmlEditor fx:id="textArea" HBox.hgrow="ALWAYS">
 
-        </MyHtmlEditor>
-    </HBox>
-
+            </MyHtmlEditor>
+        </HBox>
+    </ScrollPane>
     <HBox>
         <VBox fx:id="root" alignment="TOP_CENTER" HBox.hgrow="ALWAYS">
             <DoubleField fx:id="inputField" prefWidth="715.0" VBox.vgrow="ALWAYS" />

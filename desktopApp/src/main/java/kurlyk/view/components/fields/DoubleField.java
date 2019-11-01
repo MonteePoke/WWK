@@ -40,6 +40,6 @@ public class DoubleField extends AbstractNumberField<Double> {
 
     @Override
     protected String converter(Double value) {
-        return value.toString();
+        return value != null ? value.toString() : "";
     }
 }

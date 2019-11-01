@@ -17,6 +17,6 @@ INSERT INTO USVER_ROLES (usver_id, roles_id) VALUES (2, 2);
 
 
 
-INSERT INTO LAB_WORK (id, name, number) VALUES (1, 'Лабораторная работа №1	', 1);
-INSERT INTO TASK (id, name, number, lab_work_id) VALUES (1, 'Тест', 0, 1);
-INSERT INTO TASK (id, name, number, lab_work_id) VALUES (2, 'Задание №1', 1, 1);
+--INSERT INTO LAB_WORK (id, name, number) VALUES (1, 'Лабораторная работа №1	', 1);
+--INSERT INTO TASK (id, name, number, lab_work_id) VALUES (1, 'Тест', 0, 1);
+--INSERT INTO TASK (id, name, number, lab_work_id) VALUES (2, 'Задание №1', 1, 1);
