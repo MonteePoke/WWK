@@ -52,6 +52,11 @@ public class UsverController {
         return usverProgressService.saveUsverProgress(usverProgressLabWork);
     }
 
+    @PostMapping("/usver/progress-question")
+    public Long saveUsverProgressQuestion(@RequestBody UsverProgressQuestion usverProgressQuestion) {
+        return usverProgressService.saveUsverProgressQuestion(usverProgressQuestion);
+    }
+
     @DeleteMapping("/usver/progress/{id}")
     public ResponseEntity<Object> deleteUsverProgress(@PathVariable("id") Long id) {
         try {

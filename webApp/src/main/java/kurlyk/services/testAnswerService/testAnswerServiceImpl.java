@@ -11,6 +11,7 @@ import kurlyk.common.algorithm.graph.ComputerSystem.SimpleComputerSystemElement;
 import kurlyk.common.algorithm.graph.SimpleGraphSystem;
 import kurlyk.model.Question;
 import kurlyk.model.UsverProgressLabWork;
+import kurlyk.model.UsverProgressQuestion;
 import kurlyk.services.labWork.LabWorkService;
 import kurlyk.services.question.QuestionService;
 import kurlyk.services.task.TaskService;
@@ -211,9 +212,25 @@ public class testAnswerServiceImpl implements TestAnswerService {
      * СИЛЬНО
      * **/
     private void saveResult(ResultAnswerDto resultAnswerDto){
-        UsverProgressLabWork usverProgressLabWork =
-                usverProgressService.getUsverProgress(resultAnswerDto.getUsverId(), resultAnswerDto.getLabWorkId())
-                        .orElseThrow(RuntimeException::new);
+        List<UsverProgressQuestion> usverProgressQuestions =
+                usverProgressService.getUsverProgressQuestions(resultAnswerDto.getLabWorkId());
+
+        usverProgressQuestions
+                .stream()
+                .filter(usverProgressQuestion -> usverProgressQuestion.getQuestion().getId().equals(resultAnswerDto.getQuestionId()))
+                .forEach(usverProgressQuestion -> {
+                    usverProgressQuestion.setScore(resultAnswerDto.getScore());
+                    usverProgressQuestion.setAttemptsNumber(resultAnswerDto.getAttemptsNumber());
+                    usverProgressService.saveUsverProgressQuestion(usverProgressQuestion);
+                });
+
+//        UsverProgressLabWork usverProgressLabWork =
+//                usverProgressService.getUsverProgress(resultAnswerDto.getUsverId(), resultAnswerDto.getLabWorkId())
+//                        .orElseThrow(RuntimeException::new);
+
+
+
+
 //        usverProgressLabWork.getUsverProgressTasks()
 //                .stream()
 //                .filter(usverProgressTask -> usverProgressTask.getTask().getId().equals(resultAnswerDto.getTaskId()))
@@ -223,7 +240,7 @@ public class testAnswerServiceImpl implements TestAnswerService {
 //                    usverProgressQuestion.setScore(resultAnswerDto.getScore());
 //                    usverProgressQuestion.setAttemptsNumber(resultAnswerDto.getAttemptsNumber());
 //                });
-        usverProgressService.saveUsverProgress(usverProgressLabWork);
+
     }
 
 

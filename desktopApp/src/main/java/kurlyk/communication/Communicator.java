@@ -214,6 +214,11 @@ public class Communicator extends AbstractCommunicator{
         return postData(type, usverProgressLabWork, "/usver/progress/");
     }
 
+    public Long saveUsverProgressQuestion(UsverProgressQuestion usverProgressQuestion) throws ConnectException, IOException {
+        Type type = new TypeToken<Long>(){}.getType();
+        return postData(type, usverProgressQuestion, "/usver/progress-question/");
+    }
+
     public void deleteUsverProgress(UsverProgressLabWork usverProgressLabWork) throws ConnectException, IOException {
         deleteData(null, usverProgressLabWork.getId(), "/usver/progress/");
     }

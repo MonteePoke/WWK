@@ -43,7 +43,7 @@ public class ExecuteMaster {
             Integer variant,
             Consumer<ExecuteCallbackDto> testCompleteCallback,
             Consumer<ExecuteCallbackDto> workCompleteCallback
-    ){
+    ) {
         initWork(labWorkId, variant, testCompleteCallback, workCompleteCallback, true);
     }
 
@@ -53,7 +53,7 @@ public class ExecuteMaster {
             Consumer<ExecuteCallbackDto> testCompleteCallback,
             Consumer<ExecuteCallbackDto> workCompleteCallback,
             boolean needTest
-    ){
+    ) {
         this.needTest = needTest;
         this.labWorkId = labWorkId;
         this.usverId = usverInfo.getTokenDto().getUsverId();
@@ -71,9 +71,9 @@ public class ExecuteMaster {
         }
     }
 
-    private void initUsverProgress() throws IOException{
+    private void initUsverProgress() throws IOException {
         LabWork labWork = communicator.getLabWork(labWorkId);
-        if(labWork.getInterval() == null){
+        if (labWork.getInterval() == null) {
             labWork.setInterval(60L);
         }
         Usver usver = communicator.getUsver(usverInfo.getTokenDto().getUsverId());
@@ -85,34 +85,45 @@ public class ExecuteMaster {
          * ОЧЕНЬ
          * СИЛЬНО
          * **/
-        Set<UsverProgressQuestion> usverProgressQuestions = new HashSet<>();
 
-        Map<Long, List<UsverProgressQuestion>> questionMap = Utils.joinTwoList(questionIdsDto.getTestQuestionIds(), questionIdsDto.getWorkQuestionIds())
-                .stream()
-                .map(duet ->
-                        UsverProgressQuestion
-                                .builder()
-                                .question(Question.builder().id(duet.getB()).task(Task.builder().id(duet.getA()).build()).build())
-                                .score(0L)
-                                .attemptsNumber(0)
-                                .build()
-                )
-                .collect(Collectors.groupingBy(usverProgressQuestion -> usverProgressQuestion.getQuestion().getTask().getId()));
+        UsverProgressLabWork usverProgressLabWork = UsverProgressLabWork
+                .builder()
+                .usver(usver)
+                .labWork(labWork)
+                .startTime(new Date().getTime())
+                .endTime(Utils.toDate(LocalDateTime.now().plusMinutes(labWork.getInterval())).getTime())
+                .parameters(getUsverProgressLabWorkParameter(labWork))
 
-        communicator.saveUsverProgress(
-                UsverProgressLabWork
-                        .builder()
-                        .usver(usver)
-                        .labWork(labWork)
-                        .startTime(new Date().getTime())
-                        .endTime(Utils.toDate(LocalDateTime.now().plusMinutes(labWork.getInterval())).getTime())
-                        .parameters(getUsverProgressLabWorkParameter(labWork))
 //                        .usverProgressTasks(getUsverProgressTasks())
-                        .build()
-        );
+                .build();
+        Long usverProgressLabWorkId = communicator.saveUsverProgress(usverProgressLabWork);
+        usverProgressLabWork.setId(usverProgressLabWorkId);
+
+        Utils.joinTwoList(questionIdsDto.getTestQuestionIds(), questionIdsDto.getWorkQuestionIds())
+                .forEach(duet -> {
+
+                            UsverProgressQuestion usverProgressQuestion = UsverProgressQuestion
+                                    .builder()
+                                    .question(Question.builder().id(duet.getB()).build())
+                                    .score(0L)
+                                    .attemptsNumber(0)
+                                    .usverProgressLabWork(usverProgressLabWork)
+                                    .build();
+
+                            try {
+                                communicator.saveUsverProgressQuestion(usverProgressQuestion);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+//                            return true;
+                        }
+
+                );
+
+
     }
 
-    private Set<UsverProgressLabWorkParameter> getUsverProgressLabWorkParameter(LabWork labWork){
+    private Set<UsverProgressLabWorkParameter> getUsverProgressLabWorkParameter(LabWork labWork) {
         int difficultyLevelsNumber = labWork.getDifficultyLevelsNumber() != null ? labWork.getDifficultyLevelsNumber() : 1;
         int variantsNumber = labWork.getVariantsNumber() != null ? labWork.getVariantsNumber() : 1;
         final int numberOfParts = ((variantsNumber / difficultyLevelsNumber) > 0) ? (variantsNumber / difficultyLevelsNumber) : 1;
@@ -161,19 +172,19 @@ public class ExecuteMaster {
 //        }
 //        return usverProgressTasks;
 //    }
-    
+
     private List<UsverProgressQuestion> getUsverProgressQuestions() throws IOException {
 //        Set<UsverProgressQuestion> usverProgressQuestions = new HashSet<>();
 
         return communicator.getUsverProgressQuestions(labWorkId);
     }
 
-    public Question getQuestion(){
+    public Question getQuestion() {
         Question question = null;
         try {
-            if(isTestTime && needTest){
+            if (isTestTime && needTest) {
                 question = getTestQuestion();
-                if(question == null){
+                if (question == null) {
                     isTestTime = false;
                 }
             } else {
@@ -185,8 +196,8 @@ public class ExecuteMaster {
         return question;
     }
 
-    private Question getTestQuestion() throws IOException{
-        if(testQuestionIterator.hasNext()){
+    private Question getTestQuestion() throws IOException {
+        if (testQuestionIterator.hasNext()) {
             return communicator.getQuestionForExecute(testQuestionIterator.next());
         } else {
             ResultDto resultDto = getResultDto(false);
@@ -201,8 +212,8 @@ public class ExecuteMaster {
         }
     }
 
-    private Question getWorkQuestion() throws IOException{
-        if(workQuestionIterator.hasNext()){
+    private Question getWorkQuestion() throws IOException {
+        if (workQuestionIterator.hasNext()) {
             return communicator.getQuestionForExecute(workQuestionIterator.next());
         } else {
             ResultDto resultDto = getResultDto(true);
@@ -217,7 +228,7 @@ public class ExecuteMaster {
         }
     }
 
-    private ResultDto getResultDto(boolean forWork) throws IOException{
+    private ResultDto getResultDto(boolean forWork) throws IOException {
 //        List<UsverProgressQuestion> usverProgressQuestions = communicator.getStatiscticByUsverIdByLabWorkId(usverId, labWorkId)
 //                .usverProgressTask.getUsverProgressQuestions()
 //                .stream()

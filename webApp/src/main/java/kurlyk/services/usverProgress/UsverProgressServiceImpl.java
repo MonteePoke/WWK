@@ -89,4 +89,9 @@ public class UsverProgressServiceImpl implements UsverProgressService {
     public void deleteUsverLabWorkAccess(Long id) {
         usverLabWorkAccessRepository.deleteById(id);
     }
+
+    @Override
+    public Long saveUsverProgressQuestion(UsverProgressQuestion usverProgressQuestion) {
+        return usverProgressQuestionRepository.save(usverProgressQuestion).getId();
+    }
 }
