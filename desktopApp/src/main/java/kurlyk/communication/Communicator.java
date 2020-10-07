@@ -47,7 +47,6 @@ public class Communicator extends AbstractCommunicator{
             return true;
         }
     }
-
     public boolean register(Usver user) throws ConnectException, IOException {
         Type type = new TypeToken<TokenDto>(){}.getType();
         TokenDto tokenDto = postData(type, user, "/usvers/");
@@ -63,6 +62,11 @@ public class Communicator extends AbstractCommunicator{
     public List<Usver> getUsvers() throws ConnectException, IOException {
         Type type = new TypeToken<ArrayList<Usver>>(){}.getType();
         return getData(type, "/usvers/");
+    }
+
+    public Role getRole(String roleName) throws ConnectException, IOException {
+        Type type = new TypeToken<Role>(){}.getType();
+        return getData(type, "/role/" + roleName);
     }
 
 

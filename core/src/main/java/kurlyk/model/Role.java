@@ -23,6 +23,8 @@ public class Role implements Dictionary <String> {
     @Column(nullable = false, unique = true)
     private String name;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    private List<AccessRight> accessRights;
+
+
+//    @ManyToMany(cascade = CascadeType.ALL)
+//    private List<AccessRight> accessRights;
 }

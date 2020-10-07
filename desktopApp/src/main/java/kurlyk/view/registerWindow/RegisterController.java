@@ -9,6 +9,7 @@ import javafx.scene.control.TextField;
 import kurlyk.common.RoleTester;
 import kurlyk.communication.Communicator;
 import kurlyk.communication.UsverInfo;
+import kurlyk.model.Role;
 import kurlyk.model.Usver;
 import kurlyk.model.enums.RoleEnum;
 import kurlyk.transfer.LoginDto;
@@ -26,6 +27,8 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.net.ConnectException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 @Scope("prototype")
@@ -82,14 +85,27 @@ public class RegisterController extends Controller {
             registerButton.setDisable(false);
     }
 
-    public void register(){
-        Usver user = Usver.builder().
+    public void register() {
+
+        List<Role> roles = new ArrayList<Role>();
+        // ПОСМОТРЕТЬ!!!! ЕСЛИ РОЛЬ НЕ ПРИШЛА
+        try {
+            Role role = communicator.getRole(RoleEnum.STUDENT.getName());
+            roles.add(role);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Usver user = Usver
+                .builder().
                 login(loginField.getText()).
                 password(passwordField.getText()).
                 firstName(firstNameField.getText()).
                 secondName(secondNameField.getText()).
                 middleName(middleNameField.getText()).
-                studyGroup(studyGroupField.getText()).build();
+                studyGroup(studyGroupField.getText())
+                .roles(roles)
+                .build();
         try {
             if(!communicator.register(user)){
                 feedback.setVisible(true);

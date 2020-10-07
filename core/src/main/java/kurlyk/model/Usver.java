@@ -25,7 +25,7 @@ public class Usver {
     private String password;
 
     @Column(nullable = false)
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.MERGE)
     private List<Role> roles;
 
     @Column(nullable = false)
