@@ -48,6 +48,13 @@ public class Communicator extends AbstractCommunicator{
         }
     }
 
+    public boolean register(Usver user) throws ConnectException, IOException {
+        Type type = new TypeToken<TokenDto>(){}.getType();
+        TokenDto tokenDto = postData(type, user, "/usvers/");
+
+        return true;
+    }
+
     public Usver getUsver(Long id) throws ConnectException, IOException {
         Type type = new TypeToken<Usver>(){}.getType();
         return getData(type, "/usvers/" + id.toString());

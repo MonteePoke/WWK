@@ -30,7 +30,8 @@ public class ViewProperties {
         //Пункты верхнего меню
         properties.put("open", "Открыть");
         properties.put("help", "Справка");
-        properties.put("exit", "Выйти");
+        properties.put("logOut", "Выйти");
+        properties.put("exit", "Закрыть");
         properties.put("labWorks", "Лабораторные работы");
         properties.put("dataBase", "База знаний");
     }

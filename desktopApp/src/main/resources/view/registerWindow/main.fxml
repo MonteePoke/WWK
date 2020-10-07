@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<GridPane hgap="10" vgap="10" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="477.0" prefWidth="330.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kurlyk.view.registerWindow.RegisterController">
+   <padding><Insets top="25" right="25" bottom="25" left="25"/></padding>
+   <children>
+      <Label GridPane.columnIndex="0" GridPane.rowIndex="0" alignment="CENTER" GridPane.halignment="CENTER" GridPane.columnSpan="2" prefHeight="56.0" prefWidth="241.0" text="Регистрация">
+         <font>
+            <Font name="SansSerif Bold" size="27.0" />
+         </font>
+      </Label>
+
+      <Label GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.halignment="RIGHT" text="Логин">
+         <font>
+            <Font name="SansSerif Regular" size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="loginField" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.halignment="CENTER">
+         <font>
+            <Font name="SansSerif Regular" size="14.0" />
+         </font>
+      </TextField>
+
+      <Label GridPane.columnIndex="0" GridPane.rowIndex="2" GridPane.halignment="RIGHT" text="Пароль">
+         <font>
+            <Font name="SansSerif Regular" size="18.0" />
+         </font>
+      </Label>
+      <PasswordField fx:id="passwordField" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.halignment="CENTER">
+         <font>
+            <Font name="SansSerif Regular" size="14.0" />
+         </font>
+      </PasswordField>
+
+      <Label GridPane.columnIndex="0" GridPane.rowIndex="3" GridPane.halignment="RIGHT" text="Имя">
+         <font>
+            <Font name="SansSerif Regular" size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="firstNameField" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.halignment="CENTER">
+         <font>
+            <Font name="SansSerif Regular" size="14.0" />
+         </font>
+      </TextField>
+
+      <Label GridPane.columnIndex="0" GridPane.rowIndex="4" GridPane.halignment="RIGHT" text="Фамилия">
+         <font>
+            <Font name="SansSerif Regular" size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="secondNameField" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.halignment="CENTER">
+         <font>
+            <Font name="SansSerif Regular" size="14.0" />
+         </font>
+      </TextField>
+
+      <Label GridPane.columnIndex="0" GridPane.rowIndex="5" GridPane.halignment="RIGHT" text="Отчество">
+         <font>
+            <Font name="SansSerif Regular" size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="middleNameField" GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.halignment="CENTER">
+         <font>
+            <Font name="SansSerif Regular" size="14.0" />
+         </font>
+      </TextField>
+
+      <Label GridPane.columnIndex="0" GridPane.rowIndex="6" GridPane.halignment="RIGHT" text="Группа">
+         <font>
+            <Font name="SansSerif Regular" size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="studyGroupField" GridPane.columnIndex="1" GridPane.rowIndex="6" GridPane.halignment="CENTER">
+         <font>
+            <Font name="SansSerif Regular" size="14.0" />
+         </font>
+      </TextField>
+
+      <Label fx:id="feedback" GridPane.columnIndex="0" GridPane.rowIndex="9" GridPane.halignment="CENTER" contentDisplay="CENTER" GridPane.columnSpan="2" prefHeight="63.0" prefWidth="255.0" text="Пользователь не найден" textAlignment="CENTER" textFill="RED" visible="false">
+         <font>
+            <Font name="SansSerif Regular" size="18.0" />
+         </font>
+      </Label>
+      <Button fx:id="registerButton" disable="true" GridPane.columnIndex="0" GridPane.rowIndex="9"  alignment="CENTER" contentDisplay="CENTER" GridPane.halignment="CENTER" GridPane.columnSpan="2" mnemonicParsing="false" prefHeight="33.0" prefWidth="160.0" text="Зарегистрироваться">
+         <font>
+            <Font name="SansSerif Regular" size="14.0" />
+         </font>
+      </Button>
+   </children>
+</GridPane>
