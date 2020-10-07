@@ -13,6 +13,7 @@ import kurlyk.transfer.LoginDto;
 import kurlyk.view.common.controller.Controller;
 import kurlyk.view.common.stage.StagePool;
 import kurlyk.view.common.stage.Stages;
+import kurlyk.view.registerWindow.RegisterStage;
 import kurlyk.view.startWindow.StartStage;
 import kurlyk.view.startWindow.admin.StartAdminSceneCreator;
 import kurlyk.view.startWindow.student.StartStudentSceneCreator;
@@ -32,6 +33,7 @@ public class SignInController extends Controller {
     @FXML private Button logInButton;
     @FXML private Button logInAsGuestButton;
     @FXML private Label feedback;
+    @FXML private Button registerButton;
 
     @Autowired
     private StagePool stagePool;
@@ -50,6 +52,12 @@ public class SignInController extends Controller {
         loginField.textProperty().addListener((observable, oldValue, newValue) -> validateButtons());
         passwordField.textProperty().addListener((observable, oldValue, newValue) -> validateButtons());
         logInButton.setOnAction(event -> signIn());
+        registerButton.setOnAction(event -> openRegisterWindow());
+    }
+
+    private void openRegisterWindow() {
+        stagePool.pushStageAndShow(Stages.REGISTER, new RegisterStage());
+        stagePool.deleteStage(Stages.SIGN_IN);
     }
 
     private void validateButtons(){

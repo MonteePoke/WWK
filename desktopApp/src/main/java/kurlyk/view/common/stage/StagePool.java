@@ -27,6 +27,13 @@ public class StagePool {
         stage.show();
     }
 
+    public void clearStages() {
+        for (Map.Entry<Stages,Stage> entry : pool.entrySet()) {
+            entry.getValue().close();
+        }
+        pool.clear();
+    }
+
     public void pushStageAndShowModal(Stages key, Stage stage){
         pushStage(key, stage);
         stage.initModality(Modality.APPLICATION_MODAL);
