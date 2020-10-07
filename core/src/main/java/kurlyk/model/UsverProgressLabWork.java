@@ -25,8 +25,9 @@ public class UsverProgressLabWork {
     private Long startTime;
     private Long endTime;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private Set<UsverProgressTask> usverProgressTasks;
+//    @OneToMany(cascade = CascadeType.ALL)
+//    private Set<UsverProgressTask> usverProgressTasks;
+
 
     @OneToMany(cascade = CascadeType.ALL)
     private Set<UsverProgressLabWorkParameter> parameters;

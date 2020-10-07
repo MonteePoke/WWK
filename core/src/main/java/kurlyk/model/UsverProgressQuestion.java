@@ -20,6 +20,9 @@ public class UsverProgressQuestion {
     @ManyToOne
     private Question question;
 
+    @ManyToOne
+    private UsverProgressLabWork usverProgressLabWork;
+
     private Long score;
     private Integer attemptsNumber;
 

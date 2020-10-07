@@ -78,6 +78,27 @@ public class ExecuteMaster {
         }
         Usver usver = communicator.getUsver(usverInfo.getTokenDto().getUsverId());
 
+        /**
+         * ОСТАНОВИЛИСЬ
+         * ТУТ
+         * ПОДУМОТЬ
+         * ОЧЕНЬ
+         * СИЛЬНО
+         * **/
+        Set<UsverProgressQuestion> usverProgressQuestions = new HashSet<>();
+
+        Map<Long, List<UsverProgressQuestion>> questionMap = Utils.joinTwoList(questionIdsDto.getTestQuestionIds(), questionIdsDto.getWorkQuestionIds())
+                .stream()
+                .map(duet ->
+                        UsverProgressQuestion
+                                .builder()
+                                .question(Question.builder().id(duet.getB()).task(Task.builder().id(duet.getA()).build()).build())
+                                .score(0L)
+                                .attemptsNumber(0)
+                                .build()
+                )
+                .collect(Collectors.groupingBy(usverProgressQuestion -> usverProgressQuestion.getQuestion().getTask().getId()));
+
         communicator.saveUsverProgress(
                 UsverProgressLabWork
                         .builder()
@@ -86,7 +107,7 @@ public class ExecuteMaster {
                         .startTime(new Date().getTime())
                         .endTime(Utils.toDate(LocalDateTime.now().plusMinutes(labWork.getInterval())).getTime())
                         .parameters(getUsverProgressLabWorkParameter(labWork))
-                        .usverProgressTasks(getUsverProgressTasks())
+//                        .usverProgressTasks(getUsverProgressTasks())
                         .build()
         );
     }
@@ -115,30 +136,36 @@ public class ExecuteMaster {
                 .collect(Collectors.toSet());
     }
 
-    private Set<UsverProgressTask> getUsverProgressTasks(){
-        Set<UsverProgressTask> usverProgressTasks = new HashSet<>();
+//    private Set<UsverProgressTask> getUsverProgressTasks(){
+//        Set<UsverProgressTask> usverProgressTasks = new HashSet<>();
+//
+//        Map<Long, List<UsverProgressQuestion>> taskMap = Utils.joinTwoList(questionIdsDto.getTestQuestionIds(), questionIdsDto.getWorkQuestionIds())
+//                .stream()
+//                .map(duet ->
+//                    UsverProgressQuestion
+//                            .builder()
+//                            .question(Question.builder().id(duet.getB()).task(Task.builder().id(duet.getA()).build()).build())
+//                            .score(0L)
+//                            .attemptsNumber(0)
+//                            .build()
+//                )
+//                .collect(Collectors.groupingBy(usverProgressQuestion -> usverProgressQuestion.getQuestion().getTask().getId()));
+//        for (Long taskId : taskMap.keySet()){
+//            usverProgressTasks.add(
+//                    UsverProgressTask
+//                            .builder()
+//                            .task(Task.builder().id(taskId).build())
+//                            .usverProgressQuestions(new HashSet<>(taskMap.get(taskId)))
+//                            .build()
+//            );
+//        }
+//        return usverProgressTasks;
+//    }
+    
+    private List<UsverProgressQuestion> getUsverProgressQuestions() throws IOException {
+//        Set<UsverProgressQuestion> usverProgressQuestions = new HashSet<>();
 
-        Map<Long, List<UsverProgressQuestion>> taskMap = Utils.joinTwoList(questionIdsDto.getTestQuestionIds(), questionIdsDto.getWorkQuestionIds())
-                .stream()
-                .map(duet ->
-                    UsverProgressQuestion
-                            .builder()
-                            .question(Question.builder().id(duet.getB()).task(Task.builder().id(duet.getA()).build()).build())
-                            .score(0L)
-                            .attemptsNumber(0)
-                            .build()
-                )
-                .collect(Collectors.groupingBy(usverProgressQuestion -> usverProgressQuestion.getQuestion().getTask().getId()));
-        for (Long taskId : taskMap.keySet()){
-            usverProgressTasks.add(
-                    UsverProgressTask
-                            .builder()
-                            .task(Task.builder().id(taskId).build())
-                            .usverProgressQuestions(new HashSet<>(taskMap.get(taskId)))
-                            .build()
-            );
-        }
-        return usverProgressTasks;
+        return communicator.getUsverProgressQuestions(labWorkId);
     }
 
     public Question getQuestion(){
@@ -191,11 +218,14 @@ public class ExecuteMaster {
     }
 
     private ResultDto getResultDto(boolean forWork) throws IOException{
-        List<UsverProgressQuestion> usverProgressQuestions = communicator.getStatiscticByUsverIdByLabWorkId(usverId, labWorkId).getUsverProgressTasks()
-                .stream()
-                .filter(usverProgressTask -> usverProgressTask.getTask().isTest() ^ forWork)
-                .flatMap(usverProgressTask -> usverProgressTask.getUsverProgressQuestions().stream())
-                .collect(Collectors.toList());
+//        List<UsverProgressQuestion> usverProgressQuestions = communicator.getStatiscticByUsverIdByLabWorkId(usverId, labWorkId)
+//                .usverProgressTask.getUsverProgressQuestions()
+//                .stream()
+////                .filter(usverProgressTask -> usverProgressTask.getTask().isTest() ^ forWork)
+////                .flatMap(usverProgressTask -> usverProgressTask.getUsverProgressQuestions().stream())
+//                .collect(Collectors.toList());
+
+        List<UsverProgressQuestion> usverProgressQuestions = getUsverProgressQuestions();
 
         return ResultDto
                 .builder()

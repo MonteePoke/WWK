@@ -3,6 +3,7 @@ package kurlyk.controllers;
 import kurlyk.model.Usver;
 import kurlyk.model.UsverLabWorkAccess;
 import kurlyk.model.UsverProgressLabWork;
+import kurlyk.model.UsverProgressQuestion;
 import kurlyk.services.usver.UsverService;
 import kurlyk.services.usverProgress.UsverProgressService;
 import kurlyk.transfer.UsverLabWorkDto;
@@ -42,6 +43,7 @@ public class UsverController {
         return ResponseEntity.ok().build();
     }
 
+
     /*
         UsverProgress
      */
@@ -58,6 +60,11 @@ public class UsverController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/usvers/progress-questions/{lab-work-id}")
+    public List<UsverProgressQuestion> getUsverProgressQuestions(@PathVariable("lab-work-id") Long labWorkId) {
+        return usverProgressService.getUsverProgressQuestions(labWorkId);
     }
 
 

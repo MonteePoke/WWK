@@ -203,19 +203,26 @@ public class testAnswerServiceImpl implements TestAnswerService {
         resultAnswerDto.setAttemptsNumber(attemptsNumber);
     }
 
+    /**
+     * ОСТАНОВИЛИСЬ
+     * ТУТ
+     * ПОДУМОТЬ
+     * ОЧЕНЬ
+     * СИЛЬНО
+     * **/
     private void saveResult(ResultAnswerDto resultAnswerDto){
         UsverProgressLabWork usverProgressLabWork =
                 usverProgressService.getUsverProgress(resultAnswerDto.getUsverId(), resultAnswerDto.getLabWorkId())
                         .orElseThrow(RuntimeException::new);
-        usverProgressLabWork.getUsverProgressTasks()
-                .stream()
-                .filter(usverProgressTask -> usverProgressTask.getTask().getId().equals(resultAnswerDto.getTaskId()))
-                .flatMap(usverProgressTask -> usverProgressTask.getUsverProgressQuestions().stream())
-                .filter(usverProgressQuestion -> usverProgressQuestion.getQuestion().getId().equals(resultAnswerDto.getQuestionId()))
-                .forEach(usverProgressQuestion -> {
-                    usverProgressQuestion.setScore(resultAnswerDto.getScore());
-                    usverProgressQuestion.setAttemptsNumber(resultAnswerDto.getAttemptsNumber());
-                });
+//        usverProgressLabWork.getUsverProgressTasks()
+//                .stream()
+//                .filter(usverProgressTask -> usverProgressTask.getTask().getId().equals(resultAnswerDto.getTaskId()))
+//                .flatMap(usverProgressTask -> usverProgressTask.getUsverProgressQuestions().stream())
+//                .filter(usverProgressQuestion -> usverProgressQuestion.getQuestion().getId().equals(resultAnswerDto.getQuestionId()))
+//                .forEach(usverProgressQuestion -> {
+//                    usverProgressQuestion.setScore(resultAnswerDto.getScore());
+//                    usverProgressQuestion.setAttemptsNumber(resultAnswerDto.getAttemptsNumber());
+//                });
         usverProgressService.saveUsverProgress(usverProgressLabWork);
     }
 

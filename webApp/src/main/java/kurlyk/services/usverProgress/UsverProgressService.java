@@ -2,8 +2,10 @@ package kurlyk.services.usverProgress;
 
 import kurlyk.model.UsverLabWorkAccess;
 import kurlyk.model.UsverProgressLabWork;
+import kurlyk.model.UsverProgressQuestion;
 import kurlyk.transfer.UsverLabWorkDto;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -15,6 +17,7 @@ public interface UsverProgressService {
 
     void deleteUsverProgressLabWorkByLabWorkId(Long labWorkId);
 
+    List<UsverProgressQuestion> getUsverProgressQuestions(Long labWorkId);
 
     Optional<UsverLabWorkAccess> getUsverLabWorkAccess(UsverLabWorkDto usverLabWorkDto);
     Long saveUsverLabWorkAccess(UsverLabWorkAccess usverLabWorkAccess);

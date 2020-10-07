@@ -2,11 +2,13 @@ package kurlyk.services.usverProgress;
 
 import kurlyk.model.UsverLabWorkAccess;
 import kurlyk.model.UsverProgressLabWork;
-import kurlyk.model.UsverProgressTask;
+
+import kurlyk.model.UsverProgressQuestion;
 import kurlyk.repositories.UsverLabWorkAccessRepository;
 import kurlyk.repositories.UsverProgressLabWorkRepository;
 import kurlyk.repositories.UsverProgressQuestionRepository;
-import kurlyk.repositories.UsverProgressTaskRepository;
+//import kurlyk.model.UsverProgressTask;
+//import kurlyk.repositories.UsverProgressTaskRepository;
 import kurlyk.transfer.UsverLabWorkDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,8 +23,8 @@ public class UsverProgressServiceImpl implements UsverProgressService {
     @Autowired
     private UsverProgressLabWorkRepository usverProgressLabWorkRepository;
 
-    @Autowired
-    private UsverProgressTaskRepository usverProgressTaskRepository;
+//    @Autowired
+//    private UsverProgressTaskRepository usverProgressTaskRepository;
 
     @Autowired
     private UsverProgressQuestionRepository usverProgressQuestionRepository;
@@ -57,19 +59,24 @@ public class UsverProgressServiceImpl implements UsverProgressService {
 
     public void deleteUsverProgressLabWorkByLabWorkId(Long labWorkId) {
         List<UsverProgressLabWork> usverProgressLabWorks = usverProgressLabWorkRepository.findByLabWorkId(labWorkId);
-        List<UsverProgressTask> usverProgressTasks = new ArrayList<>();
-
-        usverProgressLabWorks.forEach(
-                usverProgressLabWork -> {
-                    usverProgressTasks.addAll(usverProgressLabWork.getUsverProgressTasks());
-                }
-        );
-        usverProgressTasks.forEach(
-                usverProgressTask -> usverProgressQuestionRepository.deleteAll(usverProgressTask.getUsverProgressQuestions())
-        );
-
-        usverProgressTaskRepository.deleteAll(usverProgressTasks);
+//        List<UsverProgressTask> usverProgressTasks = new ArrayList<>();
+//
+//        usverProgressLabWorks.forEach(
+//                usverProgressLabWork -> {
+//                    usverProgressTasks.addAll(usverProgressLabWork.getUsverProgressTasks());
+//                }
+//        );
+//        usverProgressTasks.forEach(
+//                usverProgressTask -> usverProgressQuestionRepository.deleteAll(usverProgressTask.getUsverProgressQuestions())
+//        );
+//
+//        usverProgressTaskRepository.deleteAll(usverProgressTasks);
         usverProgressLabWorkRepository.deleteAll(usverProgressLabWorks);
+    }
+
+    @Override
+    public List<UsverProgressQuestion> getUsverProgressQuestions(Long labWorkId) {
+        return usverProgressQuestionRepository.findByUsverProgressLabWorkId(labWorkId);
     }
 
 

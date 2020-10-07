@@ -73,8 +73,8 @@ public class CompetenceController {
 
     @Autowired
     private UsverProgressLabWorkRepository usverProgressLabWorkRepository;
-    @Autowired
-    private UsverProgressTaskRepository usverProgressTaskRepository;
+//    @Autowired
+//    private UsverProgressTaskRepository usverProgressTaskRepository;
     @Autowired
     private UsverProgressQuestionRepository usverProgressQuestionRepository;
 

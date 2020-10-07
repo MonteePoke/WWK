@@ -10,4 +10,6 @@ public interface UsverProgressQuestionRepository extends JpaRepository<UsverProg
 
     List<UsverProgressQuestion> findByQuestionId(Long questionId);
     void deleteByQuestionId(Long questionId);
+
+    List<UsverProgressQuestion> findByUsverProgressLabWorkId(Long usverProgressLabWorkId);
 }
