@@ -10,6 +10,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 public class Main extends Application {
 
+    private static StagePool stagePool;
     private static AnnotationConfigApplicationContext context;
 
     @Override
@@ -19,8 +20,12 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage){
-        StagePool stagePool = (StagePool) context.getBean("stagePool");
+        stagePool = (StagePool) context.getBean("stagePool");
         stagePool.pushStageAndShow(Stages.SIGN_IN, new SignInStage());
+    }
+
+    public static StagePool getStagePool() {
+        return stagePool;
     }
 
     @Override
