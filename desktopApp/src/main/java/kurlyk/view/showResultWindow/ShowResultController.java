@@ -30,7 +30,9 @@ public class ShowResultController extends Controller {
         questionNumberField.setText(executeCallbackDto.getResultDto().getQuestionsNumber().toString());
         attemptsNumberField.setText(executeCallbackDto.getResultDto().getAttemptsNumber().toString());
 
-        further.setOnAction(event -> furtherCallback.run());
+        further.setOnAction(event ->
+                furtherCallback.run()
+        );
     }
 
     private String buildHeadline(ExecuteCallbackDto executeCallbackDto){

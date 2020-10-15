@@ -221,6 +221,9 @@ public class testAnswerServiceImpl implements TestAnswerService {
                 .forEach(usverProgressQuestion -> {
                     usverProgressQuestion.setScore(resultAnswerDto.getScore());
                     usverProgressQuestion.setAttemptsNumber(resultAnswerDto.getAttemptsNumber());
+                    //todo Проверка количества попыток
+                    if (usverProgressQuestion.getAttemptsNumber() >= usverProgressQuestion.getQuestion().getAttemptsNumber())
+                        usverProgressQuestion.setResponseReceived(true);
                     usverProgressService.saveUsverProgressQuestion(usverProgressQuestion);
                 });
 

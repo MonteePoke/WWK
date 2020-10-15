@@ -70,5 +70,14 @@
             </TextField>
          </children>
       </AnchorPane>
+      <AnchorPane layoutX="10.0" layoutY="191.0" prefHeight="48.0" prefWidth="800.0">
+         <children>
+            <Button fx:id="further" layoutX="357.0" layoutY="9.0" mnemonicParsing="false" text="Далее">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Button>
+         </children>
+      </AnchorPane>
     </VBox>
 </VBox>

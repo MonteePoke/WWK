@@ -66,9 +66,56 @@ public class ExecuteMaster {
             //todo todo где-то тут загрузить прогресс (2)
             this.questionIdsDto = communicator.getQuestionsForExecute(labWorkId, variant);
             List<UsverProgressQuestion> progress = communicator.getUsverProgressQuestions(labWorkId);
+            for (UsverProgressQuestion usverProgressQuestion : progress) {
+                if (usverProgressQuestion.isAnswered()) {
+                    questionIdsDto.deleteTestQuestionId(usverProgressQuestion.getQuestion().getId());
+                    questionIdsDto.deleteWorkQuestionId(usverProgressQuestion.getQuestion().getId());
+                }
+            }
             this.testQuestionIterator = questionIdsDto.getTestQuestionIds().stream().map(Duet::getB).iterator();
             this.workQuestionIterator = questionIdsDto.getWorkQuestionIds().stream().map(Duet::getB).iterator();
             initUsverProgress();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public boolean canSkipTest() {
+        return questionIdsDto.getTestQuestionIds().size() <= 0;
+    }
+
+    public void skipTest() {
+        isTestTime = false;
+        ResultDto resultDto = null;
+        try {
+            resultDto = getResultDto(false);
+            testCompleteCallback.accept(
+                    ExecuteCallbackDto
+                            .builder()
+                            .resultDto(resultDto)
+                            .isExecuted(resultDto.isExexute())
+                            .build()
+            );
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public boolean canSkipWork() {
+        return questionIdsDto.getWorkQuestionIds().size() <= 0;
+    }
+
+    public void skipWork() {
+        ResultDto resultDto = null;
+        try {
+            resultDto = getResultDto(true);
+            workCompleteCallback.accept(
+                    ExecuteCallbackDto
+                            .builder()
+                            .resultDto(resultDto)
+                            .isExecuted(resultDto.isExexute())
+                            .build()
+            );
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -81,13 +128,7 @@ public class ExecuteMaster {
         }
         Usver usver = communicator.getUsver(usverInfo.getTokenDto().getUsverId());
 
-        /**
-         * ОСТАНОВИЛИСЬ
-         * ТУТ
-         * ПОДУМОТЬ
-         * ОЧЕНЬ
-         * СИЛЬНО
-         * **/
+        //todo Сильно подумоть
 
         UsverProgressLabWork usverProgressLabWork = UsverProgressLabWork
                 .builder()
@@ -118,6 +159,7 @@ public class ExecuteMaster {
                             .question(Question.builder().id(duet.getB()).build())
                             .score(0L)
                             .attemptsNumber(0)
+                            .responseReceived(false)
                             .usverProgressLabWork(usverProgressLabWork)
                             .build();
                     try {
@@ -181,7 +223,6 @@ public class ExecuteMaster {
 
     private List<UsverProgressQuestion> getUsverProgressQuestions() throws IOException {
 //        Set<UsverProgressQuestion> usverProgressQuestions = new HashSet<>();
-
         return communicator.getUsverProgressQuestions(labWorkId);
     }
 

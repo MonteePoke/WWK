@@ -59,29 +59,39 @@ public class StartStudentController extends Controller {
             executeMaster.initWork(
                     labNumber.getValue().getId(),
                     variantNumber.getValue(),
-                    (executeCallbackDto -> stagePool.setSceneStage(
+                    (executeCallbackDto ->
+                            stagePool.setSceneStage(
                             Stages.PERFORM_WORK,
                             new ShowResultSceneCreator(executeCallbackDto, () -> {
                                 if (executeCallbackDto.getIsExecuted()){
                                     stagePool.setSceneStage(Stages.PERFORM_WORK, new ExecuteLabStage().getScene());
                                 } else {
+                                    stagePool.closeStage(Stages.PERFORM_WORK);
                                     stagePool.setSceneStage(Stages.START, new StartStudentSceneCreator().getScene());
                                     stagePool.showStage(Stages.START);
-                                    stagePool.deleteStage(Stages.PERFORM_WORK);
                                 }
                             }).getScene()
                     )),
-                    (executeCallbackDto -> stagePool.setSceneStage(
+                    (executeCallbackDto ->
+                            stagePool.setSceneStage(
                             Stages.PERFORM_WORK,
                             new ShowResultSceneCreator(executeCallbackDto, ()-> {
+                                stagePool.closeStage(Stages.PERFORM_WORK);
                                 stagePool.setSceneStage(Stages.START, new StartStudentSceneCreator().getScene());
                                 stagePool.showStage(Stages.START);
-                                stagePool.deleteStage(Stages.PERFORM_WORK);
                             }).getScene()
                     ))
             );
             stagePool.closeStage(Stages.START);
             stagePool.pushStageAndShow(Stages.PERFORM_WORK, new ExecuteLabStage());
+
+            if (executeMaster.canSkipWork()) {
+                executeMaster.skipWork();
+            }
+            else {
+                if (executeMaster.canSkipTest())
+                    executeMaster.skipTest();
+            }
         });
     }
 }

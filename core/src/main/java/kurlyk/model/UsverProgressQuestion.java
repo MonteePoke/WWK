@@ -28,4 +28,10 @@ public class UsverProgressQuestion {
     private Integer attemptsNumber;
 
     private Boolean responseReceived;
+
+    public Boolean isAnswered() {
+        if (responseReceived == null)
+            return false;
+        return responseReceived;
+    }
 }
