@@ -52,6 +52,7 @@ public class ExecuteLabController extends Controller {
 
     private void initTab(){
         //Если пришёл null, что конец тому, что выполняется (лабе или тесту)
+        //todo где-то тут загрузить прогресс (1)
         Question question = executeMaster.getQuestion();
         if (question == null) {
             return;

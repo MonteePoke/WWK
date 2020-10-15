@@ -79,12 +79,17 @@
          </font>
       </TextField>
 
-      <Label fx:id="feedback" GridPane.columnIndex="0" GridPane.rowIndex="9" GridPane.halignment="CENTER" contentDisplay="CENTER" GridPane.columnSpan="2" prefHeight="63.0" prefWidth="255.0" text="Пользователь не найден" textAlignment="CENTER" textFill="RED" visible="false">
+      <Label fx:id="feedback" GridPane.columnIndex="0" GridPane.rowIndex="8" GridPane.halignment="CENTER" alignment="CENTER" contentDisplay="CENTER" GridPane.columnSpan="2" prefHeight="63.0" prefWidth="255.0" text="Пользователь не найден" textAlignment="CENTER" textFill="RED" visible="false">
          <font>
             <Font name="SansSerif Regular" size="18.0" />
          </font>
       </Label>
       <Button fx:id="registerButton" disable="true" GridPane.columnIndex="0" GridPane.rowIndex="9"  alignment="CENTER" contentDisplay="CENTER" GridPane.halignment="CENTER" GridPane.columnSpan="2" mnemonicParsing="false" prefHeight="33.0" prefWidth="160.0" text="Зарегистрироваться">
+         <font>
+            <Font name="SansSerif Regular" size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="goBackButton" disable="false" GridPane.columnIndex="0" GridPane.rowIndex="10"  alignment="CENTER" contentDisplay="CENTER" GridPane.halignment="CENTER" GridPane.columnSpan="2" mnemonicParsing="false" prefHeight="33.0" prefWidth="160.0" text="Вернуться">
          <font>
             <Font name="SansSerif Regular" size="14.0" />
          </font>

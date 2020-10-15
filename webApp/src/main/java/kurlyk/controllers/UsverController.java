@@ -47,6 +47,11 @@ public class UsverController {
     /*
         UsverProgress
      */
+    @GetMapping("/usver/progress/{lab-id}")
+    public List<UsverProgressQuestion> saveUsverProgressQuestion(@PathVariable("lab-id") Long labId) {
+        return usverProgressService.getUsverProgressQuestions(labId);
+    }
+
     @PostMapping("/usver/progress")
     public Long saveUsverProgress(@RequestBody UsverProgressLabWork usverProgressLabWork) {
         return usverProgressService.saveUsverProgress(usverProgressLabWork);

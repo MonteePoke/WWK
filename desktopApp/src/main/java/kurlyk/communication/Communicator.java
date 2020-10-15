@@ -40,6 +40,8 @@ public class Communicator extends AbstractCommunicator{
     public boolean login(LoginDto loginDto) throws ConnectException, IOException {
         Type type = new TypeToken<TokenDto>(){}.getType();
         TokenDto tokenDto = postData(type, loginDto, "/login/");
+        if (tokenDto == null)
+            throw new ConnectException("Couldn't login");
         if(tokenDto.getValue().equals("")){
             return false;
         } else {
@@ -48,7 +50,14 @@ public class Communicator extends AbstractCommunicator{
         }
     }
     public boolean register(Usver user) throws ConnectException, IOException {
-        Type type = new TypeToken<TokenDto>(){}.getType();
+        Type type = new TypeToken<ArrayList<Usver>>(){}.getType();
+        List<Usver> usvers = getData(type, "/usvers/");
+        for (Usver usver : usvers) {
+            if (usver.getLogin().equals(user.getLogin()))
+                return false;
+        }
+
+        type = new TypeToken<TokenDto>(){}.getType();
         TokenDto tokenDto = postData(type, user, "/usvers/");
 
         return true;
@@ -256,10 +265,9 @@ public class Communicator extends AbstractCommunicator{
     }
 
     public List<UsverProgressQuestion> getUsverProgressQuestions(Long labWorkId) throws ConnectException, IOException {
-        Type type = new TypeToken<Long>(){}.getType();
+        Type type = new TypeToken<List<UsverProgressQuestion>>(){}.getType();
         return getData(type,"/usver/progress/" + labWorkId.toString());
     }
-
 
 
     /*

@@ -45,7 +45,7 @@
             <Font name="SansSerif Regular" size="14.0" />
          </font>
       </Button>
-      <Label fx:id="feedback" alignment="CENTER" contentDisplay="CENTER" layoutX="36.0" layoutY="124.0" prefHeight="63.0" prefWidth="255.0" text="Пользователь не найден" textAlignment="CENTER" textFill="RED" visible="false">
+      <Label fx:id="feedback" alignment="CENTER" contentDisplay="CENTER" layoutX="36.0" layoutY="124.0" prefHeight="63.0" prefWidth="255.0" text="Не верный логин и(или) пароль" textAlignment="CENTER" textFill="RED" visible="false">
          <font>
             <Font name="SansSerif Regular" size="18.0" />
          </font>

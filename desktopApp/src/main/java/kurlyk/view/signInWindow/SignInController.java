@@ -85,6 +85,7 @@ public class SignInController extends Controller {
         try {
             if(!communicator.login(loginDto)){
                 feedback.setVisible(true);
+                feedback.setText("Не верный логин и(или) пароль");
                 return;
             } else {
                 feedback.setVisible(false);
@@ -98,9 +99,11 @@ public class SignInController extends Controller {
             stagePool.showStage(Stages.START);
             stagePool.deleteStage(Stages.SIGN_IN);
         } catch (ConnectException e) {
-            System.out.println("Нет соединения с сервером");
+            feedback.setVisible(true);
+            feedback.setText("Нет соединения с сервером");
         } catch (IOException e){
-            System.out.println("Ошибка авторизации");
+            feedback.setVisible(true);
+            feedback.setText("Ошибка авторизации");
         }
     }
 }

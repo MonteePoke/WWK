@@ -31,6 +31,7 @@ public class ExecuteMaster {
     private Long usverId;
     private Integer variant;
     private QuestionIdsDto questionIdsDto;
+    private List<UsverProgressQuestion> progress;
     private Iterator<Long> testQuestionIterator;
     private Iterator<Long> workQuestionIterator;
     private Consumer<ExecuteCallbackDto> testCompleteCallback;
@@ -62,7 +63,9 @@ public class ExecuteMaster {
         this.workCompleteCallback = workCompleteCallback;
         this.isTestTime = true;
         try {
+            //todo todo где-то тут загрузить прогресс (2)
             this.questionIdsDto = communicator.getQuestionsForExecute(labWorkId, variant);
+            List<UsverProgressQuestion> progress = communicator.getUsverProgressQuestions(labWorkId);
             this.testQuestionIterator = questionIdsDto.getTestQuestionIds().stream().map(Duet::getB).iterator();
             this.workQuestionIterator = questionIdsDto.getWorkQuestionIds().stream().map(Duet::getB).iterator();
             initUsverProgress();
@@ -93,34 +96,37 @@ public class ExecuteMaster {
                 .startTime(new Date().getTime())
                 .endTime(Utils.toDate(LocalDateTime.now().plusMinutes(labWork.getInterval())).getTime())
                 .parameters(getUsverProgressLabWorkParameter(labWork))
-
 //                        .usverProgressTasks(getUsverProgressTasks())
                 .build();
         Long usverProgressLabWorkId = communicator.saveUsverProgress(usverProgressLabWork);
         usverProgressLabWork.setId(usverProgressLabWorkId);
 
-        Utils.joinTwoList(questionIdsDto.getTestQuestionIds(), questionIdsDto.getWorkQuestionIds())
-                .forEach(duet -> {
+        //ищем прогресс
+        List<UsverProgressQuestion> progressQuestions = communicator.getUsverProgressQuestions(labWorkId);
 
-                            UsverProgressQuestion usverProgressQuestion = UsverProgressQuestion
-                                    .builder()
-                                    .question(Question.builder().id(duet.getB()).build())
-                                    .score(0L)
-                                    .attemptsNumber(0)
-                                    .usverProgressLabWork(usverProgressLabWork)
-                                    .build();
+        //Собираем вопросы
+        List<Duet<Long,Long>> allIds = Utils.joinTwoList(questionIdsDto.getTestQuestionIds(), questionIdsDto.getWorkQuestionIds());
 
-                            try {
-                                communicator.saveUsverProgressQuestion(usverProgressQuestion);
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-//                            return true;
-                        }
+        //Удаляем если прогресс уже есть в бд
+        for (UsverProgressQuestion usverProgressQuestion : progressQuestions) {
+            allIds.removeIf(o->o.getB().equals(usverProgressQuestion.getQuestion().getId()));
+        }
 
-                );
-
-
+        allIds.forEach(duet -> {
+                    UsverProgressQuestion usverProgressQuestion = UsverProgressQuestion
+                            .builder()
+                            .question(Question.builder().id(duet.getB()).build())
+                            .score(0L)
+                            .attemptsNumber(0)
+                            .usverProgressLabWork(usverProgressLabWork)
+                            .build();
+                    try {
+                        communicator.saveUsverProgressQuestion(usverProgressQuestion);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+        );
     }
 
     private Set<UsverProgressLabWorkParameter> getUsverProgressLabWorkParameter(LabWork labWork) {

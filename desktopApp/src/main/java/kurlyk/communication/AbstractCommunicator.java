@@ -14,7 +14,7 @@ import java.util.Map;
 public abstract class AbstractCommunicator {
 
     //GET - запрос
-    protected <OUT> OUT getData(Type outType, String addr){
+    protected <OUT> OUT getData(Type outType, String addr) {
         return getData(outType, null, addr);
     }
 

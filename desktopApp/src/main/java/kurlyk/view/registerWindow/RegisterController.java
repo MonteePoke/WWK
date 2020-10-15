@@ -41,6 +41,7 @@ public class RegisterController extends Controller {
     @FXML public TextField middleNameField;
     @FXML public TextField studyGroupField;
     @FXML private Button registerButton;
+    @FXML private Button goBackButton;
     @FXML private Label feedback;
 
     @Autowired
@@ -62,6 +63,7 @@ public class RegisterController extends Controller {
         passwordField.textProperty().addListener((observable, oldValue, newValue) -> validateButtons());
         studyGroupField.textProperty().addListener((observable, oldValue, newValue) -> validateButtons());
         registerButton.setOnAction(event -> register());
+        goBackButton.setOnAction(event -> goBack());
     }
 
     private void validateButtons(){
@@ -85,15 +87,29 @@ public class RegisterController extends Controller {
             registerButton.setDisable(false);
     }
 
+    public void goBack() {
+        stagePool.pushStage(Stages.SIGN_IN, new SignInStage());
+        stagePool.showStage(Stages.SIGN_IN);
+        stagePool.deleteStage(Stages.REGISTER);
+    }
+
     public void register() {
 
         List<Role> roles = new ArrayList<Role>();
         // ПОСМОТРЕТЬ!!!! ЕСЛИ РОЛЬ НЕ ПРИШЛА
         try {
             Role role = communicator.getRole(RoleEnum.STUDENT.getName());
+
+            if (role == null) {
+                feedback.setVisible(true);
+                feedback.setText("Нет соединения с сервером");
+                return;
+            }
+
             roles.add(role);
         } catch (IOException e) {
-            e.printStackTrace();
+            feedback.setVisible(true);
+            feedback.setText("Нет соединения с сервером");
         }
 
         Usver user = Usver
@@ -109,6 +125,7 @@ public class RegisterController extends Controller {
         try {
             if(!communicator.register(user)){
                 feedback.setVisible(true);
+                feedback.setText("Логин занят");
                 return;
             } else {
                 feedback.setVisible(false);
@@ -117,9 +134,11 @@ public class RegisterController extends Controller {
             stagePool.showStage(Stages.SIGN_IN);
             stagePool.deleteStage(Stages.REGISTER);
         } catch (ConnectException e) {
-            System.out.println("Нет соединения с сервером");
+            feedback.setVisible(true);
+            feedback.setText("Нет соединения с сервером");
         } catch (IOException e){
-            System.out.println("Ошибка регистрации");
+            feedback.setVisible(true);
+            feedback.setText("Ошибка регистрации");
         }
     }
 }

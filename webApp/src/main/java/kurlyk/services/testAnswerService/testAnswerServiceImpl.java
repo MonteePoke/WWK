@@ -228,9 +228,6 @@ public class testAnswerServiceImpl implements TestAnswerService {
 //                usverProgressService.getUsverProgress(resultAnswerDto.getUsverId(), resultAnswerDto.getLabWorkId())
 //                        .orElseThrow(RuntimeException::new);
 
-
-
-
 //        usverProgressLabWork.getUsverProgressTasks()
 //                .stream()
 //                .filter(usverProgressTask -> usverProgressTask.getTask().getId().equals(resultAnswerDto.getTaskId()))
