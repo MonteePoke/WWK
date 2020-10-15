@@ -39,6 +39,18 @@ public class ExecuteMaster {
 
     private boolean isTestTime;
 
+    public Long getLabWorkId() {
+        return labWorkId;
+    }
+
+    public Integer getVariant() {
+        return variant;
+    }
+
+    public boolean isTestTime() {
+        return isTestTime;
+    }
+
     public void initWork(
             Long labWorkId,
             Integer variant,
@@ -63,7 +75,6 @@ public class ExecuteMaster {
         this.workCompleteCallback = workCompleteCallback;
         this.isTestTime = true;
         try {
-            //todo todo где-то тут загрузить прогресс (2)
             this.questionIdsDto = communicator.getQuestionsForExecute(labWorkId, variant);
             List<UsverProgressQuestion> progress = communicator.getUsverProgressQuestions(labWorkId);
             for (UsverProgressQuestion usverProgressQuestion : progress) {
