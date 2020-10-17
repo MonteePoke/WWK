@@ -53,6 +53,7 @@ public abstract class SubmitConfigurationController<T> extends Controller implem
             });
         } else {
             attemptsNumber = this.question.getAttemptsNumber();
+            // Событие на нажатие кнопку ответа
             submit.setOnAction(event -> {
                 modifyButton();
                 try {
@@ -72,6 +73,7 @@ public abstract class SubmitConfigurationController<T> extends Controller implem
         }
     }
 
+    // Блочит кнопку если номер попытки закончились
     private void modifyButton() {
         attemptsNumber--;
         if (attemptsNumber <= 0) {

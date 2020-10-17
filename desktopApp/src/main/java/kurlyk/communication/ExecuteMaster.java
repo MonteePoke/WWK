@@ -254,11 +254,45 @@ public class ExecuteMaster {
         return question;
     }
 
+    private void ResetResponseReceived(boolean isLabWork) throws IOException {
+        List<UsverProgressQuestion> progressQuestions = communicator.getUsverProgressQuestions(labWorkId);
+
+        if (isLabWork){
+            for(UsverProgressQuestion progressQuestion: progressQuestions){
+                if (progressQuestion.getQuestion().getTask().getNumber() > 0){
+                    //Сбросить ответ
+                    progressQuestion.setAttemptsNumber(0);
+                    progressQuestion.setScore(0L);
+                    progressQuestion.setResponseReceived(false);
+                    communicator.saveUsverProgressQuestion(progressQuestion);
+                }
+            }
+
+        } else {
+            for(UsverProgressQuestion progressQuestion: progressQuestions){
+                if (progressQuestion.getQuestion().getTask().getNumber() == 0){
+                    //Сбросить ответ
+                    progressQuestion.setAttemptsNumber(0);
+                    progressQuestion.setScore(0L);
+                    progressQuestion.setResponseReceived(false);
+                    communicator.saveUsverProgressQuestion(progressQuestion);
+                }
+            }
+        }
+
+    }
+
     private Question getTestQuestion() throws IOException {
         if (testQuestionIterator.hasNext()) {
             return communicator.getQuestionForExecute(testQuestionIterator.next());
         } else {
             ResultDto resultDto = getResultDto(false);
+
+            if (!resultDto.isExexute()){
+                // сброс ответа на вопрос
+                ResetResponseReceived(false);
+            }
+
             testCompleteCallback.accept(
                     ExecuteCallbackDto
                             .builder()
@@ -275,6 +309,12 @@ public class ExecuteMaster {
             return communicator.getQuestionForExecute(workQuestionIterator.next());
         } else {
             ResultDto resultDto = getResultDto(true);
+
+            if (!resultDto.isExexute()){
+                // сброс ответа на вопрос
+                ResetResponseReceived(true);
+            }
+
             workCompleteCallback.accept(
                     ExecuteCallbackDto
                             .builder()
