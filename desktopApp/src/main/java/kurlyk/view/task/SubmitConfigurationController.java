@@ -23,6 +23,7 @@ public abstract class SubmitConfigurationController<T> extends Controller implem
     @Getter @Setter private Communicator communicator;
     @Getter @Setter private Stages stageForClose;
     private boolean callbackIsExecuted = false;
+    private Button submitButton = null;
 
     protected void submitConfiguration(
             boolean editable,
@@ -35,7 +36,9 @@ public abstract class SubmitConfigurationController<T> extends Controller implem
     ) {
         this.question = question;
         this.communicator = communicator;
+        this.submitButton = submit;
         if (editable) {
+            blockButton();
             submit.setOnAction(event -> {
                 try {
                     callbackBefore.accept(this.question);
@@ -51,7 +54,7 @@ public abstract class SubmitConfigurationController<T> extends Controller implem
         } else {
             attemptsNumber = this.question.getAttemptsNumber();
             submit.setOnAction(event -> {
-                modifyButton(submit);
+                modifyButton();
                 try {
                     callbackBefore.accept(this.question);
                     ResultAnswerDto resultAnswerDto = getAnswerResult(this.question.getAttemptsNumber() - attemptsNumber);
@@ -69,13 +72,17 @@ public abstract class SubmitConfigurationController<T> extends Controller implem
         }
     }
 
-    private void modifyButton(Button submit) {
+    private void modifyButton() {
         attemptsNumber--;
         if (attemptsNumber <= 0) {
-            submit.setStyle("-fx-background-color: green");
-            submit.setDisable(true);
+            blockButton();
             attemptsNumber = 0;
         }
+    }
+
+    public void blockButton() {
+        submitButton.setStyle("-fx-background-color: green");
+        submitButton.setDisable(true);
     }
 
 

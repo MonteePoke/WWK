@@ -82,8 +82,6 @@ public class RadioController extends SubmitConfigurationController<SelectDto> {
         textArea.setHtmlText(question.getQuestion());
         controlPanel.setVisible(editable);
 
-
-
         if (radioDto != null) {
             for (Trio<Boolean, String, Integer> option : radioDto.getOptions()){
                 root.getChildren().add(

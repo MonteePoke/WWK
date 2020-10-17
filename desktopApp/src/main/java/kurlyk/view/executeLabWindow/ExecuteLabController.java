@@ -1,6 +1,8 @@
 package kurlyk.view.executeLabWindow;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -17,6 +19,7 @@ import kurlyk.view.common.stage.base.BaseStage;
 import kurlyk.view.components.CommonSceneCreator;
 import kurlyk.view.components.QuestionTab;
 import kurlyk.view.showAnswerWindow.ShowAnswerStage;
+import kurlyk.view.task.SubmitConfigurationController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -77,17 +80,19 @@ public class ExecuteLabController extends Controller {
                         }
                     }
                 }
+                //Создаем вкладки под пройденные вопросы
                 if (flag) {
                     Question question = usverProgressQuestion.getQuestion();
                     QuestionTab tab = new QuestionTab("Вопрос №" + (question.getNumber() != null ? question.getNumber() : "КИРПИЧ"), question);
+                    Scene scene = CommonSceneCreator.questionSceneCreator(
+                            question,
+                            true,
+                            this::callbackActionBefore,
+                            this::callbackActionAfter,
+                            null
+                    );
                     tab.setContent(
-                            CommonSceneCreator.questionSceneCreator(
-                                    question,
-                                    false,
-                                    this::callbackActionBefore,
-                                    this::callbackActionAfter,
-                                    null
-                            ).getRoot()
+                          scene.getRoot()
                     );
                     tabPane.getTabs().add(tab);
                     tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
