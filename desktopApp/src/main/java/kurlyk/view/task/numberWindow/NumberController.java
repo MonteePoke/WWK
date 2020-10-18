@@ -18,6 +18,7 @@ import kurlyk.view.components.fields.DoubleField;
 import kurlyk.view.components.fields.IntegerField;
 import kurlyk.view.components.fields.SignDeterminant;
 import kurlyk.view.task.SubmitConfigurationController;
+import kurlyk.view.task.TabPurpose;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -50,7 +51,7 @@ public class NumberController extends SubmitConfigurationController<NumberDto> {
         accuracyField.setSignDeterminant(SignDeterminant.POSITIVE_ONLY);
     }
 
-    public void setQuestion(Question question, boolean editable, Consumer<Question> callbackActionBefore, Consumer<Question> callbackActionAfter, Stages stageForClose) {
+    public void setQuestion(Question question, boolean editable, Consumer<Question> callbackActionBefore, Consumer<Question> callbackActionAfter, Stages stageForClose, TabPurpose tabPurpose) {
         this.question = question;
         NumberDto numberDto = new Gson().fromJson(question.getAnswer(), NumberDto.class);
         submitConfiguration(
@@ -60,7 +61,8 @@ public class NumberController extends SubmitConfigurationController<NumberDto> {
                 communicator,
                 stagePool,
                 callbackActionBefore,
-                callbackActionAfter
+                callbackActionAfter,
+                tabPurpose
         );
         setStageForClose(stageForClose);
 

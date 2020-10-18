@@ -19,6 +19,7 @@ import kurlyk.view.common.stage.StagePool;
 import kurlyk.view.common.stage.Stages;
 import kurlyk.view.components.MyHtmlEditor;
 import kurlyk.view.task.SubmitConfigurationController;
+import kurlyk.view.task.TabPurpose;
 import netscape.javascript.JSObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -90,7 +91,7 @@ public class FormulaController extends SubmitConfigurationController<FormulaDto>
         }
     }
 
-    public void setQuestion(Question question, boolean editable, Consumer<Question> callbackActionBefore, Consumer<Question> callbackActionAfter, Stages stageForClose) {
+    public void setQuestion(Question question, boolean editable, Consumer<Question> callbackActionBefore, Consumer<Question> callbackActionAfter, Stages stageForClose, TabPurpose tabPurpose) {
         this.question = question;
         FormulaDto formulaDto = new Gson().fromJson(question.getAnswer(), FormulaDto.class);
         submitConfiguration(
@@ -100,7 +101,8 @@ public class FormulaController extends SubmitConfigurationController<FormulaDto>
                 communicator,
                 stagePool,
                 callbackActionBefore,
-                callbackActionAfter
+                callbackActionAfter,
+                tabPurpose
         );
         setStageForClose(stageForClose);
 

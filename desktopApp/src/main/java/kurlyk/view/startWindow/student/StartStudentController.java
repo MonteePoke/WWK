@@ -63,7 +63,7 @@ public class StartStudentController extends Controller {
                             stagePool.setSceneStage(
                             Stages.PERFORM_WORK,
                             new ShowResultSceneCreator(executeCallbackDto, () -> {
-                                if (executeCallbackDto.getIsExecuted()){
+                                if (executeMaster.isTestDone()){
                                     stagePool.setSceneStage(Stages.PERFORM_WORK, new ExecuteLabStage().getScene());
                                 } else {
                                     stagePool.closeStage(Stages.PERFORM_WORK);

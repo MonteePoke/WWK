@@ -20,6 +20,7 @@ import kurlyk.view.components.CommonSceneCreator;
 import kurlyk.view.components.fields.DoubleField;
 import kurlyk.view.components.fields.IntegerField;
 import kurlyk.view.components.fields.LongField;
+import kurlyk.view.task.TabPurpose;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -112,7 +113,8 @@ public class CreateLtqController extends Controller {
                     true,
                     questionBeforeAction -> {},
                     questionAfterAction -> {},
-                    Stages.LTQ_CREATE
+                    Stages.LTQ_CREATE,
+                    TabPurpose.EDITOR
             ));
         });
 

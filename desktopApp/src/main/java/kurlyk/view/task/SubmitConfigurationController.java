@@ -32,44 +32,49 @@ public abstract class SubmitConfigurationController<T> extends Controller implem
             Communicator communicator,
             StagePool stagePool,
             Consumer<Question> callbackBefore,
-            Consumer<Question> callbackAfter
+            Consumer<Question> callbackAfter,
+            TabPurpose tabPurpose
     ) {
         this.question = question;
         this.communicator = communicator;
         this.submitButton = submit;
-        if (editable) {
-            blockButton();
-            submit.setOnAction(event -> {
-                try {
-                    callbackBefore.accept(this.question);
-                    Question savedQuestion = saveQuestion(this.question);
-                    callbackAfter.accept(savedQuestion);
-                    if (stageForClose != null) {
-                        stagePool.closeStage(stageForClose);
+        switch (tabPurpose) {
+            case EDITOR:
+                submit.setOnAction(event -> {
+                    try {
+                        callbackBefore.accept(this.question);
+                        Question savedQuestion = saveQuestion(this.question);
+                        callbackAfter.accept(savedQuestion);
+                        if (stageForClose != null) {
+                            stagePool.closeStage(stageForClose);
+                        }
+                    } catch (IOException e) {
+                        FxDialogs.showError("", "Ошибка отправки данных");
                     }
-                } catch (IOException e) {
-                    FxDialogs.showError("", "Ошибка отправки данных");
-                }
-            });
-        } else {
-            attemptsNumber = this.question.getAttemptsNumber();
-            // Событие на нажатие кнопку ответа
-            submit.setOnAction(event -> {
-                modifyButton();
-                try {
-                    callbackBefore.accept(this.question);
-                    ResultAnswerDto resultAnswerDto = getAnswerResult(this.question.getAttemptsNumber() - attemptsNumber);
-                    if (!callbackIsExecuted) {
-                        callbackAfter.accept(this.question);
-                        callbackIsExecuted = true;
+                });
+                break;
+            case QUESTION:
+                attemptsNumber = this.question.getAttemptsNumber();
+                // Событие на нажатие кнопку ответа
+                submit.setOnAction(event -> {
+                    modifyButton();
+                    try {
+                        callbackBefore.accept(this.question);
+                        ResultAnswerDto resultAnswerDto = getAnswerResult(this.question.getAttemptsNumber() - attemptsNumber);
+                        if (!callbackIsExecuted) {
+                            callbackAfter.accept(this.question);
+                            callbackIsExecuted = true;
+                        }
+                        if (stageForClose != null) {
+                            stagePool.closeStage(stageForClose);
+                        }
+                    } catch (IOException e) {
+                        FxDialogs.showError("", "Ошибка отправки данных");
                     }
-                    if (stageForClose != null) {
-                        stagePool.closeStage(stageForClose);
-                    }
-                } catch (IOException e) {
-                    FxDialogs.showError("", "Ошибка отправки данных");
-                }
-            });
+                });
+                break;
+            case SOLVED:
+                blockButton();
         }
     }
 

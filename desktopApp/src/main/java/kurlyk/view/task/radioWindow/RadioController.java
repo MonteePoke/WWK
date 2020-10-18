@@ -20,6 +20,7 @@ import kurlyk.view.common.stage.Stages;
 import kurlyk.view.components.EditableRadioButton;
 import kurlyk.view.components.MyHtmlEditor;
 import kurlyk.view.task.SubmitConfigurationController;
+import kurlyk.view.task.TabPurpose;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -63,7 +64,7 @@ public class RadioController extends SubmitConfigurationController<SelectDto> {
         });
     }
 
-    public void setQuestion(Question question, boolean editable, Consumer<Question> callbackActionBefore, Consumer<Question> callbackActionAfter, Stages stageForClose) {
+    public void setQuestion(Question question, boolean editable, Consumer<Question> callbackActionBefore, Consumer<Question> callbackActionAfter, Stages stageForClose, TabPurpose tabPurpose) {
         this.question = question;
         SelectDto radioDto = new Gson().fromJson(question.getAnswer(), SelectDto.class);
         submitConfiguration(
@@ -73,7 +74,8 @@ public class RadioController extends SubmitConfigurationController<SelectDto> {
                 communicator,
                 stagePool,
                 callbackActionBefore,
-                callbackActionAfter
+                callbackActionAfter,
+                tabPurpose
         );
         setStageForClose(stageForClose);
 

@@ -3,6 +3,7 @@ package kurlyk.view.executeLabWindow;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -20,6 +21,7 @@ import kurlyk.view.components.CommonSceneCreator;
 import kurlyk.view.components.QuestionTab;
 import kurlyk.view.showAnswerWindow.ShowAnswerStage;
 import kurlyk.view.task.SubmitConfigurationController;
+import kurlyk.view.task.TabPurpose;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -89,7 +91,8 @@ public class ExecuteLabController extends Controller {
                             true,
                             this::callbackActionBefore,
                             this::callbackActionAfter,
-                            null
+                            null,
+                            TabPurpose.SOLVED
                     );
                     tab.setContent(
                           scene.getRoot()
@@ -117,7 +120,8 @@ public class ExecuteLabController extends Controller {
                         false,
                         this::callbackActionBefore,
                         this::callbackActionAfter,
-                        null
+                        null,
+                        TabPurpose.QUESTION
                 ).getRoot()
         );
         tabPane.getTabs().add(tab);

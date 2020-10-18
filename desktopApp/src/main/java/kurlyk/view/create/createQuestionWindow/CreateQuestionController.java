@@ -13,6 +13,7 @@ import kurlyk.view.common.controller.Controller;
 import kurlyk.view.common.stage.StagePool;
 import kurlyk.view.common.stage.Stages;
 import kurlyk.view.components.CommonSceneCreator;
+import kurlyk.view.task.TabPurpose;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,7 +67,8 @@ public class CreateQuestionController extends Controller {
                             true,
                             callbackActionBefore,
                             callbackActionAfter,
-                            Stages.CREATE_QUESTION
+                            Stages.CREATE_QUESTION,
+                            TabPurpose.EDITOR
                     )
             );
         });

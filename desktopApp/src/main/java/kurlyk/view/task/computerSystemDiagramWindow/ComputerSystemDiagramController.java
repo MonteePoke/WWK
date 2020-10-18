@@ -28,6 +28,7 @@ import kurlyk.view.components.DiagramContextMenu;
 import kurlyk.view.components.MyHtmlEditor;
 import kurlyk.view.components.fields.DoubleField;
 import kurlyk.view.task.SubmitConfigurationController;
+import kurlyk.view.task.TabPurpose;
 import kurlyk.view.task.computerSystemDiagramWindow.characteristicWindow.CharacteristicStage;
 import kurlyk.view.task.computerSystemDiagramWindow.computerSystemDiagram.ComputerSystemDiagramConnector;
 import kurlyk.view.task.computerSystemDiagramWindow.computerSystemDiagram.ComputerSystemDiagramDetail;
@@ -251,7 +252,7 @@ public class ComputerSystemDiagramController extends SubmitConfigurationControll
         );
     }
 
-    public void setQuestion(Question question, boolean editable, Consumer<Question> callbackActionBefore, Consumer<Question> callbackActionAfter, Stages stageForClose) {
+    public void setQuestion(Question question, boolean editable, Consumer<Question> callbackActionBefore, Consumer<Question> callbackActionAfter, Stages stageForClose, TabPurpose tabPurpose) {
         this.question = question;
         ComputerSystemDto computerSystemDto = new Gson().fromJson(question.getAnswer(), ComputerSystemDto.class);
         submitConfiguration(
@@ -261,7 +262,8 @@ public class ComputerSystemDiagramController extends SubmitConfigurationControll
                 communicator,
                 stagePool,
                 callbackActionBefore,
-                callbackActionAfter
+                callbackActionAfter,
+                tabPurpose
         );
         setStageForClose(stageForClose);
 

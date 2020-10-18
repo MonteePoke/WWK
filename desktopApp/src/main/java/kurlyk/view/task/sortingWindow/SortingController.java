@@ -17,6 +17,7 @@ import kurlyk.view.common.stage.Stages;
 import kurlyk.view.components.DraggingListView;
 import kurlyk.view.components.MyHtmlEditor;
 import kurlyk.view.task.SubmitConfigurationController;
+import kurlyk.view.task.TabPurpose;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -60,7 +61,7 @@ public class SortingController extends SubmitConfigurationController<SortingDto>
         });
     }
 
-    public void setItemsToView(Question question, boolean editable, Consumer<Question> callbackActionBefore, Consumer<Question> callbackActionAfter, Stages stageForClose){
+    public void setItemsToView(Question question, boolean editable, Consumer<Question> callbackActionBefore, Consumer<Question> callbackActionAfter, Stages stageForClose, TabPurpose tabPurpose){
         this.question = question;
         SortingDto sortingDto = new Gson().fromJson(question.getAnswer(), SortingDto.class);
         submitConfiguration(
@@ -70,7 +71,8 @@ public class SortingController extends SubmitConfigurationController<SortingDto>
                 communicator,
                 stagePool,
                 callbackActionBefore,
-                callbackActionAfter
+                callbackActionAfter,
+                tabPurpose
         );
         setStageForClose(stageForClose);
 

@@ -2,6 +2,8 @@ package kurlyk.communication;
 
 
 import kurlyk.common.Duet;
+import kurlyk.common.Quartet;
+import kurlyk.common.Trio;
 import kurlyk.common.Utils;
 import kurlyk.model.*;
 import kurlyk.transfer.ExecuteCallbackDto;
@@ -254,7 +256,7 @@ public class ExecuteMaster {
         return question;
     }
 
-    private void ResetResponseReceived(boolean isLabWork) throws IOException {
+    private void resetResponseReceived(boolean isLabWork) throws IOException {
         List<UsverProgressQuestion> progressQuestions = communicator.getUsverProgressQuestions(labWorkId);
 
         if (isLabWork){
@@ -288,9 +290,9 @@ public class ExecuteMaster {
         } else {
             ResultDto resultDto = getResultDto(false);
 
-            if (!resultDto.isExexute()){
+            if (!isTestDone()){
                 // сброс ответа на вопрос
-                ResetResponseReceived(false);
+                    resetResponseReceived(false);
             }
 
             testCompleteCallback.accept(
@@ -310,9 +312,9 @@ public class ExecuteMaster {
         } else {
             ResultDto resultDto = getResultDto(true);
 
-            if (!resultDto.isExexute()){
+            if (!isWorkDone()){
                 // сброс ответа на вопрос
-                ResetResponseReceived(true);
+                resetResponseReceived(true);
             }
 
             workCompleteCallback.accept(
@@ -344,5 +346,67 @@ public class ExecuteMaster {
                 .attemptsNumber(usverProgressQuestions.stream().mapToInt(UsverProgressQuestion::getAttemptsNumber).sum())
                 .type(forWork ? ResultDto.Type.LAB_WORK : ResultDto.Type.TEST)
                 .build();
+    }
+
+    //Возвращает Очки/Макс очки/Попытки/Кол-во вопросов
+    public Quartet<Long, Long, Long, Long> getScoreForTest() {
+        Long maxScore = 0L;
+        Long score = 0L;
+        Long attemps = 0L;
+        List<Duet<Long,Long>> duets = null;
+        try {
+            QuestionIdsDto questionIdsDto = communicator.getQuestionsForExecute(labWorkId, variant);
+            List<UsverProgressQuestion> usverProgressQuestions = communicator.getUsverProgressQuestions(labWorkId);
+            duets = questionIdsDto.getTestQuestionIds();
+            //Считаем максимальный и просто балл
+            for (Duet<Long, Long> duet : duets) {
+                for (UsverProgressQuestion usverProgressQuestion : usverProgressQuestions) {
+                    if (duet.getB() == usverProgressQuestion.getQuestion().getId()) {
+                        score += usverProgressQuestion.getScore();
+                        maxScore += usverProgressQuestion.getQuestion().getScore();
+                        attemps += usverProgressQuestion.getAttemptsNumber();
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new Quartet<Long,Long,Long,Long>(score,maxScore, new Long(duets.size()), attemps);
+    }
+
+    //Возвращает Очки/Макс очки/Попытки/Кол-во вопросов
+    public Quartet<Long, Long, Long, Long> getScoreForWork() {
+        Long maxScore = 0L;
+        Long score = 0L;
+        Long attemps = 0L;
+        List<Duet<Long,Long>> duets = null;
+        try {
+            QuestionIdsDto questionIdsDto = communicator.getQuestionsForExecute(labWorkId, variant);
+            List<UsverProgressQuestion> usverProgressQuestions = communicator.getUsverProgressQuestions(labWorkId);
+            duets = questionIdsDto.getTestQuestionIds();
+            //Считаем максимальный и просто балл
+            for (Duet<Long, Long> duet : duets) {
+                for (UsverProgressQuestion usverProgressQuestion : usverProgressQuestions) {
+                    if (duet.getB() == usverProgressQuestion.getQuestion().getId()) {
+                        score += usverProgressQuestion.getScore();
+                        maxScore += usverProgressQuestion.getQuestion().getScore();
+                        attemps += usverProgressQuestion.getAttemptsNumber();
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new Quartet<Long,Long,Long,Long>(score,maxScore, new Long(duets.size()), attemps);
+    }
+
+    public boolean isTestDone() {
+        Quartet<Long, Long, Long, Long> quartet = getScoreForTest();
+        return quartet.getA()*2 >= quartet.getB();
+    }
+
+    public boolean isWorkDone() {
+        Quartet<Long, Long, Long, Long> quartet = getScoreForWork();
+        return quartet.getA()*2 >= quartet.getB();
     }
 }

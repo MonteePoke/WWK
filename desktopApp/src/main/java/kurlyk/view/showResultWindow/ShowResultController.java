@@ -5,6 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import kurlyk.common.Duet;
+import kurlyk.common.Quartet;
 import kurlyk.communication.Communicator;
 import kurlyk.communication.ExecuteMaster;
 import kurlyk.model.UsverProgressLabWork;
@@ -40,40 +41,21 @@ public class ShowResultController extends Controller {
     public void initialize(){ }
 
     public void setResult(ExecuteCallbackDto executeCallbackDto, Runnable furtherCallback){
-        Long maxScore = 0L;
-        Long score = 0L;
-        Long attemps = 0L;
-        List<Duet<Long,Long>> duets = null;
-        try {
-            QuestionIdsDto questionIdsDto = communicator.getQuestionsForExecute(executeMaster.getLabWorkId(), executeMaster.getVariant());
-            List<UsverProgressQuestion> usverProgressQuestions = communicator.getUsverProgressQuestions(executeMaster.getLabWorkId());
-            switch (executeCallbackDto.getResultDto().getType()){
-                case TEST:
-                    duets = questionIdsDto.getTestQuestionIds();
-                    break;
-                case LAB_WORK:
-                    duets = questionIdsDto.getWorkQuestionIds();
-                    break;
-            }
-            for (Duet<Long, Long> duet : duets) {
-                for (UsverProgressQuestion usverProgressQuestion : usverProgressQuestions) {
-                    if (duet.getB() == usverProgressQuestion.getQuestion().getId()) {
-                        score += usverProgressQuestion.getScore();
-                        maxScore += usverProgressQuestion.getQuestion().getScore();
-                        attemps += usverProgressQuestion.getAttemptsNumber();
-                    }
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+        Quartet<Long, Long, Long, Long> info = null;
+        switch (executeCallbackDto.getResultDto().getType()){
+            case TEST:
+                info = executeMaster.getScoreForTest();
+                break;
+            case LAB_WORK:
+                info = executeMaster.getScoreForWork();
+                break;
         }
-
+        assert info != null;
         resultLabel.setText(buildHeadline(executeCallbackDto));
-        scoreField.setText(score+"");
-        maxScoreField.setText(maxScore+"");
-        assert duets != null;
-        questionNumberField.setText(duets.size()+"");
-        attemptsNumberField.setText(attemps+"");
+        scoreField.setText(info.getA()+"");
+        maxScoreField.setText(info.getB()+"");
+        questionNumberField.setText(info.getC()+"");
+        attemptsNumberField.setText(info.getD()+"");
 
         further.setOnAction(event ->
                 furtherCallback.run()
@@ -82,15 +64,18 @@ public class ShowResultController extends Controller {
 
     private String buildHeadline(ExecuteCallbackDto executeCallbackDto){
         String headline = "Результат ";
+        boolean done = false;
         switch (executeCallbackDto.getResultDto().getType()){
             case TEST:
                 headline += "теста: ";
+                done = executeMaster.isTestDone();
                 break;
             case LAB_WORK:
                 headline += "лабораторной: ";
+                done = executeMaster.isWorkDone();
                 break;
         }
-        headline += (executeCallbackDto.getIsExecuted() ? "Выполненно" : "Не выполненно");
+        headline += (done ? "Выполненно" : "Не выполненно");
         return headline;
     }
 }
