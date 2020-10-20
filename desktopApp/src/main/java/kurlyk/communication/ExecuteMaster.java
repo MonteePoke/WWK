@@ -361,7 +361,7 @@ public class ExecuteMaster {
             //Считаем максимальный и просто балл
             for (Duet<Long, Long> duet : duets) {
                 for (UsverProgressQuestion usverProgressQuestion : usverProgressQuestions) {
-                    if (duet.getB() == usverProgressQuestion.getQuestion().getId()) {
+                    if (duet.getB().equals(usverProgressQuestion.getQuestion().getId())) {
                         score += usverProgressQuestion.getScore();
                         maxScore += usverProgressQuestion.getQuestion().getScore();
                         attemps += usverProgressQuestion.getAttemptsNumber();
@@ -387,7 +387,7 @@ public class ExecuteMaster {
             //Считаем максимальный и просто балл
             for (Duet<Long, Long> duet : duets) {
                 for (UsverProgressQuestion usverProgressQuestion : usverProgressQuestions) {
-                    if (duet.getB() == usverProgressQuestion.getQuestion().getId()) {
+                    if (duet.getB().equals(usverProgressQuestion.getQuestion().getId())) {
                         score += usverProgressQuestion.getScore();
                         maxScore += usverProgressQuestion.getQuestion().getScore();
                         attemps += usverProgressQuestion.getAttemptsNumber();
