@@ -23,11 +23,11 @@ public class QuestionIdsDto {
     private List<Duet<Long, Long>> workQuestionIds;
 
     public void deleteTestQuestionId(Long id) {
-        testQuestionIds.removeIf(o->o.getB()==id);
+        testQuestionIds.removeIf(o-> o.getB().equals(id));
     }
 
     public void deleteWorkQuestionId(Long id) {
-        workQuestionIds.removeIf(o->o.getB()==id);
+        workQuestionIds.removeIf(o-> o.getB().equals(id));
     }
 
     public static QuestionIdsDto from(List<Question> questions){

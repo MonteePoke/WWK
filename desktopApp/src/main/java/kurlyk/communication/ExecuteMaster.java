@@ -385,7 +385,7 @@ public class ExecuteMaster {
         try {
             QuestionIdsDto questionIdsDto = communicator.getQuestionsForExecute(labWorkId, variant);
             List<UsverProgressQuestion> usverProgressQuestions = communicator.getUsverProgressQuestions(labWorkId, usverId);
-            duets = questionIdsDto.getTestQuestionIds();
+            duets = questionIdsDto.getWorkQuestionIds();
             //Считаем максимальный и просто балл
             for (Duet<Long, Long> duet : duets) {
                 for (UsverProgressQuestion usverProgressQuestion : usverProgressQuestions) {
