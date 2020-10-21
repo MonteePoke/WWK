@@ -47,9 +47,12 @@ public class UsverController {
     /*
         UsverProgress
      */
-    @GetMapping("/usver/progress/{lab-id}")
-    public List<UsverProgressQuestion> saveUsverProgressQuestion(@PathVariable("lab-id") Long labId) {
-        return usverProgressService.getUsverProgressQuestions(labId);
+    @GetMapping("/usver/progress")
+    public List<UsverProgressQuestion> saveUsverProgressQuestion(
+            @RequestParam("usverId") Long usverId,
+             @RequestParam("labWorkId") Long labWorkId)
+    {
+        return usverProgressService.getUsverProgressQuestions(labWorkId, usverId);
     }
 
     @PostMapping("/usver/progress")
@@ -72,10 +75,10 @@ public class UsverController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/usvers/progress-questions/{lab-work-id}")
-    public List<UsverProgressQuestion> getUsverProgressQuestions(@PathVariable("lab-work-id") Long labWorkId) {
-        return usverProgressService.getUsverProgressQuestions(labWorkId);
-    }
+//    @GetMapping("/usvers/progress-questions/{lab-work-id}")
+//    public List<UsverProgressQuestion> getUsverProgressQuestions(@PathVariable("lab-work-id") Long labWorkId) {
+//        return usverProgressService.getUsverProgressQuestions(labWorkId);
+//    }
 
 
     /*

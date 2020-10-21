@@ -61,7 +61,7 @@ public class ExecuteLabController extends Controller {
         //todo где-то тут загрузить прогресс (1)
         try {
             QuestionIdsDto questionIdsDto = communicator.getQuestionsForExecute(executeMaster.getLabWorkId(), executeMaster.getVariant());
-            List<UsverProgressQuestion> progress = communicator.getUsverProgressQuestions(executeMaster.getLabWorkId());
+            List<UsverProgressQuestion> progress = communicator.getUsverProgressQuestions(executeMaster.getLabWorkId(), executeMaster.getUsverId());
 
             for (UsverProgressQuestion usverProgressQuestion : progress) {
                 if (!usverProgressQuestion.isAnswered())
@@ -69,14 +69,14 @@ public class ExecuteLabController extends Controller {
                 boolean flag = false;
                 if (executeMaster.isTestTime()) {
                     for (Duet<Long, Long> idDuets : questionIdsDto.getTestQuestionIds()){
-                        if (idDuets.getB() == usverProgressQuestion.getQuestion().getId()) {
+                        if (idDuets.getB().equals(usverProgressQuestion.getQuestion().getId())) {
                             flag = true;
                             break;
                         }
                     }
                 } else {
                     for (Duet<Long, Long> idDuets : questionIdsDto.getWorkQuestionIds()){
-                        if (idDuets.getB() == usverProgressQuestion.getQuestion().getId()) {
+                        if (idDuets.getB().equals(usverProgressQuestion.getQuestion().getId())) {
                             flag = true;
                             break;
                         }

@@ -53,6 +53,8 @@ public class ExecuteMaster {
         return isTestTime;
     }
 
+    public Long getUsverId() {return usverId;}
+
     public void initWork(
             Long labWorkId,
             Integer variant,
@@ -78,7 +80,7 @@ public class ExecuteMaster {
         this.isTestTime = true;
         try {
             this.questionIdsDto = communicator.getQuestionsForExecute(labWorkId, variant);
-            List<UsverProgressQuestion> progress = communicator.getUsverProgressQuestions(labWorkId);
+            List<UsverProgressQuestion> progress = communicator.getUsverProgressQuestions(labWorkId, usverId);
             for (UsverProgressQuestion usverProgressQuestion : progress) {
                 if (usverProgressQuestion.isAnswered()) {
                     questionIdsDto.deleteTestQuestionId(usverProgressQuestion.getQuestion().getId());
@@ -156,7 +158,7 @@ public class ExecuteMaster {
         usverProgressLabWork.setId(usverProgressLabWorkId);
 
         //ищем прогресс
-        List<UsverProgressQuestion> progressQuestions = communicator.getUsverProgressQuestions(labWorkId);
+        List<UsverProgressQuestion> progressQuestions = communicator.getUsverProgressQuestions(labWorkId, usverId);
 
         //Собираем вопросы
         List<Duet<Long,Long>> allIds = Utils.joinTwoList(questionIdsDto.getTestQuestionIds(), questionIdsDto.getWorkQuestionIds());
@@ -236,7 +238,7 @@ public class ExecuteMaster {
 
     private List<UsverProgressQuestion> getUsverProgressQuestions() throws IOException {
 //        Set<UsverProgressQuestion> usverProgressQuestions = new HashSet<>();
-        return communicator.getUsverProgressQuestions(labWorkId);
+        return communicator.getUsverProgressQuestions(labWorkId, usverId);
     }
 
     public Question getQuestion() {
@@ -257,7 +259,7 @@ public class ExecuteMaster {
     }
 
     private void resetResponseReceived(boolean isLabWork) throws IOException {
-        List<UsverProgressQuestion> progressQuestions = communicator.getUsverProgressQuestions(labWorkId);
+        List<UsverProgressQuestion> progressQuestions = communicator.getUsverProgressQuestions(labWorkId, usverId);
 
         if (isLabWork){
             for(UsverProgressQuestion progressQuestion: progressQuestions){
@@ -356,7 +358,7 @@ public class ExecuteMaster {
         List<Duet<Long,Long>> duets = null;
         try {
             QuestionIdsDto questionIdsDto = communicator.getQuestionsForExecute(labWorkId, variant);
-            List<UsverProgressQuestion> usverProgressQuestions = communicator.getUsverProgressQuestions(labWorkId);
+            List<UsverProgressQuestion> usverProgressQuestions = communicator.getUsverProgressQuestions(labWorkId, usverId);
             duets = questionIdsDto.getTestQuestionIds();
             //Считаем максимальный и просто балл
             for (Duet<Long, Long> duet : duets) {
@@ -382,7 +384,7 @@ public class ExecuteMaster {
         List<Duet<Long,Long>> duets = null;
         try {
             QuestionIdsDto questionIdsDto = communicator.getQuestionsForExecute(labWorkId, variant);
-            List<UsverProgressQuestion> usverProgressQuestions = communicator.getUsverProgressQuestions(labWorkId);
+            List<UsverProgressQuestion> usverProgressQuestions = communicator.getUsverProgressQuestions(labWorkId, usverId);
             duets = questionIdsDto.getTestQuestionIds();
             //Считаем максимальный и просто балл
             for (Duet<Long, Long> duet : duets) {

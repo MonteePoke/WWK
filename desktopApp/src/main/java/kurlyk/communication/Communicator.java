@@ -264,9 +264,9 @@ public class Communicator extends AbstractCommunicator{
         return parameters;
     }
 
-    public List<UsverProgressQuestion> getUsverProgressQuestions(Long labWorkId) throws ConnectException, IOException {
+    public List<UsverProgressQuestion> getUsverProgressQuestions(Long labWorkId, Long usverId) throws ConnectException, IOException {
         Type type = new TypeToken<List<UsverProgressQuestion>>(){}.getType();
-        return getData(type,"/usver/progress/" + labWorkId.toString());
+        return getData(type, usverIdAndlabWorkIdToParameters(usverId, labWorkId), "/usver/progress");
     }
 
 

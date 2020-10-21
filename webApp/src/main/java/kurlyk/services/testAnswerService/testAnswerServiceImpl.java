@@ -103,6 +103,9 @@ public class testAnswerServiceImpl implements TestAnswerService {
     }
 
     public ResultAnswerDto testNumberAnswer(NumberAnswerDto dto){
+
+        //TODO подумать тут над округлением или все ок?
+
         Optional<Question> optionalQuestion = questionService.getQuestion(dto.getQuestionId());
         ResultAnswerDto resultAnswerDto = new ResultAnswerDto();
         if(optionalQuestion.isPresent()){
@@ -213,7 +216,7 @@ public class testAnswerServiceImpl implements TestAnswerService {
      * **/
     private void saveResult(ResultAnswerDto resultAnswerDto){
         List<UsverProgressQuestion> usverProgressQuestions =
-                usverProgressService.getUsverProgressQuestions(resultAnswerDto.getLabWorkId());
+                usverProgressService.getUsverProgressQuestions(resultAnswerDto.getLabWorkId(), resultAnswerDto.getUsverId());
 
         usverProgressQuestions
                 .stream()
@@ -352,6 +355,8 @@ public class testAnswerServiceImpl implements TestAnswerService {
         return isAnswerFound ? 1 : 0;
     }
 
+    // округление
+    // todo округление. чекнуть
     private double testNumberDto(NumberDto standart, NumberDto answer){
         if(answer.getNumber() == null){
             return 0;

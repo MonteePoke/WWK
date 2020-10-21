@@ -75,8 +75,8 @@ public class UsverProgressServiceImpl implements UsverProgressService {
     }
 
     @Override
-    public List<UsverProgressQuestion> getUsverProgressQuestions(Long labWorkId) {
-        return usverProgressQuestionRepository.findByUsverProgressLabWorkId(labWorkId);
+    public List<UsverProgressQuestion> getUsverProgressQuestions(Long labWorkId, Long usverId) {
+        return usverProgressQuestionRepository.findByUsverProgressLabWorkLabWorkIdAndUsverProgressLabWorkUsverId(labWorkId, usverId);
     }
 
 

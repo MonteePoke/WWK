@@ -17,7 +17,7 @@ public interface UsverProgressService {
 
     void deleteUsverProgressLabWorkByLabWorkId(Long labWorkId);
 
-    List<UsverProgressQuestion> getUsverProgressQuestions(Long labWorkId);
+    List<UsverProgressQuestion> getUsverProgressQuestions(Long labWorkId, Long usverId);
 
     Optional<UsverLabWorkAccess> getUsverLabWorkAccess(UsverLabWorkDto usverLabWorkDto);
     Long saveUsverLabWorkAccess(UsverLabWorkAccess usverLabWorkAccess);
