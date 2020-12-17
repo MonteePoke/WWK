@@ -101,7 +101,6 @@ public class Communicator extends AbstractCommunicator{
         deleteData(null, labWork.getId(), "/lab-work/");
     }
 
-
     /*
         Competence
     */

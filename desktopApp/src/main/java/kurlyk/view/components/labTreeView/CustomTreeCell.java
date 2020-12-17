@@ -205,7 +205,7 @@ public class CustomTreeCell extends TreeCell<TreeDto> {
             LabWork labWork = LabWork
                     .builder()
                     .number(getNumber())
-                    .name("Лабораторная работа №" + getNumber())
+                    .name("Lab Work №" + getNumber())
                     .build();
             Long labWorkId = communicator.saveLabWork(labWork);
             labWork.setId(labWorkId);

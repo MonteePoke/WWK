@@ -34,6 +34,8 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
+        if (args.length > 0)
+            MainProperties.getInstance().addProperty("addr", "http://"+args[0]+":8080");
         launch(args);
     }
 }

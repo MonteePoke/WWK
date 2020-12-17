@@ -47,6 +47,7 @@ public abstract class AbstractCommunicator {
             conn.setRequestProperty("Content-Type", "application/json");
             conn.setRequestProperty("Content-Length", String.valueOf(dataBytes.length));
             conn.setRequestProperty("Authorization", "Token " + getToken());
+//            conn.setRequestProperty("content-type", "application/json;  charset=utf-8");
             conn.setDoOutput(true);
 
             conn.getOutputStream().write(dataBytes);

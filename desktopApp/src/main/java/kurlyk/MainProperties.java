@@ -16,6 +16,10 @@ public class MainProperties {
         properties.put("addr", "http://localhost:8080");
     }
 
+    public void addProperty(String key, String value) {
+        properties.put(key, value);
+    }
+
     public String getProperty(String name){
         return properties.get(name);
     }

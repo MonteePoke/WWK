@@ -79,6 +79,10 @@ public class ExecuteMaster {
         this.workCompleteCallback = workCompleteCallback;
         this.isTestTime = true;
         try {
+            if (isTestFailed())
+                resetResponseReceived(false);
+            if (isWorkDone())
+                resetResponseReceived(true);
             this.questionIdsDto = communicator.getQuestionsForExecute(labWorkId, variant);
             List<UsverProgressQuestion> progress = communicator.getUsverProgressQuestions(labWorkId, usverId);
             for (UsverProgressQuestion usverProgressQuestion : progress) {
@@ -210,32 +214,6 @@ public class ExecuteMaster {
                 .collect(Collectors.toSet());
     }
 
-//    private Set<UsverProgressTask> getUsverProgressTasks(){
-//        Set<UsverProgressTask> usverProgressTasks = new HashSet<>();
-//
-//        Map<Long, List<UsverProgressQuestion>> taskMap = Utils.joinTwoList(questionIdsDto.getTestQuestionIds(), questionIdsDto.getWorkQuestionIds())
-//                .stream()
-//                .map(duet ->
-//                    UsverProgressQuestion
-//                            .builder()
-//                            .question(Question.builder().id(duet.getB()).task(Task.builder().id(duet.getA()).build()).build())
-//                            .score(0L)
-//                            .attemptsNumber(0)
-//                            .build()
-//                )
-//                .collect(Collectors.groupingBy(usverProgressQuestion -> usverProgressQuestion.getQuestion().getTask().getId()));
-//        for (Long taskId : taskMap.keySet()){
-//            usverProgressTasks.add(
-//                    UsverProgressTask
-//                            .builder()
-//                            .task(Task.builder().id(taskId).build())
-//                            .usverProgressQuestions(new HashSet<>(taskMap.get(taskId)))
-//                            .build()
-//            );
-//        }
-//        return usverProgressTasks;
-//    }
-
     private List<UsverProgressQuestion> getUsverProgressQuestions() throws IOException {
 //        Set<UsverProgressQuestion> usverProgressQuestions = new HashSet<>();
         return communicator.getUsverProgressQuestions(labWorkId, usverId);
@@ -288,14 +266,12 @@ public class ExecuteMaster {
 
     private Question getTestQuestion() throws IOException {
         if (testQuestionIterator.hasNext()) {
+            if (isTestFailed())
+                System.out.println("Проиграл");
+
             return communicator.getQuestionForExecute(testQuestionIterator.next());
         } else {
             ResultDto resultDto = getResultDto(false);
-
-            if (!isTestDone()){
-                // сброс ответа на вопрос
-                    resetResponseReceived(false);
-            }
 
             testCompleteCallback.accept(
                     ExecuteCallbackDto
@@ -400,6 +376,48 @@ public class ExecuteMaster {
             e.printStackTrace();
         }
         return new Quartet<Long,Long,Long,Long>(score,maxScore, new Long(duets.size()), attemps);
+    }
+
+    public boolean isTestFailed() {
+        Long maxScore = 0L;
+        Long failedScore = 0L;
+        List<Duet<Long,Long>> duets = null;
+        try {
+            List<UsverProgressQuestion> usverProgressQuestions = communicator.getUsverProgressQuestions(labWorkId, usverId);
+            duets = communicator.getQuestionsForExecute(labWorkId, variant).getTestQuestionIds();
+            for (Duet<Long, Long> duet : duets) {
+                for (UsverProgressQuestion usverProgressQuestion : usverProgressQuestions) {
+                    if (duet.getB().equals(usverProgressQuestion.getQuestion().getId())) {
+                        if (usverProgressQuestion.isAnswered() == true)
+                            failedScore += usverProgressQuestion.getQuestion().getScore() - usverProgressQuestion.getScore();
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return failedScore > maxScore/2;
+    }
+
+    public boolean isWorkFailed() {
+        Long maxScore = 0L;
+        Long failedScore = 0L;
+        List<Duet<Long,Long>> duets = null;
+        try {
+            List<UsverProgressQuestion> usverProgressQuestions = communicator.getUsverProgressQuestions(labWorkId, usverId);
+            duets = communicator.getQuestionsForExecute(labWorkId, variant).getWorkQuestionIds();
+            for (Duet<Long, Long> duet : duets) {
+                for (UsverProgressQuestion usverProgressQuestion : usverProgressQuestions) {
+                    if (duet.getB().equals(usverProgressQuestion.getQuestion().getId())) {
+                        if (usverProgressQuestion.isAnswered() == true)
+                            failedScore += usverProgressQuestion.getQuestion().getScore() - usverProgressQuestion.getScore();
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return failedScore > maxScore/2;
     }
 
     public boolean isTestDone() {
