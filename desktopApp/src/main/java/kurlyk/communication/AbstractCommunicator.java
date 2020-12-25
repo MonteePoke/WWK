@@ -40,14 +40,15 @@ public abstract class AbstractCommunicator {
     //POST - запрос
     protected <IN, OUT> OUT postData(Type outType, IN data, String addr){
         try {
-            byte[] dataBytes = new Gson().toJson(data).getBytes();
+            String jsonString = new Gson().toJson(data);
+            byte[] dataBytes = jsonString.getBytes("UTF8");
+            System.out.println("Posting: " + data.getClass());
             URL url = new URL(MainProperties.getInstance().getProperty("addr") + addr);
             HttpURLConnection conn = (HttpURLConnection)url.openConnection();
             conn.setRequestMethod("POST");
-            conn.setRequestProperty("Content-Type", "application/json");
+            conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
             conn.setRequestProperty("Content-Length", String.valueOf(dataBytes.length));
             conn.setRequestProperty("Authorization", "Token " + getToken());
-//            conn.setRequestProperty("content-type", "application/json;  charset=utf-8");
             conn.setDoOutput(true);
 
             conn.getOutputStream().write(dataBytes);
