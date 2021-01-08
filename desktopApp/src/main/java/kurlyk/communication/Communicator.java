@@ -335,7 +335,6 @@ public class Communicator extends AbstractCommunicator{
         return postData(type, dto, "/test/sorting/");
     }
 
-
     /*
         executeLabWork
     */

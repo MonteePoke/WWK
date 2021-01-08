@@ -206,6 +206,7 @@ public class CustomTreeCell extends TreeCell<TreeDto> {
                     .builder()
                     .number(getNumber())
                     .name("Лабораторная работа №" + getNumber())
+                    .variantsNumber(1)
                     .build();
             Long labWorkId = communicator.saveLabWork(labWork);
             labWork.setId(labWorkId);
@@ -216,6 +217,7 @@ public class CustomTreeCell extends TreeCell<TreeDto> {
                     .labWork(labWork)
                     .number(0)
                     .name("Тест")
+                    .variantsNumber(1)
                     .build();
             Long taskId = communicator.saveTask(task);
             task.setId(taskId);
@@ -258,6 +260,7 @@ public class CustomTreeCell extends TreeCell<TreeDto> {
                 .labWork(getSelectedItem().getValue().getLabWork())
                 .number(getNumber())
                 .name("Задание №" + getNumber())
+                .variantsNumber(1)
                 .build();
         try {
             Long id = communicator.saveTask(task);

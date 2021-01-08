@@ -35,11 +35,8 @@ public class Question {
     private Boolean skipQuestion;
     private Duration interval;
 
-    @Lob
-    @Column(columnDefinition = "CLOB")
     private String question;
-    @Lob
-    @Column(columnDefinition = "CLOB")
+
     private String answer;
 
     public Question(

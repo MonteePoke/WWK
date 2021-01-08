@@ -38,7 +38,7 @@ public class LabWorkController {
             @RequestParam("labWorkId") Long labWorkId,
             @RequestParam("variant") Integer variant
     ) {
-        List<Question> questions = taskService.getTaskIds(labWorkId)
+        List<Question> questions = taskService.getTaskIds(labWorkId, variant)
                 .stream()
                 .flatMap(taskId -> questionService.getQuestionIdAndNumbers(taskId).stream())
                 .collect(Collectors.toList());

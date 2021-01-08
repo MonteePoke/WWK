@@ -10,7 +10,7 @@ public interface TaskService {
 
     Optional<Task> getTask(Long id);
     List<Task> getTasks(Long labWorkId);
-    List<Long> getTaskIds(Long labWorkId);
+    List<Long> getTaskIds(Long labWorkId, Integer variant);
     List<Task> getTasks();
     Long saveTask(Task task);
     void deleteTask(Long id);

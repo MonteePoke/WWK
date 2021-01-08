@@ -16,4 +16,7 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
 
     @Query("SELECT t.id FROM Task as t WHERE t.labWork.id = ?1")
     List<Long> findOnlyIdByLabWorkId(Long labWorkId);
+
+    @Query("SELECT t.id FROM Task as t WHERE t.labWork.id = ?1 and (t.variantsNumber = ?2 or t.number = 0) ORDER BY t.number")
+    List<Long> findByLabWorkIdAndVariant(Long labWorkId, Integer variants);
 }

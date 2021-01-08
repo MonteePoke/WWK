@@ -73,6 +73,7 @@ public class CreateLtqController extends Controller {
         MyFunction<Long> defaultQuestionScoreProperty = createLongField("Максимальный балл за вопрос (по умолч.)", labWork.getDefaultQuestionScore());
         MyFunction<Boolean> negativeScoreProperty = createBooleanField("Отрицательный балл за задание", labWork.getNegativeScore());
         MyFunction<Long> decScoreProperty = createLongField("Вычитаемое значение при ошибке", labWork.getDecScore());
+        MyFunction<Integer> variants = createIntegerField("Количество вариантов", labWork.getVariantsNumber());
         submit.setOnAction(event -> {
             labWork.setNumber(numberProperty.get());
             labWork.setName(nameProperty.get());
@@ -81,6 +82,7 @@ public class CreateLtqController extends Controller {
             labWork.setDefaultQuestionScore(defaultQuestionScoreProperty.get());
             labWork.setNegativeScore(negativeScoreProperty.get());
             labWork.setDecScore(decScoreProperty.get());
+            labWork.setVariantsNumber(variants.get());
             saveAction.accept(labWork);
             closeStage.run();
         });
@@ -90,11 +92,13 @@ public class CreateLtqController extends Controller {
         MyFunction<Integer> numberProperty = createIntegerField("Номер задания", task.getNumber());
         MyFunction<String> nameProperty = createStringField("Название", task.getName());
         MyFunction<Double> scoreProperty = createDoubleField("Балл заданий", task.getScoreMultiplier());
+        MyFunction<Integer> variant = createIntegerField("Вариант", task.getVariantsNumber());
 
         submit.setOnAction(event -> {
             task.setNumber(numberProperty.get());
             task.setName(nameProperty.get());
             task.setScoreMultiplier(scoreProperty.get());
+            task.setVariantsNumber(variant.get());
             saveAction.accept(task);
             closeStage.run();
         });
